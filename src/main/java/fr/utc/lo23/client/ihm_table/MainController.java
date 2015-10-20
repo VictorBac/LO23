@@ -5,21 +5,20 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 public class MainController {
-	
+
+	private TableToMainListener tableToMainListener = new TableToMainListener();
 	@FXML
 	public Pane IAmYourPaneLuke;
 	@FXML
 	public Button testbtn;
 
 	public MainController(){
-		//constructor
+
 	}
 	
 	@FXML
 	private void launchTable(javafx.event.ActionEvent event) {
-		System.out.println("test");
-		TableView nex = new TableView();
-		nex.createTable(IAmYourPaneLuke);
+		tableToMainListener.showTableCreationForm(IAmYourPaneLuke);
 	}
 	
 }

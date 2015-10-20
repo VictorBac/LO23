@@ -1,7 +1,7 @@
 package fr.utc.lo23.client.ihm_table;
 
 /**
- * Created by victor on 20/10/15.
+ * Test class
  */
 public class test {
 }

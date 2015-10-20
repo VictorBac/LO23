@@ -1,4 +1,4 @@
-package fr.utc.lo23.server.data;
+package fr.utc.lo23.client.data;
 
 /**
  * Created by Jianghan on 15-10-20.

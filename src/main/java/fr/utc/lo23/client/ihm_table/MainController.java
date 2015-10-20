@@ -12,7 +12,7 @@ public class MainController {
 	public Button testbtn;
 
 	public MainController(){
-
+		//constructor
 	}
 	
 	@FXML

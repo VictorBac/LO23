@@ -11,7 +11,7 @@ public class MainController {
 	public Pane IAmYourPaneLuke;
 
 	public MainController(){
-		//constructor
+
 	}
 	
 	@FXML

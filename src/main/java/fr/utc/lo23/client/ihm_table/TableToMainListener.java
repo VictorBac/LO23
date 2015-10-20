@@ -5,10 +5,8 @@ import javafx.scene.layout.Pane;
 public class TableToMainListener implements ITableToMainListener{
 
 	public void showTableCreationForm(Pane root){
-
 		TableView tableView = new TableView();
 		tableView.createTable(root);
-
 	}
 	
 }

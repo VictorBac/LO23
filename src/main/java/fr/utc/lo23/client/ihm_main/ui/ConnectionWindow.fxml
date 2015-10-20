@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="60.0" layoutY="260.0" mnemonicParsing="false" text="Connect" />
+      <Button layoutX="220.0" layoutY="260.0" mnemonicParsing="false" text="Create profile" />
+      <TextField layoutX="60.0" layoutY="46.0" promptText="Username" />
+      <PasswordField layoutX="60.0" layoutY="168.0" promptText="Password" />
+      <ListView layoutX="445.0" layoutY="46.0" prefHeight="229.0" prefWidth="200.0" />
+      <Button layoutX="600.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" textAlignment="CENTER">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
+      <Button layoutX="562.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="-" textAlignment="CENTER">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

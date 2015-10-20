@@ -28,8 +28,7 @@ public class MainView extends Application{
 		primaryStage.setWidth(1220);
 		primaryStage.setHeight(770);
 		
-	   MainController controller = loader.getController();
-
+	   	MainController controller = loader.getController();
 
 		primaryStage.show();
 		WindowStage = primaryStage;

@@ -13,8 +13,31 @@ public class TableList {
     private ArrayList<Table> listTable;
 
     /**
+     * Constructeur
+     * @param listTable
+     */
+    public TableList(ArrayList<Table> listTable) {
+        this.listTable = listTable;
+    }
+
+    /**
+     * COnstructeur par défaut
+     */
+    public TableList() {
+        this.listTable = new ArrayList<Table>();
+    }
+
+    /**
      * ajout d'une nouvelle table dans la liste
      * @param table : table à ajouter
      */
     public void newTable(Table table){}
+
+    public ArrayList<Table> getListTable() {
+        return listTable;
+    }
+
+    public void setListTable(ArrayList<Table> listTable) {
+        this.listTable = listTable;
+    }
 }

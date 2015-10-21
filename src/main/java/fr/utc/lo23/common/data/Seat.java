@@ -16,6 +16,27 @@ public class Seat {
     private int currentAccount;
 
     /**
+     * Constructeur
+     * @param player
+     * @param startAmount
+     * @param currentAccount
+     */
+    public Seat(UserLight player, int startAmount, int currentAccount) {
+        this.player = player;
+        this.startAmount = startAmount;
+        this.currentAccount = currentAccount;
+    }
+
+    /**
+     * Constructeur par défaut
+     */
+    public Seat() {
+        this.player = new UserLight();
+        this.startAmount = 0;
+        this.currentAccount = 0;
+    }
+
+    /**
      * méthode permettant d'ajouter un montant gagné au montant actuel
      * @param amount : montant gagné
      */
@@ -32,4 +53,28 @@ public class Seat {
      * @param amount : montant misé
      */
     public void spendAmount(int amount){}
+
+    public int getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(int currentAccount) {
+        this.currentAccount = currentAccount;
+    }
+
+    public UserLight getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(UserLight player) {
+        this.player = player;
+    }
+
+    public int getStartAmount() {
+        return startAmount;
+    }
+
+    public void setStartAmount(int startAmount) {
+        this.startAmount = startAmount;
+    }
 }

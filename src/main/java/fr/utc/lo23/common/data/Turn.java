@@ -14,6 +14,34 @@ public class Turn {
     private Timestamp timeStampOfTurn;
 
     /**
+     * Constructor to create a Table
+     * @param aListOfAction the List of Action to added
+     */
+    public Turn(ArrayList<Action> aListOfAction){
+        this.listAction = aListOfAction;
+        //TODO initialize the timeStamp or copy another Turn time (change parameter)
+    }
+
+    /**
+     * Constructor without argument mainly used when we start a new Turn in a normal Game
+     */
+    public Turn(){
+        //TODO initialize the Turn's list and Time
+    }
+
+    /**
+     * Getter that return the list of action that is associated to this turn
+     * @return an ArrayList of Action from the Turn
+     */
+    public ArrayList<Action> getListAction() {return listAction;}
+
+    /**
+     * Getter that return the time when this turn started
+     * @return a Timestamp returned that represent when the Turn started
+     */
+    public Timestamp getTimeStampOfTurn() {return timeStampOfTurn;}
+
+    /**
      * Minimal bet that a player has to do, calculated according to previous Action
      * @return an integer that a player has to pay
      */

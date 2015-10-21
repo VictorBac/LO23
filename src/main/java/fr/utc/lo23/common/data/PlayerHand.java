@@ -15,8 +15,42 @@ public class PlayerHand {
     private UserLight player;
 
     /**
+     * Constructeur
+     * @param listCardsHand
+     * @param player
+     */
+    public PlayerHand(ArrayList<Card> listCardsHand, UserLight player) {
+        this.listCardsHand = listCardsHand;
+        this.player = player;
+    }
+
+    /**
+     * Constructeur par défaut
+     */
+    public PlayerHand() {
+        this.listCardsHand = new ArrayList<Card>();
+        this.player = new UserLight();
+    }
+
+    /**
      * Methode permettant d'ajouter une carte à un joueur
      * @param carte : carte à ajouter
      */
     public void addNewCard(Card carte){}
+
+    public ArrayList<Card> getListCardsHand() {
+        return listCardsHand;
+    }
+
+    public void setListCardsHand(ArrayList<Card> listCardsHand) {
+        this.listCardsHand = listCardsHand;
+    }
+
+    public UserLight getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(UserLight player) {
+        this.player = player;
+    }
 }

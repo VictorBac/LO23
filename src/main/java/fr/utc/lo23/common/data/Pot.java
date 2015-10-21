@@ -14,5 +14,23 @@ public class Pot {
      */
     private ArrayList<Integer> valeurPot;
     private ArrayList<UserLight> players;
+
+    /**
+     * Constructeur
+     * @param valeurPot
+     * @param players
+     */
+    public Pot(ArrayList<Integer> valeurPot, ArrayList<UserLight> players) {
+        this.valeurPot = valeurPot;
+        this.players = players;
+    }
+
+    /**
+     * Constructeur par défaut
+     */
+    public Pot() {
+        this.players = new ArrayList<UserLight>();
+        this.valeurPot = new ArrayList<Integer>();
+    }
 }
 

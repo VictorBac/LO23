@@ -1,5 +1,12 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.common.data.Action;
+import fr.utc.lo23.common.data.Groupe;
+import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.UserLight;
+
+import java.util.UUID;
+
 /**
  * Interface présentée par le module Data à IHM Table
  * Created by Haroldcb on 20/10/2015.
@@ -77,7 +84,7 @@ public interface InterfaceDataFromIHMTable {
      * méthode permettant de récupérer un utilisateur
      * @param user : utilisateur à récupérer
      */
-    public void getUser(Userlight user);
+    public void getUser(UserLight user);
 
     /**
      * confirmation de reception d'une carte distribuée

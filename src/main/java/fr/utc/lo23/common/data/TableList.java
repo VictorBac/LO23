@@ -1,5 +1,7 @@
 package fr.utc.lo23.common.data;
 
+import java.util.ArrayList;
+
 /**
  * Classe représentant la liste des tables disponibles
  * Created by Haroldcb on 21/10/2015.

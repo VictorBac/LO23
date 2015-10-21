@@ -1,5 +1,7 @@
 package fr.utc.lo23.common.data;
 
+import java.sql.Timestamp;
+
 /**
  * Classe représentant un message du chat
  * Created by Haroldcb on 21/10/2015.

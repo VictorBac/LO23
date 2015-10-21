@@ -11,7 +11,7 @@ public class Seat {
      * startAmount : montant de départ affecté au joueur
      * curentAccount : montant possédé à un instant t par la joueur
      */
-    private Userlight player;
+    private UserLight player;
     private int startAmount;
     private int currentAccount;
 

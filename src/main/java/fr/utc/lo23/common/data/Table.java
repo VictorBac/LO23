@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.data;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Classe représentant une table, sur laquelle se déroulent des parties

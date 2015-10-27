@@ -1,16 +1,14 @@
 package fr.utc.lo23.client.ihm_table;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 public class MainController {
 
 	private TableToMainListener tableToMainListener = new TableToMainListener();
+
 	@FXML
 	public Pane IAmYourPaneLuke;
-	@FXML
-	public Button testbtn;
 
 	public MainController(){
 

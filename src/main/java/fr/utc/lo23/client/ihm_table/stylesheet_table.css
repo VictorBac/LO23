@@ -1,0 +1,62 @@
+.action1 {
+	-fx-graphic:url("action_1_m.png");
+	-fx-background-color:none;
+	-fx-border:none;
+}
+
+.action2 {
+	-fx-graphic:url("action_2_m.png");
+	-fx-background-color:none;
+	-fx-border:none;
+}
+
+.action3 {
+	-fx-graphic:url("action_3_m.png");
+	-fx-background-color:none;
+	-fx-border:none;
+}
+
+.action4 {
+	-fx-graphic:url("action_4_m.png");
+	-fx-background-color:none;
+	-fx-border:none;
+}
+
+.action5 {
+	-fx-graphic:url("action_5_m.png");
+	-fx-background-color:none;
+	-fx-border:none;
+}
+
+.table{
+	-fx-background-image:url("table.png");
+	-fx-background-repeat:no-repeat;
+}
+
+.gameLog{
+	-fx-color:#85898A;
+	-fx-border:none;
+	-fx-border-radius:none;
+	-fx-text-fill:white;
+	-fx-background-radius:none;
+}
+
+.gameLogMessage{
+	-fx-background-color:#939699;
+	-fx-text-fill:white;
+	-fx-background-radius:none;
+}
+
+.chat{
+	-fx-color:#337364;
+	-fx-background-radius:none;
+}
+
+.chatMessage{
+	-fx-background-color:#3B8474;
+	-fx-background-radius:none;
+}
+
+.sendChat{
+	-fx-background-radius:none;
+}

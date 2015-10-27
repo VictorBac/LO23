@@ -5,10 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 public class MainView extends Application{
 
@@ -24,13 +20,15 @@ public class MainView extends Application{
 		System.out.println(getClass().getResource("."));
 		System.out.println(getClass().getResource("MainView.fxml"));
 		loader.setLocation(getClass().getResource("MainView.fxml"));
-		Parent root = (Parent) loader.load();
+		Parent root = loader.load();
 		
 		primaryStage.setTitle("Test Main");
 		primaryStage.setScene(new Scene(root));
 		primaryStage.setResizable(false);
+		primaryStage.setWidth(1220);
+		primaryStage.setHeight(770);
 		
-	   MainController controller = (MainController)loader.getController();
+	   MainController controller = loader.getController();
 
 
 		primaryStage.show();

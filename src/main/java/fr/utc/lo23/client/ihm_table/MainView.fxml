@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.HBox?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.MainController">
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.MainController">
    <children>
-      <Button fx:id="testbtn" mnemonicParsing="false" onAction="#launchTable" text="Left Main" />
-      <Pane fx:id="IAmYourPaneLuke" prefHeight="200.0" prefWidth="200.0">
+      <ToolBar prefHeight="40.0" prefWidth="200.0" style="" />
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0">
          <children>
-            <Label layoutX="83.0" layoutY="60.0" text="not to be shown" />
-         </children></Pane>
-      <Button mnemonicParsing="false" text="Right Main" />
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;">
+               <children>
+                  <Button layoutX="49.0" layoutY="38.0" mnemonicParsing="false" onAction="#launchTable" text="Create Table" />
+               </children>
+            </Pane>
+            <Pane fx:id="IAmYourPaneLuke" prefHeight="728.0" prefWidth="824.0" />
+         </children>
+      </HBox>
    </children>
-</HBox>
+</VBox>

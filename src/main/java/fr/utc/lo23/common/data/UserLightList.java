@@ -26,4 +26,7 @@ public class UserLightList {
         return null;
     }
 
+    public ArrayList<UserLight> getListUserLights() {
+        return listUserLights;
+    }
 }

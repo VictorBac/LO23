@@ -21,17 +21,11 @@ public class TableList {
     }
 
     /**
-     * COnstructeur par défaut
+     * Constructeur par défaut
      */
     public TableList() {
         this.listTable = new ArrayList<Table>();
     }
-
-    /**
-     * ajout d'une nouvelle table dans la liste
-     * @param table : table à ajouter
-     */
-    public void newTable(Table table){}
 
     public ArrayList<Table> getListTable() {
         return listTable;
@@ -39,5 +33,13 @@ public class TableList {
 
     public void setListTable(ArrayList<Table> listTable) {
         this.listTable = listTable;
+    }
+
+    /**
+     * ajout d'une nouvelle table dans la liste
+     * @param table : table à ajouter
+     */
+    public void newTable(Table table){
+        this.listTable.add(table);
     }
 }

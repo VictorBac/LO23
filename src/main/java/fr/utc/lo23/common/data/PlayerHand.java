@@ -36,7 +36,9 @@ public class PlayerHand {
      * Methode permettant d'ajouter une carte à un joueur
      * @param carte : carte à ajouter
      */
-    public void addNewCard(Card carte){}
+    public void addNewCard(Card carte){
+        this.listCardsHand.add(carte);
+    }
 
     public ArrayList<Card> getListCardsHand() {
         return listCardsHand;

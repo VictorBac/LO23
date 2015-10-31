@@ -40,19 +40,31 @@ public class Seat {
      * méthode permettant d'ajouter un montant gagné au montant actuel
      * @param amount : montant gagné
      */
-    public void winAmount(int amount){}
+    public void winAmount(int amount){
+        this.currentAccount += amount;
+    }
 
     /**
      * méthode permettant de mettre à jour le montant actuel en fonction du montant passé en paramètre
      * @param amount : monant gagné ou perdu
      */
-    public void updateCurrentAccount(int amount){}
+    public void updateCurrentAccount(int amount){
+        this.setCurrentAccount(amount);
+    }
 
     /**
      * méthode permettant d'enlever un montant misé au montant actuel
      * @param amount : montant misé
      */
-    public void spendAmount(int amount){}
+    public void spendAmount(int amount){
+        if(this.currentAccount > amount)
+            this.currentAccount -= amount;
+        /*
+        TODO
+        else throw
+        */
+    }
+
 
     public int getCurrentAccount() {
         return currentAccount;

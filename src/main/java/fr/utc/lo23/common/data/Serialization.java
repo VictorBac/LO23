@@ -7,7 +7,7 @@ import java.io.*;
  * http://www.codingeek.com/java/io/object-streams-serialization-deserialization-java-example-serializable-interface/
  */
 public class Serialization {
-    public static final String pathUserLocal ="userLocalSave";
+    public static final String pathUserLocal ="./tmp/userLocalSave";
     public static final String pathSavedGame ="userLocalSavedGame";
 
     /**
@@ -15,7 +15,7 @@ public class Serialization {
      * @param objectToSerialize the object to Serialize (its class has to implement Serializable)
      * @param namePathFile the path where the object is going to be saved
      */
-    public void serializationObject(Object objectToSerialize, String namePathFile){
+    public static void serializationObject(Object objectToSerialize, String namePathFile){
 
         try
         {

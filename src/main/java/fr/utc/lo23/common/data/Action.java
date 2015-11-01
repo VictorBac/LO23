@@ -2,6 +2,7 @@ package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
  *
  * Class used to represent an action of a player in the game
  */
-public class Action {
+public class Action implements Serializable{
     private EnumerationAction name;
     private int amount;
     private UserLight userLightOfPlayer;

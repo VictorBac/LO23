@@ -1,5 +1,7 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
+
 import java.sql.Timestamp;
 
 /**
@@ -20,34 +22,31 @@ public class Action {
      * @param userLightOfPlayer  attribute to characterize the player who made the action
      * @param timeStampOfAction  to hold the time when the Action was created
      */
-    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer, Timestamp timeStampOfAction) {
-        this.name = name;
+    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer, Timestamp timeStampOfAction) throws ActionInvalidException {
+        if(name==null || userLightOfPlayer == null || timeStampOfAction==null)
+            throw new NullPointerException("No null argument");
+        if(amount < 0)
+            throw new ActionInvalidException("Amount cannot be less than zero");
         //check if action is bet first
-        if(this.name.equals(EnumerationAction.bet)){ //TODO check if there is only bet
+        if(!(name.equals(EnumerationAction.bet)) && amount!=0)//TODO check if there is only bet than can have an amount
+            throw new ActionInvalidException("Amount cannot be different from zero when action is not bet");
+        else
+        {
+            this.name = name;
             this.amount = amount;
+            this.userLightOfPlayer = userLightOfPlayer;
+            this.timeStampOfAction = timeStampOfAction;
         }
-        else{
-            this.amount = 0; //if it is not bet then there is no point to have an amount
 
-        }
-        this.userLightOfPlayer = userLightOfPlayer;
-        this.timeStampOfAction = timeStampOfAction;
     }
 
     /**
      * Constructor to copy anotherAction
      * @param originalAction action that we want to make a copy of
      */
-    public Action(Action originalAction){
-        this.name = originalAction.name;
-        if(this.name.equals(EnumerationAction.bet)){ //TODO check if there is only bet
-            this.amount = originalAction.amount;        }
-        else{
-            this.amount = 0; //if it is not bet then there is no point to have an amount
-        }
- //TODO need a copy constructor for UserLight
-       // this.userLightOfPlayer = new UserLight(originalAction.userLightOfPlayer);
-        this.timeStampOfAction = originalAction.timeStampOfAction;
+    public Action(Action originalAction) throws ActionInvalidException {
+        //TODO need a copy constructor for UserLight --> new UserLight(originalAction.userLightOfPlayer)
+        this(originalAction.name, originalAction.amount, new UserLight(),originalAction.timeStampOfAction);
     }
 
 

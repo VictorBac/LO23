@@ -18,13 +18,20 @@ public class Action {
      * @param name an EnumerationAction to specify the type of action
      * @param amount an int to specify how much money is bet (when action is bet)
      * @param userLightOfPlayer  attribute to characterize the player who made the action
+     * @param timeStampOfAction  to hold the time when the Action was created
      */
-    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer) {
+    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer, Timestamp timeStampOfAction) {
         this.name = name;
-        //TODO check if action is bet first
-        this.amount = amount;
+        //check if action is bet first
+        if(this.name.equals(EnumerationAction.bet)){ //TODO check if there is only bet
+            this.amount = amount;
+        }
+        else{
+            this.amount = 0; //if it is not bet then there is no point to have an amount
+
+        }
         this.userLightOfPlayer = userLightOfPlayer;
-        //TODO intialize time
+        this.timeStampOfAction = timeStampOfAction;
     }
 
     /**
@@ -32,12 +39,23 @@ public class Action {
      * @param originalAction action that we want to make a copy of
      */
     public Action(Action originalAction){
-        this.name = originalAction.getName();
-        //TODO check if action is bet first
-        this.amount = originalAction.getAmount();
-        this.userLightOfPlayer = originalAction.getUserLightOfPlayer();
-        this.timeStampOfAction = originalAction.getTimeStampOfAction();
+        this.name = originalAction.name;
+        if(this.name.equals(EnumerationAction.bet)){ //TODO check if there is only bet
+            this.amount = originalAction.amount;        }
+        else{
+            this.amount = 0; //if it is not bet then there is no point to have an amount
+        }
+ //TODO need a copy constructor for UserLight
+       // this.userLightOfPlayer = new UserLight(originalAction.userLightOfPlayer);
+        this.timeStampOfAction = originalAction.timeStampOfAction;
     }
+
+
+
+
+
+
+
     /**
      * Getter to get the type of action
      * @return type of the Action of type EnumerationAction (check, bet,...)

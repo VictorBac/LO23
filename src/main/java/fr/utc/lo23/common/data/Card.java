@@ -8,7 +8,7 @@ public class Card {
     /**
      * value : value of the card
      * symbol: symbol of the card
-     * id: char[3] compos� de value et symbol
+     * id: char[3] made up by value and symbol
      */
     private String value;
     private char symbol;

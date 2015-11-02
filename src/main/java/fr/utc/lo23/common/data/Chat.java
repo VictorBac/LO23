@@ -8,14 +8,32 @@ import java.util.ArrayList;
  */
 public class Chat {
     /**
-     * listMessages : tableau des messages envoy�s
+     * listMessages : table of messages sended
      * @see  fr.utc.lo23.common.data.MessageChat
      */
     private ArrayList<MessageChat> listMessages;
 
     /**
-     * m�thode permettant d'envoyer un nouveau message dans le chat
-     * @param message : message � envoyer
+     * Constructor
+     * @param listMessages
+     */
+    public Chat(ArrayList<MessageChat> listMessages) {
+        this.listMessages = listMessages;
+    }
+
+    //getter
+    public ArrayList<MessageChat> getListMessages() {
+        return listMessages;
+    }
+    
+    //setter
+    public void setListMessages(ArrayList<MessageChat> listMessages) {
+        this.listMessages = listMessages;
+    }
+
+    /**
+     * method that permit to send a new message in the chat
+     * @param message : message to send
      * @see  fr.utc.lo23.common.data.MessageChat
      */
     public void newMessage(MessageChat message){}

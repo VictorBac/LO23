@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.exception;
+package fr.utc.lo23.exceptions.network;
 
 /**
  *
  * @author Jean-Côme
  */
-public class IncorrectFileException extends Exception {
+public class ProfileNotFoundOnServerException extends Exception {
     
-    public IncorrectFileException() {
+    public ProfileNotFoundOnServerException() {
         super();
     }
     
-    public IncorrectFileException(String s) {
+    public ProfileNotFoundOnServerException(String s) {
         super(s);
     }
 }

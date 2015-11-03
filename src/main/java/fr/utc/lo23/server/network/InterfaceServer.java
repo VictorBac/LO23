@@ -6,7 +6,7 @@
 package fr.utc.lo23.server.network;
 
 import java.util.ArrayList;
-import lo23.communication.exception.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import lo23.communication.exception.NotEnoughSpaceException;
 
 /**

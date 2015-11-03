@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.exception;
+package fr.utc.lo23.exceptions.network;
 
 /**
  *

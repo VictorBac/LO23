@@ -1,5 +1,8 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -7,7 +10,7 @@ import java.sql.Timestamp;
  *
  * Class used to represent an action of a player in the game
  */
-public class Action {
+public class Action implements Serializable{
     private EnumerationAction name;
     private int amount;
     private UserLight userLightOfPlayer;
@@ -18,26 +21,41 @@ public class Action {
      * @param name an EnumerationAction to specify the type of action
      * @param amount an int to specify how much money is bet (when action is bet)
      * @param userLightOfPlayer  attribute to characterize the player who made the action
+     * @param timeStampOfAction  to hold the time when the Action was created
      */
-    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer) {
-        this.name = name;
-        //TODO check if action is bet first
-        this.amount = amount;
-        this.userLightOfPlayer = userLightOfPlayer;
-        //TODO intialize time
+    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer, Timestamp timeStampOfAction) throws ActionInvalidException {
+        if(name==null || userLightOfPlayer == null || timeStampOfAction==null)
+            throw new NullPointerException("No null argument");
+        if(amount < 0)
+            throw new ActionInvalidException("Amount cannot be less than zero");
+        //check if action is bet first
+        if(!(name.equals(EnumerationAction.bet)) && amount!=0)//TODO check if there is only bet than can have an amount
+            throw new ActionInvalidException("Amount cannot be different from zero when action is not bet");
+        else
+        {
+            this.name = name;
+            this.amount = amount;
+            this.userLightOfPlayer = userLightOfPlayer;
+            this.timeStampOfAction = timeStampOfAction;
+        }
+
     }
 
     /**
      * Constructor to copy anotherAction
      * @param originalAction action that we want to make a copy of
      */
-    public Action(Action originalAction){
-        this.name = originalAction.getName();
-        //TODO check if action is bet first
-        this.amount = originalAction.getAmount();
-        this.userLightOfPlayer = originalAction.getUserLightOfPlayer();
-        this.timeStampOfAction = originalAction.getTimeStampOfAction();
+    public Action(Action originalAction) throws ActionInvalidException {
+        //TODO need a copy constructor for UserLight --> new UserLight(originalAction.userLightOfPlayer)
+        this(originalAction.name, originalAction.amount, new UserLight(),originalAction.timeStampOfAction);
     }
+
+
+
+
+
+
+
     /**
      * Getter to get the type of action
      * @return type of the Action of type EnumerationAction (check, bet,...)

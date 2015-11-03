@@ -3,54 +3,72 @@ package fr.utc.lo23.common.data;
 import java.util.ArrayList;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Jianghan on 20/10/2015.
  */
 public class Groupe {
 
     /**
      * nomGroupe = nom du groupe
-     * listContact = ?
+     * listContact = list of contact in this group
      */
     private String nomGroupe;
     private ArrayList<UserLight> listContact;
 
     /**
-     * constructeur vide pour groupe
+     * group default constructor
      */
-    public Groupe(){
+    public Groupe() {
 
     }
 
     /**
-     * constructeur pour Groupe
-     * @param name le nom du groupe à créer
+     * group constructor
+     *
+     * @param name le nom du groupe ï¿½ crï¿½er
      */
-    public Groupe(String name){
+    public Groupe(String name) {
         this.nomGroupe = name;
         this.listContact = new ArrayList<UserLight>();
     }
 
     /**
      * getter de nomGroupe
+     *
      * @return l'attribut nomGroupe
      */
-    public String getNomGroupe(){
+    public String getNomGroupe() {
         return nomGroupe;
     }
 
     /**
      * getter de listContact
+     *
      * @return l'attribut listContact
      */
-    public ArrayList<UserLight> getContacts(){
+    public ArrayList<UserLight> getContacts() {
         return listContact;
     }
 
     /**
-     * méthode ajoutant un contact à la liste listContact
-     * @param newUser : le Userlight à ajouter
+     * mï¿½thode ajoutant un contact ï¿½ la liste listContact
+     *
+     * @param newUser : le Userlight ï¿½ ajouter
      */
-    public void addContact(UserLight newUser){
+    public void addContact(UserLight newUser) {
         listContact.add(newUser);
     }
+
+    /**
+     * supprime un contact de la listeContact
+     *
+     * @param toDelete : Userlight ï¿½ supprimer
+     */
+    public void delContact(UserLight toDelete) throws UserLightNotFoundException {
+        if (listContact.contains(toDelete)) {
+            listContact.remove(toDelete);
+        } else {
+            throw new UserLightNotFoundException(toDelete.getIdUser());
+        }
+    }
+
 }

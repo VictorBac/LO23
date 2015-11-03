@@ -1,21 +1,21 @@
 package fr.utc.lo23.common.data;
 
 /**
- * Classe représentant les cartes
+ * Class to represent a card
  * Created by Haroldcb on 21/10/2015.
  */
 public class Card {
     /**
-     * value : valeur de la carte
-     * symbol: symbole de la carte
-     * id: char[3] composé de value et symbol
+     * value : value of the card
+     * symbol: symbol of the card
+     * id: char[3] made up by value and symbol
      */
     private String value;
     private char symbol;
     private char[] id;
 
     /**
-     * Constructeur
+     * Constructor
      * @param value
      * @param symbol
      * @param id
@@ -32,8 +32,8 @@ public class Card {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public char[] getId() {
+        return id;
     }
 
     public char getSymbol() {
@@ -46,11 +46,12 @@ public class Card {
         this.symbol = symbol;
     }
 
-    public char[] getId() {
-        return id;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public void setId(char[] id) {
         this.id = id;
     }
+
 }

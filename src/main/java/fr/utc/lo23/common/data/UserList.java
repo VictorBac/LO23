@@ -17,11 +17,11 @@ public class UserList {
      * @return le joueur voulu, null si non trouvé
      * TODO : exception au lieu de null
      */
-    public User getUser(UUID userId){
+    public User getUser(UUID userId) throws UserNotFoundException {
         for (User cur : listUser) {
             if (cur.getIdUser().equals(userId))
                 return cur;
         }
-        return null;
+        throw new UserNotFoundException(userId);
     }
 }

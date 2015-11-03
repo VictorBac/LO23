@@ -3,21 +3,44 @@ package fr.utc.lo23.common.data;
 import java.util.ArrayList;
 
 /**
- * Classe représentant le chat
- * Created by Haroldcb on 21/10/2015.
+ * Class to represent a chat
+ * Created by Jianghan on 03/11/2015.
  */
 public class Chat {
     /**
-     * listMessages : tableau des messages envoyés
+     * listMessages : table of messages sended
      * @see  fr.utc.lo23.common.data.MessageChat
      */
     private ArrayList<MessageChat> listMessages;
 
     /**
-     * méthode permettant d'envoyer un nouveau message dans le chat
-     * @param message : message à envoyer
+     * Constructor Default
+     */
+    public Chat() { this.listMessages = new ArrayList<MessageChat>();
+    }
+
+    /**
+     * Constructor
+     * @param listMessages
+     */
+    public Chat(ArrayList<MessageChat> listMessages) {
+        this.listMessages = listMessages;
+    }
+
+    //getter
+    public ArrayList<MessageChat> getListMessages() {
+        return listMessages;
+    }
+
+    //setter
+    public void setListMessages(ArrayList<MessageChat> listMessages) {
+        this.listMessages = listMessages;
+    }
+
+    /**
+     * method that permit to send a new message in the chat
+     * @param message : message to send
      * @see  fr.utc.lo23.common.data.MessageChat
      */
     public void newMessage(MessageChat message){}
 }
-

@@ -75,6 +75,7 @@ public class User extends UserLight{
             pwd = md.digest(pwd.getBytes()).toString();
         }
         catch(NoSuchAlgorithmException e){
+            System.out.println(e.toString());
         }
     };
 

@@ -27,7 +27,7 @@ public class Game {
      * @param blind
      * @param listSeatPlayerWithPeculeDepart
      * @param chatGame
-     * @param timeStampStartOfTheGame
+     * @param timeStampStartOfTheGame //TODO initialization when the start begin
      * @param ante
      * @param statusOfTheGame
      * @param listUserSpectator
@@ -44,17 +44,18 @@ public class Game {
         this.listUserSpectator = listUserSpectator;
     }
 
-    public Game(UUID idGame, Timestamp timeStampStartOfTheGame, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, int ante, ArrayList<UserLight> listUserSpectator) {
+
+    public Game( EnumerationStatusGame statusOfTheGame) {
 //TODO need to do a nullpointerexception and parameter exception just as in Action
-        this.idGame = idGame;
-        this.timeStampStartOfTheGame = timeStampStartOfTheGame;
-        this.blind = blind;
-        this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
-        this.ante = ante;
-        this.listUserSpectator = listUserSpectator;
+        this.idGame = UUID.randomUUID();
+        this.timeStampStartOfTheGame = null;
+        this.blind = 0;
+        this.listSeatPlayerWithPeculeDepart = new ArrayList<Seat>();
+        this.ante = 0;
+        this.listUserSpectator =  new ArrayList<UserLight>();
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
-        this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
+        this.statusOfTheGame = statusOfTheGame;
 
     }
 
@@ -92,7 +93,7 @@ public class Game {
      *
      * @return the time when the Game starts
      */
-    public Timestamp getTimeStamp() {return timeStamp;}
+    public Timestamp getTimeStampStartOfTheGame() {return timeStampStartOfTheGame;}
 
     /**
      * Get the ante which is the minimal amount of point that everyone has to pay each on each Hand

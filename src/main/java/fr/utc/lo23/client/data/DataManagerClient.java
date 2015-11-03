@@ -10,6 +10,7 @@ import fr.utc.lo23.common.data.UserLightList;
 public class DataManagerClient {
     private InterfaceFromCom interfaceFromCom;
     private InterfaceFromIHMTable interfaceFromIHMTable;
+    private InterfaceFromIHMMain interfaceFromIHMMain;
     private User userLocal;
     private UserLightList listUsers;
     private TableList listTables;

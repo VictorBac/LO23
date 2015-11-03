@@ -26,4 +26,7 @@ public class UserLightList {
         throw new UserLightNotFoundException(userId);
     }
 
+    public ArrayList<UserLight> getListUserLights() {
+        return listUserLights;
+    }
 }

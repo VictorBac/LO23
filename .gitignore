@@ -25,3 +25,4 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
+src/main/java/fr/utc/lo23/common/data/Chat.java

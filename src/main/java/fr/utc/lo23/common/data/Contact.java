@@ -67,7 +67,7 @@ public class Contact {
         }
     }
 
-    /**
+    /** 
      * Method to delete a group with its name
      * @param groupName name of the group to delete
      */

@@ -3,28 +3,28 @@ package fr.utc.lo23.common.data;
 import java.util.ArrayList;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Jianghan on 20/10/2015.
  */
 public class Groupe {
 
     /**
      * nomGroupe = nom du groupe
-     * listContact = ?
+     * listContact = list of contact in this group
      */
     private String nomGroupe;
     private ArrayList<UserLight> listContact;
 
     /**
-     * constructeur vide pour groupe
+     * default group constructor
      */
     public Groupe() {
 
     }
 
     /**
-     * constructeur pour Groupe
+     * group constructor
      *
-     * @param name le nom du groupe à créer
+     * @param name the name of group to create
      */
     public Groupe(String name) {
         this.nomGroupe = name;
@@ -50,9 +50,9 @@ public class Groupe {
     }
 
     /**
-     * méthode ajoutant un contact à la liste listContact
+     * method to add a contact to the list listContact
      *
-     * @param newUser : le Userlight à ajouter
+     * @param newUser : the Userlight to add
      */
     public void addContact(UserLight newUser) {
         listContact.add(newUser);
@@ -61,7 +61,7 @@ public class Groupe {
     /**
      * supprime un contact de la listeContact
      *
-     * @param toDelete : Userlight à supprimer
+     * @param toDelete : Userlight to delete
      */
     public void delContact(UserLight toDelete) throws UserLightNotFoundException {
         if (listContact.contains(toDelete)) {

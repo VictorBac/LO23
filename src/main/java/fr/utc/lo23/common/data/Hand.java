@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -20,20 +21,27 @@ public class Hand {
 
 
     /**
-     * Constructor without argument
+     * Constructor with only timeStamp argument to initialize the Hand
+     * @param timeStampStartOfTheHand the current time when the Hand started
      */
-    public Hand(){
-        //TODO change the behaviour
+    public Hand(Timestamp timeStampStartOfTheHand){
+        this.listTurn = new ArrayList<Turn>();
+        this.listCardField =  new ArrayList<Card>();
+        this.listPlayerHand =  new ArrayList<PlayerHand>();
+        this.listPlayerWin =  new ArrayList<UserLight>();
+        this.firstPlayer =  null;
+        this.listPotForTheHand =  new ArrayList<Pot>();
+        this.timeStampStartOfTheHand = timeStampStartOfTheHand;
     }
 
-    public Hand(ArrayList<Turn> listTurn, ArrayList<Card> listCardField, ArrayList<PlayerHand> listPlayerHand, ArrayList<UserLight> listPlayerWin, UserLight firstPlayer, ArrayList<Pot> listPotForTheHand) {
+    public Hand(ArrayList<Turn> listTurn, ArrayList<Card> listCardField, ArrayList<PlayerHand> listPlayerHand, ArrayList<UserLight> listPlayerWin, UserLight firstPlayer, ArrayList<Pot> listPotForTheHand, Timestamp timeStampStartOfTheHand ) {
         this.listTurn = listTurn;
         this.listCardField = listCardField;
         this.listPlayerHand = listPlayerHand;
         this.listPlayerWin = listPlayerWin;
         this.firstPlayer = firstPlayer;
         this.listPotForTheHand = listPotForTheHand;
-        //TODO handle the time there
+        this.timeStampStartOfTheHand = timeStampStartOfTheHand;
     }
 
     /**
@@ -84,10 +92,10 @@ public class Hand {
 
     /**
      * Method returning the current turn of the Hand
-     * @return current Turn
+     * @return current Turn, it corresponds to the last Turn of the ArrayList
      */
     private Turn getCurrentTurn(){
-        return null; //TODO change behaviour
+        return listTurn.get(listTurn.size()-1); //size()-1 to get the last element
     }
 
 
@@ -100,7 +108,11 @@ public class Hand {
      * Method that take an action that has been played and give it to the current Turn
      * @param actionNeededToBePlayed Action played on this Turn
      */
-    private void playAction(Action actionNeededToBePlayed){}
+    public void playAction(Action actionNeededToBePlayed){
+        //TODO need to do some check First
+        //TODO change the behaviour it is not the best way to do it
+        listTurn.get(listTurn.size()-1).addActionToTheTurn(actionNeededToBePlayed);
+    }
 
     /**
      * Method to know an order between player according to the combination of their cards and the card on the Field

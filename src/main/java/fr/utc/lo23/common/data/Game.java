@@ -15,7 +15,7 @@ public class Game {
     private int blind;
     private ArrayList<Seat> listSeatPlayerWithPeculeDepart;
     private Chat chatGame;
-    private Timestamp timeStamp;
+    private Timestamp timeStampStartOfTheGame; //TODO should we start only when status game is on playing??
     private int ante;
     private EnumerationStatusGame statusOfTheGame;
     private ArrayList<UserLight> listUserSpectator;
@@ -27,21 +27,35 @@ public class Game {
      * @param blind
      * @param listSeatPlayerWithPeculeDepart
      * @param chatGame
-     * @param timeStamp TODO see if needed or generated
+     * @param timeStampStartOfTheGame
      * @param ante
      * @param statusOfTheGame
      * @param listUserSpectator
      */
-    public Game(UUID idGame, ArrayList<Hand> listHand, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, Chat chatGame, Timestamp timeStamp, int ante, EnumerationStatusGame statusOfTheGame, ArrayList<UserLight> listUserSpectator) {
+    public Game(UUID idGame, ArrayList<Hand> listHand, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, Chat chatGame, Timestamp timeStampStartOfTheGame, int ante, EnumerationStatusGame statusOfTheGame, ArrayList<UserLight> listUserSpectator) {
         this.idGame = idGame;
         this.listHand = listHand;
         this.blind = blind;
         this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
         this.chatGame = chatGame;
-        this.timeStamp = timeStamp;
+        this.timeStampStartOfTheGame = timeStampStartOfTheGame;
         this.ante = ante;
         this.statusOfTheGame = statusOfTheGame;
         this.listUserSpectator = listUserSpectator;
+    }
+
+    public Game(UUID idGame, Timestamp timeStampStartOfTheGame, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, int ante, ArrayList<UserLight> listUserSpectator) {
+//TODO need to do a nullpointerexception and parameter exception just as in Action
+        this.idGame = idGame;
+        this.timeStampStartOfTheGame = timeStampStartOfTheGame;
+        this.blind = blind;
+        this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
+        this.ante = ante;
+        this.listUserSpectator = listUserSpectator;
+        this.listHand = new ArrayList<Hand>();
+        this.chatGame = new Chat();
+        this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
+
     }
 
     /**
@@ -121,6 +135,15 @@ public class Game {
     private void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
     private void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
     private void getCurrentPlayer(){}
-    private void playAction(Action newActionDoneByPlayer){}
+
+    /**
+     * Method that take an action that has been played and give it to the current Hand
+     * @param newActionDoneByPlayer Action played on this Hand
+     */
+    private void playAction(Action newActionDoneByPlayer){
+        //TODO need to do some check First
+        //TODO change the behaviour it is not the best way to do it
+        listHand.get(listHand.size()-1).playAction(newActionDoneByPlayer);
+    }
 }
 

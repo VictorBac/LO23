@@ -2,6 +2,7 @@ package fr.utc.lo23.common.data;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * Created by Mar on 20/10/2015.
@@ -14,20 +15,47 @@ public class Turn {
     private Timestamp timeStampOfTurn;
 
     /**
-     * Constructor to create a Table
+     * Constructor to create a Table with every fields
      * @param aListOfAction the List of Action to added
      */
-    public Turn(ArrayList<Action> aListOfAction){
+    public Turn(ArrayList<Action> aListOfAction,Timestamp timeStampOfTurn){
         this.listAction = aListOfAction;
-        //TODO initialize the timeStamp or copy another Turn time (change parameter)
+        this.timeStampOfTurn = timeStampOfTurn;
     }
 
     /**
-     * Constructor without argument mainly used when we start a new Turn in a normal Game
+     *  Constructor mainly used when we start a new Turn in a normal Game
+     * @param timeStampOfTurn currentTime
      */
-    public Turn(){
-        //TODO initialize the Turn's list and Time
+    public Turn(Timestamp timeStampOfTurn){
+        this.listAction = new ArrayList<Action>();
+        this.timeStampOfTurn = timeStampOfTurn;
     }
+
+    /**
+     * Constructor used to get a new Turn that is a copy from an other one
+     * @param originalTurn Turn original that we want to copy
+     */
+    public Turn (Turn originalTurn){
+        this.listAction = copyListOfActionToAvoidShallowCopy(originalTurn.listAction);
+        this.timeStampOfTurn = originalTurn.timeStampOfTurn;
+    }
+
+    /**
+     * Method that take an ArrayList of Action and then return a copy of it
+     * @param originalListAction ArrayList of Action original that we want to get a complete copy from without shallow copy
+     * @return copy of the original ArrayList of Action
+     */
+    private ArrayList<Action> copyListOfActionToAvoidShallowCopy(ArrayList<Action> originalListAction){
+        ListIterator<Action> listIterator = originalListAction.listIterator();
+        ArrayList<Action> copyListAction = new ArrayList<Action>();
+        while(listIterator.hasNext()) {
+            Action elementActionOfTheArray = listIterator.next();
+            copyListAction.add(elementActionOfTheArray);
+        }
+        return copyListAction;
+    }
+
 
     /**
      * Getter that return the list of action that is associated to this turn
@@ -79,5 +107,11 @@ public class Turn {
      * Method which is designed to add a new action to the turn
      * @param newActionToAddToTheTurn Action that a Player made and that needs to be added to the turn
      */
-    private void addActionToTheTurn(Action newActionToAddToTheTurn){}
+    public void addActionToTheTurn(Action newActionToAddToTheTurn){
+        //TODO need to do some check first in the case the Action is not valid
+        if(newActionToAddToTheTurn==null)
+            throw new NullPointerException("Action is null");
+        else
+            listAction.add(newActionToAddToTheTurn);
+    }
 }

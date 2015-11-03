@@ -1,9 +1,12 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ExistingGroupException;
+import fr.utc.lo23.common.data.exceptions.GroupeNotFoundException;
+
 import java.util.ArrayList;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Jianghan on 20/10/2015.
  */
 public class Contact {
 
@@ -13,11 +16,11 @@ public class Contact {
     private ArrayList<Groupe> listGroups;
 
     /**
-     * méthode permettant d'ajouter un contact à un groupe
-     * @param groupName : nom du groupe à modifier
-     * @param newContact : nom du contact à ajouter
+     * methode permettant d'ajouter un contact a un groupe
+     * @param groupName : nom du groupe a modifier
+     * @param newContact : nom du contact a ajouter
      */
-    public void updateContacts(String groupName, UserLight newContact) throws GroupeNotFoundException{
+    public void updateContacts(String groupName, UserLight newContact) throws GroupeNotFoundException {
         Groupe toAddTo = new Groupe();
         for (Groupe cur : listGroups)
         {
@@ -32,7 +35,7 @@ public class Contact {
 
     /**
      * supprime le contact d'un groupe
-     * @param toDelete le Userlight à supprimer
+     * @param toDelete le Userlight a supprimer
      * @param fromGroup : le groupe dont on supprime le contact
      */
     public void deleteContact(UserLight toDelete, String fromGroup) throws GroupeNotFoundException, UserLightNotFoundException {
@@ -51,10 +54,10 @@ public class Contact {
 
 
     /**
-     * ajoute un nouveau groupe à la liste listGroups
-     * @param groupName nom du groupe à créer
+     * ajoute un nouveau groupe a la liste listGroups
+     * @param groupName nom du groupe a creer
      */
-    public void createContactList(String groupName) throws ExistingGroupException{
+    public void createContactList(String groupName) throws ExistingGroupException {
         Groupe newGroupe = new Groupe(groupName);
         if (listGroups.contains(newGroupe))
             throw new ExistingGroupException(groupName);
@@ -64,8 +67,8 @@ public class Contact {
     }
 
     /**
-     * Supprime un groupe de listGroups à partir de son nom
-     * @param groupName nom du groupe à supprimer
+     * Supprime un groupe de listGroups a partir de son nom
+     * @param groupName nom du groupe a supprimer
      */
     public void deleteContactList(String groupName) throws GroupeNotFoundException{
         Groupe toDelete = new Groupe();

@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.exception;
+package fr.utc.lo23.exceptions.network;
 
 /**
  *
  * @author Jean-Côme
  */
-public class NetworkFailureException extends Exception {
+public class IncorrectActionException extends Exception {
     
-    public NetworkFailureException() {
+    public IncorrectActionException() {
         super();
     }
     
-    public NetworkFailureException(String s) {
+    public IncorrectActionException(String s) {
         super(s);
     }
 }

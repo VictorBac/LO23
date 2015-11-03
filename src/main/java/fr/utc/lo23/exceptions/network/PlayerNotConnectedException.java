@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.exception;
+package fr.utc.lo23.exceptions.network;
 
 /**
  *
  * @author Jean-Côme
  */
-public class ConnectionLostException extends Exception {
+public class PlayerNotConnectedException extends Exception {
     
-    public ConnectionLostException() {
+    public PlayerNotConnectedException() {
         super();
     }
     
-    public ConnectionLostException(String s) {
+    public PlayerNotConnectedException(String s) {
         super(s);
     }
 }

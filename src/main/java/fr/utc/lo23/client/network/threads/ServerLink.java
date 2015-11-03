@@ -3,7 +3,9 @@ package fr.utc.lo23.client.network.threads;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -12,6 +14,11 @@ public class ServerLink extends Thread {
     static final int serverPort = 1904;
 
     public Socket socket;
+
+    private BufferedReader br;
+    private PrintWriter pw;
+    private boolean running;
+    //private InterfaceData dataInt;
 
     public ServerLink(){
 

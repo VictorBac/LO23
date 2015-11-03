@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.server;
+package fr.utc.lo23.client.network;
 
 /**
  *
  * @author Jean-Côme
  */
-public class IntServer implements InterfaceServer {
+public class IntClient implements InterfaceClient  {
     
 }

@@ -13,5 +13,13 @@ public class DataManagerClient {
     private User userLocal;
     private UserLightList listUsers;
     private TableList listTables;
-    
+
+    public DataManagerClient() {
+        this.interfaceFromCom = null;
+        this.interfaceFromIHMTable = null;
+        this.userLocal = null;
+        this.listUsers = null;
+        this.listTables = null;
+    }
+
 }

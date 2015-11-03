@@ -29,7 +29,7 @@ public class Action implements Serializable{
         if(amount < 0)
             throw new ActionInvalidException("Amount cannot be less than zero");
         //check if action is bet first
-        if(!(name.equals(EnumerationAction.bet)) && amount!=0)//TODO check if there is only bet than can have an amount
+        if(!(name.equals(EnumerationAction.bet)) && amount!=0)//TODO check if there is only bet than can have an amount (all-in)
             throw new ActionInvalidException("Amount cannot be different from zero when action is not bet");
         else
         {

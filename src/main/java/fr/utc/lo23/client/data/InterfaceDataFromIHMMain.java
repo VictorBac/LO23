@@ -37,7 +37,7 @@ public interface InterfaceDataFromIHMMain {
      * @param table
      * @param mode
      */
-    void tableJoinAcccepted(Table table, String mode);
+    void tableJoinAccepted(Table table, String mode);
 
     /**
      * Methode to get UserList online

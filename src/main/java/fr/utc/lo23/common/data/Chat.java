@@ -38,9 +38,14 @@ public class Chat {
     }
 
     /**
-     * method that permit to send a new message in the chat
+     * method to add a new message in the chat
      * @param message : message to send
      * @see  fr.utc.lo23.common.data.MessageChat
      */
-    public void newMessage(MessageChat message){}
+    public void newMessage(MessageChat message){
+
+        this.listMessages.add(message);
+
+    }
+
 }

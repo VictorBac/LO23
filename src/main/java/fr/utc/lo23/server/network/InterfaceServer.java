@@ -6,8 +6,12 @@
 package fr.utc.lo23.server.network;
 
 import java.util.ArrayList;
+
+import fr.utc.lo23.common.data.Action;
+import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
-import lo23.communication.exception.NotEnoughSpaceException;
+import fr.utc.lo23.exceptions.network.*;
 
 /**
  *

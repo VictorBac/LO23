@@ -19,7 +19,11 @@ public class ImageAvatar {
      * @param path : le chemin local du fichier image
      * TODO : gérer les exceptions
      */
-    public Image searchImageWithPath(String path){
-        return new Image(path);
+    public Image searchImageWithPath(String path) throws ImageNotFoundException{
+        Image result = new Image(path);
+        if (result == null)
+            throw new ImageNotFoundException(path);
+        else
+            return new Image(path);
     }
 }

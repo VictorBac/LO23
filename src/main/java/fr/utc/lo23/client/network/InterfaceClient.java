@@ -13,7 +13,6 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.*;
 
-
 /**
  *
  * @author Jean-Côme D LO23

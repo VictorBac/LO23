@@ -9,7 +9,7 @@ public class Groupe {
 
     /**
      * nomGroupe = nom du groupe
-     * listContact = ?
+     * listContact = list of contact in this group
      */
     private String nomGroupe;
     private ArrayList<UserLight> listContact;
@@ -22,7 +22,7 @@ public class Groupe {
     }
 
     /**
-     * constructeur pour Groupe
+     * group constructor
      *
      * @param name le nom du groupe � cr�er
      */

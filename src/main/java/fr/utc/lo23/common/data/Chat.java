@@ -14,6 +14,12 @@ public class Chat {
     private ArrayList<MessageChat> listMessages;
 
     /**
+     * Constructor Default
+     */
+    public Chat() { this.listMessages = new ArrayList<MessageChat>();
+    }
+
+    /**
      * Constructor
      * @param listMessages
      */

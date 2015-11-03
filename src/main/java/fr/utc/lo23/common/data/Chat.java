@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to represent a chat
- * Created by Jianghan on 03/11/2015.
+ * Created by Ying on 03/11/2015.
  */
 public class Chat {
     /**

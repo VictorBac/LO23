@@ -12,6 +12,7 @@ public class TableList {
      */
     private ArrayList<Table> listTable;
 
+
     /**
      * Constructeur
      * @param listTable
@@ -42,4 +43,9 @@ public class TableList {
     public void newTable(Table table){
         this.listTable.add(table);
     }
+
+    public void deleteTable(Table table){
+        //TODO
+    }
+
 }

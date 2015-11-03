@@ -14,6 +14,7 @@ public class Seat {
     private UserLight player;
     private int startAmount;
     private int currentAccount;
+    //TODO private EnumerationStatusPlayer statusPlayer;
 
     /**
      * Constructeur
@@ -25,6 +26,7 @@ public class Seat {
         this.player = player;
         this.startAmount = startAmount;
         this.currentAccount = currentAccount;
+        //TODO this.statusPlayer = ?;
     }
 
     /**
@@ -34,6 +36,7 @@ public class Seat {
         this.player = new UserLight();
         this.startAmount = 0;
         this.currentAccount = 0;
+        //TODO this.statusPlayer = ?;
     }
 
     /**
@@ -89,4 +92,14 @@ public class Seat {
     public void setStartAmount(int startAmount) {
         this.startAmount = startAmount;
     }
+
+    /* TODO
+    public EnumerationStatusPlayer getStatusPlayer() {
+        return statusPlayer;
+    }
+
+    public void setStatusPlayer(EnumerationStatusPlayer statusPlayer) {
+        this.statusPlayer = statusPlayer;
+    }
+    */
 }

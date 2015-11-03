@@ -3,7 +3,7 @@ package fr.utc.lo23.common.data;
 import java.util.ArrayList;
 
 /**
- * Created by Jianghan on 20/10/2015.
+ * Created by Rémy on 20/10/2015.
  */
 public class Groupe {
 
@@ -15,15 +15,16 @@ public class Groupe {
     private ArrayList<UserLight> listContact;
 
     /**
-     * group default constructor
+     * constructeur vide pour groupe
      */
     public Groupe() {
 
     }
 
     /**
-     * group constructor
-     * @param name the name of group to create
+     * constructeur pour Groupe
+     *
+     * @param name le nom du groupe à créer
      */
     public Groupe(String name) {
         this.nomGroupe = name;
@@ -31,26 +32,43 @@ public class Groupe {
     }
 
     /**
-     * getter de nomGroupe TODO nom?
+     * getter de nomGroupe
+     *
      * @return l'attribut nomGroupe
      */
-    public String getGroupeName(){
+    public String getNomGroupe() {
         return nomGroupe;
     }
 
     /**
-     * getter of listContact
-     * @return istContact
+     * getter de listContact
+     *
+     * @return l'attribut listContact
      */
-    public ArrayList<UserLight> getContacts(){
+    public ArrayList<UserLight> getContacts() {
         return listContact;
     }
 
     /**
-     * method to add a contact to the list listContact
-     * @param newUser : the userLight to add
+     * méthode ajoutant un contact à la liste listContact
+     *
+     * @param newUser : le Userlight à ajouter
      */
-    public void addContact(UserLight newUser){
+    public void addContact(UserLight newUser) {
         listContact.add(newUser);
     }
+
+    /**
+     * supprime un contact de la listeContact
+     *
+     * @param toDelete : Userlight à supprimer
+     */
+    public void delContact(UserLight toDelete) throws UserLightNotFoundException {
+        if (listContact.contains(toDelete)) {
+            listContact.remove(toDelete);
+        } else {
+            throw new UserLightNotFoundException(toDelete.getIdUser());
+        }
+    }
+
 }

@@ -25,7 +25,10 @@ public class Stats {
      * @param newStat ?
      * TODO : préciser usage fonction
      */
-    public void addNewStat(int newStat){};
+    public void addNewStat(int newStat){
+
+
+    };
 
     /**
      * getter de listPointsByGame

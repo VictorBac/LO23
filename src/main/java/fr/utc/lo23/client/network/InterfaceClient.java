@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.client;
+package fr.utc.lo23.client.network;
 
 import java.util.ArrayList;
 import lo23.communication.exception.*;
@@ -12,7 +12,7 @@ import lo23.communication.exception.*;
  *
  * @author Jean-Côme D LO23
  */
-public interface InterfaceServer {
+public interface InterfaceClient {
     
     /**
      * Creation d'un utilisateur par le client

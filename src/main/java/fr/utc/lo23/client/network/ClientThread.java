@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lo23.communication.client;
+package fr.utc.lo23.client.network;
 
 /**
  *

@@ -24,20 +24,20 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     }
 
-    public void tableJoinAcccepted(Table table, String mode) {
+    public void tableJoinAccepted(Table table, String mode) {
 
     }
 
     public UserLightList getPlayerList() {
-
+        return null;
     }
 
     public TableList getTableList() {
-
+        return null;
     }
 
     public TableList getSavedGamesList() {
-
+        return null;
     }
 
     public void playGame(int idTable) {

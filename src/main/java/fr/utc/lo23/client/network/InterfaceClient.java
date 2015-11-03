@@ -6,7 +6,13 @@
 package fr.utc.lo23.client.network;
 
 import java.util.ArrayList;
-import lo23.communication.exception.*;
+
+import fr.utc.lo23.common.data.Action;
+import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.*;
+
 
 /**
  *

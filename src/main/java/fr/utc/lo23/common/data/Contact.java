@@ -38,14 +38,27 @@ public class Contact {
      * Method to delete a contact
      * @param toDelete
      */
-    public void deleteContact(UserLight toDelete){};
+    public void deleteContact(UserLight toDelete, String fromGroup) throws GroupeNotFoundException, UserLightNotFoundException {
+        Groupe toDelFrom = new Groupe();
+        for (Groupe cur : listGroups)
+        {
+            if (cur.getNomGroupe().equals(fromGroup))
+                toDelFrom = cur;
+        }
+        if (toDelFrom != null) {
+            toDelFrom.delContact(toDelete);
+        }
+        else
+            throw new GroupeNotFoundException(fromGroup);
+    };
+
 
     /**
      * Method to add a new group to the list listGroups
      * @param groupName name of group to add
      */
     public void createContactList(String groupName) throws ContactException {
-        if (Arrays.asList(listGroups).contains(groupName) {
+        if (Arrays.asList(listGroups).contains(groupName)) {
             throw new ContactException("group to create already exist ");
         } else {
             Groupe newGroupe = new Groupe(groupName);

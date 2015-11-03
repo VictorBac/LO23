@@ -2,17 +2,7 @@ package fr.utc.lo23.common.data;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
-/////////////////////////////////
-// TODO Classe à déplacer !!
-/////////////////////////////////
-
-class TableException extends Exception{
-    public TableException(String message){
-        System.out.println(message);
-    }
-}
-
+import fr.utc.lo23.common.data.exceptions.TableException;
 
 /**
  * Classe représentant une table, sur laquelle se déroulent des parties
@@ -22,16 +12,16 @@ public class Table {
     /**
      * idTable : id unique de la table
      * name : nom de la table
-     * accpetSpectator : 1 si oui, 0 sinon
+     * acceptSpectator : 1 si oui, 0 sinon
      * acceptChatSpectator : 1 si oui, 0 sinon
      * nbPlayerMax : nombre maximum de joueurs sur la table
      * nbPlayerMin : nombre minimum de joueurs requis pour lancer une partie
-     * playerList: liste des joueurs actuellement sur la table
-     * spectatorList : liste des spectateurs sur la table
-     * currentGame : jeu actuel
+     * listPlayers: liste des joueurs actuellement sur la table
+     * listSpectators : liste des spectateurs
+     * currentGame : indice du jeu actuel dans le tableau de parties
      * abandonAmiable : 1 si autorisé, 0 sinon
-     * maxMise : ??????
-     * listGames : liste des parties qui se sont déroulées sur la table
+     * maxMise : mise maximum que les joeurs peuvent s'attribuer au début
+     * listGames : liste des parties qui se sont déroulées sur la table (dernier = actuel)
      * timeforAction : délai entre les actions lors du replay d'une partie
      */
     private UUID idTable;
@@ -40,8 +30,8 @@ public class Table {
     private boolean acceptChatSpectator;
     private int nbPlayerMax;
     private int nbPlayerMin;
-    private UserLightList playerList;
-    private UserLightList spectatorList;
+    private UserLightList listPlayers;
+    private UserLightList listSpectators;
     private int currentGame;
     private boolean abandonAmiable;
     private int maxMise;
@@ -66,16 +56,15 @@ public class Table {
         this.name = name;
         this.acceptSpectator = acceptSpectator;
         this.acceptChatSpectator = acceptChatSpectator;
+        this.listPlayers = new UserLightList();
+        this.listSpectators = new UserLightList();
         this.nbPlayerMax = nbPlayerMax;
         this.nbPlayerMin = nbPlayerMin;
-        this.playerList = new UserLightList();
-        if(this.acceptSpectator == true) {
-            this.spectatorList = new UserLightList();
-        }
         this.currentGame = currentGame;
         this.abandonAmiable = abandonAmiable;
         this.maxMise = maxMise;
-        this.listGames = listGames;
+        this.listGames = new ArrayList<Game>();
+        //TODO listGames.add(new Game(EnumerationStatusGame.waitingForPlayer));
         this.timeforAction = timeforAction;
     }
 
@@ -84,119 +73,115 @@ public class Table {
      */
     public Table() throws TableException {
         //TODO
-        throw new TableException("Impossible de créer une tablesans paramètres");
-    }
-
-    /**
-     * méthode récupérant la partie se déroulant actuellement sur la table
-     */
-    public UUID getCurrentGameID(){
-        // TODO ajout exception : pas de current game
-        int index = this.getCurrentGame();
-        return this.listGames.get(index).getIdGame();
+        throw new TableException("Impossible de créer une table sans paramètres");
     }
 
     /**
      * m&eacute;thode permettant d'ajouter un joueur &agrave; une table, en v&eacute;rifiant que cela est possible
      * Appelle checkConditionPlayerJoin()
-     * @param player : id du joueur
+     * @param player : player
      */
     public void playerJoinTable(UserLight player) throws TableException {
-        if (checkConditionsPlayerJoin()){
-            // TODO ajouter méthode dans UserLightList
-            this.playerList.getListUserLights().add(player);
+        if (checkConditionPlayerJoin()){
+            this.listPlayers.getListUserLights().add(player);
         }
         else {
             throw new TableException("Impossible d'ajouter un nouveau joueur");
         }
     }
 
+    //TODO
+
     /**
-     * methode permettant de supprimer un joueur de la table
-     * @param player : id du joueur à supprimer
+     * Delete player frome table
+     * @param player
      * @throws TableException
      */
-    public void playerLeaveTable(UserLight player) throws TableException{
-        //Si le joueur est dans la liste, on le supprime
-        if (this.playerList.getListUserLights().contains(player)){
-            this.playerList.getListUserLights().remove(player);
-        }
-        else{
-            throw new TableException("Le joueur n'est pas dans la table");
-        }
+    public void playerLeaveTable(UserLight player) throws  TableException{
+
     }
 
     /**
-     * methode permettant d'ajouter un spectateur à la table
-     * @param spectator
-     * @throws TableException
+     * Check if a player can join a table
      */
-    public void spectatorJoinTable(UserLight spectator) throws TableException {
-        if (this.acceptSpectator == true){
-            // TODO ajouter méthode dans UserLightList
-            this.spectatorList.getListUserLights().add(spectator);
-        }
-        else {
-            throw new TableException("Impossible d'ajouter un nouveau spectateur");
-        }
-    }
-
-    /**
-     * methode permettant de supprimer un spectateur de la table
-     * @param spectator : id du spectateur à supprimer
-     * @throws TableException
-     */
-    public void spectatorLeaveTable(UserLight spectator) throws TableException{
-        //Si le joueur est dans la liste, on le supprime
-        if (this.spectatorList.getListUserLights().contains(spectator)){
-            this.spectatorList.getListUserLights().remove(spectator);
-        }
-        else{
-            throw new TableException("Le spectateur n'est pas dans la table");
-        }
-    }
-
-    /**
-     * méthode permettant de vérifier les conditions d'ajout d'un joueur à la table
-     */
-    public boolean checkConditionsPlayerJoin(){
-        if (this.playerList.getListUserLights().size() < this.nbPlayerMax){
+    public boolean checkConditionPlayerJoin(){
+        if (this.listPlayers.getListUserLights().size() < this.nbPlayerMax){
             return true;
         }
         else return false;
     }
 
     /**
-     * méthode permettant de sauvegarder la partie
+     * Add a spectator to the table
+     * @param player
+     * @throws TableException
      */
-    public void saveGame(){
-        /* TODO */
+    //TODO
+    public void spectatorJoinTable(UserLight player) throws TableException {
+        /*if (checkConditionSpectatorJoin()){
+            this.listPlayers.getListUserLights().add(player);
+        }
+        else {
+            throw new TableException("Impossible d'ajouter un nouveau spectateur");
+        }*/
     }
 
     /**
-     * méthode permettant d'ouvrir une partie pour la rejouer
+     * Delete a spectator from the table
+     * @param player
+     * @throws TableException
+     */
+    //TODO
+    public void spectatorLeaveTable(UserLight player) throws TableException{
+
+    }
+
+    /**
+     * Check if a spectator can join the table
+     */
+    //TODO
+    public void checkConditionSpectatorJoin(){
+    }
+
+
+    //TODO
+    /**
+     * Save the game
+     */
+    public void saveGame(){
+
+    }
+
+    /**
+     * Open a game in order to replay it
      * @param idGame
      */
     public void openGame(UUID idGame){
         /* TODO */
     }
 
-    /**
-     * méthode permettant de mettre à jour la liste des tables actuellement disponibles
-     */
-    public void updateTableList(){
-        /* TODO */
-    }
 
     /**
-     * méthode permettant d'ajouter une nouvelle partie dans la liste des parties sur la table
-     * @param partie : nouvelle partie à ajouter à la liste
+     * Add a new game in the list of games of the table
+     * @param partie : new game to add to the list
      */
     public void addNewGameToList(Game partie){
         this.listGames.add(partie);
     }
 
+    /**
+     * Start a waiting game
+     * @param game : game to start
+     */
+    //TODO
+    public void startGame(Game game){
+        /*
+        if game en attente start
+        else pas start
+         */
+    };
 
+/******************* GETTERS AND SETTERS ********************************/
 
     public UUID getIdTable() {
         return idTable;
@@ -254,22 +239,6 @@ public class Table {
         this.currentGame = currentGame;
     }
 
-    public UserLightList getPlayerList() {
-        return playerList;
-    }
-
-    public void setPlayerList(UserLightList playerList) {
-        this.playerList = playerList;
-    }
-
-    public UserLightList getSpectatorList() {
-        return spectatorList;
-    }
-
-    public void setSpectatorList(UserLightList spectatorList) {
-        this.spectatorList = spectatorList;
-    }
-
     public boolean isAbandonAmiable() {
         return abandonAmiable;
     }
@@ -300,6 +269,22 @@ public class Table {
 
     public void setTimeforAction(int timeforAction) {
         this.timeforAction = timeforAction;
+    }
+
+    public UserLightList getListPlayers() {
+        return listPlayers;
+    }
+
+    public void setListPlayers(UserLightList listPlayers) {
+        this.listPlayers = listPlayers;
+    }
+
+    public UserLightList getListSpectators() {
+        return listSpectators;
+    }
+
+    public void setListSpectators(UserLightList listSpectators) {
+        this.listSpectators = listSpectators;
     }
 }
 

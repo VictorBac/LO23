@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.ContactException;
+import fr.utc.lo23.common.data.exceptions.GroupeNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

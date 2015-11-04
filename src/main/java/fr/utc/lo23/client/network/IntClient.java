@@ -5,10 +5,71 @@
  */
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.common.data.Action;
+import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.*;
+
 /**
  *
  * @author Jean-Côme
  */
 public class IntClient implements InterfaceClient  {
-    
+
+    public void sendProfile(User u) throws NetworkFailureException {
+
+    }
+
+    public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException {
+
+    }
+
+    public void createTable(Table tableToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException {
+
+    }
+
+    public void updateProfile(User userLocal) throws NetworkFailureException {
+
+    }
+
+    public void leaveRoom(UserLight userLocal) throws NetworkFailureException {
+
+    }
+
+    public void joinTable(UserLight userLocal, int IdTable) throws NetworkFailureException, FullTableException {
+
+    }
+
+    public void hearthBeat() throws NetworkFailureException {
+
+    }
+
+    public void sendAction(Action act, UserLight userLocal) throws NetworkFailureException, IncorrectActionException {
+
+    }
+
+    public void leaveTable(UserLight userLocal, int IdTable) throws NetworkFailureException {
+
+    }
+
+    public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
+
+    }
+
+    public void requestUserStats(UserLight userLocal) throws NetworkFailureException {
+
+    }
+
+    public void queryNextStepReplay() throws NetworkFailureException {
+
+    }
+
+    public void askStopGame() throws NetworkFailureException {
+
+    }
+
+    public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException {
+
+    }
 }

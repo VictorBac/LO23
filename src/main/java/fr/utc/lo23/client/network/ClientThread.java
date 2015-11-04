@@ -5,16 +5,21 @@
  */
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+
 /**
  *
- * @author Jean-Côme
+ * @author Jean-CômeInterfaceData
  */
 public class ClientThread {
     
     private BufferedReader br;
     private PrintWriter pw;
-    private bool running;
-    private InterfaceData dataInt;
+    private boolean running;
+    private InterfaceDataFromCom dataInt;
     
     public ClientThread() {
         
@@ -27,9 +32,4 @@ public class ClientThread {
     public void run(){
         
     };
-    
-    public void 
-    
-    
-    
 }

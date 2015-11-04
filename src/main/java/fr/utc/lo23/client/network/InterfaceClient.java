@@ -35,13 +35,12 @@ public interface InterfaceClient {
     
     /**
      * 
-     * @param tablToCreate
+     * @param tableToCreate
      * @param user 
      */
-    public void createTable(
-            //TODO: Pas passer de table mais les paramètres de la table
-            TableParameters tablToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException;
-    
+    public void createTable(Table tableToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException;
+        //TODO: Pas passer de table mais les paramètres de la table
+        //TableParameters
     /**
      *
      * @param userLocal
@@ -90,13 +89,13 @@ public interface InterfaceClient {
      *
      * @param logGame
      */
-    public void launchSavedGame(Log logGame) throws NetworkFailureException,IncorrectFileException;
+    //public void launchSavedGame(Log logGame) throws NetworkFailureException,IncorrectFileException;
     
     /**
      *
      * @param chat
      */
-    public void sensPacket(ChatPacket chat) throws NetworkFailureException;
+    //public void sensPacket(ChatPacket chat) throws NetworkFailureException;
     
     /**
      *

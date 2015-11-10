@@ -1,11 +1,10 @@
 package fr.utc.lo23.client.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.main.TestSerialize;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -18,6 +17,9 @@ public class ServerLink extends Thread {
     private BufferedReader br;
     private PrintWriter pw;
     private boolean running;
+    private ObjectInputStream inputStream = null;
+    private ObjectOutputStream outputStream = null;
+
     //private InterfaceData dataInt;
 
     public ServerLink(){
@@ -37,6 +39,18 @@ public class ServerLink extends Thread {
         socket.connect(new InetSocketAddress(serverAddress, serverPort));
         Console.log("Done");
         Console.log("Client connecté sur: " + serverAddress + ":" + serverPort + "\n");
+
+        //Test to receive serialized object from the server
+        outputStream = new ObjectOutputStream(socket.getOutputStream());
+        TestSerialize testS = new TestSerialize(1,"salut");
+        System.out.println("Object to send : " + testS);
+        outputStream.writeObject(testS);
+        System.out.println("Object sent");
+
+        //Ending the conversation
+        disconnect();
+
+
     }
 
 
@@ -53,7 +67,7 @@ public class ServerLink extends Thread {
         }
     }
 
-    public void disconnnect() throws IOException {
+    public void disconnect() throws IOException {
         socket.close();
     }
 }

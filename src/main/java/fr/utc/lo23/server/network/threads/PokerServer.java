@@ -1,8 +1,11 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.main.TestSerialize;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,6 +14,7 @@ public class PokerServer extends Thread {
 
     private ServerSocket listeningSocket;
     private boolean running = false;
+
 
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
@@ -49,6 +53,7 @@ public class PokerServer extends Thread {
             try {
                 Console.log("Srv: Attente des connexions clients...");
                 Socket soClient = listeningSocket.accept();
+
                 new ConnectionThread(soClient, this).start();
             } catch (IOException e) {
                 e.printStackTrace();

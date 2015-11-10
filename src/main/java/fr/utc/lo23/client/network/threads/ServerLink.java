@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package fr.utc.lo23.client.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;

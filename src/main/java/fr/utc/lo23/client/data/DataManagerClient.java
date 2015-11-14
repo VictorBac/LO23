@@ -32,7 +32,6 @@ public class DataManagerClient {
         this.interToCom = interToCom;
         //this.interToIHMMain = interToIHMMain;
 
-
         this.interFromIHMTable = new InterfaceFromIHMTable();
         this.interFromIHMMain = new InterfaceFromIHMMain();
         this.interFromCom = new InterfaceFromCom(interFromIHMTable,interFromIHMMain, interToIHMTable, interToCom, userLocal,listUsers,listTables);

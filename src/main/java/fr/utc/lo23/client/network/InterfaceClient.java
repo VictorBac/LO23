@@ -32,14 +32,8 @@ public interface InterfaceClient {
      */
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
     
-    /**
-     * 
-     * @param tablToCreate
-     * @param user 
-     */
-    public void createTable(
-            //TODO: Pas passer de table mais les paramètres de la table
-            TableParameters tablToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException;
+
+    public void createTable() throws NetworkFailureException, TooManyTablesException;
     
     /**
      *
@@ -84,18 +78,11 @@ public interface InterfaceClient {
      * @param userLocal
      */
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException;
+
+    public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
     
-    /**
-     *
-     * @param logGame
-     */
-    public void launchSavedGame(Log logGame) throws NetworkFailureException,IncorrectFileException;
-    
-    /**
-     *
-     * @param chat
-     */
-    public void sensPacket(ChatPacket chat) throws NetworkFailureException;
+
+    public void sensPacket() throws NetworkFailureException;
     
     /**
      *

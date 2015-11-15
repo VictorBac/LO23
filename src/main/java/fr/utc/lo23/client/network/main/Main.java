@@ -14,8 +14,6 @@ public class Main {
         Console.log("Main: Lancement client 2");
         ServerLink localClient2 = new ServerLink();
         localClient2.start();
-
-        Console.log("testtt");
     }
 }
 

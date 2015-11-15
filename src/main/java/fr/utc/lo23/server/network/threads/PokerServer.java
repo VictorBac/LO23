@@ -1,23 +1,29 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.client.network.main.TestSerialize;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class PokerServer extends Thread {
     static int port = 1904;
+    static int nbMaxUser = 100;
 
     private ServerSocket listeningSocket;
     private boolean running = false;
+    private int nbUsers;
 
 
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
+
+        Console.log("Nombre d'utilisateurs maximum à " + nbMaxUser);
+        nbUsers = 0;
+
+        Console.log("Lancement du serveur....");
+
+
         // Change port if needed
         if (portToListen != null) PokerServer.port = portToListen.intValue();
 
@@ -29,6 +35,10 @@ public class PokerServer extends Thread {
         }
     }
 
+    /**
+     * Create the socket
+     * @throws Exception
+     */
     public void initSocket() throws Exception {
         if (null != listeningSocket) {
             Console.err("La socket existait déjà");
@@ -39,11 +49,18 @@ public class PokerServer extends Thread {
         Console.log("Le serveur écoute sur " + listeningSocket.getInetAddress() + ":" + listeningSocket.getLocalPort());
     }
 
+    /**
+     * Shutdown the server
+     * @throws Exception
+     */
     public void shutdown() throws Exception {
         running = false;
         listeningSocket.close();
     }
 
+    /**
+     *
+     */
     @Override
     public synchronized void run() {
 
@@ -59,5 +76,27 @@ public class PokerServer extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Return the number of users connected
+     * @return int
+     */
+    public int getNbUsers() {
+        return nbUsers;
+    }
+
+
+    /**
+     * Check if there is room for one more user
+     * @return boolean
+     */
+    public boolean checkIfUserCanConnect () {
+
+        if (nbUsers < nbMaxUser) {
+            nbUsers++;
+            return true;
+        }
+        return false;
     }
 }

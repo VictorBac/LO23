@@ -1,7 +1,7 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.client.network.main.TestSerialize;
+import fr.utc.lo23.common.network.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,9 +19,20 @@ public class ConnectionThread extends Thread {
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
         myServer = pokerServer;
         soClient = socket;
+
+        try {
+            inputStream = new ObjectInputStream(soClient.getInputStream());
+            outputStream = new ObjectOutputStream(soClient.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Console.log("Nouveau Client: " + socket.getInetAddress());
     }
 
+    /**
+     * Run method (thread)
+     */
     @Override
     public synchronized void run() {
 
@@ -29,11 +40,8 @@ public class ConnectionThread extends Thread {
 
 
         try {
-
-            //Test to receive serialized object from the server
-            inputStream = new ObjectInputStream(soClient.getInputStream());
-            TestSerialize testS = (TestSerialize) inputStream.readObject();
-            Console.log("Received : " + testS);
+            Message msg = (Message) inputStream.readObject();
+            msg.process(myServer, outputStream);
 
 
         } catch (ClassNotFoundException e) {
@@ -42,4 +50,5 @@ public class ConnectionThread extends Thread {
             e.printStackTrace();
         }
     }
+
 }

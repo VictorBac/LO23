@@ -1,7 +1,8 @@
 package fr.utc.lo23.client.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.client.network.main.TestSerialize;
+import fr.utc.lo23.common.network.Message;
+import fr.utc.lo23.common.network.RequestLoginMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.io.*;
@@ -23,7 +24,6 @@ public class ServerLink extends Thread {
     //private InterfaceData dataInt;
 
     public ServerLink(){
-
         try {
             connect();
         } catch (Exception e) {
@@ -31,6 +31,10 @@ public class ServerLink extends Thread {
         }
     }
 
+    /**
+     * Try to connect to the server
+     * @throws Exception
+     */
     public void connect() throws Exception{
         if (null != socket) throw new NetworkFailureException("La socket client existe déjà");
 
@@ -40,25 +44,35 @@ public class ServerLink extends Thread {
         Console.log("Done");
         Console.log("Client connecté sur: " + serverAddress + ":" + serverPort + "\n");
 
-        //Test to receive serialized object from the server
+        //Test to send serialized object to the server
         outputStream = new ObjectOutputStream(socket.getOutputStream());
-        TestSerialize testS = new TestSerialize(1,"salut");
-        System.out.println("Object to send : " + testS);
-        outputStream.writeObject(testS);
-        System.out.println("Object sent");
+        RequestLoginMessage reqLog = new RequestLoginMessage();
+        outputStream.writeObject(reqLog);
+
+        inputStream = new ObjectInputStream(socket.getInputStream());
 
         //Ending the conversation
-        disconnect();
+        //disconnect();
 
 
     }
 
-
+    /**
+     * Run method (thread)
+     */
     @Override
     public void run() {
         while (true) {
             try {
-                Thread.sleep(20000);
+                Thread.sleep(10000);
+                try {
+                    Message msg = (Message) inputStream.readObject();
+                    msg.process();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -67,6 +81,10 @@ public class ServerLink extends Thread {
         }
     }
 
+    /**
+     * Disconnect from the server
+     * @throws IOException
+     */
     public void disconnect() throws IOException {
         socket.close();
     }

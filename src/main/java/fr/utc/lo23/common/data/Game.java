@@ -45,9 +45,10 @@ public class Game {
         this.listUserSpectator = listUserSpectator;
     }
 
-
-    public Game( EnumerationStatusGame statusOfTheGame) {
-//TODO need to do a nullpointerexception and parameter exception just as in Action
+    /**
+     * Constructor used to intialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
+     */
+    public Game() {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
         this.blind = 0;
@@ -56,7 +57,7 @@ public class Game {
         this.listUserSpectator =  new ArrayList<UserLight>();
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
-        this.statusOfTheGame = statusOfTheGame;
+        this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
 
     }
 
@@ -103,7 +104,7 @@ public class Game {
 
 
 
-///////////////////////GETTER
+///////////////////////GETTER and SETTER
     /**
      * Get the if of the Game
      * @return int id of the Game
@@ -159,6 +160,8 @@ public class Game {
     public ArrayList<UserLight> getListUserSpectator() {return listUserSpectator;}
 
 
-
+    public void setBlind(int blind) {this.blind = blind;}
+    public void setAnte(int ante) {this.ante = ante;}
+    public void setStatusOfTheGame(EnumerationStatusGame statusOfTheGame) {this.statusOfTheGame = statusOfTheGame;}
 }
 

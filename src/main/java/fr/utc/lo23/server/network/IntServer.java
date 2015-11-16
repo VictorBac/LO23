@@ -18,42 +18,34 @@ import java.util.ArrayList;
  */
 public class IntServer implements InterfaceServer {
 
-    @Override
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException {
 
     }
 
-    @Override
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException {
 
     }
 
-    @Override
     public void sendLogGame() throws NetworkFailureException {
 
     }
 
-    @Override
     public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException {
 
     }
 
-    @Override
     public void notifyAction(Action act) throws NetworkFailureException {
 
     }
 
-    @Override
     public void notifyNewTable(Table newTable) throws NetworkFailureException {
 
     }
 
-    @Override
     public void notifyDisconnection(UserLight distantUser) throws NetworkFailureException {
 
     }
 
-    @Override
     public void sendChatPacket() throws NetworkFailureException {
 
     }

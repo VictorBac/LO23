@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40">
+  <columnConstraints>
+    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="145.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="245.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="256.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="79.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label text="Nom de la table" />
+      <Label text="Nombre de joueurs min" GridPane.rowIndex="1" />
+      <Label text="Nombre de joueurs max" GridPane.rowIndex="2" />
+      <Label text="Spectateurs acceptés" GridPane.rowIndex="3" />
+      <Label text="Les spectateurs peuvent participer au chat" GridPane.rowIndex="4" />
+      <Label text="Abandon à l'amiable autorisé" GridPane.rowIndex="5" />
+      <Label text="Mise maximum autorisée" GridPane.rowIndex="6" />
+      <Label text="Temps pour réaliser une action max" GridPane.rowIndex="7" />
+      <TextField fx:id="formName" GridPane.columnIndex="1" />
+      <Label text="Blinde" GridPane.rowIndex="8" />
+      <Label text="Ante" GridPane.rowIndex="9" />
+      <ComboBox fx:id="formPlayerMin" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ComboBox fx:id="formPlayerMax" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton fx:id="formSpectatorYes" mnemonicParsing="false" text="Oui">
+               <toggleGroup>
+                  <ToggleGroup fx:id="spectators" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="formSpectatorNo" mnemonicParsing="false" text="Non" toggleGroup="$spectators" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton fx:id="formSpectatorChatYes" mnemonicParsing="false" text="Oui">
+               <toggleGroup>
+                  <ToggleGroup fx:id="chatSpectators" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="formSpectatorChatNo" mnemonicParsing="false" text="Non" toggleGroup="$chatSpectators" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton fx:id="formAbandonYes" mnemonicParsing="false" text="Oui">
+               <toggleGroup>
+                  <ToggleGroup fx:id="abandonAmiable" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="formAbandonNon" mnemonicParsing="false" text="Non" toggleGroup="$abandonAmiable" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="229.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="71.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="formMiseMax" />
+            <Label text=" $" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="229.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="71.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text=" secondes" GridPane.columnIndex="1" />
+            <TextField fx:id="formTempsMax" />
+         </children>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="8">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="246.0" minWidth="10.0" prefWidth="229.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="71.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="formBlinde" prefHeight="26.0" prefWidth="247.0" />
+            <Label text=" $" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="9">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="229.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="71.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="formAnte" prefHeight="26.0" prefWidth="237.0" />
+            <Label text=" $" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Button fx:id="formSend" mnemonicParsing="false" text="Envoyer" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+   </children>
+</GridPane>

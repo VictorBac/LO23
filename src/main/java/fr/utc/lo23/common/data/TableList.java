@@ -1,9 +1,11 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.TableException;
+
 import java.util.ArrayList;
 
 /**
- * Classe représentant la liste des tables disponibles
+ * Class representing the list of available tables
  * Created by Haroldcb on 21/10/2015.
  */
 public class TableList {
@@ -14,7 +16,7 @@ public class TableList {
 
 
     /**
-     * Constructeur
+     * Constructor
      * @param listTable
      */
     public TableList(ArrayList<Table> listTable) {
@@ -22,19 +24,12 @@ public class TableList {
     }
 
     /**
-     * Constructeur par défaut
+     * Default constructor
      */
     public TableList() {
         this.listTable = new ArrayList<Table>();
     }
 
-    public ArrayList<Table> getListTable() {
-        return listTable;
-    }
-
-    public void setListTable(ArrayList<Table> listTable) {
-        this.listTable = listTable;
-    }
 
     /**
      * ajout d'une nouvelle table dans la liste
@@ -44,8 +39,28 @@ public class TableList {
         this.listTable.add(table);
     }
 
-    public void deleteTable(Table table){
-        //TODO
+    //TODO => utile en cas d'erreur? doit on supprimer une table sinon?
+    /**
+     * Method to delete a table from the list
+     * @param table
+     */
+    public void deleteTable(Table table) throws TableException{
+        if(this.getListTable().contains(table)) {
+            this.listTable.remove(table);
+        }
+        else
+            throw new TableException("Impossible to delete the table from the list!");
+    }
+
+
+/********************* Getters and Setters *****************************/
+
+    public ArrayList<Table> getListTable() {
+        return listTable;
+    }
+
+    public void setListTable(ArrayList<Table> listTable) {
+        this.listTable = listTable;
     }
 
 }

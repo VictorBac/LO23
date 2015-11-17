@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_table.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.TableList;
@@ -16,7 +17,7 @@ public class DataManagerClient {
 
     private ITableToDataListener interToIHMTable;
     private InterfaceClient  interToCom;
-    //private InterfaceData interToIHMMain;
+    private InterfaceMainToData interToIHMMain;
 
     private User userLocal;
     private UserLightList listUsers;
@@ -30,10 +31,10 @@ public class DataManagerClient {
 
         this.interToIHMTable = null;
         this.interToCom = null;
-        //this.interToIHMMain = null;
+        this.interToIHMMain = null;
 
-        this.interFromIHMTable = new InterfaceFromIHMTable();
-        this.interFromIHMMain = new InterfaceFromIHMMain();
+        this.interFromIHMTable = new InterfaceFromIHMTable(this);
+        this.interFromIHMMain = new InterfaceFromIHMMain(this);
         this.interFromCom = new InterfaceFromCom(this);
 
     }

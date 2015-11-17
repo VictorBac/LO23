@@ -25,7 +25,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void remoteUserConnected(UserLight userLightDistant) {
-        try {
+        try {//TODO
             dManagerClient.getListUsers().addUser(userLightDistant);
         } catch (ExistingUserException e) {
             e.printStackTrace();
@@ -61,6 +61,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
+        //TODO add arrayList
+        dManagerClient.getListUsers();
 
     }
 

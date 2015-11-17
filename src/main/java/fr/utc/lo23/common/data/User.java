@@ -1,8 +1,5 @@
 package fr.utc.lo23.common.data;
 
-import jdk.internal.org.objectweb.asm.commons.SerialVersionUIDAdder;
-import sun.security.provider.MD5;
-
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,6 +20,10 @@ public class User implements Serializable{
     private Contact contactUser;
     private long SerialVersionUID;
 
+    public User(){
+
+    };
+
     public User(String login, String password){
 
         this.core = new UserLight(login);
@@ -31,7 +32,7 @@ public class User implements Serializable{
 
     public UserLight  getUserLight(){
         return this.core;
-}
+    }
 
     public String getPwd() {
         return this.pwd;
@@ -86,7 +87,7 @@ public class User implements Serializable{
         catch(NoSuchAlgorithmException e){
             System.out.println(e.toString());
         }
-    };
+    }
 
 
 }

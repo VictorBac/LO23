@@ -8,10 +8,11 @@ import javafx.scene.image.Image;
 public class ImageAvatar {
 
     /**
+     * Todo : implement serialization of img
      * img = l'image de l'avatar
      * pathToImage = le chemin local de l'image sur la machine
      */
-     private  Image img;
+//     private  Image img;
      private String pathToImage;
 
     /**

@@ -12,38 +12,41 @@ import java.util.UUID;
  */
 public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
-    private UserLightList connectedUsers;
-    private TableList tables;
+    private DataManagerServer myManager;
 
-    public ServerDataFromCom(){
-
+    public ServerDataFromCom(DataManagerServer manager ){
+        this.myManager = manager;
     }
 
     /**
-     * Notifies a new user connection and creates a userlight
+     * Notifies a new user connection and creates a user
      * @param connectingUser
-     * @return the new userlight created
+     * @return the new user created
      * @throws ExistingUserException
      */
     public UserLight userConnection(User connectingUser) throws ExistingUserException {
-        connectedUsers.addUser(connectingUser);
-        UserLight connectedUserLight = new UserLight(connectingUser);
-        return connectedUserLight;
+        myManager.getUsers().addUser(connectingUser);
+        return connectingUser.getUserLight();
     }
 
     /**
-     *
+     * creates a list of userlights from the list of users
      * @return  the list of currently connected users
      */
     public ArrayList<UserLight> getConnectedUsers() {
-        return connectedUsers.getListUserLights();
+        ArrayList<UserLight> created = new ArrayList<UserLight>();
+        for (User current : myManager.getUsers().getList())
+        {
+            created.add(current.getUserLight());
+        }
+        return created;
     }
 
     /**
      * @return the list of current tables
      */
     public ArrayList<Table> getTableList() {
-        return tables.getListTable();
+        return myManager.getTables().getListTable();
     }
 
     /**
@@ -52,7 +55,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param newTb
      */
     public void createTable(UserLight maker, Table newTb) {
-        tables.newTable(newTb);
+        myManager.getTables().newTable(newTb);
     }
 
     /**
@@ -95,7 +98,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public Game startGame(UUID idTable, UserLight player) {
         Table toStart;
-        for (Table cur : tables.getListTable())
+        for (Table cur : myManager.getTables().getListTable())
         {
             if (cur.getIdTable().equals(idTable))
                 toStart = cur;
@@ -115,8 +118,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param deletedUsr
      */
     public void deletePlayer(UserLight deletedUsr) {
-        if (connectedUsers.getListUserLights().contains(deletedUsr))
-            connectedUsers.getListUserLights().remove(deletedUsr);
+        for (User current : myManager.getUsers().getList())
+        {
+            if (current.getUserLight().equals(deletedUsr))
+                myManager.getUsers().getList().remove(current);
+        }
     }
 
     public void confirmationCardReceived(UserLight player) {

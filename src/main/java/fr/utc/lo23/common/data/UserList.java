@@ -19,9 +19,21 @@ public class UserList {
      */
     public User getUser(UUID userId) throws UserNotFoundException {
         for (User cur : listUser) {
-            if (cur.getIdUser().equals(userId))
+            if (cur.getUserLight().getIdUser().equals(userId))
                 return cur;
         }
         throw new UserNotFoundException(userId);
+    }
+
+    /**
+     * TODO exception in case of duplicate user
+     * @param connectingUser
+     */
+    public void addUser(User connectingUser) {
+        this.listUser.add(connectingUser);
+    }
+
+    public ArrayList<User> getList(){
+        return listUser;
     }
 }

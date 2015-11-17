@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -9,7 +10,7 @@ import java.util.UUID;
 public interface InterfaceServerDataFromCom {
 
 
-    UserLight userConnection(User connectingUser);
+    UserLight userConnection(User connectingUser) throws ExistingUserException;
 
     ArrayList<UserLight> getConnectedUsers();
 

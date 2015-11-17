@@ -201,9 +201,10 @@ public class Table {
         if game en attente start
         else pas start
          */
-    };
+    }
 
-/******************* GETTERS AND SETTERS ********************************/
+    /******************* GETTERS AND SETTERS ********************************/
+
 
     public UUID getIdTable() {
         return idTable;

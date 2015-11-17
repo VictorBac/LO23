@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 
 public class MainController {
 
-	private TableToMainListener tableToMainListener = new TableToMainListener();
+	IHMTable table = new IHMTable();
 
 	@FXML
 	public Pane IAmYourPaneLuke;
@@ -16,7 +16,7 @@ public class MainController {
 	
 	@FXML
 	private void launchTable(javafx.event.ActionEvent event) {
-		tableToMainListener.showTableCreationForm(IAmYourPaneLuke);
+		table.getTableToMainListener().showTableCreationForm(IAmYourPaneLuke);
 	}
 	
 }

@@ -24,7 +24,7 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process() {
-        Console.lognl("Envoi de la table");
+        Console.logn("Envoi de la table");
     }
 
     /**
@@ -34,7 +34,7 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process (PokerServer myServ, ObjectOutputStream out){
-        Console.lognl("Envoi de la table");
+        Console.logn("Envoi de la table");
     }
 
 }

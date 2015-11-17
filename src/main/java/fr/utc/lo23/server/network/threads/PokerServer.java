@@ -30,6 +30,7 @@ public class PokerServer extends Thread {
         Console.log("Lancement du serveur....");
         Console.log("Nombre d'utilisateurs maximum fixé à " + NB_MAX_USER);
         nbUsers = 0;
+        userLinksOut = new HashMap<User, ObjectOutputStream>();
 
         // Change port if needed
         if (portToListen != null) PokerServer.PORT = portToListen;
@@ -108,7 +109,7 @@ public class PokerServer extends Thread {
         return nbUsers;
     }
 
-    public ArrayList<User> stockUserAndNotifyOthers(UserLight u) {
+    public ArrayList<User> stockUserAndNotifyOthers(User u) {
         //Apperler interface data pour stocker l'userlight
         //Notify les autres users
         //retourner arraylist des autres users

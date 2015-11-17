@@ -40,8 +40,8 @@ public class RequestLoginMessage extends Message {
         Console.log("Request login message received");
 
         Console.log("Checking if there is room for one more user");
-        boolean result = myServ.checkIfUserCanConnect();
-        if (result) {
+        myServ.registerOutputStream(out, user);
+        if (true) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
             Console.log("pseudo " + user.getPseudo());
 

@@ -10,27 +10,13 @@ import java.util.ArrayList;
  * Created by Mar on 24/10/2015.
  */
 public class InterfaceFromCom implements InterfaceDataFromCom{
-    private InterfaceFromIHMTable interFromIHMTable;
-    private InterfaceFromIHMMain interFromIHMMain;
 
-    private ITableToDataListener interToIHMTable;
-    private InterfaceClient interToCom;
-    //private InterfaceData interToIHMMain;
+    private DataManagerClient dManagerClient;
 
-    private User userLocal;
-    private UserLightList listUsers;
-    private TableList listTables;
 
-    public InterfaceFromCom(InterfaceFromIHMTable interFromIHMTable, InterfaceFromIHMMain interFromIHMMain, ITableToDataListener interToIHMTable, InterfaceClient interToCom, User userLocal, UserLightList listUsers, TableList listTables) {
-        this.interFromIHMTable = interFromIHMTable;
-        this.interFromIHMMain = interFromIHMMain;
+    public InterfaceFromCom(DataManagerClient dManagerClient) {
 
-        this.interToIHMTable = interToIHMTable;
-        this.interToCom = interToCom;
-
-        this.userLocal = userLocal;
-        this.listUsers = listUsers;
-        this.listTables = listTables;
+        this.dManagerClient = dManagerClient;
     }
 
     public void updateStats(Stats statsLocalUser) {

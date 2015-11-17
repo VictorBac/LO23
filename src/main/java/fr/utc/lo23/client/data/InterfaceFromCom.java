@@ -3,6 +3,7 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.ihm_table.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void remoteUserConnected(UserLight userLightDistant) {
-
+        try {
+            dManagerClient.getListUsers().addUser(userLightDistant);
+        } catch (ExistingUserException e) {
+            e.printStackTrace();
+        }
     }
 
     public void remoteUserDisonnected(UserLight userLightDistant) {

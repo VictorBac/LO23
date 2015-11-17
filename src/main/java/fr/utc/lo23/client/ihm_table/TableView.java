@@ -11,7 +11,7 @@ public class TableView{
 
 	public void createTable(Pane root) {
 		try {
-			root.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("TableView.fxml")));
+			root.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("tableForm.fxml")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

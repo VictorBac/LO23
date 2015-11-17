@@ -7,8 +7,22 @@ import fr.utc.lo23.common.data.*;
  * Created by Jianghan on 01-11-15.
  */
 public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
-    public void logUser(String login, String password) {
 
+    // Constructor
+
+    private DataManagerClient dManagerClient;
+
+    public InterfaceFromIHMMain(DataManagerClient dManagerClient) {
+        this.dManagerClient = dManagerClient;
+    }
+
+
+    // Interface functions.
+    
+    public void logUser(String login, String password) {
+        // TODO Check existance of this login and check if password is correct Serialization
+        User localUser = new User(login, password);
+        //dManagerClient.getInterToCom().requestLoginServer(localUser);
     }
 
     public void exitAsked() {

@@ -19,7 +19,7 @@ public class SerializationTest {
         User localUser2 = (User) Serialization.deserializationObject(Serialization.pathUserLocal);
         String inputPseudo = localUser.getUserLight().getPseudo();
         String outputPseudo = localUser.getUserLight().getPseudo();
-        assertEquals("The comparasion between serialization input and output", inputPseudo, outputPseudo);‚
+        assertEquals("The comparasion between serialization input and output", inputPseudo, outputPseudo);
     }
 
     @Test

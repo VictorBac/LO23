@@ -32,6 +32,9 @@ public class UserLightList {
         return listUserLights;
     }
 
+    public void setUserList(ArrayList<UserLight> newList){
+        this.listUserLights = newList;
+    }
     public void addUser(UserLight toAdd) throws ExistingUserException {
         if (listUserLights.contains(toAdd))
             throw new ExistingUserException(toAdd);

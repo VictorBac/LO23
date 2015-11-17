@@ -12,7 +12,7 @@
                <children>
                   <ImageView fitHeight="120.0" fitWidth="120.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icon_action.png" />
+                        <Image url="@images/icon_action.png" />
                      </image>
                   </ImageView>
                   <Button layoutX="3.0" layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action1" />

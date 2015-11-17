@@ -1,35 +1,35 @@
 .action1 {
-	-fx-graphic:url("action_1_m.png");
+	-fx-graphic:url("images/action_1_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action2 {
-	-fx-graphic:url("action_2_m.png");
+	-fx-graphic:url("images/action_2_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action3 {
-	-fx-graphic:url("action_3_m.png");
+	-fx-graphic:url("images/action_3_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action4 {
-	-fx-graphic:url("action_4_m.png");
+	-fx-graphic:url("images/action_4_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action5 {
-	-fx-graphic:url("action_5_m.png");
+	-fx-graphic:url("images/action_5_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .table{
-	-fx-background-image:url("table.png");
+	-fx-background-image:url("images/table.png");
 	-fx-background-repeat:no-repeat;
 }
 

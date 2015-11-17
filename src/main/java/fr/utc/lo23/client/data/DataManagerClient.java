@@ -24,13 +24,13 @@ public class DataManagerClient {
 
     public DataManagerClient() {
 
-        this.userLocal = new User();
+        this.userLocal = null;
         this.listUsers = new UserLightList();
         this.listTables = new TableList();
 
         this.interToIHMTable = null;
         this.interToCom = null;
-        //this.interToIHMMain = interToIHMMain;
+        //this.interToIHMMain = null;
 
         this.interFromIHMTable = new InterfaceFromIHMTable();
         this.interFromIHMMain = new InterfaceFromIHMMain();

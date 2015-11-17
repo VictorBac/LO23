@@ -71,10 +71,25 @@ public class FormController {
     @FXML
     private void formSend(ActionEvent event){
         // Checking form values
-        ArrayList<String> errors = new ArrayList<String>(); // If an error is detected, we add it in this list
-        if (formName.getText()==null){
+        ArrayList<String> errors = new ArrayList<String>(); // Si une erreur est détectée, on l'ajoute dans cette liste
+        if (formName.getText().isEmpty()){
             errors.add("Nom de la table");
-            System.out.println("Nom de table vide !");
+        }
+        if (formMiseMax.getText().isEmpty()){
+            errors.add("Mise Max");
+        }
+        if (formTempsMax.getText().isEmpty()){
+            errors.add("Temps Max");
+        }
+        if (formBlinde.getText().isEmpty()){
+            errors.add("Blinde");
+        }
+        if (formAnte.getText().isEmpty()){
+            errors.add("Ante");
+        }
+
+        if (errors.isEmpty()){ // Toutes les valeurs sont correctement remplies
+
         }
     }
 

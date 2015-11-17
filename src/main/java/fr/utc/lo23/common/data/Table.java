@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 import fr.utc.lo23.common.data.exceptions.TableException;
@@ -8,7 +9,7 @@ import fr.utc.lo23.common.data.exceptions.TableException;
  * Class representing a table, on which games are played
  * Created by Haroldcb on 21/10/2015.
  */
-public class Table {
+public class Table implements Serializable {
     /**
      * idTable : unique id of the table
      * name : name of the table

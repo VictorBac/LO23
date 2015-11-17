@@ -18,5 +18,10 @@ public class MainController {
 	private void launchTable(javafx.event.ActionEvent event) {
 		table.getTableToMainListener().showTableCreationForm(IAmYourPaneLuke);
 	}
+
+	@FXML
+	private void joinTable(javafx.event.ActionEvent event) {
+		table.getTableToMainListener().joinTable(IAmYourPaneLuke,null);
+	}
 	
 }

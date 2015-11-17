@@ -32,6 +32,7 @@ public class TableToMainListener implements ITableToMainListener{
      * Permet à IHM-Table de prendre la main et d'afficher la table
      */
     public void joinTable(Pane root, Table table){
-
+        TableView tableView = new TableView();
+        tableView.createTable(root,table,getIhmtable());
     }
 }

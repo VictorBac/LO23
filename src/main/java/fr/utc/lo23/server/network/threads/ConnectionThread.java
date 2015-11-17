@@ -10,19 +10,20 @@ import java.net.Socket;
 
 public class ConnectionThread extends Thread {
     private PokerServer myServer;
-    private Socket soClient;
+    private Socket socketClient;
 
     //To send objects between client and server
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
+
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
         myServer = pokerServer;
-        soClient = socket;
+        socketClient = socket;
 
         try {
-            inputStream = new ObjectInputStream(soClient.getInputStream());
-            outputStream = new ObjectOutputStream(soClient.getOutputStream());
+            inputStream = new ObjectInputStream(socketClient.getInputStream());
+            outputStream = new ObjectOutputStream(socketClient.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,20 +36,14 @@ public class ConnectionThread extends Thread {
      */
     @Override
     public synchronized void run() {
-
-        Console.log("Client: Démarré\n");
-
-
+        Console.log("Client: Démarré");
         try {
+            // Call suitable processing method
             Message msg = (Message) inputStream.readObject();
             msg.process(myServer, outputStream);
 
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class PokerServer extends Thread {
     static int PORT = 1904;
@@ -17,8 +18,7 @@ public class PokerServer extends Thread {
 
     private ServerSocket listeningSocket;
     private boolean running;
-    private int nbUsers;
-    private HashMap<User, ObjectOutputStream> userLinksOut;
+    private HashMap<UUID, ObjectOutputStream> userLinksOut;
 
     /**
      * Constructeur
@@ -29,8 +29,7 @@ public class PokerServer extends Thread {
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
         Console.log("Nombre d'utilisateurs maximum fixé à " + NB_MAX_USER);
-        nbUsers = 0;
-        userLinksOut = new HashMap<User, ObjectOutputStream>();
+        userLinksOut = new HashMap<UUID, ObjectOutputStream>();
 
         // Change port if needed
         if (portToListen != null) PokerServer.PORT = portToListen;
@@ -89,7 +88,7 @@ public class PokerServer extends Thread {
      * @param user
      */
     public void registerOutputStream(ObjectOutputStream out, User user){
-        userLinksOut.put(user, out);
+        userLinksOut.put(user.getIdUser(), out);
     }
 
     /**
@@ -102,13 +101,25 @@ public class PokerServer extends Thread {
     }
 
     /**
+     * Get all outputStream for inform other
+     * @return
+     */
+    public ArrayList<ObjectOutputStream> getAllOutputStream(){
+
+        return null;
+    }
+
+    /**
      * Return the number of users connected
      * @return int
      */
     public int getNbUsers() {
-        return nbUsers;
+        return userLinksOut.size();
     }
 
+
+
+    //TODO: Non il faut demander la liste de outputstream des autre et se demerder dans process() correspondant
     public ArrayList<User> stockUserAndNotifyOthers(User u) {
         //Apperler interface data pour stocker l'userlight
         //Notify les autres users
@@ -116,6 +127,7 @@ public class PokerServer extends Thread {
         return null;
     }
 
+    //TODO: C'est data qui gere ca ! A virer
     public ArrayList<User> getUserList(){
         //On récupère la liste
         return null;

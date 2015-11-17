@@ -13,7 +13,6 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.*;
 
-
 /**
  *
  * @author Jean-Côme D LO23
@@ -33,14 +32,9 @@ public interface InterfaceClient {
      */
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
     
-    /**
-     * 
-     * @param tableToCreate
-     * @param user 
-     */
-    public void createTable(Table tableToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException;
-        //TODO: Pas passer de table mais les paramètres de la table
-        //TableParameters
+
+    public void createTable() throws NetworkFailureException, TooManyTablesException;
+    
     /**
      *
      * @param userLocal
@@ -84,18 +78,11 @@ public interface InterfaceClient {
      * @param userLocal
      */
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException;
+
+    public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
     
-    /**
-     *
-     * @param logGame
-     */
-    //public void launchSavedGame(Log logGame) throws NetworkFailureException,IncorrectFileException;
-    
-    /**
-     *
-     * @param chat
-     */
-    //public void sensPacket(ChatPacket chat) throws NetworkFailureException;
+
+    public void sensPacket() throws NetworkFailureException;
     
     /**
      *
@@ -121,4 +108,4 @@ public interface InterfaceClient {
     public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException;
 }
     
-    
+

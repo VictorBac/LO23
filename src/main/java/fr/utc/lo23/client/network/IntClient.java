@@ -25,7 +25,7 @@ public class IntClient implements InterfaceClient  {
 
     }
 
-    public void createTable(Table tableToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException {
+    public void createTable() throws NetworkFailureException, TooManyTablesException {
 
     }
 
@@ -54,6 +54,14 @@ public class IntClient implements InterfaceClient  {
     }
 
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
+
+    }
+
+    public void launchSavedGame() throws NetworkFailureException, IncorrectFileException {
+
+    }
+
+    public void sensPacket() throws NetworkFailureException {
 
     }
 

@@ -52,12 +52,6 @@ public class FormController {
     TextField formTempsMax;
 
     @FXML
-    TextField formBlinde;
-
-    @FXML
-    TextField formAnte;
-
-    @FXML
     Button formSend;
 
     @FXML
@@ -80,12 +74,6 @@ public class FormController {
         }
         if (formTempsMax.getText().isEmpty()){
             errors.add("Temps Max");
-        }
-        if (formBlinde.getText().isEmpty()){
-            errors.add("Blinde");
-        }
-        if (formAnte.getText().isEmpty()){
-            errors.add("Ante");
         }
 
         if (errors.isEmpty()){ // Toutes les valeurs sont correctement remplies

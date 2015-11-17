@@ -3,6 +3,7 @@ package fr.utc.lo23.common.data;
 import jdk.internal.org.objectweb.asm.commons.SerialVersionUIDAdder;
 import sun.security.provider.MD5;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -10,9 +11,9 @@ import java.security.NoSuchAlgorithmException;
  * Created by Rémy on 20/10/2015.
  */
 
-public class User extends UserLight{
+public class User implements Serializable{
 
-
+    private UserLight core;
     private String pwd;
     private String firstName;
     private String lastName;
@@ -22,38 +23,46 @@ public class User extends UserLight{
     private Contact contactUser;
     private long SerialVersionUID;
 
+    public User(String login, String password){
+
+        this.core = new UserLight(login);
+        this.pwd = password;
+    }
+
+    public UserLight  getUserLight(){
+        return this.core;
+}
 
     public String getPwd() {
-        return pwd;
+        return this.pwd;
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public int getAge() {
-        return age;
+        return this.age;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public Stats getStats() {
-        return statsUser;
+        return this.statsUser;
     }
 
-
     public Contact getContactUser() {
-        return contactUser;
+        return this.contactUser;
     }
 
     public long getSerialVersionUID() {
-        return SerialVersionUID;
+        return this.SerialVersionUID;
     }
 
     /**

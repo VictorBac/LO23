@@ -94,12 +94,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return
      */
     public Game startGame(UUID idTable, UserLight player) {
-
+        Table toStart;
         for (Table cur : tables.getListTable())
         {
             if (cur.getIdTable().equals(idTable))
-                cur.startGame(cur.getCurrentGame());
-                return cur.getCurrentGame();
+                toStart = cur;
+//                cur.startGame(cur.getCurrentGame());
+//                return cur.getCurrentGame();
         }
         return null;
     }

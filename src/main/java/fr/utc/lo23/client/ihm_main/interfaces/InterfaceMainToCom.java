@@ -1,11 +1,11 @@
-package lo23poker.IHMMain.interfaces;
+package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.common.data.Table;
 
 /**
  * Created by jbmartin on 20/10/15.
  */
-public interface InterfaceCom {
+public interface InterfaceMainToCom {
     void waitForStart();
     void notifyNewTable(Table t);
     void returnHome();

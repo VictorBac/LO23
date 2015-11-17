@@ -1,8 +1,8 @@
 package fr.utc.lo23.common.data;
 
 /**
- * Created by Mar on 21/10/2015.
+ * Created by Ying on 21/10/2015.
  */
 public enum EnumerationStatusGame {
-    waitingForPlayer,playing,finished
+    waitingForPlayer, playing, finished
 }

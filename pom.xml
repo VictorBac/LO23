@@ -7,7 +7,15 @@
     <groupId>LO23</groupId>
     <artifactId>LO23</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+	<dependencies>
+       <dependency>
+           <groupId>Flatter</groupId>
+           <artifactId>com.guigarage</artifactId>
+           <version>0.7</version>
+           <scope>system</scope>
+           <systemPath>${project.basedir}/lib/flatter-0.7.jar</systemPath>
+       </dependency>
+   </dependencies>
     <build>
         <resources>
             <resource>

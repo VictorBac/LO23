@@ -2,7 +2,7 @@ package fr.utc.lo23.common.data;
 
 /**
  * Class to represent a card
- * Created by Haroldcb on 21/10/2015.
+ * Created by Ying on 21/10/2015.
  */
 public class Card {
     /**

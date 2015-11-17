@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * Class to represent a message of a chat
- * Created by Haroldcb on 21/10/2015.
+ * Created by Ying on 21/10/2015.
  */
 public class MessageChat {
 

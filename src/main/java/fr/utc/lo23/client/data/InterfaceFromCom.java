@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class InterfaceFromCom implements InterfaceDataFromCom{
 
+    public InterfaceFromCom() {}
+
     public void updateStats(Stats statsLocalUser) {
 
     }

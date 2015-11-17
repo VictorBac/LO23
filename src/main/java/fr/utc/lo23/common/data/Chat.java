@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to represent a chat
- * Created by Jianghan on 03/11/2015.
+ * Created by Ying on 03/11/2015.
  */
 public class Chat {
     /**
@@ -38,9 +38,14 @@ public class Chat {
     }
 
     /**
-     * method that permit to send a new message in the chat
+     * method to add a new message in the chat
      * @param message : message to send
      * @see  fr.utc.lo23.common.data.MessageChat
      */
-    public void newMessage(MessageChat message){}
+    public void newMessage(MessageChat message){
+
+        this.listMessages.add(message);
+
+    }
+
 }

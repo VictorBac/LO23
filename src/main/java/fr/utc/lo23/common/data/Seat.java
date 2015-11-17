@@ -2,11 +2,13 @@ package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.SeatException;
 
+import java.io.Serializable;
+
 /**
  * Class representing a player on the table and his start and actual account
  * Created by Haroldcb on 21/10/2015.
  */
-public class Seat {
+public class Seat implements Serializable {
     /**
      * player : player
      * startAmount : account at the beginning of the game

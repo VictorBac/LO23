@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * There can be several separated Pots during the same turn
  * Created by Haroldcb on 21/10/2015.
  */
-public class Pot {
+public class Pot implements Serializable {
     /**
      * valeurPot : total amount in the pot
      * players : player who have bet in the pot

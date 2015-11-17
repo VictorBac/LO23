@@ -2,13 +2,14 @@ package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.TableException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Class representing the list of available tables
  * Created by Haroldcb on 21/10/2015.
  */
-public class TableList {
+public class TableList implements Serializable {
     /**
      * List of tables
      */

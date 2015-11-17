@@ -14,8 +14,12 @@ public class SerializationTest {
 
     @Test
     public void testSerializationObject() throws Exception {
-        Action actionToSerialize = new Action(EnumerationAction.allIn,0,new UserLight(),new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-        //Serialization.serializationObject(actionToSerialize,Serialization.pathUserLocal);
+        User localUser = new User("testLocalUser", "testpsw");
+        Serialization.serializationObject(localUser, Serialization.pathUserLocal);
+        User localUser2 = (User) Serialization.deserializationObject(Serialization.pathUserLocal);
+        String inputPseudo = localUser.getUserLight().getPseudo();
+        String outputPseudo = localUser.getUserLight().getPseudo();
+        assertEquals("The comparasion between serialization input and output", inputPseudo, outputPseudo);‚
     }
 
     @Test

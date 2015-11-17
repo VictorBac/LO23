@@ -13,7 +13,13 @@ import java.util.Calendar;
 
 public class TableController {
 
+    private IHMTable ihmTable;
+
+    public void setInterface(IHMTable ihmTable){ this.ihmTable = ihmTable; }
+
 	public TableController(){
+
+
 		
 	}
 

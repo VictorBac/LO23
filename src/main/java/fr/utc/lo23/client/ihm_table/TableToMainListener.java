@@ -23,8 +23,8 @@ public class TableToMainListener implements ITableToMainListener{
 	 * Permet à IHM-Table de prendre la main et d'afficher le formulaire de création de table
 	 */
 	public void showTableCreationForm(Pane root){
-		TableView tableView = new TableView();
-		tableView.createTable(root);
+        FormView formView = new FormView();
+        formView.createForm(root,getIhmtable());
 	}
 
     /*

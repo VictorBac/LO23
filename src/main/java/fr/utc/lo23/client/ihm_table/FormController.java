@@ -13,6 +13,11 @@ import java.util.ArrayList;
  * Controller of the create table form
  */
 public class FormController {
+
+    private IHMTable ihmTable;
+
+    public void setInterface(IHMTable ihmTable){ this.ihmTable = ihmTable; }
+
     public FormController() {
     }
 

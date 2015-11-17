@@ -9,12 +9,15 @@ import java.io.IOException;
 public class TableView{
 	
 
-	public void createTable(Pane root) {
+	public void createTable(Pane root, IHMTable ihmTable) {
 		try {
-			root.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("tableForm.fxml")));
+			FXMLLoader loader = new FXMLLoader();
+			root.getChildren().setAll((Node) loader.load(getClass().getResource("tableView.fxml")));
+			TableController tableController = (TableController) loader.getController();
+			tableController.setInterface(ihmTable);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

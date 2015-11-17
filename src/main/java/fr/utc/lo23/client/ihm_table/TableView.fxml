@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -41,12 +42,12 @@
                      <children>
                         <VBox>
                            <children>
-                              <ListView prefHeight="137.0" prefWidth="512.0" styleClass="chatMessage" />
+                              <ListView fx:id="chatList" editable="true" maxWidth="512.0" prefHeight="137.0" prefWidth="512.0" styleClass="chatMessage" />
                               <VBox prefHeight="39.0" prefWidth="412.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <TextField prefHeight="17.0" prefWidth="437.0" />
+                                          <TextField fx:id="messageToSend" onAction="#sendMessage" prefHeight="17.0" prefWidth="437.0" />
                                           <Button mnemonicParsing="false" styleClass="sendChat" text="Envoyer" />
                                        </children>
                                     </HBox>

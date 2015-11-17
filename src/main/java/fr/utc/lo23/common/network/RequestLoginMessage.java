@@ -1,10 +1,13 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /**
  * Message permettant de demander au serveur si la
@@ -13,7 +16,10 @@ import java.io.ObjectOutputStream;
  */
 public class RequestLoginMessage extends Message {
 
-    public RequestLoginMessage() {
+    private User user;
+
+    public RequestLoginMessage(User userLocal) {
+        user = userLocal;
     }
 
     /**
@@ -37,8 +43,11 @@ public class RequestLoginMessage extends Message {
         boolean result = myServ.checkIfUserCanConnect();
         if (result) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
+            Console.log("pseudo " + user.getPseudo());
 
-            AcceptLoginMessage acceptL = new AcceptLoginMessage();
+            ArrayList<User> aUsers = myServ.stockUserAndNotifyOthers(user);
+
+            AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
             try {
                 out.writeObject(acceptL);
             } catch (IOException e) {

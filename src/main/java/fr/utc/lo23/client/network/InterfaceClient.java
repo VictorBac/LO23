@@ -80,9 +80,10 @@ public interface InterfaceClient {
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException;
 
     public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
-    
 
-    public void sensPacket() throws NetworkFailureException;
+    public void requestLoginServer(User u);
+
+    public void sendPacket() throws NetworkFailureException;
     
     /**
      *

@@ -4,12 +4,12 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
-
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class PokerServer extends Thread {
     static int PORT = 1904;
@@ -81,6 +81,7 @@ public class PokerServer extends Thread {
         }
     }
 
+
     /**
      * Must be called to register the output stream with a User
      * @param out
@@ -106,4 +107,17 @@ public class PokerServer extends Thread {
     public int getNbUsers() {
         return nbUsers;
     }
+
+    public ArrayList<User> stockUserAndNotifyOthers(UserLight u) {
+        //Apperler interface data pour stocker l'userlight
+        //Notify les autres users
+        //retourner arraylist des autres users
+        return null;
+    }
+
+    public ArrayList<User> getUserList(){
+        //On récupère la liste
+        return null;
+    }
+
 }

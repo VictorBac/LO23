@@ -5,6 +5,8 @@
  */
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
@@ -16,6 +18,15 @@ import fr.utc.lo23.exceptions.network.*;
  * @author Jean-Côme
  */
 public class IntClient implements InterfaceClient  {
+
+    private ServerLink localClient;
+
+    public IntClient() {
+        localClient = new ServerLink();
+        localClient.start();
+        User user = new User();
+        requestLoginServer(user);
+    }
 
     public void sendProfile(User u) throws NetworkFailureException {
 
@@ -53,6 +64,7 @@ public class IntClient implements InterfaceClient  {
 
     }
 
+
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
 
     }
@@ -61,8 +73,17 @@ public class IntClient implements InterfaceClient  {
 
     }
 
-    public void sensPacket() throws NetworkFailureException {
+    public void sendPacket() throws NetworkFailureException {
 
+    }
+
+    /**
+     * Envoi la reclamation de connexion du client.
+     * @param u
+     * @throws NetworkFailureException
+     */
+    public void requestLoginServer(User u){
+        localClient.sendLoginRequest(u);
     }
 
     public void requestUserStats(UserLight userLocal) throws NetworkFailureException {

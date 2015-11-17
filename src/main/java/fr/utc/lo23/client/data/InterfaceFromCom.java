@@ -63,7 +63,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
         //TODO add arrayList
-        dManagerClient.getListUsers();
+        dManagerClient.getListUsers().;
 
     }
 

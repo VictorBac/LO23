@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +11,7 @@ import java.util.UUID;
  *
  * Class used to represent a game
  */
-public class Game {
+public class Game implements Serializable{
     private UUID idGame;
     private ArrayList<Hand> listHand;
     private int blind;

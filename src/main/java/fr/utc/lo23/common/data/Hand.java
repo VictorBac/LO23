@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  *
  * Class used to represent a hand (manche) in the game
  */
-public class Hand {
+public class Hand implements Serializable{
 
     private ArrayList<Turn> listTurn;
     private ArrayList<Card> listCardField;

@@ -79,6 +79,14 @@ public class DataManagerClient {
         this.interToCom = interToCom;
     }
 
+    public InterfaceMainToData getInterToIHMMain() {
+        return interToIHMMain;
+    }
+
+    public void setInterToIHMMain(InterfaceMainToData interToIHMMain) {
+        this.interToIHMMain = interToIHMMain;
+    }
+
     public User getUserLocal() {
         return userLocal;
     }

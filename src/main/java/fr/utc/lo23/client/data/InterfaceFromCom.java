@@ -25,8 +25,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void remoteUserConnected(UserLight userLightDistant) {
-        try {//TODO
+        try {//TODO handle exception
             dManagerClient.getListUsers().addUser(userLightDistant);
+            dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
         } catch (ExistingUserException e) {
             e.printStackTrace();
         }

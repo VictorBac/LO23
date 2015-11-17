@@ -48,7 +48,7 @@
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                           <TextField fx:id="messageToSend" onAction="#sendMessage" prefHeight="17.0" prefWidth="437.0" />
-                                          <Button mnemonicParsing="false" styleClass="sendChat" text="Envoyer" />
+                                          <Button mnemonicParsing="false" onAction="#sendMessage" styleClass="sendChat" text="Envoyer" />
                                        </children>
                                     </HBox>
                                  </children>

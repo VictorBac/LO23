@@ -3,6 +3,7 @@ package fr.utc.lo23.client.ihm_table;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -23,11 +24,24 @@ public class TableController {
 		
 	}
 
+    public void initialize(){
+        /*ListChangeListener<String> chatListener;
+        chatListener = (changed) -> {
+            changed.next();
+            if(changed.wasAdded())
+            {
+                chatList.getItems().add(changed.getAddedSubList().get(0));
+            }
+        };
+        items.addListener(chatListener);*/
+    }
+
 	@FXML
 	private TextField messageToSend;
     @FXML
     private ListView<String> chatList;
-    ObservableList<String> items = FXCollections.observableArrayList ();
+    //ObservableList<String> items = FXCollections.observableArrayList ();
+
 
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {
@@ -47,7 +61,8 @@ public class TableController {
     }
 
     private void addChatMessage(MessageChat message) {
-        items.add("[" + message.getTime() + "] " + message.getSender().getPseudo() + " : " + message.getText());
-        chatList.setItems(items);
+        //items.add(message.getSender().getPseudo() + " : " + message.getText());
+        chatList.getItems().add(message.getSender().getPseudo() + " : " + message.getText());
+        chatList.setStyle("-fx-graphic:red;");
     }
 }

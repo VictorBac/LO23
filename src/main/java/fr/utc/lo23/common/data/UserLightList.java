@@ -1,5 +1,7 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -14,8 +16,8 @@ public class UserLightList {
     /**
      * recherche un UserLight dans l'arrayList à partir de son UUID
      * @param userId l'UUUID du joueur à trouver
-     * @return le joueur voulu, null si non trouvé
-     
+     * @return le joueur voulu, nexception si non trouvé
+
      */
     public UserLight getUser(UUID userId) throws UserLightNotFoundException{
         for (UserLight cur : listUserLights)
@@ -28,5 +30,12 @@ public class UserLightList {
 
     public ArrayList<UserLight> getListUserLights() {
         return listUserLights;
+    }
+
+    public void addUser(UserLight toAdd) throws ExistingUserException {
+        if (listUserLights.contains(toAdd))
+            throw new ExistingUserException(toAdd);
+        else
+            listUserLights.add(toAdd);
     }
 }

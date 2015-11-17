@@ -11,6 +11,23 @@ public class UserLight {
     private String pseudo;
     private ImageAvatar avatar;
 
+    /**
+     * empty constructor
+     */
+    public UserLight(){
+
+    }
+
+    /**
+     * Copy constructor
+     * @param toCopy the UserLight to copy.
+     */
+    public UserLight(UserLight toCopy)  {
+        this.idUser = toCopy.getIdUser();
+        this.pseudo = toCopy.getPseudo();
+        this.avatar = toCopy.getAvatar();
+    }
+
     public UUID getIdUser(){
         return idUser;
     }
@@ -19,8 +36,5 @@ public class UserLight {
         return pseudo;
     }
 
-    public ImageAvatar getAvatar(){
-
-        return avatar;
-    }
+    public ImageAvatar getAvatar(){ return avatar; }
 }

@@ -5,7 +5,7 @@ import java.util.UUID;
 import fr.utc.lo23.common.data.exceptions.TableException;
 
 /**
- * Classe représentant une table, sur laquelle se déroulent des parties
+ * Classe repr?sentant une table, sur laquelle se d?roulent des parties
  * Created by Haroldcb on 21/10/2015.
  */
 public class Table {
@@ -69,11 +69,12 @@ public class Table {
     }
 
     /**
-     * Constructeur par défaut
+     * Constructeur par d?faut
      */
     public Table() throws TableException {
         //TODO
         throw new TableException("Impossible de créer une table sans paramètres");
+
     }
 
     /**
@@ -181,7 +182,9 @@ public class Table {
          */
     };
 
+
 /******************* GETTERS AND SETTERS ********************************/
+
 
     public UUID getIdTable() {
         return idTable;
@@ -271,6 +274,7 @@ public class Table {
         this.timeforAction = timeforAction;
     }
 
+
     public UserLightList getListPlayers() {
         return listPlayers;
     }
@@ -287,4 +291,7 @@ public class Table {
         this.listSpectators = listSpectators;
     }
 }
+
+
+
 

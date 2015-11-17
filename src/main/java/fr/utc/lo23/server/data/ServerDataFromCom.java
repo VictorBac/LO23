@@ -2,7 +2,8 @@ package fr.utc.lo23.server.data;
 
 import com.sun.xml.internal.ws.developer.*;
 import fr.utc.lo23.common.data.*;
-import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+import fr.utc.lo23.common.data.exceptions.*;
+import fr.utc.lo23.common.data.exceptions.UserNotFoundException;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -114,15 +115,18 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
     /**
      * deletes a player from the list connectedusers
-     * Todo exception
-     * @param deletedUsr
+     * @param deletedUsr the user to delete
      */
-    public void deletePlayer(UserLight deletedUsr) {
+    public void deletePlayer(UserLight deletedUsr) throws UserNotFoundException {
+        boolean found = false;
         for (User current : myManager.getUsers().getList())
         {
             if (current.getUserLight().equals(deletedUsr))
+                found = true;
                 myManager.getUsers().getList().remove(current);
         }
+        if (found == false)
+            throw new fr.utc.lo23.common.data.exceptions.UserNotFoundException(deletedUsr.getIdUser());
     }
 
     public void confirmationCardReceived(UserLight player) {

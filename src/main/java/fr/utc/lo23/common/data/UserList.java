@@ -1,12 +1,15 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * Created by Rémy on 20/10/2015.
  */
-public class UserList {
+public class UserList implements Serializable{
 
     private ArrayList<User> listUser;
 
@@ -15,7 +18,6 @@ public class UserList {
      * recherche un User dans l'arrayList à partir de son UUID
      * @param userId l'UUUID du joueur à trouver
      * @return le joueur voulu, null si non trouvé
-     * TODO : exception au lieu de null
      */
     public User getUser(UUID userId) throws UserNotFoundException {
         for (User cur : listUser) {
@@ -26,11 +28,13 @@ public class UserList {
     }
 
     /**
-     * TODO exception in case of duplicate user
      * @param connectingUser
      */
-    public void addUser(User connectingUser) {
-        this.listUser.add(connectingUser);
+    public void addUser(User connectingUser)  throws ExistingUserException{
+        if (this.listUser.contains(connectingUser))
+            throw new ExistingUserException(connectingUser.getUserLight());
+        else
+            this.listUser.add(connectingUser);
     }
 
     public ArrayList<User> getList(){

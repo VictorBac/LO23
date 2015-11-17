@@ -2,13 +2,14 @@ package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * Created by Rémy on 20/10/2015.
  */
-public class UserLightList {
+public class UserLightList implements Serializable{
 
     private ArrayList<UserLight> listUserLights;
 
@@ -35,6 +36,7 @@ public class UserLightList {
     public void setUserList(ArrayList<UserLight> newList){
         this.listUserLights = newList;
     }
+
     public void addUser(UserLight toAdd) throws ExistingUserException {
         if (listUserLights.contains(toAdd))
             throw new ExistingUserException(toAdd);

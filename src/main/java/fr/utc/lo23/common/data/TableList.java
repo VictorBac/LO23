@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class TableList {
     /**
-     * Liste des tables
+     * List of tables
      */
     private ArrayList<Table> listTable;
 
@@ -32,8 +32,8 @@ public class TableList {
 
 
     /**
-     * ajout d'une nouvelle table dans la liste
-     * @param table : table à ajouter
+     * add a new table in the list
+     * @param table : table to add
      */
     public void newTable(Table table){
         this.listTable.add(table);

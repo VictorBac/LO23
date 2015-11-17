@@ -45,13 +45,11 @@ public class Table {
      * @param acceptChatSpectator
      * @param nbPlayerMax
      * @param nbPlayerMin
-     * @param currentGame
      * @param abandonAmiable
      * @param maxMise
-     * @param listGames
      * @param timeforAction
      */
-    public Table(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, int currentGame, boolean abandonAmiable, int maxMise, ArrayList<Game> listGames, int timeforAction) {
+    public Table(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
         this.setIdTable(UUID.randomUUID());
         this.setName(name);
         this.setAcceptSpectator(acceptSpectator);
@@ -60,20 +58,12 @@ public class Table {
         this.listSpectators = new UserLightList();
         this.setNbPlayerMax(nbPlayerMax);
         this.setNbPlayerMin(nbPlayerMin);
-        this.setCurrentGame(currentGame);
+        this.setCurrentGame(0);
         this.setAbandonAmiable(abandonAmiable);
         this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
-        //TODO listGames.add(new Game());
+        listGames.add(new Game());
         this.setTimeforAction(timeforAction);
-    }
-
-    //TODO => supprimer car inutile?
-    /**
-     * Default construtor
-     */
-    public Table() throws TableException {
-        throw new TableException("Impossible to create a table without parameters");
     }
 
     /**
@@ -158,7 +148,7 @@ public class Table {
      */
     //TODO vérifier si suffisant
     public boolean checkConditionSpectatorJoin(){
-        if(this.acceptSpectator)
+        if(isAcceptSpectator())
             return true;
         else
             return false;
@@ -185,10 +175,10 @@ public class Table {
 
     /**
      * Add a new game in the list of games of the table
-     * @param partie : new game to add to the list
+     * @param game : new game to add to the list
      */
-    public void addNewGameToList(Game partie){
-        this.listGames.add(partie);
+    public void addNewGameToList(Game game){
+        this.listGames.add(game);
     }
 
     /**

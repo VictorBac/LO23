@@ -11,28 +11,16 @@ import java.util.UUID;
  */
 public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
-    public void addContact(UserLight contact, Groupe category) {
+    private DataManagerClient dManagerClient;
 
+    public InterfaceFromIHMTable(DataManagerClient dManagerClient) {
+
+        this.dManagerClient = dManagerClient;
     }
 
-    public void deleteContact(UserLight contact) {
-
-    }
-
-    public void createContactList(String name) {
-
-    }
-
-    public void deleteContactList(String name) {
-
-    }
-
-    public void contactAddedNotificationReceived(UserLight contact) {
-
-    }
-
-    public void tableToCreate(Table table) {
-
+    //TODO envoyer table sur le serveur via interface com
+    public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
+        Table table = new Table(name, acceptSpectator, acceptChatSpectator, nbPlayerMax, nbPlayerMin, abandonAmiable, maxMise, timeforAction);
     }
 
     public void playGame(UUID idTable) {

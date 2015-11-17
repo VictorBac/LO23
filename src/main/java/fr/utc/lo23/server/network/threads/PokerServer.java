@@ -7,25 +7,28 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class PokerServer extends Thread {
-    static int port = 1904;
-    static int nbMaxUser = 100;
+    static int PORT = 1904;
+    static int NB_MAX_USER = 100;
 
     private ServerSocket listeningSocket;
     private boolean running = false;
     private int nbUsers;
 
-
+    /**
+     * Constructeur
+     * @param portToListen default port to listen is defined in const var, if you would like to change it,
+     *                     give an other number here
+     */
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
-
-        Console.log("Nombre d'utilisateurs maximum à " + nbMaxUser);
+        Console.log("Nombre d'utilisateurs maximum à " + NB_MAX_USER);
         nbUsers = 0;
 
-        Console.log("Lancement du serveur....");
+
 
 
         // Change port if needed
-        if (portToListen != null) PokerServer.port = portToListen.intValue();
+        if (portToListen != null) PokerServer.PORT = portToListen;
 
         try {
             initSocket();
@@ -45,7 +48,7 @@ public class PokerServer extends Thread {
             return;
         }
 
-        listeningSocket = new ServerSocket(port);
+        listeningSocket = new ServerSocket(PORT);
         Console.log("Le serveur écoute sur " + listeningSocket.getInetAddress() + ":" + listeningSocket.getLocalPort());
     }
 
@@ -63,7 +66,6 @@ public class PokerServer extends Thread {
      */
     @Override
     public synchronized void run() {
-
         Console.log("Srv: Lancement Thread...");
         running = true;
         while (running) {
@@ -93,7 +95,7 @@ public class PokerServer extends Thread {
      */
     public boolean checkIfUserCanConnect () {
 
-        if (nbUsers < nbMaxUser) {
+        if (nbUsers < NB_MAX_USER) {
             nbUsers++;
             return true;
         }

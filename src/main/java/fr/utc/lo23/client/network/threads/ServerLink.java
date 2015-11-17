@@ -13,16 +13,14 @@ public class ServerLink extends Thread {
     static final String serverAddress = "localhost";
     static final int serverPort = 1904;
 
-    public Socket socket;
-
-    private BufferedReader br;
-    private PrintWriter pw;
-    private boolean running;
+    private boolean connected = false;
+    private Socket socket;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
     //private InterfaceData dataInt;
 
+    //TODO: Gerer le changement de port
     public ServerLink(){
         try {
             connect();
@@ -39,46 +37,19 @@ public class ServerLink extends Thread {
         if (null != socket) throw new NetworkFailureException("La socket client existe déjà");
 
         socket = new Socket();
-        Console.lognl("Le client tente de se connecter...");
+        Console.logn("Le client tente de se connecter...");
         socket.connect(new InetSocketAddress(serverAddress, serverPort));
+        connected = true;
         Console.log("Done");
         Console.log("Client connecté sur: " + serverAddress + ":" + serverPort + "\n");
 
         //Test to send serialized object to the server
+        inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+        //TODO: Ca doit pas etre la, c'est coté apllicatif ca -> a mettre dans la fct connect de l'interface
         RequestLoginMessage reqLog = new RequestLoginMessage();
         outputStream.writeObject(reqLog);
-
-        inputStream = new ObjectInputStream(socket.getInputStream());
-
-        //Ending the conversation
-        //disconnect();
-
-
-    }
-
-    /**
-     * Run method (thread)
-     */
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(10000);
-                try {
-                    Message msg = (Message) inputStream.readObject();
-                    msg.process();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            Console.log("Client ok");
-        }
     }
 
     /**
@@ -87,5 +58,23 @@ public class ServerLink extends Thread {
      */
     public void disconnect() throws IOException {
         socket.close();
+        connected = false;
+    }
+
+    /**
+     * Run method (thread)
+     */
+    @Override
+    public void run() {
+        while (connected) {
+            try {
+                Message msg = (Message) inputStream.readObject();
+                msg.process();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Console.log("Client ok");
+        }
     }
 }

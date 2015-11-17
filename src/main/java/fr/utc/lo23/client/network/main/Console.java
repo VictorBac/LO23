@@ -5,7 +5,7 @@ public class Console {
         System.out.println(msg);
     }
 
-    public static void lognl(String msg) {
+    public static void logn(String msg) {
         System.out.print(msg);
     }
 

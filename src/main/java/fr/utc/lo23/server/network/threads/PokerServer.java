@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.data.User;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -88,6 +89,22 @@ public class PokerServer extends Thread {
         return nbUsers;
     }
 
+
+
+    /**
+     * Actualise la table interne qui a tous les clients
+     * @return boolean
+     *
+     *
+     * @param User
+     */
+    public boolean userDisconnect(User u) {
+
+        // Actualiser la table en enlevant le user u
+        // Il n'y a pas de table encore crée, je ne code pas ça
+
+
+    }
 
     /**
      * Check if there is room for one more user

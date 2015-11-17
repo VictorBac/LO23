@@ -55,6 +55,10 @@ public class FormController {
     @FXML
     Button formSend;
 
+    @FXML
+    public void initialize() {
+        formSend.setOnAction((actionEvent) -> formSend(actionEvent));
+    }
     /**
      * Checks form values.
      * @param event
@@ -62,8 +66,11 @@ public class FormController {
     @FXML
     private void formSend(ActionEvent event){
         // Checking form values
-        ArrayList<String> error = new ArrayList<String>(); // If an error is detected, we add it in this list
-
+        ArrayList<String> errors = new ArrayList<String>(); // If an error is detected, we add it in this list
+        if (formName.getText()==null){
+            errors.add("Nom de la table");
+            System.out.println("Nom de table vide !");
+        }
     }
 
 }

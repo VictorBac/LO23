@@ -3,26 +3,26 @@ package fr.utc.lo23.common.data;
 import java.util.ArrayList;
 
 /**
- * Classe représentant la somme totale misée dans un pot.
- * Il peut y avoir plusieurs pots séparés lors du même tour.
+ * Class representing the total amount in the pot
+ * There can be several separated Pots during the same turn
  * Created by Haroldcb on 21/10/2015.
  */
 public class Pot {
     /**
-     * valeurPot : valeur totale dans le pot
-     * players : joueurs ayant misé dans le pot
+     * valeurPot : total amount in the pot
+     * players : player who have bet in the pot
      */
     private ArrayList<Integer> valeurPot;
     private UserLightList players;
 
     /**
-     * Constructeur
+     * Constructor
      * @param valeurPot
      * @param players
      */
     public Pot(ArrayList<Integer> valeurPot, UserLightList players) {
-        this.valeurPot = valeurPot;
-        this.players = players;
+        this.setValeurPot(valeurPot);
+        this.setPlayers(players);
     }
 
     /**
@@ -46,7 +46,7 @@ public class Pot {
         return a + b;
     }
 
-
+/********************* Getters and Setters ***************************/
 
     public ArrayList<Integer> getValeurPot() {
         return valeurPot;

@@ -1,26 +1,15 @@
 package fr.utc.lo23.client.data;
 
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Groupe;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLight;
 
 import java.util.UUID;
 
 /**
+ * This is the interface which will be used by the IHMTable module on the client's side
  * Created by Haroldcb on 21/10/2015.
  */
 public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
-
-    /**
-     * Constructeur
-     */
-    public InterfaceFromIHMTable() {
-    }
-
-    public void logUser(String login, String password) {
-
-    }
 
     public void addContact(UserLight contact, Groupe category) {
 
@@ -58,9 +47,6 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
-    public void saveLogGame(Table table) {
-
-    }
 
     public void getUser(UserLight user) {
 

@@ -25,7 +25,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void remoteUserConnected(UserLight userLightDistant) {
-        try {//TODO handle exception
+        try {//TODO handle exception and test
             dManagerClient.getListUsers().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
         } catch (ExistingUserException e) {
@@ -62,8 +62,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
-        //TODO add arrayList
-        dManagerClient.getListUsers().;
+        //TODO test
+        dManagerClient.getListUsers().setUserList(listUserLightConnectedOnServer);
+        dManagerClient.getInterToIHMMain().onlineUsers(listUserLightConnectedOnServer);
 
     }
 

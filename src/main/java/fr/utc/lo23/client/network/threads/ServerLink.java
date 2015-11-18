@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.network.threads;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.Userlight;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
@@ -23,6 +24,7 @@ public class ServerLink extends Thread {
     private Socket socket;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
+    private InterfaceDataFromCom dataInterface;
 
     //private InterfaceData dataInt;
 
@@ -76,7 +78,7 @@ public class ServerLink extends Thread {
         while (connected) {
             try {
                 Message msg = (Message) inputStream.readObject();
-                msg.process();
+                msg.process(dataInterface);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -102,5 +104,13 @@ public class ServerLink extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Set the data interface we will be using
+     * @param dataInterface
+     */
+    public void setDataInterface(InterfaceDataFromCom dataInterface) {
+        this.dataInterface = dataInterface;
     }
 }

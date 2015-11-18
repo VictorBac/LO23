@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.Userlight;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
@@ -35,14 +36,22 @@ public class RequestListUserMessage extends Message {
      */
     @Override
     public void process (PokerServer myServ, ObjectOutputStream out){
+
         Console.log("Request list of users");
-        ArrayList<User> list =myServ.getUserList();
-        SendListUserMessage listUserMess = new SendListUserMessage(list);
+        //ArrayList<User> list =myServ.getUserList(); appeler l'interface de data ?
+
+
+       /* SendListUserMessage listUserMess = new SendListUserMessage(list);
         try {
             out.writeObject(listUserMess);
         }catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+    }
+
+    @Override
+    public void process(InterfaceDataFromCom dataInterface) {
+
     }
 
 }

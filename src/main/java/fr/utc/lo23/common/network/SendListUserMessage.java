@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.Userlight;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
@@ -35,6 +36,15 @@ public class SendListUserMessage extends Message {
     @Override
     public void process (PokerServer myServ, ObjectOutputStream out){
         Console.logn("Envoi de la table");
+    }
+
+    /**
+     * Client-side process
+     * @param dataInterface
+     */
+    @Override
+    public void process(InterfaceDataFromCom dataInterface) {
+
     }
 
 }

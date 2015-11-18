@@ -5,6 +5,7 @@
  */
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Action;
@@ -20,9 +21,13 @@ import fr.utc.lo23.exceptions.network.*;
 public class IntClient implements InterfaceClient  {
 
     private ServerLink localClient;
+    private InterfaceDataFromCom interfaceData;
 
-    public IntClient() {
+    public IntClient(InterfaceDataFromCom intData) {
         localClient = new ServerLink();
+        interfaceData = intData;
+        localClient.setDataInterface(interfaceData);
+
         localClient.start();
         User user = new User();
         requestLoginServer(user);

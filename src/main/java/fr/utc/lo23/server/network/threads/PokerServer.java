@@ -2,6 +2,7 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.io.IOException;
@@ -118,19 +119,36 @@ public class PokerServer extends Thread {
     }
 
 
-
-    //TODO: Non il faut demander la liste de outputstream des autre et se demerder dans process() correspondant
+    /**
+     * Permet d'ajouter le nouvel user aux users connectés sur le serveur
+     * De notifier les autres utilisateurs du nouvel user connecté
+     * De récupérer la liste des utilisateurs connectés
+     * @param u
+     * @return
+     */
     public ArrayList<User> stockUserAndNotifyOthers(User u) {
-        //Apperler interface data pour stocker l'userlight
-        //Notify les autres users
-        //retourner arraylist des autres users
+        //TODO Appeler interface data pour stocker l'user U
+
+        //TODO Notify les autres users de la connection d'un nouvel utilisateur
+        notifyNewPlayer(u);
+
+
+        //TODO retourner arraylist des autres users pour le donner au message accept login
+        //ArrayList<Users> userList = InterfaceServerDataFromCom.getConnectedUsers(); Le nom de la classe n'est pas le bon, il faudra juste le changer par la classe implémentant leur int.
+        //return userList;
         return null;
     }
 
-    //TODO: C'est data qui gere ca ! A virer
-    public ArrayList<User> getUserList(){
-        //On récupère la liste
-        return null;
+    private void notifyNewPlayer(User u) {
+
+        NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(u);
+        for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {
+            try {
+                userOut.getValue().writeObject(newPMessage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

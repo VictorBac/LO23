@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.network;
 
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.PokerServer;
@@ -54,6 +55,15 @@ private UserLight u;
         // On ferme le socket lié à cet User
 
 
+
+    }
+
+    /**
+     * Client-side process
+     * @param dataInterface
+     */
+    @Override
+    public void process(InterfaceDataFromCom dataInterface) {
 
     }
 

@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
@@ -32,6 +33,8 @@ public class RequestLoginMessage extends Message {
 
     /**
      * Check if we can login in the server, and send a confirmation (or not ?)
+     * We put in the acceptloginmessage all users currently connected to have them directly at the confirmation
+     * We also notify all other users that now we're in da place
      * @param myServ
      * @param out
      */
@@ -57,6 +60,15 @@ public class RequestLoginMessage extends Message {
         } else {
             Console.log("Connection impossible ! ");
         }
+    }
+
+    /**
+     * Client-side process
+     * @param dataInterface
+     */
+    @Override
+    public void process(InterfaceDataFromCom dataInterface) {
+
     }
 
 }

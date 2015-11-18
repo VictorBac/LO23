@@ -3,11 +3,9 @@ package fr.utc.lo23.client.ihm_main.controllers;
  * Created by jbmartin on 20/10/15.
  */
 
-import com.guigarage.flatterfx.FlatterFX;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceDataFromIHMTable;
-import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToCom;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
 import fr.utc.lo23.client.network.InterfaceClient;
@@ -32,7 +30,6 @@ public class MainController extends Application {
     /**
      * Interfaces from MAIN
      */
-    private InterfaceMainToCom m_interfaceMainToCom;
     private InterfaceMainToData m_interfaceMainToData;
     private InterfaceMainToTable m_interfaceMainToTable;
 

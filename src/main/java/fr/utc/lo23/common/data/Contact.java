@@ -14,7 +14,7 @@ public class Contact {
     /**
      * listGroups : liste des groupes de contacts
      */
-    private ArrayList<Groupe> listGroups;
+    private ArrayList<Group> listGroups;
 
     /**
      * Method to add a contact to a group
@@ -22,8 +22,8 @@ public class Contact {
      * @param newContact : the name of contact to add
      */
     public void updateContacts(String groupName, UserLight newContact) throws ContactException {
-        Groupe toAddTo = new Groupe();
-        for (Groupe cur : listGroups)
+        Group toAddTo = new Group();
+        for (Group cur : listGroups)
         {
             if (cur.getNomGroupe().equals(groupName))
                 toAddTo = cur;
@@ -40,8 +40,8 @@ public class Contact {
      * @param toDelete
      */
     public void deleteContact(UserLight toDelete, String fromGroup) throws GroupeNotFoundException, UserLightNotFoundException {
-        Groupe toDelFrom = new Groupe();
-        for (Groupe cur : listGroups)
+        Group toDelFrom = new Group();
+        for (Group cur : listGroups)
         {
             if (cur.getNomGroupe().equals(fromGroup))
                 toDelFrom = cur;
@@ -62,8 +62,8 @@ public class Contact {
         if (Arrays.asList(listGroups).contains(groupName)) {
             throw new ContactException("group to create already exist ");
         } else {
-            Groupe newGroupe = new Groupe(groupName);
-            listGroups.add(newGroupe);
+            Group newGroup = new Group(groupName);
+            listGroups.add(newGroup);
         }
     }
 
@@ -72,8 +72,8 @@ public class Contact {
      * @param groupName name of the group to delete
      */
     public void deleteContactList(String groupName) throws ContactException {
-        Groupe toDelete = new Groupe();
-        for (Groupe cur : listGroups)
+        Group toDelete = new Group();
+        for (Group cur : listGroups)
         {
             if (cur.getNomGroupe().equals(groupName))
                 toDelete = cur;

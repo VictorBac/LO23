@@ -91,4 +91,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
 
     }
+
+    public void saveLogGame(Table table) {
+
+    }
 }

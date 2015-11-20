@@ -109,4 +109,11 @@ public interface InterfaceDataFromCom {
      */
     public void informEndTurn( ArrayList<UserLight> listWinner, ArrayList<Integer> listGain );
 
+
+    /**
+     * Method to save a game
+     * @param table : table on which the game was played
+    */
+    public void saveLogGame(Table table);
+
 }

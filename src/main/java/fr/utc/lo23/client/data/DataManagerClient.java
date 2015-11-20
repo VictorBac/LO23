@@ -51,9 +51,7 @@ public class DataManagerClient {
         return interFromIHMTable;
     }
 
-    public void setInterFromIHMTable(InterfaceFromIHMTable interFromIHMTable) {
-        this.interFromIHMTable = interFromIHMTable;
-    }
+    public void setInterFromIHMTable(InterfaceFromIHMTable interFromIHMTable) {this.interFromIHMTable = interFromIHMTable;}
 
     public InterfaceFromIHMMain getInterFromIHMMain() {
         return interFromIHMMain;
@@ -79,9 +77,7 @@ public class DataManagerClient {
         this.interToCom = interToCom;
     }
 
-    public InterfaceMainToData getInterToIHMMain() {
-        return interToIHMMain;
-    }
+    public InterfaceMainToData getInterToIHMMain() {return interToIHMMain;}
 
     public void setInterToIHMMain(InterfaceMainToData interToIHMMain) {
         this.interToIHMMain = interToIHMMain;

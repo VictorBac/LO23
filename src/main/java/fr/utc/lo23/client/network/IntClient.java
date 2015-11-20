@@ -5,6 +5,9 @@
  */
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
+import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
@@ -17,6 +20,19 @@ import fr.utc.lo23.exceptions.network.*;
  */
 public class IntClient implements InterfaceClient  {
 
+    private ServerLink localClient;
+    private InterfaceDataFromCom interfaceData;
+
+    public IntClient(InterfaceDataFromCom intData) {
+        localClient = new ServerLink();
+        interfaceData = intData;
+        localClient.setDataInterface(interfaceData);
+
+        localClient.start();
+        User user = new User();
+        requestLoginServer(user);
+    }
+
     public void sendProfile(User u) throws NetworkFailureException {
 
     }
@@ -25,7 +41,7 @@ public class IntClient implements InterfaceClient  {
 
     }
 
-    public void createTable(Table tableToCreate, UserLight user) throws NetworkFailureException, TooManyTablesException {
+    public void createTable() throws NetworkFailureException, TooManyTablesException {
 
     }
 
@@ -53,8 +69,26 @@ public class IntClient implements InterfaceClient  {
 
     }
 
+
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
 
+    }
+
+    public void launchSavedGame() throws NetworkFailureException, IncorrectFileException {
+
+    }
+
+    public void sendPacket() throws NetworkFailureException {
+
+    }
+
+    /**
+     * Envoi la reclamation de connexion du client.
+     * @param u
+     * @throws NetworkFailureException
+     */
+    public void requestLoginServer(User u){
+        localClient.sendLoginRequest(u);
     }
 
     public void requestUserStats(UserLight userLocal) throws NetworkFailureException {

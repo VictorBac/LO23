@@ -26,6 +26,10 @@ public class IntServer implements InterfaceServer {
 
     }
 
+    public void sendLogGame() throws NetworkFailureException {
+
+    }
+
     public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException {
 
     }
@@ -39,6 +43,10 @@ public class IntServer implements InterfaceServer {
     }
 
     public void notifyDisconnection(UserLight distantUser) throws NetworkFailureException {
+
+    }
+
+    public void sendChatPacket() throws NetworkFailureException {
 
     }
 }

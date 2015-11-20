@@ -11,6 +11,9 @@ import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.*;
+
+
 
 /**
  *
@@ -30,11 +33,8 @@ public interface InterfaceServer {
      */
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException;
 
-    /**
-     *
-     * @param gameLog
-     */
-    //public void sendLogGame(Log gameLog) throws NetworkFailureException;
+
+    public void sendLogGame() throws NetworkFailureException;
 
     /**
      *
@@ -60,13 +60,7 @@ public interface InterfaceServer {
      */
     public void notifyDisconnection(UserLight distantUser) throws NetworkFailureException;
 
-    /**
-     *
-     * @param chatP
-     */
-    //public void sendChatPacket(ChatPacket chatP) throws NetworkFailureException;
+    public void sendChatPacket() throws NetworkFailureException;
     
 
 }
-    
-    

@@ -4,6 +4,7 @@ import fr.utc.lo23.client.ihm_table.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+import fr.utc.lo23.common.data.Table;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
     public InterfaceFromCom(DataManagerClient dManagerClient) {
-
         this.dManagerClient = dManagerClient;
     }
 
@@ -26,7 +26,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
-            dManagerClient.getListUsers().addUser(userLightDistant);
+            dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
         } catch (ExistingUserException e) {
             e.printStackTrace();
@@ -34,11 +34,13 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void remoteUserDisonnected(UserLight userLightDistant) {
+        dManagerClient.getListUsersLightLocal().getListUserLights();//TODO ADD remove UserLight Remy from UserLightlist
 
     }
 
     public void notifyNewTable(Table tableCreatedOnServer) {
-
+        dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
+        //TODO missing IHM main interface for new Table
     }
 
     public void userJoinedTable() {
@@ -63,17 +65,18 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
         //TODO test
-        dManagerClient.getListUsers().setUserList(listUserLightConnectedOnServer);
+        dManagerClient.getListUsersLightLocal().setUserList(listUserLightConnectedOnServer);
         dManagerClient.getInterToIHMMain().onlineUsers(listUserLightConnectedOnServer);
 
     }
 
-    public void currentTables(TableList tableListOnServer) {
-
+    public void currentTables(ArrayList<Table> listOfTableListOnServer) {
+        dManagerClient.getListTablesLocal().setListTable(listOfTableListOnServer);
+        //TODO missing IHM main interface for table list
     }
 
     public UserLight getUserLightLocal() {
-        return null;
+        return dManagerClient.getUserLocal().getUserLight();
     }
 
     public void stockCards(PlayerHand playerHandUserLocal) {

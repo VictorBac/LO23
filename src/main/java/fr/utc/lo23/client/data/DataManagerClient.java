@@ -20,14 +20,14 @@ public class DataManagerClient {
     private InterfaceMainToData interToIHMMain;
 
     private User userLocal;
-    private UserLightList listUsers;
-    private TableList listTables;
+    private UserLightList listUsersLightLocal;
+    private TableList listTablesLocal;
 
     public DataManagerClient() {
 
         this.userLocal = null;
-        this.listUsers = new UserLightList();
-        this.listTables = new TableList();
+        this.listUsersLightLocal = new UserLightList();
+        this.listTablesLocal = new TableList();
 
         this.interToIHMTable = null;
         this.interToCom = null;
@@ -43,9 +43,7 @@ public class DataManagerClient {
         return interFromCom;
     }
 
-    public void setInterFromCom(InterfaceFromCom interFromCom) {
-        this.interFromCom = interFromCom;
-    }
+    public void setInterFromCom(InterfaceFromCom interFromCom) {this.interFromCom = interFromCom;}
 
     public InterfaceFromIHMTable getInterFromIHMTable() {
         return interFromIHMTable;
@@ -91,19 +89,15 @@ public class DataManagerClient {
         this.userLocal = userLocal;
     }
 
-    public UserLightList getListUsers() {
-        return listUsers;
+    public UserLightList getListUsersLightLocal() {return listUsersLightLocal;}
+
+    public void setListUsersLightLocal(UserLightList listUsersLightLocal) {this.listUsersLightLocal = listUsersLightLocal;}
+
+    public TableList getListTablesLocal() {
+        return listTablesLocal;
     }
 
-    public void setListUsers(UserLightList listUsers) {
-        this.listUsers = listUsers;
-    }
-
-    public TableList getListTables() {
-        return listTables;
-    }
-
-    public void setListTables(TableList listTables) {
-        this.listTables = listTables;
+    public void setListTablesLocal(TableList listTablesLocal) {
+        this.listTablesLocal = listTablesLocal;
     }
 }

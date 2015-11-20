@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.client.data.exceptions.*;
 import fr.utc.lo23.common.data.*;
 
 
@@ -18,20 +19,38 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
 
     // Interface functions.
-    
-    public void logUser(String login, String password) {
-        // TODO Check existance of this login and check if password is correct Serialization
-        User localUser = new User(login, password);
-        //dManagerClient.getInterToCom().requestLoginServer(localUser);
+
+    /**
+     * Connexion with login and password, call com interface
+     * @param login
+     * @param password
+     */
+    public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
+        User userLocal = (User) Serialization.deserializationObject(Serialization.pathUserLocal);
+        // Get the login and password local.
+        String loginLocal = userLocal.getUserLight().getPseudo();
+        String passwordLocal = userLocal.getPwd();
+        // Check correctness of login and password
+        if (login.equals(loginLocal)) {
+            throw new LoginNotFoundException(login);
+        } else if (password.equals(passwordLocal)) {
+            throw new WrongPasswordException();
+        } else {
+            //dManagerClient.getInterToCom().requestLoginServer(localUser);
+        }
     }
 
     public void exitAsked() {
 
     }
 
-
+    /**
+     * Write userLocal into the local data file
+     * @param userLocal
+     */
     public void saveNewProfile(User userLocal) {
 
+        Serialization.serializationObject(userLocal, Serialization.pathUserLocal);
     }
 
     public void joinTableWithMode(Table table, String mode) {
@@ -61,5 +80,4 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     public void getUser(UserLight userlight) {
 
     }
-
 }

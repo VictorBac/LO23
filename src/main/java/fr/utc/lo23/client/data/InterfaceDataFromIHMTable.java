@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public interface InterfaceDataFromIHMTable {
     /**
-     * method to let the tables's creator to ask the end of the game to other players
+     * method to let the tables's creator ask the end of the game to other players
      */
     public void askStopGame();
 
@@ -31,42 +31,43 @@ public interface InterfaceDataFromIHMTable {
     public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction);
 
     /**
-     * method to play a game
-     * @param idTable : table on which starting the game
-     */
-    public void playGame(UUID idTable);
-
-
-    /**
      * method to save the game
      */
     public void saveGame();
+
+
+
+    /**
+     * method to play a game
+     * @param idTable : table on which starting the game
+     */
+//    public void playGame(UUID idTable);
 
     /**
      * method to get an user
      * @param user : user to get
      */
-    public void getUser(UserLight user);
+//   public void getUser(UserLight user);
 
     /**
      * confirmation of reception of a card
      */
-    public void confirmationCardRecieved();
+//    public void confirmationCardRecieved();
 
     /**
      * method to replay an action
      * @param action : action à rejouer
      */
-    public void replayAction(Action action);
+//    public void replayAction(Action action);
 
     /**
      * confirma reception of an action
      * @param action : action to send
      */
-    public void confirmationActionRecieved(Action action);
+//    public void confirmationActionRecieved(Action action);
 
     /**
      * confirm the end of turn
      */
-    public void confirmationEndTurn();
+//    public void confirmationEndTurn();
 }

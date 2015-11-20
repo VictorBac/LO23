@@ -41,6 +41,8 @@ public class PlayerHand implements Serializable {
         this.listCardsHand.add(carte);
     }
 
+    /******************* Getters and Setters ************************/
+
     public ArrayList<Card> getListCardsHand() {
         return listCardsHand;
     }

@@ -5,6 +5,6 @@ package fr.utc.lo23.common.data.exceptions;
  */
 public class SeatException extends Exception {
     public SeatException(String message){
-        System.out.println(message);
+        super(message);
     }
 }

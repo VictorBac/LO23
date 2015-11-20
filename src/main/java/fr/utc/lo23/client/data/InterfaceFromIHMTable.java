@@ -23,10 +23,9 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         Table table = new Table(name, acceptSpectator, acceptChatSpectator, nbPlayerMax, nbPlayerMin, abandonAmiable, maxMise, timeforAction);
     }
 
-    public void playGame(UUID idTable) {
-
-    }
-
+    /**
+     * forwards the request to communication module : askStopGame()
+     */
     public void askStopGame() {
 
     }
@@ -35,6 +34,12 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
+/* TODO why theese functions exist?
+
+
+    public void playGame(UUID idTable) {
+
+    }
 
     public void getUser(UserLight user) {
 
@@ -55,4 +60,5 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     public void confirmationEndTurn() {
 
     }
+*/
 }

@@ -13,11 +13,12 @@ public class Seat implements Serializable {
      * player : player
      * startAmount : account at the beginning of the game
      * curentAccount : account actually possessed
+     * statusPlayer : Connected, disconnected
      */
     private UserLight player;
     private int startAmount;
     private int currentAccount;
-    //TODO private EnumerationStatusPlayer statusPlayer;
+    private EnumerationStatusPlayer statusPlayer;
 
     /**
      * Constructeur
@@ -29,17 +30,17 @@ public class Seat implements Serializable {
         this.setPlayer(player);
         this.setStartAmount(startAmount);
         this.setCurrentAccount(currentAccount);
-        //TODO this.statusPlayer = ?;
+        this.statusPlayer = EnumerationStatusPlayer.CONNECTED;
     }
 
     /**
-     * Constructeur par défaut
+     * default constructor
      */
     public Seat() {
         this.player = new UserLight();
         this.setStartAmount(0);
         this.setCurrentAccount(0);
-        //TODO this.statusPlayer = ?;
+        this.statusPlayer = EnumerationStatusPlayer.CONNECTED;
     }
 
     /**
@@ -95,7 +96,6 @@ public class Seat implements Serializable {
         this.startAmount = startAmount;
     }
 
-    /* TODO
     public EnumerationStatusPlayer getStatusPlayer() {
         return statusPlayer;
     }
@@ -103,5 +103,4 @@ public class Seat implements Serializable {
     public void setStatusPlayer(EnumerationStatusPlayer statusPlayer) {
         this.statusPlayer = statusPlayer;
     }
-    */
 }

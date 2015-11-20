@@ -41,6 +41,7 @@ public class Table implements Serializable {
 
     /**
      * Constructor
+     * Creates a new game in games list
      * @param name
      * @param acceptSpectator
      * @param acceptChatSpectator
@@ -119,7 +120,7 @@ public class Table implements Serializable {
      */
     //TODO vérifier si suffisant
     public void spectatorJoinTable(UserLight spectator) throws TableException {
-        //  spectator not already in the table
+        //  spectator not on the table yet
         if (checkConditionSpectatorJoin() && !this.listSpectators.getListUserLights().contains(spectator)){
             this.listSpectators.getListUserLights().add(spectator);
         }
@@ -175,7 +176,7 @@ public class Table implements Serializable {
 
 
     /**
-     * Add a new game in the list of games of the table
+     * Add a new game in the table's games list
      * @param game : new game to add to the list
      */
     public void addNewGameToList(Game game){

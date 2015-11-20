@@ -1,7 +1,7 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Groupe;
+import fr.utc.lo23.common.data.Group;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 
@@ -56,7 +56,7 @@ public interface InterfaceDataFromIHMTable {
 
     /**
      * method to replay an action
-     * @param action : action à rejouer
+     * @param action : action Ã  rejouer
      */
 //    public void replayAction(Action action);
 

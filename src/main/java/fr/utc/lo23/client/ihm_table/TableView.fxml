@@ -23,6 +23,7 @@
                   <Button layoutX="129.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action5" />
                </children>
             </Pane>
+            <Button fx:id="btnLaunchGame" layoutX="843.0" layoutY="458.0" mnemonicParsing="false" onAction="#launchGame" text="Lancer la partie" visible="false" />
          </children>
       </Pane>
       <HBox prefHeight="200.0" prefWidth="824.0">

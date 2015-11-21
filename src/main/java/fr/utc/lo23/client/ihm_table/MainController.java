@@ -1,7 +1,11 @@
 package fr.utc.lo23.client.ihm_table;
 
+import fr.utc.lo23.common.data.Game;
+import fr.utc.lo23.common.data.Table;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
 
 public class MainController {
 
@@ -21,7 +25,8 @@ public class MainController {
 
 	@FXML
 	private void joinTable(javafx.event.ActionEvent event) {
-		table.getTableToMainListener().joinTable(IAmYourPaneLuke,null);
-	}
+		table.getTableToMainListener().joinTable(IAmYourPaneLuke,
+				new Table("",true,true,5,10,0,true,100,new ArrayList<Game>(),30));
+    }
 	
 }

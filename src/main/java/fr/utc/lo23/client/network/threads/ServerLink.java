@@ -58,10 +58,6 @@ public class ServerLink extends Thread {
         /*Message msg = (Message) inputStream.readObject();
         msg.process();*/
 
-        //TODO: Ca doit pas etre la, c'est coté apllicatif ca -> a mettre dans la fct connect de l'interface
-       //RequestListUserMessage reqList = new RequestListUserMessage();
-       // outputStream.writeObject(reqList);
-
         //Reception du message requestListUser
        // Message msg2 = (Message) inputStream.readObject();
         //msg2.process();

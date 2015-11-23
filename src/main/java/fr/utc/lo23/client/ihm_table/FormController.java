@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.ihm_table;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -56,7 +57,11 @@ public class FormController {
 
     @FXML
     public void initialize() {
-        formSend.setOnAction((actionEvent) -> formSend(actionEvent));
+        formSend.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                formSend(event);
+            }
+        });
     }
     /**
      * Checks form values.

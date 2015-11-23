@@ -99,7 +99,10 @@ public class PokerServer extends Thread {
      * @param u User
      */
     public void userDisconnect(User u) {
-        //TODO: Actualiser la table en enlevant le user u
+        // On ferme le socket lié à cet User
+        //TODO: mettre le connectionThread dans userLinksOut pour pouvoir appeller: userLinksOut connectionThread shutdown ()
+
+        //Actualise la table en enlevant le user u
         this.userLinksOut.remove(u.getIdUser());
     }
 

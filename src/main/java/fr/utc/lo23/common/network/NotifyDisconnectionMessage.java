@@ -17,7 +17,8 @@ public class NotifyDisconnectionMessage extends Message {
 
 private User u;
 
-    public NotifyDisconnectionMessage() {
+    public NotifyDisconnectionMessage(User u_init) {
+        u = u_init;
     }
 
     /**
@@ -58,11 +59,6 @@ private User u;
         myServ.sendToAllDisconnection(NotifyD);
 
         Console.log("Closing the ConnectionThread/Socket");
-        //
-        out.close();
-        // On ferme le socket lié à cet User
-
-
     }
 
     /**

@@ -2,6 +2,7 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
 import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
@@ -93,12 +94,13 @@ public class PokerServer extends Thread {
     }
 
     /**
-     * Actualise la table interne qui a tous les clients
-     * @return boolean
+     * Enleve l'utilsateur u de la l'array userLinksOut
+     * @return
      * @param u User
      */
     public void userDisconnect(User u) {
         //TODO: Actualiser la table en enlevant le user u
+        this.userLinksOut.remove(u.getIdUser());
     }
 
     /**
@@ -139,6 +141,16 @@ public class PokerServer extends Thread {
         return null;
     }
 
+    public void sendToAllDisconnection(NotifyDisconnectionMessage NotifyD) {
+        for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {
+            try {
+                userOut.getValue().writeObject(NotifyD);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void notifyNewPlayer(User u) {
 
         NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(u);
@@ -150,5 +162,7 @@ public class PokerServer extends Thread {
             }
         }
     }
+
+
 
 }

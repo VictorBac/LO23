@@ -43,4 +43,37 @@ public class UserLightList implements Serializable{
         else
             listUserLights.add(toAdd);
     }
+
+    /**
+     * finds a user in listUserLights using his id
+     * @param userId the id of the userlight to find
+     * @return the userlight found, or returns an exception
+     */
+    public UserLight findUser(UUID userId) throws UserLightNotFoundException {
+
+        for (UserLight cur : this.listUserLights){
+            if (cur.getIdUser().equals(userId))
+                return cur;
+        }
+        throw new UserLightNotFoundException(userId);
+
+    }
+
+    /**
+     * removes a userlight from the list
+     * @param toRemove the userlight to remove
+     * @throws UserLightNotFoundException
+     */
+    public void remove(UserLight toRemove) throws UserLightNotFoundException{
+        try {
+            this.findUser(toRemove.getIdUser());
+            this.listUserLights.remove(toRemove);
+        }
+
+            catch(UserLightNotFoundException e)
+        {
+            throw e;
+        }
+
+    }
 }

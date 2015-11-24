@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -23,7 +24,7 @@
                     <font>
                         <Font size="14.0" />
                     </font></TextField>
-                <Button fx:id="connect" layoutX="71.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  prefHeight="40.0" prefWidth="120.0" text="Connexion">
+                <Button fx:id="connect" layoutX="71.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didButtonConnectClick" prefHeight="40.0" prefWidth="120.0" text="Connexion">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
@@ -31,7 +32,7 @@
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
-                <ListView layoutX="369.0" layoutY="55.0" prefHeight="229.0" prefWidth="190.0" />
+                <ListView id="listViewServers" fx:id="listViewServers" layoutX="369.0" layoutY="55.0" prefHeight="229.0" prefWidth="190.0" />
                 <Button layoutX="418.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="+">
                     <font>
                         <Font size="13.0" />

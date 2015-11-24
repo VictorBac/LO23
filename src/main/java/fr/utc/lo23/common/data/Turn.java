@@ -3,6 +3,7 @@ package fr.utc.lo23.common.data;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ListIterator;
 
 /**
@@ -12,34 +13,41 @@ import java.util.ListIterator;
  */
 public class Turn implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private ArrayList<Action> listAction;
     private Timestamp timeStampOfTurn;
+    private Game currentGame;
 
     /**
-     * Constructor to create a Table with every fields
-     * @param aListOfAction the List of Action to added
+     *  Constructor void
+     *  @param currentGameToAddToNewTurn The current game from which we can the information to add to the new turn
      */
-    public Turn(ArrayList<Action> aListOfAction,Timestamp timeStampOfTurn){
-        this.listAction = aListOfAction;
-        this.timeStampOfTurn = timeStampOfTurn;
-    }
-
-    /**
-     *  Constructor mainly used when we start a new Turn in a normal Game
-     * @param timeStampOfTurn currentTime
-     */
-    public Turn(Timestamp timeStampOfTurn){
+    public Turn(Game currentGameToAddToNewTurn){
         this.listAction = new ArrayList<Action>();
-        this.timeStampOfTurn = timeStampOfTurn;
+        this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.currentGame = currentGameToAddToNewTurn;
     }
 
     /**
-     * Constructor used to get a new Turn that is a copy from an other one
-     * @param originalTurn Turn original that we want to copy
+     * Constructor
+     * @param aListOfAction A list of action to copy into the new turn
+     * @param timeStampOfTurn The time stamp to copy into the new turn
+     * @param currentGameToAddToNewTurn The current game from which we can the information to add to the new turn
+     */
+    public Turn(ArrayList<Action> aListOfAction, Timestamp timeStampOfTurn, Game currentGameToAddToNewTurn){
+        this.listAction = copyListOfActionToAvoidShallowCopy(aListOfAction);
+        this.timeStampOfTurn = timeStampOfTurn;
+        this.currentGame = currentGameToAddToNewTurn;
+    }
+
+    /**
+     * Copy Constructor
+     * @param originalTurn The original turn that we want to copy
      */
     public Turn (Turn originalTurn){
         this.listAction = copyListOfActionToAvoidShallowCopy(originalTurn.listAction);
         this.timeStampOfTurn = originalTurn.timeStampOfTurn;
+        this.currentGame = originalTurn.currentGame;
     }
 
     /**
@@ -57,9 +65,8 @@ public class Turn implements Serializable {
         return copyListAction;
     }
 
-
     /**
-     * Getter that return the list of action that is associated to this turn
+     * Getter to return the list of action that is associated to this turn
      * @return an ArrayList of Action from the Turn
      */
     public ArrayList<Action> getListAction() {
@@ -67,7 +74,7 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Getter that return the time when this turn started
+     * Getter to return the time when this turn started
      * @return a Timestamp returned that represent when the Turn started
      */
     public Timestamp getTimeStampOfTurn() {
@@ -75,25 +82,38 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Minimal bet that a player has to do, calculated according to previous Action
+     * Getter to return the current game with which this turn is associated
+     * @return
+     */
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+    /**
+     * Method to get the minimal bet that a player has to do, calculated according to previous Action
+     * If the list of action is void, use the amount of the blinde
      * @return an integer that a player has to pay
      */
     private int minimalBet(){
-        return 0; //TODO change this to the real number
+        if ( getListAction().isEmpty() ){
+            return currentGame.getBlind();
+        }else{
+            return getListAction().get(getListAction().size()-1).getAmount();
+        }
     }
 
     /**
-     * Method to check of either an action is possible or not considering previous Action and the amount of money
+     * Method to check either an action is possible or not considering previous Action and the amount of money
      * @param actionToCheck The action action that we want to test
      * @return return true if the action is possible and false if not
      */
     private boolean checkActionValid(Action actionToCheck){
-
+    //assez d'argent pour jouer
+        //
         return false;//TODO change the behaviour
     }
 
     /**
-     * Method which is aimed to return the list of players that have not yet quit the game, ou qui se sont couch� , for this turn
+     * Method to get the list of players that have not yet quit the game, ou qui se sont couch� , for this turn
      * @return an arrayList of UserLight representing players that can still make action on this turn
      */
     private ArrayList<UserLight> getTheListOfPlayersStillAlive(){

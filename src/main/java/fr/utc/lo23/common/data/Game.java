@@ -47,7 +47,7 @@ public class Game implements Serializable{
     }
 
     /**
-     * Constructor used to intialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
+     * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
      */
     public Game() {
         this.idGame = UUID.randomUUID();

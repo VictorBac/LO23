@@ -40,7 +40,7 @@ public class TableList implements Serializable {
         this.listTable.add(table);
     }
 
-    //TODO => utile en cas d'erreur? doit on supprimer une table sinon?
+
     /**
      * Method to delete a table from the list
      * @param table

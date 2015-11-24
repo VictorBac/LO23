@@ -2,6 +2,7 @@ package fr.utc.lo23.common.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 import fr.utc.lo23.common.data.exceptions.TableException;
 
@@ -53,7 +54,7 @@ public class Table implements Serializable {
      * @param maxMise
      * @param timeForAction
      */
-    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeForAction) {
+    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeForAction){
         this.setIdTable(UUID.randomUUID());
         this.setName(name);
         this.setCreator(creator);
@@ -86,7 +87,6 @@ public class Table implements Serializable {
         }
     }
 
-    //TODO => rôle abandon amiable?
     /**
      * Delete player from the table
      * @param player
@@ -96,9 +96,10 @@ public class Table implements Serializable {
         //if abandonAmiable = true and player already on the table
         if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
+            //TODO gestion statistiques
         }
         else if (!this.abandonAmiable){
-            throw new TableException("Leaving table is not authorised!");
+            //TODO gestion statistiques
         }
         else{
             throw new TableException("Player you want to delete is not on the table!");
@@ -121,7 +122,6 @@ public class Table implements Serializable {
      * @param spectator
      * @throws TableException
      */
-    //TODO vérifier si suffisant
     public void spectatorJoinTable(UserLight spectator) throws TableException {
         //  spectator not on the table yet
         if (checkConditionSpectatorJoin() && !this.listSpectators.getListUserLights().contains(spectator)){
@@ -137,7 +137,6 @@ public class Table implements Serializable {
      * @param spectator
      * @throws TableException
      */
-    //TODO vérifier si suffisant
     public void spectatorLeaveTable(UserLight spectator) throws TableException{
         //spectator already on the table
         if(this.listSpectators.getListUserLights().contains(spectator)){
@@ -191,11 +190,21 @@ public class Table implements Serializable {
      * @param game : game to start
      */
     //TODO
-    public void startGame(Game game){
-        /*
-        if game en attente start
-        else pas start
-         */
+    public void startGame(Game game) throws TableException{
+        if (this.listGames.contains(game)){
+            Iterator<Game> iter = this.listGames.iterator();
+            while (iter.hasNext())
+            {
+                //if a game in the list is already started, impossible to start a new game
+                if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.playing){
+                    throw new TableException("Impossible to start a new game");
+                }
+            }
+            if(game.getStatusOfTheGame() == EnumerationStatusGame.finished || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
+
+            }
+        }
+        else throw new TableException("Game not in the list");
     }
 
     /******************* GETTERS AND SETTERS ********************************/

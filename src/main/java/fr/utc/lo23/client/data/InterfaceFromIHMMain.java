@@ -36,6 +36,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         } else if (password.equals(passwordLocal)) {
             throw new WrongPasswordException();
         } else {
+            //TODO: wait com interface to be ready.
             //dManagerClient.getInterToCom().requestLoginServer(localUser);
         }
     }

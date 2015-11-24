@@ -39,7 +39,7 @@ public class AcceptLoginMessage extends Message{
      */
     @Override
     public void process(ServerLink threadClient) {
-        //dataInterface.currentConnectedUser(usersArray);
+        threadClient.getNetworkManager().getDataInstance().currentConnectedUser(usersArray);
     }
 
 }

@@ -2,6 +2,7 @@ package fr.utc.lo23.client.network.threads;
 
 import fr.utc.lo23.client.network.NetworkManagerClient;
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
@@ -12,23 +13,23 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class ServerLink extends Thread {
-    static final String serverAddress = "localhost";
-    static final int serverPort = 1904;
-
     private NetworkManagerClient networkManager;
-    private boolean connected = false;
+
+    /* ============================ ATTRIBUTES ============================ */
     private Socket socket;
+    private boolean running = false;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
-    //TODO: Gerer le changement de port
-    public ServerLink(NetworkManagerClient networkManagerClient){
-        this.networkManager = networkManagerClient;
 
+    /* ============================ METHODS ============================ */
+    public ServerLink(NetworkManagerClient networkManagerClient) {
+        this.networkManager = networkManagerClient;
         try {
+            //TODO: Gerer le changement de port
             connect();
         } catch (Exception e) {
-            Console.err(e.getStackTrace().toString());
+            Console.log("Erreur de connexion: " + e.getMessage());
         }
     }
 
@@ -41,30 +42,13 @@ public class ServerLink extends Thread {
 
         socket = new Socket();
         Console.logn("Le client tente de se connecter...");
-        socket.connect(new InetSocketAddress(serverAddress, serverPort));
-        connected = true;
+        socket.connect(new InetSocketAddress(Params.DEFAULT_SERVER_ADDRESS, Params.DEFAULT_SERVER_PORT));
+        running = true;
         Console.log("Done");
-        Console.log("Client connecté sur: " + serverAddress + ":" + serverPort + "\n");
+        Console.log("Client connecté sur: " + Params.DEFAULT_SERVER_ADDRESS + ":" + Params.DEFAULT_SERVER_PORT + "\n");
 
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         inputStream = new ObjectInputStream(socket.getInputStream());
-    }
-
-    /**
-     * Run method (thread)
-     */
-    @Override
-    public void run() {
-        while (connected) {
-            try {
-                Message msg = (Message) inputStream.readObject();
-                msg.process();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Console.log("Client ok");
-        }
     }
 
     /**
@@ -72,9 +56,31 @@ public class ServerLink extends Thread {
      * @throws IOException
      */
     public void disconnect() throws IOException {
+        running = false;
         socket.close();
     }
 
+    /**
+     * Run method (thread)
+     */
+    @Override
+    public void run() {
+        while (running) {
+            try {
+                Message msg = (Message) inputStream.readObject();
+                msg.process();
+            } catch (Exception e) {
+                Console.err("Erreur de traitement de message: " + e.getMessage());
+            }
+        }
+    }
+
+
+
+    /**
+     * Send a Message Object to the server
+     * @param message Message to send
+     */
     public void send(Message message){
         try {
             outputStream.writeObject(message);
@@ -83,9 +89,7 @@ public class ServerLink extends Thread {
         }
     }
 
-    /* == GETTERS AND SETTERS == */
-    public ObjectOutputStream getOutputStream() {
-        return outputStream;
-    }
+
+    /* ============================ GETTERS AND SETTERS ============================ */
     public NetworkManagerClient getNetworkManager() { return networkManager; }
 }

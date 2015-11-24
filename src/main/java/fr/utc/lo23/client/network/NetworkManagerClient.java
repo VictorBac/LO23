@@ -28,7 +28,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     private ServerLink localClient;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerClient() {
+    public NetworkManagerClient() throws NetworkFailureException{
         localClient = new ServerLink(this);
         localClient.start();
 

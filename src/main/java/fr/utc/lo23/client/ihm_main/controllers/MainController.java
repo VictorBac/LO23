@@ -10,14 +10,21 @@ import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
 import fr.utc.lo23.client.network.InterfaceClient;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainController extends Application {
+
+
 
     /**
      * Interfaces from DATA
@@ -57,5 +64,7 @@ public class MainController extends Application {
         scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
         root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
         primaryStage.show();
-    }
+            }
+
+
 }

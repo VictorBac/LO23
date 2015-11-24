@@ -15,9 +15,7 @@ public class AcceptLoginMessage extends Message{
 
     private ArrayList<User> usersArray;
 
-    public AcceptLoginMessage(ArrayList<User> aUser) {
-        aUser=usersArray;
-    }
+    public AcceptLoginMessage(ArrayList<User> aUser) {usersArray=aUser;}
 
     /**
      * Generic process (both server and client)

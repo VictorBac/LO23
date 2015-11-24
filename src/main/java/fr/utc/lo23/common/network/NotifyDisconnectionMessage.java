@@ -3,8 +3,10 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.server.network.threads.PokerServer;
+
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 /**
@@ -13,9 +15,10 @@ import java.io.ObjectOutputStream;
  */
 public class NotifyDisconnectionMessage extends Message {
 
-private UserLight u;
+private User u;
 
-    public NotifyDisconnectionMessage() {
+    public NotifyDisconnectionMessage(User u_init) {
+        u = u_init;
     }
 
     /**
@@ -47,15 +50,15 @@ private UserLight u;
         //
 
         Console.log("Refreshing UserLight Table in Server");
-        // myServ.userDisconnected(u);
+        myServ.userDisconnect(u);
         // Update de la liste de UserLight contenue dans le Thread Server.
 
+
+        // Notification à tous les users de la déconnection
+        NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(u);
+        myServ.sendToAllDisconnection(NotifyD);
+
         Console.log("Closing the ConnectionThread/Socket");
-        //
-        // On ferme le socket lié à cet User
-
-
-
     }
 
     /**

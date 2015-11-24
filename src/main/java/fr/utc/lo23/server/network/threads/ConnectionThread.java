@@ -46,4 +46,8 @@ public class ConnectionThread extends Thread {
             e.printStackTrace();
         }
     }
+
+    public void shutdown() throws IOException {
+        this.socketClient.close();
+    }
 }

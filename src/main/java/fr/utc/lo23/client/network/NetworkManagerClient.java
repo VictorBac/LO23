@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.utc.lo23.client.network;
 
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
@@ -12,25 +7,66 @@ import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.network.RequestLoginMessage;
 import fr.utc.lo23.exceptions.network.*;
+
+import java.io.IOException;
 
 /**
  *
  * @author Jean-Côme
  */
-public class IntClient implements InterfaceClient  {
+public class NetworkManagerClient implements InterfaceClient  {
+    /* Singleton -> Il faudrait passer le constructeur en privé et faire un getInstance() */
+    private static NetworkManagerClient myInstance;
 
+    /* Modules instance, initiate by IHM module with setters */
+    private InterfaceDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
+    //private IhmManagerClient IhmInstance; TODO: Avoir le manager !
+
+    /* Attributes */
     private ServerLink localClient;
-    private InterfaceDataFromCom interfaceData;
 
-    public IntClient(InterfaceDataFromCom intData) {
-        localClient = new ServerLink();
-        interfaceData = intData;
-        localClient.setDataInterface(interfaceData);
-
+    /* =========================================== METHODES =========================================== */
+    public NetworkManagerClient() {
+        localClient = new ServerLink(this);
         localClient.start();
+
         User user = new User();
         requestLoginServer(user);
+    }
+
+    /* == GETTERS AND SETTERS == */
+    public InterfaceDataFromCom getDataInstance() {
+        return dataInstance;
+    }
+
+    public void setDataInstance(InterfaceDataFromCom dataInstance) {
+        this.dataInstance = dataInstance;
+    }
+
+    /* TODO: Avoir le manager
+    public IhmManager getIhmInstance() {
+        return IhmInstance;
+    }
+
+    public void setIhmInstance(IhmManager ihmInstance) {
+        IhmInstance = ihmInstance;
+    }
+    */
+
+
+    /* == METHODES IMPLEMENTATION == */
+    /**
+     * Envoi la reclamation de connexion du client.
+     * @param u
+     * @throws NetworkFailureException
+     */
+    public void requestLoginServer(User u){
+        //Test to send serialized object to the server
+        Console.log("Creation d'un Request Login message\n");
+        RequestLoginMessage reqLog = new RequestLoginMessage(u);
+        localClient.send(reqLog);
     }
 
     public void sendProfile(User u) throws NetworkFailureException {
@@ -82,14 +118,6 @@ public class IntClient implements InterfaceClient  {
 
     }
 
-    /**
-     * Envoi la reclamation de connexion du client.
-     * @param u
-     * @throws NetworkFailureException
-     */
-    public void requestLoginServer(User u){
-        localClient.sendLoginRequest(u);
-    }
 
     public void requestUserStats(UserLight userLocal) throws NetworkFailureException {
 

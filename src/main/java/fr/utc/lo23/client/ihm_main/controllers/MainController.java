@@ -3,12 +3,14 @@ package fr.utc.lo23.client.ihm_main.controllers;
  * Created by jbmartin on 20/10/15.
  */
 
+import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceDataFromIHMTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
 import fr.utc.lo23.client.network.InterfaceClient;
+import fr.utc.lo23.client.network.NetworkManagerClient;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,26 +28,9 @@ public class MainController extends Application {
 
 
 
-    /**
-     * Interfaces from DATA
-     */
-    private InterfaceDataFromIHMMain m_interfaceDataToMain;
-    private InterfaceDataFromCom m_interfaceDataToCom;
-    private InterfaceDataFromIHMTable m_interfaceDataToTable;
-
-
-    /**
-     * Interfaces from MAIN
-     */
-    private InterfaceMainToData m_interfaceMainToData;
-    private InterfaceMainToTable m_interfaceMainToTable;
-
-
-    /**
-     * Interfaces from COM
-     */
-    private InterfaceClient m_interfaceComToData;
-
+    private DataManagerClient DataClient;
+    private IHMMainClientManager IHMmainClient;
+    private NetworkManagerClient NetworkClient;
 
 
 
@@ -57,6 +42,17 @@ public class MainController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        DataClient = new DataManagerClient();
+        IHMmainClient = new IHMMainClientManager(DataClient.getInterFromIHMMain());
+        //NetworkClient = new NetworkManagerClient(DataClient.getInterFromCom());  pull les nouveaux trucs de com.
+        //DataClient.setInterToIHMMain(IHMmainClient.getInterface qu'on envoie a DATA');
+        DataClient.setInterToCom(NetworkClient);
+        
+
+        // Il faut passer en parametre de chaque controleur, la réference au manager IHM main qui contient tout pour passer
+        // d'une fenetre à une autre.
+
         Parent root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
         primaryStage.setTitle("Connexion");
         Scene scene = new Scene(root);

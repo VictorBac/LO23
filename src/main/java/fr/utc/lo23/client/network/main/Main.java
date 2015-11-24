@@ -11,10 +11,9 @@ import fr.utc.lo23.client.network.NetworkManagerClient;
 public class Main {
     public static void main(String[] args){
         Console.log("Main: Lancement client 1");
-        //ServerLink localClient = new ServerLink();
         InterfaceDataFromCom intCom = new InterfaceFromCom();
-        NetworkManagerClient clientInterface = new NetworkManagerClient(intCom);
-        // localClient.start();
+        NetworkManagerClient clientInterface = new NetworkManagerClient();
+        clientInterface.setDataInstance(intCom);
     }
 }
 

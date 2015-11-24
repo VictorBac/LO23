@@ -10,25 +10,20 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.RequestLoginMessage;
 import fr.utc.lo23.exceptions.network.*;
 
-import java.io.IOException;
-
 /**
  *
  * @author Jean-Côme
  */
 public class NetworkManagerClient implements InterfaceClient  {
-    /* Singleton -> Il faudrait passer le constructeur en privé et faire un getInstance() */
-    private static NetworkManagerClient myInstance;
-
     /* Modules instance, initiate by IHM module with setters */
-    private InterfaceDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
-    //private IhmManagerClient IhmInstance; TODO: Avoir le manager !
+    private InterfaceDataFromCom dataInstance;
 
     /* Attributes */
     private ServerLink localClient;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerClient() throws NetworkFailureException{
+    public NetworkManagerClient(InterfaceDataFromCom dataInter) throws NetworkFailureException{
+        this.dataInstance = dataInter;
         localClient = new ServerLink(this);
         localClient.start();
 
@@ -37,24 +32,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     /* == GETTERS AND SETTERS == */
-    public InterfaceDataFromCom getDataInstance() {
-        return dataInstance;
-    }
-
-    public void setDataInstance(InterfaceDataFromCom dataInstance) {
-        this.dataInstance = dataInstance;
-    }
-
-    /* TODO: Avoir le manager
-    public IhmManager getIhmInstance() {
-        return IhmInstance;
-    }
-
-    public void setIhmInstance(IhmManager ihmInstance) {
-        IhmInstance = ihmInstance;
-    }
-    */
-
+    public InterfaceDataFromCom getDataInstance() { return dataInstance; }
 
     /* == METHODES IMPLEMENTATION == */
     /**

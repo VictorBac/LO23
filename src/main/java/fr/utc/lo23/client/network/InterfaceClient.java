@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.utc.lo23.client.network;
-
-import java.util.ArrayList;
 
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;

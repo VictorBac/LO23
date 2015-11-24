@@ -1,10 +1,5 @@
 package fr.utc.lo23.client.network.main;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
-import fr.utc.lo23.client.data.InterfaceFromCom;
-import fr.utc.lo23.client.network.NetworkManagerClient;
-import fr.utc.lo23.server.data.ServerDataFromCom;
-
 /**
  * Created by guixii on 03/11/15.
  * Main for test with 2 clients virtually launched

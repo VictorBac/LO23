@@ -1,55 +1,55 @@
 .action1 {
-	-fx-graphic:url("images/action_fold_m.png");
+	-fx-graphic:url("../images/action_fold_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action1:hover {
-	-fx-graphic:url("images/action_fold_m_hover.png");
+	-fx-graphic:url("../images/action_fold_m_hover.png");
 }
 
 .action2 {
-	-fx-graphic:url("images/action_check_m.png");
+	-fx-graphic:url("../images/action_check_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action2:hover {
-	-fx-graphic:url("images/action_check_m_hover.png");
+	-fx-graphic:url("../images/action_check_m_hover.png");
 }
 
 .action3 {
-	-fx-graphic:url("images/action_follow_m.png");
+	-fx-graphic:url("../images/action_follow_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action3:hover {
-	-fx-graphic:url("images/action_follow_m_hover.png");
+	-fx-graphic:url("../images/action_follow_m_hover.png");
 }
 
 .action4 {
-	-fx-graphic:url("images/action_bet_m.png");
+	-fx-graphic:url("../images/action_bet_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action4:hover {
-	-fx-graphic:url("images/action_bet_m_hover.png");
+	-fx-graphic:url("../images/action_bet_m_hover.png");
 }
 
 .action5 {
-	-fx-graphic:url("images/action_allin_m.png");
+	-fx-graphic:url("../images/action_allin_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
 .action5:hover {
-	-fx-graphic:url("images/action_allin_m_hover.png");
+	-fx-graphic:url("../images/action_allin_m_hover.png");
 }
 
 .table{
-	-fx-background-image:url("images/table.png");
+	-fx-background-image:url("../images/table.png");
 	-fx-background-repeat:no-repeat;
 }
 
@@ -98,7 +98,7 @@
 }
 
 .launchGame{
-    -fx-graphic:url("images/launchGame.png");
+    -fx-graphic:url("../images/launchGame.png");
     -fx-background-color:#3B8474;
     -fx-border:none;
     -fx-border-radius:0px;

@@ -1,4 +1,4 @@
-package fr.utc.lo23.client.ihm_table;
+package fr.utc.lo23.client.ihm_table.interfaces;
 
 import java.security.Timestamp;
 import java.util.ArrayList;

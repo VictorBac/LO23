@@ -1,5 +1,6 @@
-package fr.utc.lo23.client.ihm_table;
+package fr.utc.lo23.client.ihm_table.controllers;
 
+import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;

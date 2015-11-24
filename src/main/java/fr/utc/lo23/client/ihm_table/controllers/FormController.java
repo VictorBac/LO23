@@ -1,5 +1,6 @@
-package fr.utc.lo23.client.ihm_table;
+package fr.utc.lo23.client.ihm_table.controllers;
 
+import fr.utc.lo23.client.ihm_table.IHMTable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

@@ -1,11 +1,11 @@
 package fr.utc.lo23.client.ihm_table;
 
+import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.common.data.*;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
 
-public class TableToDataListener implements ITableToDataListener{
+public class TableToDataListener implements ITableToDataListener {
     private IHMTable ihmtable;
 
     public TableToDataListener(IHMTable ihmtable){

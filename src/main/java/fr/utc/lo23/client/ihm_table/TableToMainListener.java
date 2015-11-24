@@ -1,9 +1,12 @@
 package fr.utc.lo23.client.ihm_table;
 
+import fr.utc.lo23.client.ihm_table.interfaces.ITableToMainListener;
+import fr.utc.lo23.client.ihm_table.views.FormView;
+import fr.utc.lo23.client.ihm_table.views.TableView;
 import fr.utc.lo23.common.data.Table;
 import javafx.scene.layout.Pane;
 
-public class TableToMainListener implements ITableToMainListener{
+public class TableToMainListener implements ITableToMainListener {
 	private IHMTable ihmtable;
 
     public TableToMainListener(IHMTable ihmtable){

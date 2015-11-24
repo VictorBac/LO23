@@ -1,5 +1,7 @@
-package fr.utc.lo23.client.ihm_table;
+package fr.utc.lo23.client.ihm_table.views;
 
+import fr.utc.lo23.client.ihm_table.IHMTable;
+import fr.utc.lo23.client.ihm_table.controllers.TableController;
 import fr.utc.lo23.common.data.Table;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

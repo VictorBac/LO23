@@ -13,20 +13,22 @@ public class Table implements Serializable {
     /**
      * idTable : unique id of the table
      * name : name of the table
-     * acceptSpectator : true if accept, false otherwhise
-     * acceptChatSpectator : true if accept, false otherwhise
+     * creator : UserLight who created the table (can launch game...)
+     * acceptSpectator : true if accept, false otherwise
+     * acceptChatSpectator : true if accept, false otherwise
      * nbPlayerMax : maximum number of players on the table
      * nbPlayerMin : minimum number of players on the table required to launch a game
      * listPlayers: list of players actually on the table
      * listSpectators : list of spectators
      * currentGame : number of the actual game in the game array
-     * abandonAmiable : true if authorised, false otherwhise
+     * abandonAmiable : true if authorised, false otherwise
      * maxMise : maximum amount that players can give themselves at the beginning
      * listGames : list of games that were played on this table (last = actual)
-     * timeforAction : time between actions for the replay
+     * timeForAction : time between actions for the replay
      */
     private UUID idTable;
     private String name;
+    private UserLight creator;
     private boolean acceptSpectator;
     private boolean acceptChatSpectator;
     private int nbPlayerMax;
@@ -37,23 +39,24 @@ public class Table implements Serializable {
     private boolean abandonAmiable;
     private int maxMise;
     private ArrayList<Game> listGames;
-    private int timeforAction;
+    private int timeForAction;
 
     /**
      * Constructor
-     * Creates a new game in games list
      * @param name
+     * @param creator
      * @param acceptSpectator
      * @param acceptChatSpectator
      * @param nbPlayerMax
      * @param nbPlayerMin
      * @param abandonAmiable
      * @param maxMise
-     * @param timeforAction
+     * @param timeForAction
      */
-    public Table(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
+    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeForAction) {
         this.setIdTable(UUID.randomUUID());
         this.setName(name);
+        this.setCreator(creator);
         this.setAcceptSpectator(acceptSpectator);
         this.setAcceptChatSpectator(acceptChatSpectator);
         this.listPlayers = new UserLightList();
@@ -65,7 +68,7 @@ public class Table implements Serializable {
         this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
         listGames.add(new Game());
-        this.setTimeforAction(timeforAction);
+        this.setTimeForAction(timeForAction);
     }
 
     /**
@@ -214,6 +217,10 @@ public class Table implements Serializable {
         this.name = name;
     }
 
+    public UserLight getCreator() {return creator;}
+
+    public void setCreator(UserLight creator) {this.creator = creator;}
+
     public boolean isAcceptSpectator() {
         return acceptSpectator;
     }
@@ -278,12 +285,12 @@ public class Table implements Serializable {
         this.listGames = listGames;
     }
 
-    public int getTimeforAction() {
-        return timeforAction;
+    public int getTimeForAction() {
+        return timeForAction;
     }
 
-    public void setTimeforAction(int timeforAction) {
-        this.timeforAction = timeforAction;
+    public void setTimeForAction(int timeForAction) {
+        this.timeForAction = timeForAction;
     }
 
     public UserLightList getListPlayers() {
@@ -301,5 +308,6 @@ public class Table implements Serializable {
     public void setListSpectators(UserLightList listSpectators) {
         this.listSpectators = listSpectators;
     }
+
 }
 

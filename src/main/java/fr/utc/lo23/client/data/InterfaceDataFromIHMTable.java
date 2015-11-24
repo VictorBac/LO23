@@ -1,9 +1,7 @@
 package fr.utc.lo23.client.data;
 
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Group;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLight;
 
 import java.util.UUID;
 
@@ -18,17 +16,17 @@ public interface InterfaceDataFromIHMTable {
     public void askStopGame();
 
     /**
-     * method to create a new table
-     * @param name
-     * @param acceptSpectator
-     * @param acceptChatSpectator
-     * @param nbPlayerMax
-     * @param nbPlayerMin
-     * @param abandonAmiable
-     * @param maxMise
-     * @param timeforAction
+     * TODO : params?
      */
-    public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction);
+    public void vote();
+
+
+    /**
+     * method to create a new table
+     * @param table
+     */
+    public void tableToCreate(Table table);
+
 
     /**
      * method to save the game
@@ -36,38 +34,40 @@ public interface InterfaceDataFromIHMTable {
     public void saveGame();
 
 
+    /**
+     * method to send a chat message
+     */
+    public void sendMessage(MessageChat message);
 
     /**
      * method to play a game
      * @param idTable : table on which starting the game
      */
-//    public void playGame(UUID idTable);
+    public void playGame(UUID idTable);
 
-    /**
-     * method to get an user
-     * @param user : user to get
-     */
-//   public void getUser(UserLight user);
 
     /**
      * confirmation of reception of a card
      */
-//    public void confirmationCardRecieved();
+    public void confirmationCardReceived();
 
     /**
      * method to replay an action
-     * @param action : action à rejouer
+     * @param action : action to replay
      */
-//    public void replayAction(Action action);
+    public void replayAction(Action action, UserLight player);
 
     /**
-     * confirma reception of an action
+     * confirms reception of an action
      * @param action : action to send
      */
-//    public void confirmationActionRecieved(Action action);
+    public void confirmationActionReceived(Action action);
 
     /**
      * confirm the end of turn
      */
-//    public void confirmationEndTurn();
+    public void confirmationEndTurn();
+
+
+    public void transmitRequest();
 }

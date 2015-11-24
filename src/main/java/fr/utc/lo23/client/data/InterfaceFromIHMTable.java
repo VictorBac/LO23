@@ -19,8 +19,8 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
     //TODO envoyer table sur le serveur via interface com
-    public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
-        Table table = new Table(name, acceptSpectator, acceptChatSpectator, nbPlayerMax, nbPlayerMin, abandonAmiable, maxMise, timeforAction);
+    public void tableToCreate(Table table){
+        
     }
 
     /**
@@ -30,35 +30,42 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
+    public void vote(){
+
+    }
+
     public void saveGame() {
 
     }
 
-/* TODO why theese functions exist?
 
+    public void sendMessage(MessageChat message){
+
+    }
 
     public void playGame(UUID idTable) {
 
     }
 
-    public void getUser(UserLight user) {
+
+    public void confirmationCardReceived() {
 
     }
 
-    public void confirmationCardRecieved() {
+    public void replayAction(Action action, UserLight player) {
 
     }
 
-    public void replayAction(Action action) {
-
-    }
-
-    public void confirmationActionRecieved(Action action) {
+    public void confirmationActionReceived(Action action) {
 
     }
 
     public void confirmationEndTurn() {
 
     }
-*/
+
+
+    public void transmitRequest(){
+
+    }
 }

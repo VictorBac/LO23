@@ -11,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -35,9 +37,14 @@ public class ConnectionController implements Initializable {
     @FXML
     void didButtonConnectClick(ActionEvent event) {
         System.out.println("didButtonConnectClick");
-        ObservableList<String> items = FXCollections.observableArrayList("Serveur 1", "Cerberus 2", "World 3", "Europe 3");
-        listViewServers.setItems(items);
+        List<String> listerecue = new ArrayList<String>();
+        listerecue.add("Premier");
+        listerecue.add("Deuxieme");
 
+        ObservableList<String> items = FXCollections.observableArrayList(listerecue);
+
+        //ObservableList<String> items = FXCollections.observableArrayList("Serveur 1", "Cerberus 2", "World 3", "Europe 3");
+        listViewServers.setItems(items);
 
     }
 

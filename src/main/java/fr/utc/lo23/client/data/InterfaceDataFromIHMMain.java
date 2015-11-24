@@ -3,6 +3,8 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
 /**
  * This is the interface which will be used by the IHM Main module on the client's side
@@ -66,8 +68,8 @@ public interface InterfaceDataFromIHMMain {
     void playGame(int idTable);
 
     /**
-     * Methode to get the user light information
+     * Methode to get the user's all information
      * @param userlight
      */
-    void getUser(UserLight userlight);
+    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
 }

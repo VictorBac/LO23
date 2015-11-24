@@ -4,6 +4,7 @@ package fr.utc.lo23.common.network;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.exceptions.UserNotFoundException;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
@@ -26,11 +27,6 @@ private User u;
     public void process() {
         Console.log("Disconnection of Player");
         //TODO
-        /**
-         *
-         *
-         *
-         */
     }
 
     /**
@@ -44,7 +40,12 @@ private User u;
         Console.log("Notify disconnection message received");
 
         Console.log("Sending to DataServer");
-
+        try {
+            // Je suppose que c'est la fonction pour enlever l'user. Pas de commentaire de cette fonction sur interface data
+            myServ.getNetworkManager().getDataInstance().deletePlayer(u.getUserLight());
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
         //Appel de la fonction d'interface DATA pour update les tables dans DataServer
 
         Console.log("Refreshing UserLight Table in Server");

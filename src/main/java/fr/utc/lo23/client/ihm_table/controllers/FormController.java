@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.ihm_table.controllers;
 
 import fr.utc.lo23.client.ihm_table.IHMTable;
+import fr.utc.lo23.common.data.Table;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -83,7 +84,18 @@ public class FormController {
         }
 
         if (errors.isEmpty()){ // Toutes les valeurs sont correctement remplies
+            // Getting values
+            String tableName = formName.getText();
+            Integer playerMin = Integer.valueOf(formPlayerMin.getValue().toString());
+            Integer playerMax = Integer.valueOf(formPlayerMax.getValue().toString());
+            boolean spectator = formSpectatorYes.isSelected();
+            boolean spectatorChat = formSpectatorChatYes.isSelected();
+            boolean abandon = formAbandonYes.isSelected();
+            Integer miseMax = Integer.valueOf(formMiseMax.getText());
+            Integer tempsMax = Integer.valueOf(formTempsMax.getText());
 
+            // Sending Table to Data
+            ihmTable.getDataInterface().tableToCreate(tableName, spectator, spectatorChat, playerMax, playerMin, abandon, miseMax, tempsMax);
         }
     }
 

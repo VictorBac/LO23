@@ -31,6 +31,11 @@ public class ImageAvatar {
             return new Image(path);
     }
 
+    /**
+     * stores this.img in a local file
+     * @param path the path where the file is created/opened
+     * @throws IOException if the file cannot be written.
+     */
     public void storeImg(String path) throws IOException {
         File image = new File(path);
         FileOutputStream fos = new FileOutputStream(image);
@@ -39,12 +44,22 @@ public class ImageAvatar {
         ImageIO.write(SwingFXUtils.fromFXImage(img, null), "png", oos);
     }
 
-    public Image readImg(String path) throws IOException, ClassNotFoundException {
-        s.defaultReadObject();
-        Image tempImage = SwingFXUtils.toFXImage(ImageIO.read(s), null);
-        return tempImage;
+    /**
+     * reads an image from a local file
+     * @param path the location of the image
+     * @return the image created
+     * @throws IOException
+     */
+    public Image readImg(String path) throws IOException {
+        File image = new File(path);
+        img = new Image(image.toURI().toString());
+        return img;
     }
 
+    /**
+     * getter for the attribute img
+     * @return the attribute img
+     */
     public Image getImg() {
         return img;
     }

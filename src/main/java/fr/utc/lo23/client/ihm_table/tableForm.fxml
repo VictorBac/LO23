@@ -5,12 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.FormController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="908.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.FormController">
     <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="400.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="400.0" />
     </columnConstraints>
     <rowConstraints>
+      <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="145.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
@@ -22,16 +24,16 @@
         <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label text="Nom de la table" />
-        <Label text="Nombre de joueurs min" GridPane.rowIndex="1" />
-        <Label text="Nombre de joueurs max" GridPane.rowIndex="2" />
-        <Label text="Spectateurs acceptés" GridPane.rowIndex="3" />
-        <Label text="Les spectateurs peuvent participer au chat" GridPane.rowIndex="4" />
-        <Label text="Abandon à l'amiable autorisé" GridPane.rowIndex="5" />
-        <Label text="Mise maximum autorisée" GridPane.rowIndex="6" />
-        <Label text="Temps pour réaliser une action max" GridPane.rowIndex="7" />
-        <TextField fx:id="formName" GridPane.columnIndex="1" />
-        <ComboBox fx:id="formPlayerMin" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="399.0" text="Nom de la table :    " GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Nombre de joueurs min" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label text="Nombre de joueurs max" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label text="Spectateurs acceptés" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="Les spectateurs peuvent participer au chat" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Label text="Abandon à l'amiable autorisé" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <Label text="Mise maximum autorisée" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <Label text="Temps pour réaliser une action max" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <TextField fx:id="formName" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <ComboBox fx:id="formPlayerMin" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="2" />
@@ -49,7 +51,7 @@
                 <String fx:value="2" />
             </value>
         </ComboBox>
-        <ComboBox fx:id="formPlayerMax" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <ComboBox fx:id="formPlayerMax" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="2" />
@@ -67,7 +69,7 @@
                 <String fx:value="10" />
             </value>
         </ComboBox>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <GridPane GridPane.columnIndex="2" GridPane.rowIndex="4">
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -84,7 +86,7 @@
                 <RadioButton fx:id="formSpectatorNo" mnemonicParsing="false" text="Non" toggleGroup="$spectators" GridPane.columnIndex="1" />
             </children>
         </GridPane>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <GridPane GridPane.columnIndex="2" GridPane.rowIndex="5">
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -101,7 +103,7 @@
                 <RadioButton fx:id="formSpectatorChatNo" mnemonicParsing="false" text="Non" toggleGroup="$chatSpectators" GridPane.columnIndex="1" />
             </children>
         </GridPane>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <GridPane GridPane.columnIndex="2" GridPane.rowIndex="6">
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -118,7 +120,7 @@
                 <RadioButton fx:id="formAbandonNon" mnemonicParsing="false" text="Non" toggleGroup="$abandonAmiable" GridPane.columnIndex="1" />
             </children>
         </GridPane>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+        <GridPane GridPane.columnIndex="2" GridPane.rowIndex="7">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="229.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="71.0" />
@@ -131,7 +133,7 @@
                 <Label text=" $" GridPane.columnIndex="1" />
             </children>
         </GridPane>
-        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <GridPane GridPane.columnIndex="2" GridPane.rowIndex="8">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="229.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="71.0" />
@@ -144,6 +146,6 @@
                 <TextField fx:id="formTempsMax" />
             </children>
         </GridPane>
-        <Button fx:id="formSend" mnemonicParsing="false" text="Envoyer" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+        <Button fx:id="formSend" mnemonicParsing="false" text="Envoyer" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
     </children>
 </GridPane>

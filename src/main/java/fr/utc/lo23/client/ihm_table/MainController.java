@@ -26,7 +26,7 @@ public class MainController {
 	@FXML
 	private void joinTable(javafx.event.ActionEvent event) {
 		table.getTableToMainListener().joinTable(IAmYourPaneLuke,
-				new Table("",true,true,5,10,0,true,100,new ArrayList<Game>(),30));
+				new Table("",true,true,5,10,true,100,30));
     }
 	
 }

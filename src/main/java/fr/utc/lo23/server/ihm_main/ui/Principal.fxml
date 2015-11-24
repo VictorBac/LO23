@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="581.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.server.ihm_main.controllers.MainController">
+    <columnConstraints>
+        <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="600.0" />
+        <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+        <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="136.0" minHeight="0.0" prefHeight="0.0" />
+        <RowConstraints maxHeight="400.0" minHeight="-Infinity" prefHeight="550.0" />
+        <RowConstraints />
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="603.0" stylesheets="@style.css" GridPane.rowIndex="1">
+            <children>
+                <TextField fx:id="textPort" layoutX="136.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="56.0" promptText="Port">
+                    <font>
+                        <Font size="14.0" />
+                    </font></TextField>
+                <Button fx:id="buttonStop" disable="true" layoutX="70.0" layoutY="207.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonStopAction" prefHeight="40.0" prefWidth="120.0" text="Arrêter" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font></Button>
+                <Button fx:id="buttonStart" layoutX="70.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonStartAction" prefHeight="40.0" prefWidth="120.0" text="Démarrer" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font></Button>
+            <Label layoutX="48.0" layoutY="34.0" text="Adresse IP:">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelIp" layoutX="140.0" layoutY="34.0" text="0.0.0.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="textLog" editable="false" layoutX="234.0" layoutY="26.0" prefHeight="322.0" prefWidth="359.0" />
+            <Label layoutX="95.0" layoutY="60.0" text="Port:" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>

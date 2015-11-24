@@ -70,4 +70,5 @@ public interface InterfaceDataFromIHMMain {
      * @param userlight
      */
     void getUser(UserLight userlight);
+
 }

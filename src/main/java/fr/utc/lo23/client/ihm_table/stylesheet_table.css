@@ -96,3 +96,12 @@
 .list-cell:filled:hover {
     -fx-background-color: none;
 }
+
+.launchGame{
+    -fx-graphic:url("images/launchGame.png");
+    -fx-background-color:#3B8474;
+    -fx-border:none;
+    -fx-border-radius:0px;
+    -fx-background-radius:0px;
+    -fx-text-fill:white;
+}

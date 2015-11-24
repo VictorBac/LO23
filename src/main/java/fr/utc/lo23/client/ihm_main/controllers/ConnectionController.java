@@ -30,14 +30,15 @@ public class ConnectionController implements Initializable {
     private PasswordField fieldPassword;
 
     @FXML
-    public ListView ListViewServers;
+    public ListView listViewServers;
 
     @FXML
     void didButtonConnectClick(ActionEvent event) {
         System.out.println("didButtonConnectClick");
-        //ObservableList<String> items = FXCollections.observableArrayList("Single", "Double", "Suite", "Family App");
-        //fx:ListViewServers.setItems(items);
-        fx:ListViewServers.setVisible(false);
+        ObservableList<String> items = FXCollections.observableArrayList("Serveur 1", "Cerberus 2", "World 3", "Europe 3");
+        listViewServers.setItems(items);
+
+
     }
 
     @Override

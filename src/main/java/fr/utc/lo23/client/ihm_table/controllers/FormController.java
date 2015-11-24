@@ -75,6 +75,7 @@ public class FormController {
         ArrayList<String> errors = new ArrayList<String>(); // Si une erreur est détectée, on l'ajoute dans cette liste
         if (formName.getText().isEmpty()){
             errors.add("Nom de la table");
+            formName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
         if (formMiseMax.getText().isEmpty()){
             errors.add("Mise Max");

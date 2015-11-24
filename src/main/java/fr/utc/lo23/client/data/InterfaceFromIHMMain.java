@@ -2,6 +2,8 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.*;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
 
 /**
@@ -77,7 +79,14 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     }
 
-    public void getUser(UserLight userlight) {
 
+    /**
+     * Method to get the user's all information
+     * @param userlight
+     * @throws ProfileNotFoundOnServerException
+     * @throws NetworkFailureException
+     */
+    public void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException {
+        dManagerClient.getInterToCom().consultProfile(userlight);
     }
 }

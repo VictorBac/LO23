@@ -3,14 +3,15 @@ package fr.utc.lo23.common.data;
 import fr.utc.lo23.common.data.exceptions.ContactException;
 import fr.utc.lo23.common.data.exceptions.GroupeNotFoundException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * Created by Jianghan on 20/10/2015.
  */
-public class Contact {
-
+public class Contact implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * listGroups : liste des groupes de contacts
      */

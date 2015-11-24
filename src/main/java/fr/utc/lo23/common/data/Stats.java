@@ -1,12 +1,13 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Jianghan on 20/10/2015.
  */
-public class Stats {
-
+public class Stats implements Serializable {
+    private static final long serialVersionUID = 1L;
     private ArrayList<Integer> listMiseBegin;
     private ArrayList<Integer> listPointsByGame;
 

@@ -1,12 +1,13 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Jianghan on 20/10/2015.
  */
-public class Group {
-
+public class Group implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String groupName;
     private ArrayList<UserLight> contactList;
 

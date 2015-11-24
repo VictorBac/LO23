@@ -1,5 +1,7 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
+import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
 
 /**
@@ -12,7 +14,7 @@ public interface InterfaceDataFromIHMMain {
      * @param login
      * @param password
      */
-    void logUser(String login, String password);
+    void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException;
 
     /**
      * Methode to ask to exit

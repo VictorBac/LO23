@@ -1,6 +1,10 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.client.ihm_table.ITableToDataListener;
+import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+import fr.utc.lo23.common.data.Table;
 
 import java.util.ArrayList;
 
@@ -9,22 +13,38 @@ import java.util.ArrayList;
  */
 public class InterfaceFromCom implements InterfaceDataFromCom{
 
-    public InterfaceFromCom() {}
+    private DataManagerClient dManagerClient;
+
+
+    public InterfaceFromCom(DataManagerClient dManagerClient) {
+        this.dManagerClient = dManagerClient;
+    }
 
     public void updateStats(Stats statsLocalUser) {
 
     }
 
     public void remoteUserConnected(UserLight userLightDistant) {
-
+        try {//TODO handle exception and test
+            dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
+            dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
+        } catch (ExistingUserException e) {
+            e.printStackTrace();
+        }
     }
 
     public void remoteUserDisonnected(UserLight userLightDistant) {
+        try {//TODO handle exception and test
+            dManagerClient.getListUsersLightLocal().remove(userLightDistant);
+        } catch (UserLightNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void notifyNewTable(Table tableCreatedOnServer) {
-
+        dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
+        //TODO missing IHM main interface for new Table
     }
 
     public void userJoinedTable() {
@@ -48,15 +68,19 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
+        //TODO test
+        dManagerClient.getListUsersLightLocal().setUserList(listUserLightConnectedOnServer);
+        dManagerClient.getInterToIHMMain().onlineUsers(listUserLightConnectedOnServer);
 
     }
 
-    public void currentTables(TableList tableListOnServer) {
-
+    public void currentTables(ArrayList<Table> listOfTableListOnServer) {
+        dManagerClient.getListTablesLocal().setListTable(listOfTableListOnServer);
+        //TODO missing IHM main interface for table list
     }
 
     public UserLight getUserLightLocal() {
-        return null;
+        return dManagerClient.getUserLocal().getUserLight();
     }
 
     public void stockCards(PlayerHand playerHandUserLocal) {
@@ -72,6 +96,10 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
+
+    }
+
+    public void saveLogGame(Table table) {
 
     }
 }

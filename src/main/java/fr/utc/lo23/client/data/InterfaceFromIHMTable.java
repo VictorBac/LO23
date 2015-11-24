@@ -1,55 +1,31 @@
 package fr.utc.lo23.client.data;
 
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Groupe;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLight;
 
 import java.util.UUID;
 
 /**
+ * This is the interface which will be used by the IHMTable module on the client's side
  * Created by Haroldcb on 21/10/2015.
  */
 public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
+    private DataManagerClient dManagerClient;
+
+    public InterfaceFromIHMTable(DataManagerClient dManagerClient) {
+
+        this.dManagerClient = dManagerClient;
+    }
+
+    //TODO envoyer table sur le serveur via interface com
+    public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
+        Table table = new Table(name, acceptSpectator, acceptChatSpectator, nbPlayerMax, nbPlayerMin, abandonAmiable, maxMise, timeforAction);
+    }
+
     /**
-     * Constructeur
+     * forwards the request to communication module : askStopGame()
      */
-    public InterfaceFromIHMTable() {
-    }
-
-    public void logUser(String login, String password) {
-
-    }
-
-    public void addContact(UserLight contact, Groupe category) {
-
-    }
-
-    public void deleteContact(UserLight contact) {
-
-    }
-
-    public void createContactList(String name) {
-
-    }
-
-    public void deleteContactList(String name) {
-
-    }
-
-    public void contactAddedNotificationReceived(UserLight contact) {
-
-    }
-
-    public void tableToCreate(Table table) {
-
-    }
-
-    public void playGame(UUID idTable) {
-
-    }
-
     public void askStopGame() {
 
     }
@@ -58,7 +34,10 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
-    public void saveLogGame(Table table) {
+/* TODO why theese functions exist?
+
+
+    public void playGame(UUID idTable) {
 
     }
 
@@ -81,4 +60,5 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     public void confirmationEndTurn() {
 
     }
+*/
 }

@@ -1,6 +1,6 @@
 package fr.utc.lo23.server.network.main;
 
-import fr.utc.lo23.server.network.threads.PokerServer;
+import fr.utc.lo23.server.network.NetworkManagerServer;
 
 /**
  * Created by guixii on 03/11/15.
@@ -8,8 +8,7 @@ import fr.utc.lo23.server.network.threads.PokerServer;
  */
 public class Main {
     public static void main(String[] args){
-        PokerServer pokerPokerServer = new PokerServer(null); // instance de la classe principale
-        //TODO Quand data aura commit l'implémentation de son interface, l'ajouter à pokerserveur pour pouvoir ajouter les méthodes qui vont bien
-        pokerPokerServer.start();
+        NetworkManagerServer manager = new NetworkManagerServer();
+
     }
 }

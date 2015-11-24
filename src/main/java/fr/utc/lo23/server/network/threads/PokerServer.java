@@ -2,7 +2,10 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
 import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
+import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.io.IOException;
@@ -20,6 +23,7 @@ public class PokerServer extends Thread {
     private ServerSocket listeningSocket;
     private boolean running;
     private HashMap<UUID, ObjectOutputStream> userLinksOut;
+    private ArrayList<ConnectionThread> threadsClientList;
 
     /**
      * Constructeur
@@ -30,7 +34,8 @@ public class PokerServer extends Thread {
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
         Console.log("Nombre d'utilisateurs maximum fixé à " + NB_MAX_USER);
-        userLinksOut = new HashMap<UUID, ObjectOutputStream>();
+        ArrayList<ConnectionThread> threadsClientList = new ArrayList<ConnectionThread>();
+
 
         // Change port if needed
         if (portToListen != null) PokerServer.PORT = portToListen;
@@ -74,7 +79,9 @@ public class PokerServer extends Thread {
             try {
                 Console.log("Srv: Attente des connexions clients...");
                 Socket soClient = listeningSocket.accept();
-                new ConnectionThread(soClient, this).start();
+                ConnectionThread thread = new ConnectionThread(soClient, this);
+                thread.start();
+                threadsClientList.add(thread);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,30 +91,24 @@ public class PokerServer extends Thread {
 
 
     /**
-     * Must be called to register the output stream with a User
-     * @param out
-     * @param user
-     */
-    public void registerOutputStream(ObjectOutputStream out, User user){
-        userLinksOut.put(user.getIdUser(), out);
-    }
-
-    /**
-     * Actualise la table interne qui a tous les clients
-     * @return boolean
+     * Enleve l'utilsateur u de la l'array userLinksOut
+     * @return
      * @param u User
      */
+
     public void userDisconnect(User u) {
-        //TODO: Actualiser la table en enlevant le user u
+        //TODO cedric
+        // On ferme le socket lié à cet User
+        //TODO: mettre le connectionThread dans userLinksOut pour pouvoir appeller: userLinksOut connectionThread shutdown ()
+
+        //Actualise la table en enlevant le user u
+        //this.userLinksOut.remove(u.getIdUser());
     }
 
-    /**
-     * Get all outputStream for inform other
-     * @return
-     */
-    public ArrayList<ObjectOutputStream> getAllOutputStream(){
-
-        return null;
+    public void sendToAll(Message message){
+        for (ConnectionThread threadClient : threadsClientList) {
+            threadClient.send(message);
+        }
     }
 
     /**
@@ -115,7 +116,7 @@ public class PokerServer extends Thread {
      * @return int
      */
     public int getNbUsers() {
-        return userLinksOut.size();
+        return threadsClientList.size();
     }
 
 
@@ -126,29 +127,16 @@ public class PokerServer extends Thread {
      * @param u
      * @return
      */
-    public ArrayList<User> stockUserAndNotifyOthers(User u) {
+    public ArrayList<UserLight> stockUserAndNotifyOthers(UserLight u) {
         //TODO Appeler interface data pour stocker l'user U
 
         //TODO Notify les autres users de la connection d'un nouvel utilisateur
-        notifyNewPlayer(u);
+        //notifyNewPlayer(u);
 
 
         //TODO retourner arraylist des autres users pour le donner au message accept login
-        //ArrayList<Users> userList = InterfaceServerDataFromCom.getConnectedUsers(); Le nom de la classe n'est pas le bon, il faudra juste le changer par la classe implémentant leur int.
+        //ArrayList<UserLight> userList = InterfaceServerDataFromCom.getConnectedUsers();//TODO
         //return userList;
         return null;
     }
-
-    private void notifyNewPlayer(User u) {
-
-        NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(u);
-        for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {
-            try {
-                userOut.getValue().writeObject(newPMessage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 }

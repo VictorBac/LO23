@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.data.Table;
 
 import java.util.ArrayList;
 
@@ -73,9 +74,9 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to keep locally the list of Table currently on the Server
-     * @param tableListOnServer a TableList that contains an ArrayList of Table on the server
+     * @param listOfTableListOnServer ArrayList of Table from the server
      */
-    public void currentTables (TableList tableListOnServer);
+    public void currentTables (ArrayList<Table> listOfTableListOnServer);
 
     /**
      * Method to get the UserLight of the local user
@@ -108,5 +109,12 @@ public interface InterfaceDataFromCom {
      * @param listGain ArrayList of Integer with the point that each one earned ordered in the same order as the list of winner
      */
     public void informEndTurn( ArrayList<UserLight> listWinner, ArrayList<Integer> listGain );
+
+
+    /**
+     * Method to save a game
+     * @param table : table on which the game was played
+    */
+    public void saveLogGame(Table table);
 
 }

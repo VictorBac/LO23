@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.data.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -9,7 +10,7 @@ import java.util.UUID;
 public interface InterfaceServerDataFromCom {
 
 
-    UserLight userConnection(User connectingUser);
+    UserLight userConnection(User connectingUser) throws ExistingUserException;
 
     ArrayList<UserLight> getConnectedUsers();
 
@@ -29,7 +30,7 @@ public interface InterfaceServerDataFromCom {
 
     void nextStepReplay();
 
-    void deletePlayer(UserLight deletedUsr);
+    void deletePlayer(UserLight deletedUsr) throws fr.utc.lo23.common.data.exceptions.UserNotFoundException;
 
     void confirmationCardReceived(UserLight player);
 

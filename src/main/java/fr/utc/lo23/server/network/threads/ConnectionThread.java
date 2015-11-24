@@ -9,12 +9,17 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ConnectionThread extends Thread {
+    private boolean running;
     private PokerServer myServer;
     private Socket socketClient;
 
     //To send objects between client and server
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
+
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
+    }
 
 
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
@@ -37,13 +42,29 @@ public class ConnectionThread extends Thread {
     @Override
     public synchronized void run() {
         Console.log("Client: Démarré");
-        try {
-            // Call suitable processing method
-            Message msg = (Message) inputStream.readObject();
-            msg.process(myServer, outputStream);
+        running = true;
+        while (running) {
+            try {
+                // Call suitable processing method
+                Message msg = (Message) inputStream.readObject();
+                msg.process(myServer, this);
 
-        } catch (Exception e) {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void send(Message message){
+        try {
+            outputStream.writeObject(message);
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void shutdown() throws IOException {
+        running = false;
+        socketClient.close();
     }
 }

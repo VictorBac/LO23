@@ -1,12 +1,13 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Class to represent a chat
  * Created by Ying on 03/11/2015.
  */
-public class Chat {
+public class Chat implements Serializable {
     /**
      * listMessages : table of messages sended
      * @see  fr.utc.lo23.common.data.MessageChat

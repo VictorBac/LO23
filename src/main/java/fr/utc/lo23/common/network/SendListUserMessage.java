@@ -1,14 +1,11 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
-import fr.utc.lo23.client.data.Userlight;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**

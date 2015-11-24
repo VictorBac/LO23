@@ -41,7 +41,7 @@ public interface InterfaceServer {
      *
      * @param userDistant
      */
-    public void notifyNewPlayer(User userDistant) throws NetworkFailureException;
+    public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException;
 
     /**
      *

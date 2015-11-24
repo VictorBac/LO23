@@ -68,7 +68,7 @@ public class NetworkManagerServer implements InterfaceServer {
 
     }
 
-    public void notifyNewPlayer(User userDistant) throws NetworkFailureException {
+    public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException {
         NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(userDistant);
         server.sendToAll(newPMessage);
     }

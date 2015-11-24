@@ -139,32 +139,4 @@ public class PokerServer extends Thread {
         //return userList;
         return null;
     }
-<<<<<<< HEAD
-
-    public void sendToAllDisconnection(NotifyDisconnectionMessage NotifyD) {
-        for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {
-            try {
-                userOut.getValue().writeObject(NotifyD);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void notifyNewPlayer(UserLight u) {
-
-        NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(u);
-        for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {
-            try {
-                userOut.getValue().writeObject(newPMessage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
-=======
->>>>>>> Fin changement server
 }

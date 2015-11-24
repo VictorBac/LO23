@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class TableView{
-	
 
 	public void createTable(Pane root, Table table, IHMTable ihmTable) {
 		try {

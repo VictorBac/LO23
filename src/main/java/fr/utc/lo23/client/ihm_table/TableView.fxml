@@ -5,16 +5,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="730.0" prefWidth="1020.0" stylesheets="@stylesheet_table.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.TableController">
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@stylesheet_table.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.TableController">
    <children>
-      <Pane prefHeight="530.0" prefWidth="1020.0" styleClass="table">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1020.0" styleClass="table">
          <children>
             <Button fx:id="btnLaunchGame" layoutX="887.0" layoutY="14.0" mnemonicParsing="false" onAction="#launchGame" styleClass="launchGame" text="Lancer partie" visible="false" />
          </children>
       </Pane>
-      <HBox prefHeight="200.0" prefWidth="1020.0">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1020.0">
          <children>
-            <TitledPane animated="false" collapsible="false" prefHeight="200.0" prefWidth="512.0" styleClass="gameLog" text="&gt; Logs partie">
+            <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="510.0" styleClass="gameLog" text="&gt; Logs partie">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -23,7 +23,7 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <TitledPane animated="false" collapsible="false" prefHeight="200.0" prefWidth="512.0" styleClass="chat" text="&gt; Chat">
+            <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="510.0" styleClass="chat" text="&gt; Chat">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

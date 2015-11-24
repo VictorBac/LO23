@@ -127,4 +127,8 @@ public class PokerServer extends Thread {
     public int getNbUsers() {
         return threadsClientList.size();
     }
+
+    public NetworkManagerServer getNetworkManager() {
+        return networkManager;
+    }
 }

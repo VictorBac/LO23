@@ -5,6 +5,7 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
 import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
+import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class PokerServer extends Thread {
     private ServerSocket listeningSocket;
     private boolean running;
     private HashMap<UUID, ObjectOutputStream> userLinksOut;
-    private ArrayList<ConnectionThread> threadsWithUUID;
+    private ArrayList<ConnectionThread> threadsClientList;
 
     /**
      * Constructeur
@@ -33,7 +34,7 @@ public class PokerServer extends Thread {
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
         Console.log("Nombre d'utilisateurs maximum fixé à " + NB_MAX_USER);
-        ArrayList<ConnectionThread> threadsWithUUID = new ArrayList<ConnectionThread>();
+        ArrayList<ConnectionThread> threadsClientList = new ArrayList<ConnectionThread>();
 
 
         // Change port if needed
@@ -80,7 +81,7 @@ public class PokerServer extends Thread {
                 Socket soClient = listeningSocket.accept();
                 ConnectionThread thread = new ConnectionThread(soClient, this);
                 thread.start();
-                threadsWithUUID.add(thread);
+                threadsClientList.add(thread);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -104,13 +105,10 @@ public class PokerServer extends Thread {
         //this.userLinksOut.remove(u.getIdUser());
     }
 
-    /**
-     * Get all outputStream for inform other
-     * @return
-     */
-    public ArrayList<ObjectOutputStream> getAllOutputStream(){
-
-        return null;
+    public void sendToAll(Message message){
+        for (ConnectionThread threadClient : threadsClientList) {
+            threadClient.send(message);
+        }
     }
 
     /**
@@ -118,7 +116,7 @@ public class PokerServer extends Thread {
      * @return int
      */
     public int getNbUsers() {
-        return threadsWithUUID.size();
+        return threadsClientList.size();
     }
 
 
@@ -133,7 +131,7 @@ public class PokerServer extends Thread {
         //TODO Appeler interface data pour stocker l'user U
 
         //TODO Notify les autres users de la connection d'un nouvel utilisateur
-        notifyNewPlayer(u);
+        //notifyNewPlayer(u);
 
 
         //TODO retourner arraylist des autres users pour le donner au message accept login
@@ -141,6 +139,7 @@ public class PokerServer extends Thread {
         //return userList;
         return null;
     }
+<<<<<<< HEAD
 
     public void sendToAllDisconnection(NotifyDisconnectionMessage NotifyD) {
         for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {
@@ -166,4 +165,6 @@ public class PokerServer extends Thread {
 
 
 
+=======
+>>>>>>> Fin changement server
 }

@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ConnectionThread extends Thread {
+    private boolean running;
     private PokerServer myServer;
     private Socket socketClient;
 
@@ -41,17 +42,29 @@ public class ConnectionThread extends Thread {
     @Override
     public synchronized void run() {
         Console.log("Client: Démarré");
-        try {
-            // Call suitable processing method
-            Message msg = (Message) inputStream.readObject();
-            msg.process(myServer, this);
+        running = true;
+        while (running) {
+            try {
+                // Call suitable processing method
+                Message msg = (Message) inputStream.readObject();
+                msg.process(myServer, this);
 
-        } catch (Exception e) {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void send(Message message){
+        try {
+            outputStream.writeObject(message);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void shutdown() throws IOException {
-        this.socketClient.close();
+        running = false;
+        socketClient.close();
     }
 }

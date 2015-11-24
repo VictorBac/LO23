@@ -1,13 +1,18 @@
 package fr.utc.lo23.server.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
+
 import java.util.ArrayList;
+
 
 /**
  *
@@ -63,8 +68,9 @@ public class NetworkManagerServer implements InterfaceServer {
 
     }
 
-    public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException {
-
+    public void notifyNewPlayer(User userDistant) throws NetworkFailureException {
+        NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(userDistant);
+        server.sendToAll(newPMessage);
     }
 
     public void notifyAction(Action act) throws NetworkFailureException {
@@ -75,8 +81,9 @@ public class NetworkManagerServer implements InterfaceServer {
 
     }
 
-    public void notifyDisconnection(UserLight distantUser) throws NetworkFailureException {
-
+    public void notifyDisconnection(User distantUser) throws NetworkFailureException {
+        NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(distantUser);
+        server.sendToAll(NotifyD);
     }
 
     public void sendChatPacket() throws NetworkFailureException {

@@ -57,7 +57,7 @@ private User u;
 
         // Notification à tous les users de la déconnection
         NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(u);
-        myServ.sendToAllDisconnection(NotifyD);
+        myServ.sendToAll(NotifyD);
 
         Console.log("Closing the ConnectionThread/Socket");
     }

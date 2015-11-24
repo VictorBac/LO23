@@ -22,7 +22,6 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process() {
-        Console.logn("Envoi de la table");
     }
 
     /**

@@ -3,8 +3,11 @@ package fr.utc.lo23.common.network;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
+
+import java.util.ArrayList;
 
 /**
  * Message permettant de demander au serveur si la
@@ -42,18 +45,14 @@ public class RequestLoginMessage extends Message {
         Console.log("Checking if there is room for one more user");
         if (myServ.getNbUsers() < PokerServer.NB_MAX_USER) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
-
             threadServer.setUserId(user.getUserLight().getIdUser());
-           //ArrayList<UserLight> aUsers = myServ.stockUserAndNotifyOthers(user.getUserLight());
-
-
-            /*AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
-            try {
-                threadServer.getOutputStream().writeObject(acceptL);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-
+            ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
+            //On envoie un message au client pour accepter sa connexion
+            AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
+            threadServer.send(acceptL);
+            //On envoie à tous les autres clients un notify new client.
+            NotifyNewPlayerMessage newPlayerM = new NotifyNewPlayerMessage(user.getUserLight());
+            myServ.sendToAll(newPlayerM);
         } else {
             Console.log("Connection impossible ! ");
         }

@@ -12,7 +12,7 @@ import java.util.UUID;
 public class UserLightList implements Serializable{
 
     private ArrayList<UserLight> listUserLights;
-
+    private static final long serialVersionUID = 1L;
 
     /**
      * recherche un UserLight dans l'arrayList à partir de son UUID

@@ -28,7 +28,7 @@ public class User implements Serializable{
     private String email;
     private Stats statsUser;
     private Contact contactUser;
-    private long SerialVersionUID;
+    private static final long serialVersionUID = 1L;
 
     public User(){
 
@@ -49,7 +49,6 @@ public class User implements Serializable{
         this.email = toCopy.email;
         this.statsUser = toCopy.statsUser;
         this.contactUser = toCopy.contactUser;
-        this.SerialVersionUID = toCopy.SerialVersionUID;
     }
 
     public UserLight  getUserLight(){
@@ -84,9 +83,6 @@ public class User implements Serializable{
         return this.contactUser;
     }
 
-    public long getSerialVersionUID() {
-        return this.SerialVersionUID;
-    }
 
     /**
      * met à jour les statsUser du joueur

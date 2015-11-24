@@ -31,4 +31,4 @@ public class SerializationTest {
     public void testDeserializationObject() throws Exception {
 
     }
-}&
+}

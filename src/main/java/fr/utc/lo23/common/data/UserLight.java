@@ -8,6 +8,7 @@ import java.util.UUID;
  */
 public class UserLight implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private UUID idUser;
     private String pseudo;
     private ImageAvatar avatar;

@@ -46,9 +46,8 @@ public class RequestLoginMessage extends Message {
         Console.log("Checking if there is room for one more user");
         if (true) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
-            Console.log("pseudo " + user.getPseudo());
 
-            ArrayList<User> aUsers = myServ.stockUserAndNotifyOthers(user);
+            ArrayList<UserLight> aUsers = myServ.stockUserAndNotifyOthers(user.getUserLight());
 
             AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
             try {

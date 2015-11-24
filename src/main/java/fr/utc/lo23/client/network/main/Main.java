@@ -3,6 +3,7 @@ package fr.utc.lo23.client.network.main;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.InterfaceFromCom;
 import fr.utc.lo23.client.network.NetworkManagerClient;
+import fr.utc.lo23.server.data.ServerDataFromCom;
 
 /**
  * Created by guixii on 03/11/15.
@@ -11,9 +12,9 @@ import fr.utc.lo23.client.network.NetworkManagerClient;
 public class Main {
     public static void main(String[] args){
         Console.log("Main: Lancement client 1");
-        InterfaceDataFromCom intCom = new InterfaceFromCom();
-        NetworkManagerClient clientInterface = new NetworkManagerClient();
-        clientInterface.setDataInstance(intCom);
+        //InterfaceDataFromCom intCom = new ServerDataFromCom();
+        //NetworkManagerClient clientInterface = new NetworkManagerClient();
+        //clientInterface.setDataInstance(intCom);
     }
 }
 

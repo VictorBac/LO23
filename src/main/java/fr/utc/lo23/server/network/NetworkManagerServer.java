@@ -1,11 +1,10 @@
 package fr.utc.lo23.server.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
-import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class NetworkManagerServer implements InterfaceServer {
     private static NetworkManagerServer myInstance;
 
     /* Modules instance, initiate by IHM module with setters */
-    private InterfaceDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
+    private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
     //private IhmManagerServer IhmInstance; TODO: Avoir le manager !
 
     /* Attributes */
@@ -32,11 +31,11 @@ public class NetworkManagerServer implements InterfaceServer {
     }
 
     /* == GETTERS AND SETTERS == */
-    public InterfaceDataFromCom getDataInstance() {
+    public InterfaceServerDataFromCom getDataInstance() {
         return dataInstance;
     }
 
-    public void setDataInstance(InterfaceDataFromCom dataInstance) {
+    public void setDataInstance(InterfaceServerDataFromCom dataInstance) {
         this.dataInstance = dataInstance;
     }
 

@@ -2,6 +2,7 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
 import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
@@ -128,7 +129,7 @@ public class PokerServer extends Thread {
      * @param u
      * @return
      */
-    public ArrayList<User> stockUserAndNotifyOthers(User u) {
+    public ArrayList<UserLight> stockUserAndNotifyOthers(UserLight u) {
         //TODO Appeler interface data pour stocker l'user U
 
         //TODO Notify les autres users de la connection d'un nouvel utilisateur
@@ -136,7 +137,7 @@ public class PokerServer extends Thread {
 
 
         //TODO retourner arraylist des autres users pour le donner au message accept login
-        //ArrayList<Users> userList = InterfaceServerDataFromCom.getConnectedUsers(); Le nom de la classe n'est pas le bon, il faudra juste le changer par la classe implémentant leur int.
+        //ArrayList<UserLight> userList = InterfaceServerDataFromCom.getConnectedUsers();//TODO
         //return userList;
         return null;
     }
@@ -151,7 +152,7 @@ public class PokerServer extends Thread {
         }
     }
 
-    private void notifyNewPlayer(User u) {
+    private void notifyNewPlayer(UserLight u) {
 
         NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(u);
         for (HashMap.Entry<UUID, ObjectOutputStream> userOut: userLinksOut.entrySet()) {

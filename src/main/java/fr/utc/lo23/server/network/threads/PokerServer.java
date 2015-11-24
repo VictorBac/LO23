@@ -3,10 +3,9 @@ package fr.utc.lo23.server.network.threads;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
-import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
-import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.server.network.NetworkManagerServer;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,9 +16,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class PokerServer extends Thread {
-    static int PORT = 1904;
-    static int NB_MAX_USER = 100;
+    public static int NB_MAX_USER = 100;
+    private static int PORT = 1904;
 
+    private NetworkManagerServer networkManager;
     private ServerSocket listeningSocket;
     private boolean running;
     private HashMap<UUID, ObjectOutputStream> userLinksOut;
@@ -95,14 +95,23 @@ public class PokerServer extends Thread {
      * @return
      * @param u User
      */
-
     public void userDisconnect(User u) {
+
         //TODO cedric
         // On ferme le socket lié à cet User
+
         //TODO: mettre le connectionThread dans userLinksOut pour pouvoir appeller: userLinksOut connectionThread shutdown ()
 
         //Actualise la table en enlevant le user u
         //this.userLinksOut.remove(u.getIdUser());
+    }
+
+    private ConnectionThread getThreadFromUserLight(UserLight u){
+        for (ConnectionThread threadClient : threadsClientList) {
+            if(threadClient.getUserId() == u.getIdUser()) return threadClient;
+        }
+        // If not found
+        return null;
     }
 
     public void sendToAll(Message message){
@@ -117,26 +126,5 @@ public class PokerServer extends Thread {
      */
     public int getNbUsers() {
         return threadsClientList.size();
-    }
-
-
-    /**
-     * Permet d'ajouter le nouvel user aux users connectés sur le serveur
-     * De notifier les autres utilisateurs du nouvel user connecté
-     * De récupérer la liste des utilisateurs connectés
-     * @param u
-     * @return
-     */
-    public ArrayList<UserLight> stockUserAndNotifyOthers(UserLight u) {
-        //TODO Appeler interface data pour stocker l'user U
-
-        //TODO Notify les autres users de la connection d'un nouvel utilisateur
-        //notifyNewPlayer(u);
-
-
-        //TODO retourner arraylist des autres users pour le donner au message accept login
-        //ArrayList<UserLight> userList = InterfaceServerDataFromCom.getConnectedUsers();//TODO
-        //return userList;
-        return null;
     }
 }

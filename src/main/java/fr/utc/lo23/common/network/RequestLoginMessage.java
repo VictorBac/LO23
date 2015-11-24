@@ -1,15 +1,10 @@
 package fr.utc.lo23.common.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
 /**
  * Message permettant de demander au serveur si la
@@ -36,25 +31,28 @@ public class RequestLoginMessage extends Message {
      * Check if we can login in the server, and send a confirmation (or not ?)
      * We put in the acceptloginmessage all users currently connected to have them directly at the confirmation
      * We also notify all other users that now we're in da place
-     * @param myServ
-     * @param thread
+     * @param threadServer
      */
     @Override
-    public void process (PokerServer myServ, ConnectionThread thread){
+    public void process (ConnectionThread threadServer){
+        PokerServer myServ = threadServer.getMyServer();
+
         Console.log("Request login message received");
 
         Console.log("Checking if there is room for one more user");
-        if (true) {
+        if (myServ.getNbUsers() < PokerServer.NB_MAX_USER) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
 
-            ArrayList<UserLight> aUsers = myServ.stockUserAndNotifyOthers(user.getUserLight());
+            threadServer.setUserId(user.getUserLight().getIdUser());
+           //ArrayList<UserLight> aUsers = myServ.stockUserAndNotifyOthers(user.getUserLight());
 
-            AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
+
+            /*AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
             try {
-                thread.getOutputStream().writeObject(acceptL);
+                threadServer.getOutputStream().writeObject(acceptL);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
         } else {
             Console.log("Connection impossible ! ");
@@ -63,10 +61,10 @@ public class RequestLoginMessage extends Message {
 
     /**
      * Client-side process
-     * @param dataInterface
+     * @param threadClient
      */
     @Override
-    public void process(InterfaceDataFromCom dataInterface) {
+    public void process(ServerLink threadClient) {
 
     }
 

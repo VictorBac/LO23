@@ -1,10 +1,9 @@
 package fr.utc.lo23.common.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
-import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
 
@@ -28,20 +27,19 @@ public class SendListUserMessage extends Message {
 
     /**
      * Check if we can login in the server, and send a confirmation (or not ?)
-     * @param myServ
-     * @param thread
+     * @param threadServer
      */
     @Override
-    public void process (PokerServer myServ, ConnectionThread thread){
+    public void process (ConnectionThread threadServer){
         Console.logn("Envoi de la table");
     }
 
     /**
      * Client-side process
-     * @param dataInterface
+     * @param threadClient
      */
     @Override
-    public void process(InterfaceDataFromCom dataInterface) {
+    public void process(ServerLink threadClient) {
 
     }
 

@@ -2,12 +2,12 @@ package fr.utc.lo23.client.network.threads;
 
 import fr.utc.lo23.client.network.NetworkManagerClient;
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.network.Message;
-import fr.utc.lo23.common.network.RequestLoginMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -58,7 +58,7 @@ public class ServerLink extends Thread {
         while (connected) {
             try {
                 Message msg = (Message) inputStream.readObject();
-                msg.process(networkManager.getDataInstance());
+                msg.process();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,4 +87,5 @@ public class ServerLink extends Thread {
     public ObjectOutputStream getOutputStream() {
         return outputStream;
     }
+    public NetworkManagerClient getNetworkManager() { return networkManager; }
 }

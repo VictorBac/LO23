@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.UUID;
 
 public class ConnectionThread extends Thread {
     private boolean running;
@@ -14,6 +15,7 @@ public class ConnectionThread extends Thread {
     private Socket socketClient;
 
     //To send objects between client and server
+    private UUID userId;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
@@ -47,7 +49,7 @@ public class ConnectionThread extends Thread {
             try {
                 // Call suitable processing method
                 Message msg = (Message) inputStream.readObject();
-                msg.process(myServer, this);
+                msg.process(this);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -66,5 +68,17 @@ public class ConnectionThread extends Thread {
     public void shutdown() throws IOException {
         running = false;
         socketClient.close();
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public PokerServer getMyServer() {
+        return myServer;
     }
 }

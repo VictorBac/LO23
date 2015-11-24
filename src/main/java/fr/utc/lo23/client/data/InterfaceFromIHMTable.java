@@ -2,6 +2,7 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.util.UUID;
 
@@ -18,16 +19,20 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         this.dManagerClient = dManagerClient;
     }
 
-    //TODO envoyer table sur le serveur via interface com
+    //TODO handle exceptions
     public void tableToCreate(Table table){
-        
+        //dManagerClient.getInterToCom().createTable(table);
     }
 
     /**
      * forwards the request to communication module : askStopGame()
      */
     public void askStopGame() {
-
+        try {
+            dManagerClient.getInterToCom().askStopGame();
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
     }
 
     public void vote(){
@@ -44,7 +49,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
     public void playGame(UUID idTable) {
-
+        //dManagerClient.getInterToCom().requestPlayGame();
     }
 
 

@@ -7,6 +7,8 @@ import java.io.Serializable;
  * Created by Ying on 21/10/2015.
  */
 public class Card implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * value : value of the card
      * symbol: symbol of the card

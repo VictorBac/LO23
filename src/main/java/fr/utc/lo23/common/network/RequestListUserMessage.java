@@ -5,6 +5,7 @@ import fr.utc.lo23.client.data.Userlight;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.io.IOException;
@@ -32,10 +33,10 @@ public class RequestListUserMessage extends Message {
     /**
      * Check if we can login in the server, and send a confirmation (or not ?)
      * @param myServ
-     * @param out
+     * @param thread
      */
     @Override
-    public void process (PokerServer myServ, ObjectOutputStream out){
+    public void process (PokerServer myServ, ConnectionThread thread){
 
         Console.log("Request list of users");
         //ArrayList<User> list =myServ.getUserList(); appeler l'interface de data ?

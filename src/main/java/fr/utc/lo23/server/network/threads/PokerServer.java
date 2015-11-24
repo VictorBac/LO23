@@ -21,6 +21,7 @@ public class PokerServer extends Thread {
     private ServerSocket listeningSocket;
     private boolean running;
     private HashMap<UUID, ObjectOutputStream> userLinksOut;
+    private ArrayList<ConnectionThread> threadsWithUUID;
 
     /**
      * Constructeur
@@ -31,7 +32,8 @@ public class PokerServer extends Thread {
     public PokerServer(Integer portToListen) {
         Console.log("Lancement du serveur....");
         Console.log("Nombre d'utilisateurs maximum fixé à " + NB_MAX_USER);
-        userLinksOut = new HashMap<UUID, ObjectOutputStream>();
+        ArrayList<ConnectionThread> threadsWithUUID = new ArrayList<ConnectionThread>();
+
 
         // Change port if needed
         if (portToListen != null) PokerServer.PORT = portToListen;
@@ -75,7 +77,9 @@ public class PokerServer extends Thread {
             try {
                 Console.log("Srv: Attente des connexions clients...");
                 Socket soClient = listeningSocket.accept();
-                new ConnectionThread(soClient, this).start();
+                ConnectionThread thread = new ConnectionThread(soClient, this);
+                thread.start();
+                threadsWithUUID.add(thread);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -85,25 +89,18 @@ public class PokerServer extends Thread {
 
 
     /**
-     * Must be called to register the output stream with a User
-     * @param out
-     * @param user
-     */
-    public void registerOutputStream(ObjectOutputStream out, User user){
-        userLinksOut.put(user.getIdUser(), out);
-    }
-
-    /**
      * Enleve l'utilsateur u de la l'array userLinksOut
      * @return
      * @param u User
      */
+
     public void userDisconnect(User u) {
+        //TODO cedric
         // On ferme le socket lié à cet User
         //TODO: mettre le connectionThread dans userLinksOut pour pouvoir appeller: userLinksOut connectionThread shutdown ()
 
         //Actualise la table en enlevant le user u
-        this.userLinksOut.remove(u.getIdUser());
+        //this.userLinksOut.remove(u.getIdUser());
     }
 
     /**
@@ -120,7 +117,7 @@ public class PokerServer extends Thread {
      * @return int
      */
     public int getNbUsers() {
-        return userLinksOut.size();
+        return threadsWithUUID.size();
     }
 
 

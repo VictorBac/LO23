@@ -16,6 +16,10 @@ public class ConnectionThread extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
+    }
+
 
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
         myServer = pokerServer;
@@ -40,7 +44,7 @@ public class ConnectionThread extends Thread {
         try {
             // Call suitable processing method
             Message msg = (Message) inputStream.readObject();
-            msg.process(myServer, outputStream);
+            msg.process(myServer, this);
 
         } catch (Exception e) {
             e.printStackTrace();

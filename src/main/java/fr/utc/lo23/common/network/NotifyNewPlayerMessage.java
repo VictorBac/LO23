@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.io.ObjectOutputStream;
@@ -25,7 +26,7 @@ public class NotifyNewPlayerMessage extends Message {
     }
 
     @Override
-    public void process(PokerServer myServ, ObjectOutputStream out) {
+    public void process(PokerServer myServ, ConnectionThread thread) {
 
     }
 

@@ -65,7 +65,7 @@ private User u;
      */
     @Override
     public void process(ServerLink threadClient) {
-
+        threadClient.getNetworkManager().getDataInstance().remoteUserDisonnected(u.getUserLight());
     }
 
 

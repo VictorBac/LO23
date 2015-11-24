@@ -17,8 +17,19 @@ public interface InterfaceClient {
      * @param u 
      */
     public void sendProfile(User u) throws NetworkFailureException;
-    
-  
+
+    /**
+     * Demande d'envoi de la liste des users connectes
+     * @throws NetworkFailureException
+     */
+    public void RequestUserList()throws NetworkFailureException;
+
+    /**
+     * Demande d'envoi de la liste des tables
+     * @throws NetworkFailureException
+     */
+    public void RequestTableList()throws NetworkFailureException;
+
     /**
      * 
      * @param u

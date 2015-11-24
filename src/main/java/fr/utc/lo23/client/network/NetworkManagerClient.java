@@ -7,6 +7,8 @@ import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.network.RequestListTableMessage;
+import fr.utc.lo23.common.network.RequestListUserMessage;
 import fr.utc.lo23.common.network.RequestLoginMessage;
 import fr.utc.lo23.exceptions.network.*;
 
@@ -41,14 +43,41 @@ public class NetworkManagerClient implements InterfaceClient  {
      * @throws NetworkFailureException
      */
     public void requestLoginServer(User u){
-        //Test to send serialized object to the server
+        //Send the login request over the server
         Console.log("Creation d'un Request Login message\n");
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
         localClient.send(reqLog);
     }
 
+    /**
+     *
+     * @param u
+     * @throws NetworkFailureException
+     */
     public void sendProfile(User u) throws NetworkFailureException {
 
+    }
+
+    /**
+     * Request de la liste des users connectes
+     * @throws NetworkFailureException
+     */
+    public void RequestUserList() throws NetworkFailureException {
+        //Request user list
+        Console.logn("Creation d'un Request de list des users");
+        RequestListUserMessage reqUseList = new RequestListUserMessage();
+        localClient.send(reqUseList);
+    }
+
+    /**
+     * Request la liste des tables actives
+     * @throws NetworkFailureException
+     */
+    public void RequestTableList() throws NetworkFailureException {
+        //Request table list
+        Console.logn("Creation d'un Request de list des users");
+        RequestListTableMessage reqTabList = new RequestListTableMessage();
+        localClient.send(reqTabList);
     }
 
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException {

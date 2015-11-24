@@ -54,16 +54,17 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * creates a new table
      * @param maker
      * @param newTb
+     * TODO : remove the maker attribute ?
      */
     public void createTable(UserLight maker, Table newTb) {
         myManager.getTables().newTable(newTb);
     }
 
     /**
-     *
+     * notifies the tables list has been modified to all observers
      */
     public void updateTableList() {
-
+        myManager.getTables().getListTable().notifyAll();
     }
 
     /**
@@ -74,13 +75,14 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return
      */
     public boolean canJoinTableUser(UserLight joiner, Table wantedTable, String mode) {
-
+        boolean ok;
         if (wantedTable.getListPlayers().getListUserLights().size() > wantedTable.getNbPlayerMax())
-            return false;
+            ok = false;
         else if (mode.equals("Spectator") && !wantedTable.isAcceptSpectator())
-            return false;
+            ok = false;
         else
-            return true;
+            ok = true;
+        return ok;
     }
 
     public void validateMessage(UserLight sender, MessageChat msgSent) {

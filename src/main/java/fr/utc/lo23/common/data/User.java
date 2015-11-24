@@ -10,6 +10,14 @@ import java.security.NoSuchAlgorithmException;
 
 public class User implements Serializable{
 
+    /**
+     * core : the UserLight contained in the User
+     * pwd : the user's password
+     * firstname, lastname, age, email
+     * stats : the current stats of the user
+     * ContactUser : the list of contacts of the user
+     * SerialVersionUID : the unique ID of the user
+     */
     private UserLight core;
     private String pwd;
     private String firstName;
@@ -28,6 +36,18 @@ public class User implements Serializable{
 
         this.core = new UserLight(login);
         this.pwd = password;
+    }
+
+    public User(User toCopy){
+        this.core = toCopy.core;
+        this.pwd = toCopy.pwd;
+        this.firstName = toCopy.firstName;
+        this.lastName = toCopy.lastName;
+        this.age = toCopy.age;
+        this.email = toCopy.email;
+        this.statsUser = toCopy.statsUser;
+        this.contactUser = toCopy.contactUser;
+        this.SerialVersionUID = toCopy.SerialVersionUID;
     }
 
     public UserLight  getUserLight(){
@@ -72,7 +92,7 @@ public class User implements Serializable{
      * @param beginMse : la mise de départ du joueur
      * @param points : son score par partie
      */
-    public void UpdateStats(int beginMse, int points){
+    public void updateStats(int beginMse, int points){
         statsUser.updateStats(beginMse, points);
     };
 
@@ -89,5 +109,20 @@ public class User implements Serializable{
         }
     }
 
+    /**
+     * other option to password anonymization, just replaces it with a blank string
+     */
+    private void hidePassword(){
+        this.pwd = "";
+    }
+
+
+    public boolean equals(User other){
+        boolean match;
+        if (this.core.getIdUser().equals(other.core.getIdUser()))
+            match = true;
+        else match = false;
+        return match;
+    }
 
 }

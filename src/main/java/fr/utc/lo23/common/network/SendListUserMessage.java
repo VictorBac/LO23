@@ -3,6 +3,7 @@ package fr.utc.lo23.common.network;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
  */
 public class SendListUserMessage extends Message {
 
-    private ArrayList<User> userList;
-    public SendListUserMessage(ArrayList<User> users) {
+    private ArrayList<UserLight> userList;
+    public SendListUserMessage(ArrayList<UserLight> users) {
         userList=users;
     }
 
@@ -22,6 +23,7 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process() {
+
     }
 
     /**
@@ -30,7 +32,7 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process (ConnectionThread threadServer){
-        Console.logn("Envoi de la table");
+
     }
 
     /**
@@ -39,7 +41,9 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process(ServerLink threadClient) {
-
+        Console.logn("Envoi de la table");
+        threadClient.getNetworkManager().getDataInstance().currentConnectedUser(userList);
+        Console.logn(userList+"Envoyée");
     }
 
 }

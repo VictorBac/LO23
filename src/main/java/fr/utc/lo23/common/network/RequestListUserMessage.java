@@ -2,7 +2,13 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
+import fr.utc.lo23.server.network.threads.PokerServer;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Message permettant de demander au serveur si la
@@ -23,22 +29,16 @@ public class RequestListUserMessage extends Message {
     }
 
     /**
-     * Check if we can login in the server, and send a confirmation (or not ?)
+     * Send the list of connected users to concerned thread.
      * @param threadServer
      */
     @Override
     public void process (ConnectionThread threadServer){
-
+        PokerServer myServ = threadServer.getMyServer();
         Console.log("Request list of users");
-        //ArrayList<User> list =myServ.getUserList(); appeler l'interface de data ?
-
-
-       /* SendListUserMessage listUserMess = new SendListUserMessage(list);
-        try {
-            out.writeObject(listUserMess);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        ArrayList<UserLight> listUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
+        SendListUserMessage listUserMess = new SendListUserMessage(listUsers);
+        threadServer.send(listUserMess);
     }
 
     @Override

@@ -2,9 +2,7 @@ package fr.utc.lo23.client.network.main;
 
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.data.InterfaceFromCom;
-import fr.utc.lo23.client.network.IntClient;
-import fr.utc.lo23.client.network.threads.ServerLink;
-import fr.utc.lo23.common.network.Message;
+import fr.utc.lo23.client.network.NetworkManagerClient;
 
 /**
  * Created by guixii on 03/11/15.
@@ -15,7 +13,7 @@ public class Main {
         Console.log("Main: Lancement client 1");
         //ServerLink localClient = new ServerLink();
         InterfaceDataFromCom intCom = new InterfaceFromCom();
-        IntClient clientInterface = new IntClient(intCom);
+        NetworkManagerClient clientInterface = new NetworkManagerClient(intCom);
         // localClient.start();
     }
 }

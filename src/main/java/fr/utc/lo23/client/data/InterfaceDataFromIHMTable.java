@@ -1,110 +1,73 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Groupe;
+import fr.utc.lo23.common.data.Group;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 
 import java.util.UUID;
 
 /**
- * Interface présentée par le module Data à IHM Table
+ * Interface offered by the Data module to IHM Table
  * Created by Haroldcb on 20/10/2015.
  */
 public interface InterfaceDataFromIHMTable {
     /**
-     * méthode permettant de connecter un joueur
-     * @param login : identifiant du joueur
-     * @param password : mot de passe
-     */
-    public void logUser(String login, String password);
-
-    /**
-     * méthode permettant d'ajouter un contact dans une catégorie
-     * @param contact : contact à ajouter
-     * @param category : groupe dans lequel l'ajouter
-     */
-    public void addContact(UserLight contact, Groupe category);
-
-    /**
-     * méthode permettant de supprimer un contact de sa liste
-     * @param contact
-     */
-    public void deleteContact(UserLight contact);
-
-    /**
-     * méthode permettant de créer une liste de contact
-     * @param name
-     */
-    public void createContactList(String name);
-
-    /**
-     * méthode permettant de supprimer sa liste de contacts
-     * @param name
-     */
-    public void deleteContactList(String name);
-
-    /**
-     * méthode permettant de notifier le contact de son ajout
-     * @param contact : contact à notifier
-     */
-    public void contactAddedNotificationReceived(UserLight contact);
-
-
-
-    /**
-     * méthode permettant de créer une nouvelle table
-     * @param table : table à créer
-     */
-    public void tableToCreate(Table table);
-
-    /**
-     * méthode permettant de jouer une partie
-     * @param idTable : table sur laquelle lancer la partie
-     */
-    public void playGame(UUID idTable);
-
-    /**
-     * méthode permettant au créateur de la table de demander l'arrêt de la partie
+     * method to let the tables's creator ask the end of the game to other players
      */
     public void askStopGame();
 
     /**
-     * ???
+     * method to create a new table
+     * @param name
+     * @param acceptSpectator
+     * @param acceptChatSpectator
+     * @param nbPlayerMax
+     * @param nbPlayerMin
+     * @param abandonAmiable
+     * @param maxMise
+     * @param timeforAction
+     */
+    public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction);
+
+    /**
+     * method to save the game
      */
     public void saveGame();
 
-    /**
-     * méthode permettant de sauvegarder la partie
-     * @param table : table à sauvegarder
-     */
-    public void saveLogGame(Table table);
+
 
     /**
-     * méthode permettant de récupérer un utilisateur
-     * @param user : utilisateur à récupérer
+     * method to play a game
+     * @param idTable : table on which starting the game
      */
-    public void getUser(UserLight user);
+//    public void playGame(UUID idTable);
 
     /**
-     * confirmation de reception d'une carte distribuée
+     * method to get an user
+     * @param user : user to get
      */
-    public void confirmationCardRecieved();
+//   public void getUser(UserLight user);
 
     /**
-     * méthode permettant de rejouer une action
-     * @param action : action à rejouer
+     * confirmation of reception of a card
      */
-    public void replayAction(Action action);
+//    public void confirmationCardRecieved();
 
     /**
-     * confirmation de reception d'une action effectuée
-     * @param action : action envoyée
+     * method to replay an action
+     * @param action : action Ã  rejouer
      */
-    public void confirmationActionRecieved(Action action);
+//    public void replayAction(Action action);
 
     /**
-     * confirmation de fin de tour
+     * confirma reception of an action
+     * @param action : action to send
      */
-    public void confirmationEndTurn();
+//    public void confirmationActionRecieved(Action action);
+
+    /**
+     * confirm the end of turn
+     */
+//    public void confirmationEndTurn();
 }

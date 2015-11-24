@@ -1,28 +1,29 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 import fr.utc.lo23.common.data.exceptions.TableException;
 
 /**
- * Classe représentant une table, sur laquelle se déroulent des parties
+ * Class representing a table, on which games are played
  * Created by Haroldcb on 21/10/2015.
  */
-public class Table {
+public class Table implements Serializable {
     /**
-     * idTable : id unique de la table
-     * name : nom de la table
-     * acceptSpectator : 1 si oui, 0 sinon
-     * acceptChatSpectator : 1 si oui, 0 sinon
-     * nbPlayerMax : nombre maximum de joueurs sur la table
-     * nbPlayerMin : nombre minimum de joueurs requis pour lancer une partie
-     * listPlayers: liste des joueurs actuellement sur la table
-     * listSpectators : liste des spectateurs
-     * currentGame : indice du jeu actuel dans le tableau de parties
-     * abandonAmiable : 1 si autorisé, 0 sinon
-     * maxMise : mise maximum que les joeurs peuvent s'attribuer au début
-     * listGames : liste des parties qui se sont déroulées sur la table (dernier = actuel)
-     * timeforAction : délai entre les actions lors du replay d'une partie
+     * idTable : unique id of the table
+     * name : name of the table
+     * acceptSpectator : true if accept, false otherwhise
+     * acceptChatSpectator : true if accept, false otherwhise
+     * nbPlayerMax : maximum number of players on the table
+     * nbPlayerMin : minimum number of players on the table required to launch a game
+     * listPlayers: list of players actually on the table
+     * listSpectators : list of spectators
+     * currentGame : number of the actual game in the game array
+     * abandonAmiable : true if authorised, false otherwhise
+     * maxMise : maximum amount that players can give themselves at the beginning
+     * listGames : list of games that were played on this table (last = actual)
+     * timeforAction : time between actions for the replay
      */
     private UUID idTable;
     private String name;
@@ -39,72 +40,73 @@ public class Table {
     private int timeforAction;
 
     /**
-     * Constructeur
+     * Constructor
+     * Creates a new game in games list
      * @param name
      * @param acceptSpectator
      * @param acceptChatSpectator
      * @param nbPlayerMax
      * @param nbPlayerMin
-     * @param currentGame
      * @param abandonAmiable
      * @param maxMise
-     * @param listGames
      * @param timeforAction
      */
-    public Table(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, int currentGame, boolean abandonAmiable, int maxMise, ArrayList<Game> listGames, int timeforAction) {
-        this.idTable = UUID.randomUUID();
-        this.name = name;
-        this.acceptSpectator = acceptSpectator;
-        this.acceptChatSpectator = acceptChatSpectator;
+    public Table(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
+        this.setIdTable(UUID.randomUUID());
+        this.setName(name);
+        this.setAcceptSpectator(acceptSpectator);
+        this.setAcceptChatSpectator(acceptChatSpectator);
         this.listPlayers = new UserLightList();
         this.listSpectators = new UserLightList();
-        this.nbPlayerMax = nbPlayerMax;
-        this.nbPlayerMin = nbPlayerMin;
-        this.currentGame = currentGame;
-        this.abandonAmiable = abandonAmiable;
-        this.maxMise = maxMise;
+        this.setNbPlayerMax(nbPlayerMax);
+        this.setNbPlayerMin(nbPlayerMin);
+        this.setCurrentGame(0);
+        this.setAbandonAmiable(abandonAmiable);
+        this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
-        //TODO listGames.add(new Game(EnumerationStatusGame.waitingForPlayer));
-        this.timeforAction = timeforAction;
+        listGames.add(new Game());
+        this.setTimeforAction(timeforAction);
     }
 
     /**
-     * Constructeur par défaut
-     */
-    public Table() throws TableException {
-        //TODO
-        throw new TableException("Impossible de créer une table sans paramètres");
-    }
-
-    /**
-     * m&eacute;thode permettant d'ajouter un joueur &agrave; une table, en v&eacute;rifiant que cela est possible
-     * Appelle checkConditionPlayerJoin()
+     * method to add a player to the table, with checking if it is possible
+     * Call checkConditionPlayerJoin()
      * @param player : player
      */
     public void playerJoinTable(UserLight player) throws TableException {
-        if (checkConditionPlayerJoin()){
+        // number of players on the table < max number of players AND player not already in the table
+        if (checkConditionPlayerJoin() && !this.listPlayers.getListUserLights().contains(player)){
             this.listPlayers.getListUserLights().add(player);
         }
         else {
-            throw new TableException("Impossible d'ajouter un nouveau joueur");
+            throw new TableException("Impossible to add this new player");
         }
     }
 
-    //TODO
-
+    //TODO => rôle abandon amiable?
     /**
-     * Delete player frome table
+     * Delete player from the table
      * @param player
      * @throws TableException
      */
     public void playerLeaveTable(UserLight player) throws  TableException{
-
+        //if abandonAmiable = true and player already on the table
+        if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
+            this.listPlayers.getListUserLights().remove(player);
+        }
+        else if (!this.abandonAmiable){
+            throw new TableException("Leaving table is not authorised!");
+        }
+        else{
+            throw new TableException("Player you want to delete is not on the table!");
+        }
     }
 
     /**
      * Check if a player can join a table
      */
     public boolean checkConditionPlayerJoin(){
+        // number of players on the table < max number of players
         if (this.listPlayers.getListUserLights().size() < this.nbPlayerMax){
             return true;
         }
@@ -113,34 +115,45 @@ public class Table {
 
     /**
      * Add a spectator to the table
-     * @param player
+     * @param spectator
      * @throws TableException
      */
-    //TODO
-    public void spectatorJoinTable(UserLight player) throws TableException {
-        /*if (checkConditionSpectatorJoin()){
-            this.listPlayers.getListUserLights().add(player);
+    //TODO vérifier si suffisant
+    public void spectatorJoinTable(UserLight spectator) throws TableException {
+        //  spectator not on the table yet
+        if (checkConditionSpectatorJoin() && !this.listSpectators.getListUserLights().contains(spectator)){
+            this.listSpectators.getListUserLights().add(spectator);
         }
         else {
-            throw new TableException("Impossible d'ajouter un nouveau spectateur");
-        }*/
+            throw new TableException("Impossible to add this spectator");
+        }
     }
 
     /**
      * Delete a spectator from the table
-     * @param player
+     * @param spectator
      * @throws TableException
      */
-    //TODO
-    public void spectatorLeaveTable(UserLight player) throws TableException{
-
+    //TODO vérifier si suffisant
+    public void spectatorLeaveTable(UserLight spectator) throws TableException{
+        //spectator already on the table
+        if(this.listSpectators.getListUserLights().contains(spectator)){
+            this.listSpectators.getListUserLights().remove(spectator);
+        }
+        else{
+            throw new TableException("Spectator you want to delete is not on the table!");
+        }
     }
 
     /**
      * Check if a spectator can join the table
      */
-    //TODO
-    public void checkConditionSpectatorJoin(){
+    //TODO vérifier si suffisant
+    public boolean checkConditionSpectatorJoin(){
+        if(isAcceptSpectator())
+            return true;
+        else
+            return false;
     }
 
 
@@ -152,21 +165,22 @@ public class Table {
 
     }
 
+    //TODO
     /**
      * Open a game in order to replay it
      * @param idGame
      */
     public void openGame(UUID idGame){
-        /* TODO */
+
     }
 
 
     /**
-     * Add a new game in the list of games of the table
-     * @param partie : new game to add to the list
+     * Add a new game in the table's games list
+     * @param game : new game to add to the list
      */
-    public void addNewGameToList(Game partie){
-        this.listGames.add(partie);
+    public void addNewGameToList(Game game){
+        this.listGames.add(game);
     }
 
     /**
@@ -179,9 +193,10 @@ public class Table {
         if game en attente start
         else pas start
          */
-    };
+    }
 
-/******************* GETTERS AND SETTERS ********************************/
+    /******************* GETTERS AND SETTERS ********************************/
+
 
     public UUID getIdTable() {
         return idTable;

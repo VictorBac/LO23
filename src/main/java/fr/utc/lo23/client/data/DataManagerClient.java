@@ -1,5 +1,8 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
+import fr.utc.lo23.client.ihm_table.ITableToDataListener;
+import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.TableList;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLightList;
@@ -8,21 +11,93 @@ import fr.utc.lo23.common.data.UserLightList;
  * Created by Mar on 01/11/2015.
  */
 public class DataManagerClient {
-    private InterfaceFromCom interCom;
+    private InterfaceFromCom interFromCom;
     private InterfaceFromIHMTable interFromIHMTable;
     private InterfaceFromIHMMain interFromIHMMain;
 
+    private ITableToDataListener interToIHMTable;
+    private InterfaceClient  interToCom;
+    private InterfaceMainToData interToIHMMain;
+
     private User userLocal;
-    private UserLightList listUsers;
-    private TableList listTables;
+    private UserLightList listUsersLightLocal;
+    private TableList listTablesLocal;
 
     public DataManagerClient() {
-        this.interCom = null;
-        this.interFromIHMTable = null;
-        this.interFromIHMMain = null;
+
         this.userLocal = null;
-        this.listUsers = null;
-        this.listTables = null;
+        this.listUsersLightLocal = new UserLightList();
+        this.listTablesLocal = new TableList();
+
+        this.interToIHMTable = null;
+        this.interToCom = null;
+        this.interToIHMMain = null;
+
+        this.interFromIHMTable = new InterfaceFromIHMTable(this);
+        this.interFromIHMMain = new InterfaceFromIHMMain(this);
+        this.interFromCom = new InterfaceFromCom(this);
+
     }
 
+    public InterfaceFromCom getInterFromCom() {
+        return interFromCom;
+    }
+
+    public void setInterFromCom(InterfaceFromCom interFromCom) {this.interFromCom = interFromCom;}
+
+    public InterfaceFromIHMTable getInterFromIHMTable() {
+        return interFromIHMTable;
+    }
+
+    public void setInterFromIHMTable(InterfaceFromIHMTable interFromIHMTable) {this.interFromIHMTable = interFromIHMTable;}
+
+    public InterfaceFromIHMMain getInterFromIHMMain() {
+        return interFromIHMMain;
+    }
+
+    public void setInterFromIHMMain(InterfaceFromIHMMain interFromIHMMain) {
+        this.interFromIHMMain = interFromIHMMain;
+    }
+
+    public ITableToDataListener getInterToIHMTable() {
+        return interToIHMTable;
+    }
+
+    public void setInterToIHMTable(ITableToDataListener interToIHMTable) {
+        this.interToIHMTable = interToIHMTable;
+    }
+
+    public InterfaceClient getInterToCom() {
+        return interToCom;
+    }
+
+    public void setInterToCom(InterfaceClient interToCom) {
+        this.interToCom = interToCom;
+    }
+
+    public InterfaceMainToData getInterToIHMMain() {return interToIHMMain;}
+
+    public void setInterToIHMMain(InterfaceMainToData interToIHMMain) {
+        this.interToIHMMain = interToIHMMain;
+    }
+
+    public User getUserLocal() {
+        return userLocal;
+    }
+
+    public void setUserLocal(User userLocal) {
+        this.userLocal = userLocal;
+    }
+
+    public UserLightList getListUsersLightLocal() {return listUsersLightLocal;}
+
+    public void setListUsersLightLocal(UserLightList listUsersLightLocal) {this.listUsersLightLocal = listUsersLightLocal;}
+
+    public TableList getListTablesLocal() {
+        return listTablesLocal;
+    }
+
+    public void setListTablesLocal(TableList listTablesLocal) {
+        this.listTablesLocal = listTablesLocal;
+    }
 }

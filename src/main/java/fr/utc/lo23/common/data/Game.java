@@ -1,7 +1,9 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -9,25 +11,25 @@ import java.util.UUID;
  *
  * Class used to represent a game
  */
-public class Game {
+public class Game implements Serializable{
     private UUID idGame;
     private ArrayList<Hand> listHand;
     private int blind;
     private ArrayList<Seat> listSeatPlayerWithPeculeDepart;
     private Chat chatGame;
-    private Timestamp timeStampStartOfTheGame; //TODO should we start only when status game is on playing??
+    private Timestamp timeStampStartOfTheGame;
     private int ante;
     private EnumerationStatusGame statusOfTheGame;
     private ArrayList<UserLight> listUserSpectator;
 
     /**
      * Constructor with all parameter
-     * @param idGame TODO see if needed or generated
+     * @param idGame
      * @param listHand
      * @param blind
      * @param listSeatPlayerWithPeculeDepart
      * @param chatGame
-     * @param timeStampStartOfTheGame //TODO initialization when the start begin
+     * @param timeStampStartOfTheGame
      * @param ante
      * @param statusOfTheGame
      * @param listUserSpectator
@@ -44,9 +46,10 @@ public class Game {
         this.listUserSpectator = listUserSpectator;
     }
 
-
-    public Game( EnumerationStatusGame statusOfTheGame) {
-//TODO need to do a nullpointerexception and parameter exception just as in Action
+    /**
+     * Constructor used to intialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
+     */
+    public Game() {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
         this.blind = 0;
@@ -55,10 +58,54 @@ public class Game {
         this.listUserSpectator =  new ArrayList<UserLight>();
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
-        this.statusOfTheGame = statusOfTheGame;
+        this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
 
     }
 
+    //TODO comment those method
+
+    private Hand getCurrentHand(){
+        return this.listHand.get(this.listHand.size()-1);
+    }
+    private ArrayList<UserLight> getPlayerList(){
+        return null;//TODO remove this line
+    }
+
+
+    private void addPlayer(UserLight newUserLightPlayerJoinGame){}
+    private void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){}
+
+    private UserLight getNextPlayer(){
+        return null; //TODO remove this line
+    }
+
+    private void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
+    private void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
+    private void getCurrentPlayer(){}
+
+    /**
+     * Method that take an action that has been played and give it to the current Hand
+     * @param newActionDoneByPlayer Action played on this Hand
+     */
+    private void playAction(Action newActionDoneByPlayer){
+        //TODO need to do some check First
+        //TODO change the behaviour it is not the best way to do it
+        listHand.get(listHand.size()-1).playAction(newActionDoneByPlayer);
+    }
+
+
+    /**
+     * Method to start the Game
+      */
+    public void startGame(){
+        this.timeStampStartOfTheGame= new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.statusOfTheGame = EnumerationStatusGame.playing;
+
+    }
+
+
+
+///////////////////////GETTER and SETTER
     /**
      * Get the if of the Game
      * @return int id of the Game
@@ -114,37 +161,8 @@ public class Game {
     public ArrayList<UserLight> getListUserSpectator() {return listUserSpectator;}
 
 
-    //TODO comment those method
-
-    private Hand getCurrentHand(){
-        return null;//TODO remove this line
-    }
-
-
-    private ArrayList<UserLight> getPlayerList(){
-        return null;//TODO remove this line
-    }
-
-
-    private void addPlayer(UserLight newUserLightPlayerJoinGame){}
-    private void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){}
-
-    private UserLight getNextPlayer(){
-        return null; //TODO remove this line
-    }
-
-    private void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
-    private void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
-    private void getCurrentPlayer(){}
-
-    /**
-     * Method that take an action that has been played and give it to the current Hand
-     * @param newActionDoneByPlayer Action played on this Hand
-     */
-    private void playAction(Action newActionDoneByPlayer){
-        //TODO need to do some check First
-        //TODO change the behaviour it is not the best way to do it
-        listHand.get(listHand.size()-1).playAction(newActionDoneByPlayer);
-    }
+    public void setBlind(int blind) {this.blind = blind;}
+    public void setAnte(int ante) {this.ante = ante;}
+    public void setStatusOfTheGame(EnumerationStatusGame statusOfTheGame) {this.statusOfTheGame = statusOfTheGame;}
 }
 

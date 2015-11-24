@@ -1,12 +1,13 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Class to represent a message of a chat
  * Created by Ying on 21/10/2015.
  */
-public class MessageChat {
+public class MessageChat implements Serializable {
 
     /**
      * sender : sender of the message

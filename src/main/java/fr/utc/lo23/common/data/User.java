@@ -1,8 +1,6 @@
 package fr.utc.lo23.common.data;
 
-import jdk.internal.org.objectweb.asm.commons.SerialVersionUIDAdder;
-import sun.security.provider.MD5;
-
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -10,9 +8,17 @@ import java.security.NoSuchAlgorithmException;
  * Created by Rémy on 20/10/2015.
  */
 
-public class User extends UserLight{
+public class User implements Serializable{
 
-
+    /**
+     * core : the UserLight contained in the User
+     * pwd : the user's password
+     * firstname, lastname, age, email
+     * stats : the current stats of the user
+     * ContactUser : the list of contacts of the user
+     * SerialVersionUID : the unique ID of the user
+     */
+    private UserLight core;
     private String pwd;
     private String firstName;
     private String lastName;
@@ -22,38 +28,62 @@ public class User extends UserLight{
     private Contact contactUser;
     private long SerialVersionUID;
 
+    public User(){
+
+    };
+
+    public User(String login, String password){
+
+        this.core = new UserLight(login);
+        this.pwd = password;
+    }
+
+    public User(User toCopy){
+        this.core = toCopy.core;
+        this.pwd = toCopy.pwd;
+        this.firstName = toCopy.firstName;
+        this.lastName = toCopy.lastName;
+        this.age = toCopy.age;
+        this.email = toCopy.email;
+        this.statsUser = toCopy.statsUser;
+        this.contactUser = toCopy.contactUser;
+        this.SerialVersionUID = toCopy.SerialVersionUID;
+    }
+
+    public UserLight  getUserLight(){
+        return this.core;
+    }
 
     public String getPwd() {
-        return pwd;
+        return this.pwd;
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public int getAge() {
-        return age;
+        return this.age;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public Stats getStats() {
-        return statsUser;
+        return this.statsUser;
     }
 
-
     public Contact getContactUser() {
-        return contactUser;
+        return this.contactUser;
     }
 
     public long getSerialVersionUID() {
-        return SerialVersionUID;
+        return this.SerialVersionUID;
     }
 
     /**
@@ -62,7 +92,7 @@ public class User extends UserLight{
      * @param beginMse : la mise de départ du joueur
      * @param points : son score par partie
      */
-    public void UpdateStats(int beginMse, int points){
+    public void updateStats(int beginMse, int points){
         statsUser.updateStats(beginMse, points);
     };
 
@@ -77,7 +107,22 @@ public class User extends UserLight{
         catch(NoSuchAlgorithmException e){
             System.out.println(e.toString());
         }
-    };
+    }
 
+    /**
+     * other option to password anonymization, just replaces it with a blank string
+     */
+    private void hidePassword(){
+        this.pwd = "";
+    }
+
+
+    public boolean equals(User other){
+        boolean match;
+        if (this.core.getIdUser().equals(other.core.getIdUser()))
+            match = true;
+        else match = false;
+        return match;
+    }
 
 }

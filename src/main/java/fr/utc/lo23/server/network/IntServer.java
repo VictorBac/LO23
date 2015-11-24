@@ -18,6 +18,8 @@ import java.util.ArrayList;
  */
 public class IntServer implements InterfaceServer {
 
+
+
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException {
 
     }

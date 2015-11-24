@@ -18,6 +18,9 @@ public class TableView{
 			root.getChildren().setAll((Node) loader.load());
 			TableController tableController = (TableController) loader.getController();
 			tableController.setInterface(ihmTable);
+
+			FXMLLoader playerLoader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("../fxml/player.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

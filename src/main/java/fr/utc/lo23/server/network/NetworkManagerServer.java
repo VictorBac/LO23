@@ -30,8 +30,8 @@ public class NetworkManagerServer implements InterfaceServer {
     private PokerServer server;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerServer() {
-        server = new PokerServer(null);
+    public NetworkManagerServer(int portToListen) {
+        server = new PokerServer(portToListen);
         server.start();
     }
 

@@ -106,6 +106,21 @@ public class PokerServer extends Thread {
         //this.userLinksOut.remove(u.getIdUser());
     }
 
+    /**
+     * Enleve le thread de la liste des threads, retourne true si réussi sinon retourne false
+     * @return boolean
+     * @param userId
+     */
+    public boolean removeThread(UUID userId) {
+        for (ConnectionThread threadClient : threadsClientList) {
+            if(threadClient.getUserId() == userId) {
+                threadsClientList.remove(threadClient);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private ConnectionThread getThreadFromUserLight(UserLight u){
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == u.getIdUser()) return threadClient;

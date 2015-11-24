@@ -45,15 +45,22 @@ public class ConnectionThread extends Thread {
     public synchronized void run() {
         Console.log("Client: Démarré");
         running = true;
-        while (running) {
-            try {
-                // Call suitable processing method
-                Message msg = (Message) inputStream.readObject();
-                msg.process(this);
+        try {
+            while (running) {
+                try {
+                    // Call suitable processing method
+                    Message msg = (Message) inputStream.readObject();
+                    msg.process(this);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!myServer.removeThread(userId)) {
+            Console.err("On n'a pas pu enlever le thread du l'user de la liste des threads");
         }
     }
 

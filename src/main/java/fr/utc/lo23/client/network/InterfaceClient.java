@@ -22,13 +22,13 @@ public interface InterfaceClient {
      * Demande d'envoi de la liste des users connectes
      * @throws NetworkFailureException
      */
-    public void RequestUserList()throws NetworkFailureException;
+    public void requestUserList()throws NetworkFailureException;
 
     /**
      * Demande d'envoi de la liste des tables
      * @throws NetworkFailureException
      */
-    public void RequestTableList()throws NetworkFailureException;
+    public void requestTableList()throws NetworkFailureException;
 
     /**
      * 
@@ -37,7 +37,7 @@ public interface InterfaceClient {
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
     
 
-    public void createTable() throws NetworkFailureException, TooManyTablesException;
+    public void createTable(Table t) throws NetworkFailureException, TooManyTablesException;
     
     /**
      *
@@ -61,7 +61,7 @@ public interface InterfaceClient {
     /**
      *
      */
-    public void hearthBeat() throws NetworkFailureException;
+    public void heartBeat() throws NetworkFailureException;
     
     /**
      *

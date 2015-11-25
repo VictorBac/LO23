@@ -7,9 +7,7 @@ import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
-import fr.utc.lo23.common.network.RequestListTableMessage;
-import fr.utc.lo23.common.network.RequestListUserMessage;
-import fr.utc.lo23.common.network.RequestLoginMessage;
+import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
 
 /**
@@ -62,7 +60,7 @@ public class NetworkManagerClient implements InterfaceClient  {
      * Request de la liste des users connectes
      * @throws NetworkFailureException
      */
-    public void RequestUserList() throws NetworkFailureException {
+    public void requestUserList() throws NetworkFailureException {
         //Request user list
         Console.logn("Creation d'un Request de list des users");
         RequestListUserMessage reqUseList = new RequestListUserMessage();
@@ -73,23 +71,45 @@ public class NetworkManagerClient implements InterfaceClient  {
      * Request la liste des tables actives
      * @throws NetworkFailureException
      */
-    public void RequestTableList() throws NetworkFailureException {
+    public void requestTableList() throws NetworkFailureException {
         //Request table list
         Console.logn("Creation d'un Request de list des users");
         RequestListTableMessage reqTabList = new RequestListTableMessage();
         localClient.send(reqTabList);
     }
 
+    /**
+     * Envoi d'une requête pour avoir des informations détaillées d'un profil
+     * @param u
+     * @throws NetworkFailureException
+     * @throws ProfileNotFoundOnServerException
+     */
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException {
-
+        Console.log("Creation d'un Request Profile message\n");
+        RequestProfileMessage reqProf = new RequestProfileMessage(u);
+        localClient.send(reqProf);
     }
 
-    public void createTable() throws NetworkFailureException, TooManyTablesException {
-
+    /**
+     * Envoi d'une table à créer sur le serveur
+     * @throws NetworkFailureException
+     * @throws TooManyTablesException
+     */
+    public void createTable(Table tabletoCreate) throws NetworkFailureException, TooManyTablesException {
+        Console.log("Creation d'un Send New Table message\n");
+        CreateTableMessage createTableMsg = new CreateTableMessage(tabletoCreate);
+        localClient.send(createTableMsg);
     }
 
+    /**
+     * Envoi du profil modifié de l'user au serveur
+     * @param userLocal
+     * @throws NetworkFailureException
+     */
     public void updateProfile(User userLocal) throws NetworkFailureException {
-
+        Console.log("Creation d'un Update Profile message\n");
+        UpdateProfileMessage reqProf = new UpdateProfileMessage(userLocal);
+        localClient.send(reqProf);
     }
 
     public void leaveRoom(UserLight userLocal) throws NetworkFailureException {
@@ -100,8 +120,14 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void hearthBeat() throws NetworkFailureException {
-
+    /**
+     * Envoyer le heartbeat pour ne pas se faire déco
+     * @throws NetworkFailureException
+     */
+    public void heartBeat() throws NetworkFailureException {
+        Console.log("Creation d'un Heartbeat message\n");
+        HeartbeatMessage hBeat = new HeartbeatMessage();
+        localClient.send(hBeat);
     }
 
     public void sendAction(Action act, UserLight userLocal) throws NetworkFailureException, IncorrectActionException {

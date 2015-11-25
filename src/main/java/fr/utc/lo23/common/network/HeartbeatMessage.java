@@ -14,7 +14,7 @@ public class HeartbeatMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        threadServer.updateHeartbeat();
     }
 
     @Override

@@ -14,6 +14,9 @@ public class ConnectionThread extends Thread {
     private PokerServer myServer;
     private Socket socketClient;
 
+    //Heartbeat
+    private int nbHeartBeat;
+
     //To send objects between client and server
     private UUID userId;
     private ObjectInputStream inputStream = null;
@@ -27,6 +30,7 @@ public class ConnectionThread extends Thread {
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
         myServer = pokerServer;
         socketClient = socket;
+        nbHeartBeat = 5;
 
         try {
             inputStream = new ObjectInputStream(socketClient.getInputStream());
@@ -44,6 +48,19 @@ public class ConnectionThread extends Thread {
     @Override
     public synchronized void run() {
         Console.log("Client: Démarré");
+
+        /* Heartbeat a tester
+        Console.log("Timer pour le heartbeat démarré");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        checkHeatBeat();
+                    }
+                },
+                10000
+        );*/
+
         running = true;
         try {
             while (running) {
@@ -63,6 +80,7 @@ public class ConnectionThread extends Thread {
             Console.err("On n'a pas pu enlever le thread du l'user de la liste des threads");
         }
     }
+
 
     public void send(Message message){
         try {
@@ -87,5 +105,27 @@ public class ConnectionThread extends Thread {
 
     public PokerServer getMyServer() {
         return myServer;
+    }
+
+
+    /**
+     * Décrémente le heartbeat et regarde s'il en a reçu depuis
+     * Si ce n'est pas le cas, déconnecte
+     */
+    private void checkHeatBeat() {
+        nbHeartBeat--;
+        Console.log("Valeur HB : "+nbHeartBeat);
+        if (nbHeartBeat == 0) {
+            Console.log("HB nul, déconnexion");
+            //Procéder à la déconnection
+        }
+    }
+
+    /**
+     * Met à jour le compteur de heartbeat
+     * Suite à la réception d'un message de ce type
+     */
+    public void updateHeartbeat() {
+        nbHeartBeat++;
     }
 }

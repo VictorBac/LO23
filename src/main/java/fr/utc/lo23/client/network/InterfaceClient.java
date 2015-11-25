@@ -37,7 +37,7 @@ public interface InterfaceClient {
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
     
 
-    public void createTable(Table t) throws NetworkFailureException, TooManyTablesException;
+    public void createTable(UserLight maker, Table t) throws NetworkFailureException, TooManyTablesException;
     
     /**
      *

@@ -95,9 +95,9 @@ public class NetworkManagerClient implements InterfaceClient  {
      * @throws NetworkFailureException
      * @throws TooManyTablesException
      */
-    public void createTable(Table tabletoCreate) throws NetworkFailureException, TooManyTablesException {
+    public void createTable(UserLight maker, Table tabletoCreate) throws NetworkFailureException, TooManyTablesException {
         Console.log("Creation d'un Send New Table message\n");
-        CreateTableMessage createTableMsg = new CreateTableMessage(tabletoCreate);
+        CreateTableMessage createTableMsg = new CreateTableMessage(maker, tabletoCreate);
         localClient.send(createTableMsg);
     }
 

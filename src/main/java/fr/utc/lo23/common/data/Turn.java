@@ -65,15 +65,6 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Method to update the list of players that have not folded for this turn
-     * @return an arrayList of UserLight representing players that can still make action on this turn
-     */
-    public ArrayList<UserLight> updateListPlayerInThisTurn(UserLight currentPlayer) {
-        listPlayerInThisTurn.remove(currentPlayer);
-        return listPlayerInThisTurn;
-    }
-
-    /**
      * Method to get the minimal bet that a player has to call, calculated according to previous Action
      * If the list of action is void, use the amount of the blinde
      * @return an integer that a player has to pay at least
@@ -87,26 +78,16 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Method to check either an action is possible or not considering previous Action and the amount of money
-     * @param actionToCheck The action action that we want to test
-     * @return return true if the action is possible and false if not
-     */
-    private boolean checkActionValid(Action actionToCheck){
-        if ( actionToCheck.getName().name() == "fold" ){
-            addAction(actionToCheck);
-            updateListPlayerInThisTurn(actionToCheck.getUserLightOfPlayer());
-            return true;
-        }else if ( actionToCheck.getName().name() == "bet" ){
-            return true;
-        }
-        return true;
-    }
-
-    /**
      * Method which is designed to add a new action to the turn
      * @param newAction Action that a Player made and that needs to be added to the turn
      */
     public void addAction(Action newAction){
+        if ( newAction.getName().name() == "fold" ){
+            addAction(newAction);
+            listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
+        }else if ( newAction.getName().name() == "bet" ){
+        }
+
         //TODO need to do some check first in the case the Action is not valid
         if(newAction==null)
             throw new NullPointerException("Action is null");
@@ -117,7 +98,7 @@ public class Turn implements Serializable {
 
 
 
-    /*********************Getters & Setters*********************/
+    /*********************Getters*********************/
 
     /**
      * Getter to return the list of action that is associated to this turn

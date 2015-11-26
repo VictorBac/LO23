@@ -19,9 +19,7 @@ public class TableView{
 			TableController tableController = (TableController) loader.getController();
 			tableController.setInterface(ihmTable);
 			tableController.setTable(table);
-
-			FXMLLoader playerLoader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("../fxml/player.fxml"));
+            tableController.playerInitializer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

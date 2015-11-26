@@ -1,8 +1,9 @@
 package fr.utc.lo23.client.ihm_table.controllers;
 
 import fr.utc.lo23.client.ihm_table.IHMTable;
-import fr.utc.lo23.common.data.Game;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
@@ -25,9 +26,16 @@ public class MainController {
 	}
 
 	@FXML
-	private void joinTable(javafx.event.ActionEvent event) {
+	private void joinTable(javafx.event.ActionEvent event) throws ExistingUserException {
+		Table ta = new Table("",true,true,6,2,true,100,30);
+		ta.getListPlayers().addUser(new UserLight("pseudo1"));
+		ta.getListPlayers().addUser(new UserLight("pseudo2"));
+		ta.getListPlayers().addUser(new UserLight("pseudo3"));
+		ta.getListPlayers().addUser(new UserLight("pseudo4"));
+		ta.getListPlayers().addUser(new UserLight("pseudo5"));
+		ta.getListPlayers().addUser(new UserLight("pseudo6"));
 		ihmTable.getTableToMainListener().joinTable(IAmYourPaneLuke,
-				new Table("",true,true,5,10,true,100,30));
+				ta);
     }
 	
 }

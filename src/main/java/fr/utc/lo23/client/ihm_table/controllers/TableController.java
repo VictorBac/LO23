@@ -1,24 +1,27 @@
 package fr.utc.lo23.client.ihm_table.controllers;
 
 import fr.utc.lo23.client.ihm_table.IHMTable;
+import fr.utc.lo23.client.ihm_table.TableUtils;
+import fr.utc.lo23.client.ihm_table.views.PlayerView;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class TableController {
 
     private IHMTable ihmTable;
     private Table table;
+    private HashMap<UserLight,PlayerController> playerControllerMap;
 
     private boolean isHost = true;
 
@@ -32,20 +35,22 @@ public class TableController {
     }
 
 	public TableController(){
-
+        playerControllerMap = new HashMap<UserLight,PlayerController>();
 	}
 
     public void initialize(){
-        /*ListChangeListener<String> chatListener;
-        chatListener = (changed) -> {
-            changed.next();
-            if(changed.wasAdded())
-            {
-                chatList.getItems().add(changed.getAddedSubList().get(0));
-            }
-        };
-        items.addListener(chatListener);*/
         if(isHost) btnLaunchGame.setVisible(true);
+    }
+
+    public void playerInitializer(){
+        int i=1;
+        for(UserLight user : table.getListPlayers().getListUserLights())
+        {
+            Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
+            PlayerView playerView = new PlayerView();
+            playerControllerMap.put(user,playerView.createPlayer(tablePane,user,coords));
+            i++;
+        }
     }
 
 	@FXML
@@ -54,6 +59,8 @@ public class TableController {
     private ListView<String> chatList;
     @FXML
     private Button btnLaunchGame;
+    @FXML
+    private Pane tablePane;
 
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {

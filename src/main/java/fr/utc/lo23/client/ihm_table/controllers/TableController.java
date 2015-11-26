@@ -22,8 +22,14 @@ public class TableController {
 
     private boolean isHost = true;
 
-    public void setInterface(IHMTable ihmTable){ this.ihmTable = ihmTable; }
-    public void setTable(Table table) { this.table = table; }
+    public void setInterface(IHMTable ihmTable){
+        this.ihmTable = ihmTable;
+        ihmTable.setTableController(this);
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
 
 	public TableController(){
 
@@ -70,10 +76,13 @@ public class TableController {
 
     private void sendPacket(MessageChat message) {
         //TODO : Raccorder à DATA
+        //ihmTable.getDataInterface(). fucking fontion qui existe pas
+
+        //TO DELETE
         addChatMessage(message);
     }
 
-    private void addChatMessage(MessageChat message) {
+    public void addChatMessage(MessageChat message) {
         chatList.getItems().add(message.getSender().getPseudo() + " : " + message.getText());
         chatList.setStyle("-fx-graphic:red;");
     }

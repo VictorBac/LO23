@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_table;
 
+import fr.utc.lo23.client.ihm_table.exceptions.NoFormController;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.common.data.*;
 
@@ -7,10 +8,6 @@ import java.util.ArrayList;
 
 public class TableToDataListener implements ITableToDataListener {
     private IHMTable ihmtable;
-
-    public TableToDataListener(IHMTable ihmtable){
-        setIhmtable(ihmtable);
-    }
 
     public IHMTable getIhmtable() {
         return ihmtable;
@@ -20,19 +17,40 @@ public class TableToDataListener implements ITableToDataListener {
         this.ihmtable = ihmtable;
     }
 
+    //Constructeur
+    public TableToDataListener(IHMTable ihmtable){
+        setIhmtable(ihmtable);
+    }
+
     // Fonctions de l'interface
 
     /*
 	 * Fonction à appeler après l'envoi de la table vers le serveur, et réception de celle-ci.
 	 * Permet à IHM-Table d'afficher la table.
 	 */
-    public void showTable(Table table){ }
+    public void showTable(Table table){
+        try{
+            if(getIhmtable().getFormController()!=null) {
+                getIhmtable().getFormController().goToTable(table);
+                getIhmtable().setFormController(null);
+            }
+            else
+            {
+                throw new NoFormController();
+            }
+        } catch (NoFormController noFormController){
+            System.exit(0);
+        }
+
+    }
 
     /*
      * Fonction à appeler après avoir reçu un nouveau message chat.
      * Permet à IHM-Table d'afficher le message
      */
-    public void notifyNewChatMessage(MessageChat message){ }
+    public void notifyNewChatMessage(MessageChat message){
+        getIhmtable().getTableController().addChatMessage(message);
+    }
 
     /*
      * Fonction à appeler après l'arrivée d'un nouveau utilisteur sur la partie

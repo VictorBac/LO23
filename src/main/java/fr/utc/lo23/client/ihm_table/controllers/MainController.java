@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MainController {
 
-	IHMTable table = new IHMTable();
+	IHMTable ihmTable = new IHMTable();
 
 	@FXML
 	public Pane IAmYourPaneLuke;
@@ -21,12 +21,12 @@ public class MainController {
 	
 	@FXML
 	private void launchTable(javafx.event.ActionEvent event) {
-		table.getTableToMainListener().showTableCreationForm(IAmYourPaneLuke);
+		ihmTable.getTableToMainListener().showTableCreationForm(IAmYourPaneLuke);
 	}
 
 	@FXML
 	private void joinTable(javafx.event.ActionEvent event) {
-		table.getTableToMainListener().joinTable(IAmYourPaneLuke,
+		ihmTable.getTableToMainListener().joinTable(IAmYourPaneLuke,
 				new Table("",true,true,5,10,true,100,30));
     }
 	

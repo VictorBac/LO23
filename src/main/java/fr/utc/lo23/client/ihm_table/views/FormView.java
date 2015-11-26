@@ -19,6 +19,7 @@ public class FormView {
             root.getChildren().setAll((Node) loader.load());
             FormController formController = (FormController) loader.getController();
             formController.setInterface(ihmTable);
+            formController.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }

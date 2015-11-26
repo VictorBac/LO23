@@ -18,8 +18,6 @@ public class MainView extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-		System.out.println(getClass().getResource("."));
-		System.out.println(getClass().getResource("../fxml/MainView.fxml"));
 		loader.setLocation(getClass().getResource("../fxml/MainView.fxml"));
 		Parent root = loader.load();
 		

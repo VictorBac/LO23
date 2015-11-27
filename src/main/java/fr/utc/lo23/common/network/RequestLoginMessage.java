@@ -4,6 +4,7 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
@@ -45,16 +46,25 @@ public class RequestLoginMessage extends Message {
         Console.log("Checking if there is room for one more user");
         if (myServ.getNbUsers() < PokerServer.NB_MAX_USER) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
-            threadServer.setUserId(user.getUserLight().getIdUser());
-            ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
-            //On envoie un message au client pour accepter sa connexion
-            AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
-            threadServer.send(acceptL);
-            //On envoie à tous les autres clients un notify new client.
-            NotifyNewPlayerMessage newPlayerM = new NotifyNewPlayerMessage(user.getUserLight());
-            myServ.sendToAll(newPlayerM);
+
+            //Giving the user to data
+            try {
+                UserLight ul = myServ.getNetworkManager().getDataInstance().userConnection(user);
+                threadServer.setUserId(user.getUserLight().getIdUser());
+                ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
+
+                //On envoie un message au client pour accepter sa connexion
+                sendConnectionConfirmation(aUsers, threadServer);
+
+                //On envoie à tous les autres clients un notify new client.
+                notifyNewUserToCurrentPlayers(ul, myServ);
+            } catch (ExistingUserException e) {
+                e.printStackTrace();
+            }
+
         } else {
             Console.log("Connection impossible ! ");
+            sendConnectionRejection(threadServer);
         }
     }
 
@@ -65,6 +75,32 @@ public class RequestLoginMessage extends Message {
     @Override
     public void process(ServerLink threadClient) {
 
+    }
+
+    /**
+     * Notifie aux joueurs connecté la présence
+     * d'un nouveau joueur
+     * @param ul
+     */
+    private void notifyNewUserToCurrentPlayers(UserLight ul, PokerServer myServ) {
+        NotifyNewPlayerMessage newPlayerM = new NotifyNewPlayerMessage(ul);
+        myServ.sendToAll(newPlayerM);
+    }
+
+    /**
+     * Envoie la confirmation de connection
+     * au nouveau joueur ainsi que la liste
+     * des joueurs actuels
+     * @param aUsers
+     */
+    private void sendConnectionConfirmation(ArrayList<UserLight> aUsers, ConnectionThread threadServer) {
+        AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
+        threadServer.send(acceptL);
+    }
+
+    private void sendConnectionRejection(ConnectionThread threadServer) {
+        RefuseLoginMessage refuseL = new RefuseLoginMessage();
+        threadServer.send(refuseL);
     }
 
 }

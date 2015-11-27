@@ -5,7 +5,7 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Created by Ghark on 25/11/2015.
+ * Created by rbonneau on 25/11/2015.
  */
 public class RequestProfileMessage extends Message {
 
@@ -20,7 +20,8 @@ public class RequestProfileMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //TODO remplacer par le bon nom de méthode
+        //User Profile threadServer.getMyServer().getNetworkManager().getDataInstance().getUserFromUserLight();
     }
 
     @Override

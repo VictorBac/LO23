@@ -18,7 +18,6 @@ public class RefuseLoginMessage extends Message {
     @Override
     public void process() {
         Console.log("Login refused");
-        //TODO
     }
 
     /**
@@ -35,6 +34,6 @@ public class RefuseLoginMessage extends Message {
      */
     @Override
     public void process(ServerLink threadClient) {
-
+        //TODO
     }
 }

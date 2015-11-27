@@ -5,7 +5,7 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Created by Ghark on 25/11/2015.
+ * Created by rbonneau on 25/11/2015.
  */
 public class UpdateProfileMessage extends Message {
 
@@ -20,7 +20,6 @@ public class UpdateProfileMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
     }
 
     @Override

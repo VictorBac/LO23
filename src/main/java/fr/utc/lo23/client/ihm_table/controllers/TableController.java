@@ -11,6 +11,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 import java.sql.Timestamp;
@@ -44,11 +45,12 @@ public class TableController {
 
     public void playerInitializer(){
         int i=1;
+        Image defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
         for(UserLight user : table.getListPlayers().getListUserLights())
         {
             Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
             PlayerView playerView = new PlayerView();
-            playerControllerMap.put(user,playerView.createPlayer(tablePane,user,coords));
+            playerControllerMap.put(user,playerView.createPlayer(tablePane,user,coords,defaultImage));
             i++;
         }
     }

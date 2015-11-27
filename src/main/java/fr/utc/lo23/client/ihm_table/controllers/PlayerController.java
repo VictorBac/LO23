@@ -37,11 +37,9 @@ public class PlayerController{
 
     }
 
-    public void setNameAndAvatar(UserLight user){
+    public void setNameAndAvatar(UserLight user,Image defaultImage){
         playerNameLabel.setText(user.getPseudo());
-        System.out.println("Working Directory = " +
-                System.getProperty("user.dir"));
-        avatarImageView.setImage(new Image(getClass().getResource("../images/default.png").toExternalForm()));
+        avatarImageView.setImage(defaultImage);
     }
 
     public void setPositions(Point2D coords){

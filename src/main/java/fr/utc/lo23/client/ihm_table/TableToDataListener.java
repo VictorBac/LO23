@@ -1,6 +1,5 @@
 package fr.utc.lo23.client.ihm_table;
 
-import fr.utc.lo23.client.ihm_table.exceptions.NoFormController;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.common.data.*;
 
@@ -29,18 +28,15 @@ public class TableToDataListener implements ITableToDataListener {
 	 * Permet à IHM-Table d'afficher la table.
 	 */
     public void showTable(Table table){
-        try{
             if(getIhmtable().getFormController()!=null) {
                 getIhmtable().getFormController().goToTable(table);
                 getIhmtable().setFormController(null);
             }
             else
             {
-                throw new NoFormController();
+                System.out.println("Error: Il ne faut pas appeler cette fonction en dehors de ses cas d'utilisation.");
+                System.exit(0);
             }
-        } catch (NoFormController noFormController){
-            System.exit(0);
-        }
 
     }
 

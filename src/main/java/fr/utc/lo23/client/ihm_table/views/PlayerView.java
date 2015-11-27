@@ -23,7 +23,7 @@ public class PlayerView {
             loader.setLocation(getClass().getResource("../fxml/PlayerBox.fxml"));
             root.getChildren().add((Node) loader.load());
             PlayerController playerController = (PlayerController) loader.getController();
-            playerController.setName(user);
+            playerController.setNameAndAvatar(user);
             playerController.setPositions(coords);
 
 

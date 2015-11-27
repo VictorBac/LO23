@@ -4,6 +4,7 @@ import fr.utc.lo23.common.data.UserLight;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
@@ -36,8 +37,11 @@ public class PlayerController{
 
     }
 
-    public void setName(UserLight user){
+    public void setNameAndAvatar(UserLight user){
         playerNameLabel.setText(user.getPseudo());
+        System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));
+        avatarImageView.setImage(new Image(getClass().getResource("../images/default.png").toExternalForm()));
     }
 
     public void setPositions(Point2D coords){

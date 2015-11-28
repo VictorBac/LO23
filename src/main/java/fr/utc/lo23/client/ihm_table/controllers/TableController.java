@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -29,6 +30,7 @@ public class TableController {
     private IHMTable ihmTable;
     private Table table;
     private HashMap<UserLight,PlayerController> playerControllerMap;
+    private ArrayList<PlayerController> controllersList; //This is used to find where you can
     private Image defaultImage;
 
     private boolean isHost = true;
@@ -62,11 +64,17 @@ public class TableController {
     public void playerInitializer(){
         int i=1;
         Image defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
+        controllersList = new ArrayList<PlayerController>(table.getNbPlayerMax());
+        for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
+            controllersList.add(ite, null);
+        }
         for(UserLight user : table.getListPlayers().getListUserLights())
         {
             Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
             PlayerView playerView = new PlayerView();
-            playerControllerMap.put(user,playerView.createPlayer(tablePane,user,coords,defaultImage));
+            PlayerController playerController = playerView.createPlayer(tablePane,user,coords,defaultImage);
+            playerControllerMap.put(user,playerController);
+            controllersList.set(i - 1, playerController);
             i++;
         }
     }
@@ -79,17 +87,23 @@ public class TableController {
         }
     }
 
+    public int getFirstAvailableSeat() {
+        for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
+            if(controllersList.get(ite) == null) {
+                return ite;
+            }
+        }
+        return -1; //Should never happen because player should not be added if table is full
+    }
+
     public void addPlayer(UserLight user) {
-        addPlayer(table.getListPlayers().getListUserLights().size(), user, defaultImage);
+        addPlayer(getFirstAvailableSeat() + 1, user, defaultImage);
     }
 
     public void addPlayer(int id, UserLight user, Image image) {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();
         playerControllerMap.put(user, playerView.createPlayer(tablePane, user, coords, image));
-        //Add new object and move all others
-        //TranslateTransition animation = new TranslateTransition(new Duration(500), playerView.getNode());
-        //setFrom - setTo
     }
 
 

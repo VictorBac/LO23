@@ -9,6 +9,41 @@
    <children>
       <Pane fx:id="tablePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1020.0" styleClass="table">
          <children>
+             <Pane fx:id="actionBox" layoutY="350.0" prefHeight="180.0" prefWidth="266.0" visible="false">
+                 <children>
+                     <Button fx:id="actionFold" layoutX="2.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <styleClass>
+                        <String fx:value="action" />
+                        <String fx:value="action_fold_off" />
+                     </styleClass></Button>
+                     <Button fx:id="actionCheck" layoutX="60.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <styleClass>
+                        <String fx:value="action" />
+                        <String fx:value="action_check_off" />
+                     </styleClass></Button>
+                     <Button fx:id="actionFollow" layoutX="108.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <styleClass>
+                        <String fx:value="action" />
+                        <String fx:value="action_follow_off" />
+                     </styleClass></Button>
+                     <Button fx:id="actionBet" layoutX="136.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <styleClass>
+                        <String fx:value="action" />
+                        <String fx:value="action_bet_off" />
+                     </styleClass></Button>
+                     <Button fx:id="actionAllin" layoutX="128.0" layoutY="129.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <styleClass>
+                        <String fx:value="action" />
+                        <String fx:value="action_allin_off" />
+                     </styleClass></Button>
+                     <ImageView fitHeight="120.0" fitWidth="120.0" layoutX="3.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@../images/icon_action.png" />
+                         </image>
+                     </ImageView>
+                  <Slider fx:id="actionBetMoneySelector" layoutX="188.0" layoutY="92.0" prefHeight="17.0" prefWidth="140.0" visible="false" />
+                 </children>
+             </Pane>
             <Button fx:id="btnLaunchGame" layoutX="887.0" layoutY="14.0" mnemonicParsing="false" onAction="#launchGame" styleClass="launchGame" text="Lancer partie" visible="false" />
          </children>
       </Pane>

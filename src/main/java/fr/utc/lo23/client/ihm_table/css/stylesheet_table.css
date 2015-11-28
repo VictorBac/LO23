@@ -1,51 +1,71 @@
-.action1 {
-	-fx-graphic:url("../images/action_fold_m.png");
-	-fx-background-color:none;
-	-fx-border:none;
+.action{
+    -fx-background-color:none;
+    -fx-border:none;
 }
 
-.action1:hover {
-	-fx-graphic:url("../images/action_fold_m_hover.png");
+.action_fold_off{
+    -fx-graphic:url("../images/action_fold_off.png");
 }
 
-.action2 {
-	-fx-graphic:url("../images/action_check_m.png");
-	-fx-background-color:none;
-	-fx-border:none;
+.action_fold_on {
+	-fx-graphic:url("../images/action_fold.png");
+    -fx-cursor:hand;
 }
 
-.action2:hover {
-	-fx-graphic:url("../images/action_check_m_hover.png");
+.action_fold_on:hover {
+	-fx-graphic:url("../images/action_fold_hover.png");
 }
 
-.action3 {
-	-fx-graphic:url("../images/action_follow_m.png");
-	-fx-background-color:none;
-	-fx-border:none;
+.action_check_off {
+    -fx-graphic:url("../images/action_check_off.png");
 }
 
-.action3:hover {
-	-fx-graphic:url("../images/action_follow_m_hover.png");
+.action_check_on {
+	-fx-graphic:url("../images/action_check.png");
+    -fx-cursor:hand;
 }
 
-.action4 {
-	-fx-graphic:url("../images/action_bet_m.png");
-	-fx-background-color:none;
-	-fx-border:none;
+.action_check_on:hover {
+	-fx-graphic:url("../images/action_check_hover.png");
 }
 
-.action4:hover {
-	-fx-graphic:url("../images/action_bet_m_hover.png");
+.action_follow_off {
+    -fx-graphic:url("../images/action_follow_off.png");
 }
 
-.action5 {
-	-fx-graphic:url("../images/action_allin_m.png");
-	-fx-background-color:none;
-	-fx-border:none;
+.action_follow_on {
+	-fx-graphic:url("../images/action_follow.png");
+    -fx-cursor:hand;
 }
 
-.action5:hover {
-	-fx-graphic:url("../images/action_allin_m_hover.png");
+.action_follow_on:hover {
+	-fx-graphic:url("../images/action_follow_hover.png");
+}
+
+.action_bet_off {
+    -fx-graphic:url("../images/action_bet_off.png");
+}
+
+.action_bet_on {
+	-fx-graphic:url("../images/action_bet.png");
+    -fx-cursor:hand;
+}
+
+.action_bet_on:hover {
+	-fx-graphic:url("../images/action_bet_hover.png");
+}
+
+.action_allin_off {
+    -fx-graphic:url("../images/action_allin_off.png");
+}
+
+.action_allin_on {
+	-fx-graphic:url("../images/action_allin.png");
+    -fx-cursor:hand;
+}
+
+.action_allin_on:hover {
+	-fx-graphic:url("../images/action_allin_hover.png");
 }
 
 .table{

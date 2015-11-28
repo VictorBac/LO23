@@ -35,7 +35,7 @@ import fr.utc.lo23.server.network.threads.PokerServer;
                 myServ.getNetworkManager().getDataInstance().validateMessage(sender,messageSend);
                 SendChatMessageMessage chatMessage = new SendChatMessageMessage(sender,messageSend);
                 myServ.sendToAll(chatMessage);
-            } catch (IncorrectMessageOrRightsException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 //  Envoie à tout le monde lu message après validation

@@ -19,7 +19,6 @@ public class TableView{
 			TableController tableController = (TableController) loader.getController();
 			tableController.setInterface(ihmTable);
 			tableController.setTable(table);
-            tableController.playerInitializer();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

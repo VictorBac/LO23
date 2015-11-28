@@ -3,6 +3,7 @@ package fr.utc.lo23.client.ihm_table.controllers;
 import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.ihm_table.TableUtils;
 import fr.utc.lo23.client.ihm_table.views.PlayerView;
+import fr.utc.lo23.common.data.Game;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
@@ -35,6 +36,8 @@ public class TableController {
 
     public void setTable(Table table) {
         this.table = table;
+        playerInitializer();
+        chatInitializer();
     }
 
 	public TableController(){
@@ -48,11 +51,21 @@ public class TableController {
 
     public void playerInitializer(){
         int i=1;
-
+        Image defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
         for(UserLight user : table.getListPlayers().getListUserLights())
         {
-            addPlayer(i, user, defaultImage);
+            Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
+            PlayerView playerView = new PlayerView();
+            playerControllerMap.put(user,playerView.createPlayer(tablePane,user,coords,defaultImage));
             i++;
+        }
+    }
+
+    public void chatInitializer(){
+        //TODO: modifier ça quand ils auront modifié leur fucking fonction getCurrentGame
+        for(MessageChat msg : table.getListGames().get(table.getCurrentGame()).getChatGame().getListMessages())
+        {
+            addChatMessage(msg);
         }
     }
 

@@ -14,7 +14,7 @@ public class Card implements Serializable {
      * symbol: symbol of the card
      * id: char[3] made up by value and symbol
      */
-    private String value;
+    private Integer value;
     private char symbol;
     private char[] id;
 
@@ -24,7 +24,7 @@ public class Card implements Serializable {
      * @param symbol
      * @param id
      */
-    public Card(String value, char symbol, char[] id) {
+    public Card(Integer value, char symbol, char[] id) {
         this.value = value;
         this.symbol = symbol;
         this.id = id;
@@ -32,7 +32,7 @@ public class Card implements Serializable {
 
     // getters
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 
@@ -50,7 +50,7 @@ public class Card implements Serializable {
         this.symbol = symbol;
     }
 
-    public void setValue(String value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

@@ -34,7 +34,7 @@ public class CombinationCalculator {
         if (cardRank == null) cardRank = hasStraightFlush(cardValues);
         if (cardRank == null) cardRank = hasFullHouse(cardValues);
         if (cardRank == null) cardRank = hasFour(cardValues);
-        if (cardRank == null) cardRank = hasFlush(cardValues);
+        if (cardRank == null) cardRank = hasFlush(cards);
         if (cardRank == null) cardRank = hasStraight(cardValues);
         if (cardRank == null) cardRank = hasThree(cardValues);
         if (cardRank == null) cardRank = hasTwoPair(cardValues);
@@ -127,7 +127,39 @@ public class CombinationCalculator {
         return null;
     }
 
-    public ArrayList<Integer> hasFlush (ArrayList<Integer> cardValues) throws Exception {
+    public ArrayList<Integer> hasFlush (ArrayList<Card> cards) throws Exception {
+        ArrayList<Integer> spade = new ArrayList<Integer>();
+        ArrayList<Integer> heart = new ArrayList<Integer>();
+        ArrayList<Integer> diamond = new ArrayList<Integer>();
+        ArrayList<Integer> club = new ArrayList<Integer>();
+        for (int i = 0; i < cards.size(); i++) {
+            char symbol = cards.get(i).getSymbol();
+            Integer value = cards.get(i).getValue();
+            if (symbol == 'S') spade.add(value);
+            if (symbol == 'H') heart.add(value);
+            if (symbol == 'D') diamond.add(value);
+            if (symbol == 'C') club.add(value);
+        }
+        if (spade.size() >= 5) {
+            while (spade.size() > 5) spade.remove(5);
+            spade.add(0,5);
+            return spade;
+        }
+        if (heart.size() >= 5) {
+            while (heart.size() > 5) heart.remove(5);
+            heart.add(0,5);
+            return heart;
+        }
+        if (diamond.size() >= 5) {
+            while (diamond.size() > 5) diamond.remove(5);
+            diamond.add(0,5);
+            return diamond;
+        }
+        if (club.size() >= 5) {
+            while (club.size() > 5) club.remove(5);
+            club.add(0,5);
+            return club;
+        }
         return null;
     }
 

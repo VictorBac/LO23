@@ -13,18 +13,25 @@ import static org.junit.Assert.assertEquals;
  */
 public class CombinationCalculatorTest {
     public CombinationCalculator calculator;
+    ArrayList<Card> cards;
     ArrayList<Integer> cardValues;
 
     public CombinationCalculatorTest() {
         calculator = new CombinationCalculator();
+
+        cards = new ArrayList<Card>();
+        cards.add(new Card(13,'C'));
+        cards.add(new Card(10,'C'));
+        cards.add(new Card(10,'S'));
+        cards.add(new Card(9,'C'));
+        cards.add(new Card(7,'C'));
+        cards.add(new Card(6,'H'));
+        cards.add(new Card(2,'C'));
+
         cardValues = new ArrayList<Integer>();
-        cardValues.add(13);
-        cardValues.add(10);
-        cardValues.add(10);
-        cardValues.add(9);
-        cardValues.add(9);
-        cardValues.add(9);
-        cardValues.add(3);
+        for (int i = 0; i < cards.size(); i++) {
+            cardValues.add(cards.get(i).getValue());
+        }
     }
 
     @Test
@@ -60,8 +67,18 @@ public class CombinationCalculatorTest {
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.addAll(Arrays.asList(new Integer[]{7, 9, 9, 9, 9, 12}));
         assertEquals(expected, test);
+    }
+
+    @Test
+    public void testFlush() throws Exception {
+        ArrayList<Integer> test = calculator.hasFlush(cards);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{5, 13, 10, 9, 7, 2}));
+        assertEquals(expected, test);
 
     }
+
+
 
     @Test
     public void tempTest() throws Exception {

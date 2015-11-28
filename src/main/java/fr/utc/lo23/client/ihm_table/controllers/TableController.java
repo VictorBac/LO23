@@ -8,6 +8,8 @@ import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
@@ -16,6 +18,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -84,6 +87,9 @@ public class TableController {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();
         playerControllerMap.put(user, playerView.createPlayer(tablePane, user, coords, image));
+        //Add new object and move all others
+        //TranslateTransition animation = new TranslateTransition(new Duration(500), playerView.getNode());
+        //setFrom - setTo
     }
 
 

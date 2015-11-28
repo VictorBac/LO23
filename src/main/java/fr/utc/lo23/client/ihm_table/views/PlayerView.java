@@ -18,11 +18,14 @@ import java.io.IOException;
  */
 public class PlayerView {
 
+    private Node node;
+
     public PlayerController createPlayer(Pane root,UserLight user,Point2D coords,Image defaultImage) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../fxml/PlayerBox.fxml"));
-            root.getChildren().add((Node) loader.load());
+            node = (Node) loader.load();
+            root.getChildren().add(node);
             PlayerController playerController = (PlayerController) loader.getController();
             playerController.setNameAndAvatar(user,defaultImage);
             playerController.setPositions(coords);
@@ -34,5 +37,9 @@ public class PlayerView {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Node getNode() {
+        return node;
     }
 }

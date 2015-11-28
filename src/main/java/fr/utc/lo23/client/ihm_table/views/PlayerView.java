@@ -29,9 +29,6 @@ public class PlayerView {
             PlayerController playerController = (PlayerController) loader.getController();
             playerController.setNameAndAvatar(user,defaultImage);
             playerController.setPositions(coords);
-
-
-
             return playerController;
         } catch (IOException e) {
             e.printStackTrace();

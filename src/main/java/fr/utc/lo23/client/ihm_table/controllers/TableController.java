@@ -72,7 +72,7 @@ public class TableController {
         {
             Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
             PlayerView playerView = new PlayerView();
-            PlayerController playerController = playerView.createPlayer(tablePane,user,coords,defaultImage);
+            PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
             playerControllerMap.put(user,playerController);
             controllersList.set(i - 1, playerController);
             i++;
@@ -87,6 +87,10 @@ public class TableController {
         }
     }
 
+    /**
+     *
+     * @return first available seat on table (used when initializing
+     */
     public int getFirstAvailableSeat() {
         for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
             if(controllersList.get(ite) == null) {
@@ -96,17 +100,41 @@ public class TableController {
         return -1; //Should never happen because player should not be added if table is full
     }
 
+    /**
+     * Add player to table (called by TableToDataListener)
+     * @param user
+     */
     public void addPlayer(UserLight user) {
         addPlayer(getFirstAvailableSeat() + 1, user, defaultImage);
     }
 
+    /**
+     * Add player to table
+     * @param id
+     * @param user
+     * @param image
+     */
     public void addPlayer(int id, UserLight user, Image image) {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();
         playerControllerMap.put(user, playerView.createPlayer(tablePane, user, coords, image));
     }
 
-
+    /**
+     * Remove player from table at start
+     * @param user
+     */
+    public void removePlayer(UserLight user) {
+        PlayerController playerController = playerControllerMap.get(user);
+        if(playerController == null) {
+            //This user doesn't exist
+            return;
+        }
+        playerControllerMap.remove(user);
+        controllersList.set(controllersList.indexOf(playerController), null);
+        //How to destroy view ?
+        //playerController.getPlayerView().destroy() ?
+    }
 
     @FXML
     private TextField messageToSend;
@@ -230,7 +258,6 @@ public class TableController {
         actionAllin.getStyleClass().remove("active");
         actionAllin.getStyleClass().add("action_allin_off");
     }
-
 
 
 }

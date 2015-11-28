@@ -20,75 +20,159 @@ public class CombinationCalculator {
         return null; //TODO remove this line
     }
 
-    public ArrayList<PlayerHand> getHandType(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) throws Exception {
+    public ArrayList<Integer> getHandType(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) throws Exception {
         ArrayList<Card> cards = null;
         cards.addAll(cardsOnHand);
         cards.addAll(cardsOnField);
-        if(cards.size() != 7) {
+        if (cards.size() != 7) {
             throw new Exception();
         }
+        ArrayList<Integer> cardValues = new ArrayList<Integer>();
 
-
-        return null; //TODO remove this line
+        ArrayList<Integer> cardRank = hasRoyalFlush(cardValues);
+        if (cardRank == null) cardRank = hasRoyalFlush(cardValues);
+        if (cardRank == null) cardRank = hasStraightFlush(cardValues);
+        if (cardRank == null) cardRank = hasFullHouse(cardValues);
+        if (cardRank == null) cardRank = hasFour(cardValues);
+        if (cardRank == null) cardRank = hasFlush(cardValues);
+        if (cardRank == null) cardRank = hasStraight(cardValues);
+        if (cardRank == null) cardRank = hasThree(cardValues);
+        if (cardRank == null) cardRank = hasTwoPair(cardValues);
+        if (cardRank == null) cardRank = hasOnePair(cardValues);
+        if (cardRank == null) cardRank = hasHighCard(cardValues);
+        return cardRank;
     }
 
-    public ArrayList<Integer> toMap(ArrayList<Integer> cardValues) throws Exception {
-        for (int i = 0; i < 7 ; i++) {
-
-        }
+    public ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) throws Exception {
         return cardValues;
     }
 
-
-    public Integer hasHighCard(ArrayList<Integer> cardValues) throws Exception {
-        return cardValues.get(0);
-    }
-
-    public Integer hasOnePair(ArrayList<Integer> cardValues) throws Exception {
-        for (int i = 0; i < cardValues.size() - 1; i++) {
-            if (cardValues.get(i) == cardValues.get(i+1)) {
-                return cardValues.get(i);
+    /**
+     * Rank 1 one pair
+     * @param cardValues
+     * @return cardRank if has one pair. null if not.
+     * @throws Exception
+     */
+    public ArrayList<Integer> hasOnePair(ArrayList<Integer> cardValues) throws Exception {
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        int i;
+        for (i = 1; i < 7; i++) {
+            if (cardValues.get(i - 1) == cardValues.get(i)) {
+                break;
             }
         }
-        return 0;
+        if (i < 7) {
+            // move the pair to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, 1);
+            // remove the last two card values
+            cardRank.remove(6);
+            cardRank.remove(6);
+            return cardRank;
+        }  else {
+            return null;
+        }
     }
 
-    public Integer hasTwoPair(ArrayList<Integer> cardValues) throws Exception {
-        return cardValues.get(0);
-    }
-
-    public Integer hasThree(ArrayList<Integer> cardValues) throws Exception {
-        for (int i = 0; i < cardValues.size() - 2; i++) {
-            if (cardValues.get(i) == cardValues.get(i+2)) {
-                return cardValues.get(i);
+    /**
+     * Rank 2 two pairs
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> hasTwoPair(ArrayList<Integer> cardValues) throws Exception {
+        this.hasOnePair(cardValues);
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        int i;
+        for (i = 1; i < 7; i++) {
+            if (cardValues.get(i -1) == cardValues.get(i)) {
+                break;
             }
         }
-        return 0;
+
+        return null;
     }
 
-    public Integer hasStraight(ArrayList<Integer> cardValues) throws Exception {
-        return cardValues.get(0);
-    }
-
-    public Integer hasFlush (ArrayList<Integer> cardValues) throws Exception {
-        return cardValues.get(0);
-    }
-
-    public Integer hasFour(ArrayList<Integer> cardValues) throws Exception {
-        for (int i = 0; i < cardValues.size() - 3; i++) {
-            if (cardValues.get(i) == cardValues.get(i+3)) {
-                return cardValues.get(i);
+    /**
+     * Rank 3: three of a kind
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> hasThree(ArrayList<Integer> cardValues) throws Exception {
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        int i;
+        for (i = 2; i < 7; i++) {
+            if (cardValues.get(i - 2) == cardValues.get(i)) {
+                break;
             }
         }
-        return 0;
+        if (i < 7) {
+            // move the three of a kind to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, 3);
+            // remove the last two card values
+            cardRank.remove(6);
+            cardRank.remove(6);
+            return cardRank;
+        }  else {
+            return null;
+        }
     }
 
-    public Integer hasStraightFlush (ArrayList<Integer> cardValues) throws Exception {
-        return cardValues.get(0);
+    public ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) throws Exception {
+        return null;
     }
 
-    public Integer hasRoyalFlush(ArrayList<Integer> cardValues) throws Exception {
-        return cardValues.get(0);
+    public ArrayList<Integer> hasFlush (ArrayList<Integer> cardValues) throws Exception {
+        return null;
+    }
+
+    public ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) throws Exception {
+        return null;
+    }
+
+    /**
+     * Rank 7: four of a kind
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> hasFour(ArrayList<Integer> cardValues) throws Exception {
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        int i;
+        for (i = 3; i < 7; i++) {
+            if (cardValues.get(i - 3) == cardValues.get(i)) {
+                break;
+            }
+        }
+        if (i < 7) {
+            // move the four of a kind to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            // remove the last two card values
+            cardRank.remove(5);
+            cardRank.remove(5);
+            cardRank.add(0, 7);
+            return cardRank;
+        }  else {
+            return null;
+        }
+    }
+
+
+
+    public ArrayList<Integer> hasStraightFlush (ArrayList<Integer> cardValues) throws Exception {
+        return null;
+    }
+
+    public ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) throws Exception {
+        return null;
     }
 
 }

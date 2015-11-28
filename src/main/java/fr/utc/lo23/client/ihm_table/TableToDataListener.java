@@ -53,7 +53,13 @@ public class TableToDataListener implements ITableToDataListener {
      * isPlayer (true) -> le user est un joueur
      * isPlayer(false) -> le user est un spectateur
      */
-    public void notifyNewUser(UserLight user, boolean isPlayer){ }
+    public void notifyNewUser(UserLight user, boolean isPlayer){
+        if(isPlayer) {
+            if(ihmtable.getTableController() != null) {
+                ihmtable.getTableController().addPlayer(user);
+            }
+        }
+    }
 
     /*
      * Fonction à appeler après le départ d'un nouveau utilisteur sur la partie

@@ -6,6 +6,7 @@ import fr.utc.lo23.client.ihm_table.views.PlayerView;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ public class TableController {
     private IHMTable ihmTable;
     private Table table;
     private HashMap<UserLight,PlayerController> playerControllerMap;
+    private Image defaultImage;
 
     private boolean isHost = true;
 
@@ -37,6 +39,7 @@ public class TableController {
 
 	public TableController(){
         playerControllerMap = new HashMap<UserLight,PlayerController>();
+        defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
 	}
 
     public void initialize(){
@@ -45,14 +48,22 @@ public class TableController {
 
     public void playerInitializer(){
         int i=1;
-        Image defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
+
         for(UserLight user : table.getListPlayers().getListUserLights())
         {
-            Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
-            PlayerView playerView = new PlayerView();
-            playerControllerMap.put(user,playerView.createPlayer(tablePane,user,coords,defaultImage));
+            addPlayer(i, user, defaultImage);
             i++;
         }
+    }
+
+    public void addPlayer(UserLight user) {
+        addPlayer(table.getListPlayers().getListUserLights().size(), user, defaultImage);
+    }
+
+    public void addPlayer(int id, UserLight user, Image image) {
+        Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
+        PlayerView playerView = new PlayerView();
+        playerControllerMap.put(user, playerView.createPlayer(tablePane, user, coords, image));
     }
 
 	@FXML
@@ -95,4 +106,6 @@ public class TableController {
         chatList.getItems().add(message.getSender().getPseudo() + " : " + message.getText());
         chatList.setStyle("-fx-graphic:red;");
     }
+
+
 }

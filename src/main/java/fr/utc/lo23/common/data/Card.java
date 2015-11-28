@@ -30,6 +30,17 @@ public class Card implements Serializable {
         this.id = id;
     }
 
+    /**
+     * Constructor with value and symbol.
+     * For example Card card = new Card(13,'C');
+     * @param value
+     * @param symbol
+     */
+    public Card(Integer value, char symbol) {
+        this.value = value;
+        this.symbol = symbol;
+    }
+
     // getters
 
     public Integer getValue() {

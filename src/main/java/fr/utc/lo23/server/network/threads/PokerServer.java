@@ -1,10 +1,10 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.PlayerNotConnectedException;
 import fr.utc.lo23.server.network.NetworkManagerServer;
 
 import java.io.IOException;
@@ -16,9 +16,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class PokerServer extends Thread {
-    public static int NB_MAX_USER = 100;
-    private static int PORT = 1904;
-
     private NetworkManagerServer networkManager;
     private ServerSocket listeningSocket;
     private boolean running;
@@ -31,41 +28,46 @@ public class PokerServer extends Thread {
      * @param portToListen default port to listen is defined in const var, if you would like to change it,
      *                     give an other number here
      */
-    public PokerServer(Integer portToListen) {
-        Console.log("Lancement du serveur....");
-        Console.log("Nombre d'utilisateurs maximum fixé à " + NB_MAX_USER);
+    public PokerServer(Integer portToListen) throws NetworkFailureException{
+        Console.logn("Lancement du serveur.... ");
         ArrayList<ConnectionThread> threadsClientList = new ArrayList<ConnectionThread>();
 
-
         // Change port if needed
-        if (portToListen != null) PokerServer.PORT = portToListen;
+        if (portToListen == null) portToListen = Params.DEFAULT_SERVER_PORT;
 
-        try {
-            initSocket();
-        } catch (Exception e) {
-            Console.err("ERR: Serveur main: Initialisation du socket");
-            e.printStackTrace();
-        }
+        initSocket(portToListen);
+        Console.log("ok");
+        Console.log("Le serveur écoute sur " + listeningSocket.getInetAddress() + ":" + listeningSocket.getLocalPort());
+        Console.log("Nombre d'utilisateurs maximum fixé à " + Params.NB_MAX_USER);
     }
 
     /**
      * Create the socket
      * @throws Exception
      */
-    public void initSocket() throws Exception {
-        if (null != listeningSocket) throw new NetworkFailureException("La socket serveur existe déjà");
-
-        listeningSocket = new ServerSocket(PORT);
-        Console.log("Le serveur écoute sur " + listeningSocket.getInetAddress() + ":" + listeningSocket.getLocalPort());
+    public void initSocket(int portToListen) throws NetworkFailureException {
+        if (null != listeningSocket)
+        try {
+            listeningSocket = new ServerSocket(portToListen);
+        }
+        catch (Exception e){
+            throw new NetworkFailureException("Impossible de prendre la main sur le port: " + portToListen);
+        }
     }
 
     /**
      * Shutdown the server
      * @throws Exception
      */
-    public void shutdown() throws IOException {
+    public void shutdown() throws NetworkFailureException {
+        //TODO: Deconnecter les clients en premier si possible
+        try {
+            listeningSocket.close();
+        }
+        catch (Exception e){
+            throw new NetworkFailureException("Impossible de fermer la socket d'attente proprement");
+        }
         running = false;
-        listeningSocket.close();
     }
 
     /**
@@ -73,37 +75,18 @@ public class PokerServer extends Thread {
      */
     @Override
     public synchronized void run() {
-        Console.log("Srv: Lancement Thread...");
+        Console.log("Attente des clients...");
         running = true;
         while (running) {
             try {
-                Console.log("Srv: Attente des connexions clients...");
                 Socket soClient = listeningSocket.accept();
                 ConnectionThread thread = new ConnectionThread(soClient, this);
                 thread.start();
                 threadsClientList.add(thread);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-
-    /**
-     * Enleve l'utilsateur u de la l'array userLinksOut
-     * @return
-     * @param u User
-     */
-    public void userDisconnect(User u) {
-
-        //TODO cedric
-        // On ferme le socket lié à cet User
-
-        //TODO: mettre le connectionThread dans userLinksOut pour pouvoir appeller: userLinksOut connectionThread shutdown ()
-
-        //Actualise la table en enlevant le user u
-        //this.userLinksOut.remove(u.getIdUser());
     }
 
     /**
@@ -111,22 +94,22 @@ public class PokerServer extends Thread {
      * @return boolean
      * @param userId
      */
-    public boolean removeThread(UUID userId) {
+    public boolean userDisconnect(UUID userId) throws Exception{
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
+                threadClient.shutdown();
                 threadsClientList.remove(threadClient);
                 return true;
             }
         }
-        return false;
+        throw new PlayerNotConnectedException("L'utilisateur n'est pas inscrit sur le serveur");
     }
 
-    private ConnectionThread getThreadFromUserLight(UserLight u){
+    private ConnectionThread getThreadFromUserId(UUID userId){
         for (ConnectionThread threadClient : threadsClientList) {
-            if(threadClient.getUserId() == u.getIdUser()) return threadClient;
+            if (threadClient.getUserId() == userId) return threadClient;
         }
-        // If not found
-        return null;
+        return null; // If not found
     }
 
     public void sendToAll(Message message){
@@ -143,6 +126,10 @@ public class PokerServer extends Thread {
         return threadsClientList.size();
     }
 
+    /**
+     * Return the instance of the module networkManager
+     * @return
+     */
     public NetworkManagerServer getNetworkManager() {
         return networkManager;
     }

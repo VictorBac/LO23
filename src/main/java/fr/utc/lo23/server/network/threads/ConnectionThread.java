@@ -2,6 +2,7 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.network.Message;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -76,8 +77,11 @@ public class ConnectionThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(!myServer.removeThread(userId)) {
-            Console.err("On n'a pas pu enlever le thread du l'user de la liste des threads");
+        try {
+            myServer.userDisconnect(userId);
+        }
+        catch(Exception e){
+            Console.err("Impossible d'enlever le thread du l'user de la liste des threads");
         }
     }
 
@@ -90,9 +94,14 @@ public class ConnectionThread extends Thread {
         }
     }
 
-    public void shutdown() throws IOException {
+    public void shutdown() throws NetworkFailureException {
+        try {
+            socketClient.close();
+        }
+        catch (Exception e){
+            throw new NetworkFailureException("Impossible de fermer la socket proprement");
+        }
         running = false;
-        socketClient.close();
     }
 
     public UUID getUserId() {

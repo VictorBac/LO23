@@ -12,7 +12,6 @@ import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
 
-
 /**
  *
  * @author Jean-Côme
@@ -29,7 +28,7 @@ public class NetworkManagerServer implements InterfaceServer {
     private PokerServer server;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerServer(int portToListen) {
+    public NetworkManagerServer(int portToListen) throws NetworkFailureException{
         server = new PokerServer(portToListen);
         server.start();
     }

@@ -49,7 +49,7 @@ private User u;
         //Appel de la fonction d'interface DATA pour update les tables dans DataServer
 
         Console.log("Refreshing UserLight Table in Server");
-        myServ.userDisconnect(u);
+        myServ.userDisconnect(u.getUserLight().getIdUser());
         // Update de la liste de UserLight contenue dans le Thread Server.
 
 

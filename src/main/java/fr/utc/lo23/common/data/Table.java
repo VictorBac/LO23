@@ -10,7 +10,7 @@ import fr.utc.lo23.common.data.exceptions.TableException;
  * Created by Haroldcb on 21/10/2015.
  */
 public class Table implements Serializable {
-    /**
+    /*
      * idTable : unique id of the table
      * name : name of the table
      * acceptSpectator : true if accept, false otherwhise

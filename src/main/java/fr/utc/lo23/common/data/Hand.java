@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Class used to represent a hand (manche) in the game
  */
 public class Hand implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private ArrayList<Turn> listTurn;
     private ArrayList<Card> listCardField;

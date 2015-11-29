@@ -12,6 +12,7 @@ import java.util.UUID;
  * Class used to represent a game
  */
 public class Game implements Serializable{
+    private static final long serialVersionUID = 1L;
     private UUID idGame;
     private ArrayList<Hand> listHand;
     private int blind;
@@ -81,7 +82,9 @@ public class Game implements Serializable{
 
     private void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
     private void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
-    private void getCurrentPlayer(){}
+    private UserLight getCurrentPlayer(){
+        return null;//TODO remove this line
+    }
 
     /**
      * Method that take an action that has been played and give it to the current Hand

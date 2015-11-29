@@ -35,7 +35,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void remoteUserDisonnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
-            dManagerClient.getListUsersLightLocal().remove(userLightDistant);
+            dManagerClient.getListUsersLightLocal().remove(userLightDistant); //TODO add log for deconnection
+            //TODO ihmain method
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
         }

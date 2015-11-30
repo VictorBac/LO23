@@ -77,12 +77,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
         //TODO test
+        Console.log(TAG +"currentConnectedUser()");
         dManagerClient.getListUsersLightLocal().setUserList(listUserLightConnectedOnServer);
         dManagerClient.getInterToIHMMain().onlineUsers(listUserLightConnectedOnServer);
 
     }
 
     public void currentTables(ArrayList<Table> listOfTableListOnServer) {
+        Console.log(TAG +"currentTables()");
         dManagerClient.getListTablesLocal().setListTable(listOfTableListOnServer);
         //TODO missing IHM main interface for table list
     }

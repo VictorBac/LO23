@@ -70,14 +70,26 @@ public class Game implements Serializable{
         return this.listHand.get(this.listHand.size()-1);
     }
     private ArrayList<UserLight> getPlayerList(){
-        return null;//TODO remove this line
+        return null;//TODO remove this line, method useless
     }
 
 
     public void addPlayer(UserLight newUserLightPlayerJoinGame){
-        //this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
+        this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
     }
-    public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){}
+
+    /**
+     * Method to set a player as disconnected on the Game
+     * @param userLightPlayerToRemoveFromTheGame µUserLight of the player who is disconnected
+     */
+    public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){
+        for(int index = 0 ; index <this.listSeatPlayerWithPeculeDepart.size()-1; index++ ){
+            //search the player who needs to be disconnected
+            if (this.listSeatPlayerWithPeculeDepart.get(index).getPlayer().equals(userLightPlayerToRemoveFromTheGame))
+                this.listSeatPlayerWithPeculeDepart.get(index).setStatusPlayer(EnumerationStatusPlayer.DISCONNECTED);
+        }
+
+    }
 
     private UserLight getNextPlayer(){
         return null; //TODO remove this line

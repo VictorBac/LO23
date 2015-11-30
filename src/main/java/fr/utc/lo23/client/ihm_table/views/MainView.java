@@ -24,8 +24,8 @@ public class MainView extends Application{
 		primaryStage.setTitle("Test Main");
 		primaryStage.setScene(new Scene(root));
 		primaryStage.setResizable(false);
-		primaryStage.setWidth(1220);
-		primaryStage.setHeight(804);
+		primaryStage.setWidth(1225);
+		primaryStage.setHeight(798);
 
 	   	MainController controller = loader.getController();
 

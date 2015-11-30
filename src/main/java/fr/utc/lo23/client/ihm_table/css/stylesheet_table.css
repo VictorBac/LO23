@@ -79,27 +79,50 @@
 	-fx-border-radius:none;
 	-fx-text-fill:white;
 	-fx-background-radius:none;
+    -fx-background-color:#85898A;
+}
+
+.gameLog .title{
+    -fx-color:#85898A;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-text-fill:white;
+    -fx-background-radius:none;
+    -fx-background-color:#85898A;
 }
 
 .gameLogMessage{
 	-fx-background-color:#939699;
 	-fx-text-fill:white;
 	-fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
 }
 
 .chat{
 	-fx-color:#337364;
 	-fx-background-radius:none;
+    -fx-border-color: none;
+    -fx-border-radius:none;
+}
+
+.chat .title{
+    -fx-color:#337364;
+    -fx-background-radius:none;
+    -fx-background-color:#337364;
+    -fx-border-color: none;
+    -fx-border-radius:none;
 }
 
 .chatMessage{
 	-fx-background-color:#3B8474;
 	-fx-background-radius:none;
+    -fx-border-color: none;
+    -fx-border-radius:none;
 }
 
-.sendChat{
-	-fx-background-radius:none;
-}
+
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
 	-fx-background-color: none;
@@ -124,4 +147,26 @@
     -fx-border-radius:0px;
     -fx-background-radius:0px;
     -fx-text-fill:white;
+}
+
+.inputMessageBox{
+	-fx-background-color: #3B8474;
+}
+
+.inputMessage{
+	-fx-background-color: white;
+	-fx-text-fill: black;
+	-fx-background-radius: none;
+	-fx-border:none;
+	-fx-border-radius:none;
+	-fx-border-color:none;
+}
+
+.sendChat{
+	-fx-background-color:#337364;
+	-fx-background-radius:none;
+	-fx-border:none;
+	-fx-border-radius:none;
+	-fx-border-color:none;
+
 }

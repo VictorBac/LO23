@@ -20,6 +20,8 @@ public class PlayerController{
     public Label playerMoneyLabel;
     @FXML
     public VBox playerBox;
+    @FXML
+    public Label playerInfos;
 
     public PlayerController(){
 
@@ -29,12 +31,8 @@ public class PlayerController{
 
     }
 
-    public void updateMoney(){
-
-    }
-
-    public void setAvatar(){
-
+    public void updateMoney(Integer money){
+        playerMoneyLabel.setText(money.toString());
     }
 
     public void setNameAndAvatar(UserLight user,Image defaultImage){
@@ -45,5 +43,24 @@ public class PlayerController{
     public void setPositions(Point2D coords){
         playerBox.setLayoutX(coords.getX()-40);
         playerBox.setLayoutY(coords.getY()-35);
+    }
+
+    public void setReadyStatus(boolean isReady){
+        playerInfos.setVisible(true);
+        if(isReady) {
+            playerInfos.setText("Prêt");
+            playerInfos.getStyleClass().add("ready");
+        }
+        else {
+            playerInfos.setText("Refus");
+            playerInfos.getStyleClass().add("refuse");
+        }
+    }
+
+    public void clearReadyStatus(){
+        playerInfos.setVisible(false);
+        playerInfos.getStyleClass().remove("refuse");
+        playerInfos.getStyleClass().remove("ready");
+        playerInfos.setText("");
     }
 }

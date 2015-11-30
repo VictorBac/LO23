@@ -59,6 +59,9 @@ public class TableController {
         enableActionFollow();
         enableActionBet();
         enableActionAllin();
+        addLogEntry("Vous avez rejoint la salle.");
+        addLogEntry("Vous avez rejoint la salle.");
+        addLogEntry("Vous avez rejoint la salle.");
     }
 
     public void playerInitializer(){
@@ -144,6 +147,8 @@ public class TableController {
     private Button btnLaunchGame;
     @FXML
     private Pane tablePane;
+    @FXML
+    private ListView<String> logView;
 
     @FXML
     private Pane actionBox;
@@ -162,6 +167,9 @@ public class TableController {
 
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {
+        if(messageToSend.getText().isEmpty())
+            return;
+
         //TODO : getUserLight
         // à voir comment on fait ? est-ce qu'on doit le récupérer de data ou de ihm main ? plutot de data, donc il nous faut une fonction
         //TO DELETE
@@ -257,6 +265,10 @@ public class TableController {
         actionAllin.getStyleClass().remove("action_allin_on");
         actionAllin.getStyleClass().remove("active");
         actionAllin.getStyleClass().add("action_allin_off");
+    }
+
+    public void addLogEntry(String msg){
+        logView.getItems().add(msg);
     }
 
 

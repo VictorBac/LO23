@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
@@ -51,35 +52,48 @@
          <children>
             <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="510.0" styleClass="gameLog" text="&gt; Logs partie">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="510.0">
                      <children>
-                        <ListView layoutY="-2.0" prefHeight="170.0" prefWidth="512.0" styleClass="gameLogMessage" />
+                        <ListView fx:id="logView" layoutY="-2.0" prefHeight="176.0" prefWidth="510.0" styleClass="gameLogMessage" />
                      </children>
                   </AnchorPane>
               </content>
             </TitledPane>
             <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="510.0" styleClass="chat" text="&gt; Chat">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="510.0" styleClass="chat">
                      <children>
-                        <VBox>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="510.0" styleClass="chat">
                            <children>
-                              <ListView fx:id="chatList" editable="true" maxWidth="512.0" prefHeight="137.0" prefWidth="512.0" styleClass="chatMessage" />
-                              <VBox prefHeight="39.0" prefWidth="412.0">
+                              <ListView fx:id="chatList" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="510.0" styleClass="chatMessage">
+                                 <VBox.margin>
+                                    <Insets left="-1.0" />
+                                 </VBox.margin></ListView>
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="510.0" styleClass="inputMessageBox">
                                  <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <TextField fx:id="messageToSend" onAction="#sendMessage" prefHeight="17.0" prefWidth="437.0" />
-                                          <Button mnemonicParsing="false" onAction="#sendMessage" styleClass="sendChat" text="Envoyer" />
-                                       </children>
-                                    </HBox>
+                                    <TextField fx:id="messageToSend" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#sendMessage" prefHeight="30.0" prefWidth="435.0" styleClass="inputMessage">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="60.0" styleClass="sendChat" text="Envoyer">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Button>
                                  </children>
-                              </VBox>
+                                 <VBox.margin>
+                                    <Insets left="-1.0" />
+                                 </VBox.margin>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
                   </AnchorPane>
               </content>
+               <rotationAxis>
+                  <Point3D />
+               </rotationAxis>
             </TitledPane>
          </children>
       </HBox>

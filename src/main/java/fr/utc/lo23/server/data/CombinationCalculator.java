@@ -44,13 +44,18 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 1: High card TODO
+     * Rank 1: High card
      * @param cardValues
      * @return
      * @throws Exception
      */
     public ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) throws Exception {
-        return cardValues;
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        // Just remove the two smallest values since cardValues has been sorted.
+        cardRank.remove(5);
+        cardRank.remove(5);
+        cardRank.add(0, 1);
+        return cardRank;
     }
 
     /**
@@ -71,10 +76,11 @@ public class CombinationCalculator {
             // move the pair to the start
             cardRank.add(0, cardRank.remove(i));
             cardRank.add(0, cardRank.remove(i));
-            cardRank.add(1, 1);
             // remove the last two card values
-            cardRank.remove(6);
-            cardRank.remove(6);
+            cardRank.remove(5);
+            cardRank.remove(5);
+            // add card rank 2
+            cardRank.add(0, 2);
             return cardRank;
         }  else {
             return null;
@@ -119,10 +125,11 @@ public class CombinationCalculator {
             cardRank.add(0, cardRank.remove(i));
             cardRank.add(0, cardRank.remove(i));
             cardRank.add(0, cardRank.remove(i));
-            cardRank.add(0, 3);
             // remove the last two card values
-            cardRank.remove(6);
-            cardRank.remove(6);
+            cardRank.remove(5);
+            cardRank.remove(5);
+            // add card rank 3
+            cardRank.add(0, 3);
             return cardRank;
         }  else {
             return null;
@@ -208,6 +215,7 @@ public class CombinationCalculator {
             // remove the last two card values
             cardRank.remove(5);
             cardRank.remove(5);
+            // add card rank 7
             cardRank.add(0, 7);
             return cardRank;
         }  else {

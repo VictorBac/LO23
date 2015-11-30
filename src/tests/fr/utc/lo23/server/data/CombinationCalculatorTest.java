@@ -35,8 +35,13 @@ public class CombinationCalculatorTest {
     }
 
     @Test
-    public void testHighCard() {
-        //assertEquals(result, 13);
+    public void testHighCard() throws Exception {
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 7, 5}));
+        test = calculator.hasHighCard(test);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{1, 12, 10, 9, 9, 8}));
+        assertEquals(test, expected);
     }
 
     @Test

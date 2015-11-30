@@ -43,12 +43,18 @@ public class CombinationCalculator {
         return cardRank;
     }
 
+    /**
+     * Rank 1: High card TODO
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
     public ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) throws Exception {
         return cardValues;
     }
 
     /**
-     * Rank 1 one pair
+     * Rank 2: One pair
      * @param cardValues
      * @return cardRank if has one pair. null if not.
      * @throws Exception
@@ -65,7 +71,7 @@ public class CombinationCalculator {
             // move the pair to the start
             cardRank.add(0, cardRank.remove(i));
             cardRank.add(0, cardRank.remove(i));
-            cardRank.add(0, 1);
+            cardRank.add(1, 1);
             // remove the last two card values
             cardRank.remove(6);
             cardRank.remove(6);
@@ -76,7 +82,7 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 2 two pairs
+     * Rank 3: Two pairs TODO
      * @param cardValues
      * @return
      * @throws Exception
@@ -95,7 +101,7 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 3: three of a kind
+     * Rank 4: Three of a kind
      * @param cardValues
      * @return
      * @throws Exception
@@ -123,10 +129,22 @@ public class CombinationCalculator {
         }
     }
 
+    /**
+     * Rank 5: Straight TODO
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
     public ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) throws Exception {
         return null;
     }
 
+    /**
+     * Rank 6: Flush
+     * @param cards
+     * @return
+     * @throws Exception
+     */
     public ArrayList<Integer> hasFlush (ArrayList<Card> cards) throws Exception {
         ArrayList<Integer> spade = new ArrayList<Integer>();
         ArrayList<Integer> heart = new ArrayList<Integer>();
@@ -142,22 +160,22 @@ public class CombinationCalculator {
         }
         if (spade.size() >= 5) {
             while (spade.size() > 5) spade.remove(5);
-            spade.add(0,5);
+            spade.add(0,6);
             return spade;
         }
         if (heart.size() >= 5) {
             while (heart.size() > 5) heart.remove(5);
-            heart.add(0,5);
+            heart.add(0,6);
             return heart;
         }
         if (diamond.size() >= 5) {
             while (diamond.size() > 5) diamond.remove(5);
-            diamond.add(0,5);
+            diamond.add(0,6);
             return diamond;
         }
         if (club.size() >= 5) {
             while (club.size() > 5) club.remove(5);
-            club.add(0,5);
+            club.add(0,6);
             return club;
         }
         return null;
@@ -168,7 +186,7 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 7: four of a kind
+     * Rank 7: Four of a kind
      * @param cardValues
      * @return
      * @throws Exception
@@ -198,10 +216,22 @@ public class CombinationCalculator {
     }
 
 
-
+    /**
+     * Rank 8: Straight Flush TODO
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
     public ArrayList<Integer> hasStraightFlush (ArrayList<Integer> cardValues) throws Exception {
         return null;
     }
+
+    /**
+     * Rank 9: Royal Flush TODO
+     * @param cardValues
+     * @return
+     * @throws Exception
+     */
 
     public ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) throws Exception {
         return null;

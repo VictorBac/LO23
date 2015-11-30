@@ -45,7 +45,7 @@ public class CombinationCalculatorTest {
         test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 7, 5}));
         test = calculator.hasOnePair(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{1, 9, 9, 12, 10, 8}));
+        expected.addAll(Arrays.asList(new Integer[]{2, 9, 9, 12, 10, 8}));
         assertEquals(test, expected);
     }
 
@@ -55,7 +55,7 @@ public class CombinationCalculatorTest {
         test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 8, 5}));
         test = calculator.hasThree(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{3, 9, 9, 9, 12, 10}));
+        expected.addAll(Arrays.asList(new Integer[]{4, 9, 9, 9, 12, 10}));
         assertEquals(expected, test);
     }
 
@@ -73,7 +73,7 @@ public class CombinationCalculatorTest {
     public void testFlush() throws Exception {
         ArrayList<Integer> test = calculator.hasFlush(cards);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{5, 13, 10, 9, 7, 2}));
+        expected.addAll(Arrays.asList(new Integer[]{6, 13, 10, 9, 7, 2}));
         assertEquals(expected, test);
 
     }

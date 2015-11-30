@@ -30,7 +30,7 @@ public class ConnectionController implements Initializable {
         System.out.println("didButtonConnectClick");
     }
 
-    @Override
+    //@Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }

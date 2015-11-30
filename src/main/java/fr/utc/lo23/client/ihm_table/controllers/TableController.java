@@ -30,6 +30,7 @@ public class TableController {
     private IHMTable ihmTable;
     private Table table;
     private HashMap<UserLight,PlayerController> playerControllerMap;
+    private HashMap<UserLight,BetMoneyController> betMoneyControllerMap;
     private ArrayList<PlayerController> controllersList; //This is used to find where you can
     private Image defaultImage;
 
@@ -48,6 +49,7 @@ public class TableController {
 
     public TableController(){
         playerControllerMap = new HashMap<UserLight,PlayerController>();
+        betMoneyControllerMap = new HashMap<UserLight,BetMoneyController>();
         defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
     }
 
@@ -88,6 +90,16 @@ public class TableController {
         {
             addChatMessage(msg);
         }
+    }
+
+    public void betMoneyBoxInitializer(){
+        Point2D betPlayerBoxWidthHeight = new Point2D(565.0, 255.0);
+        Point2D betPlayerBoxCenter = new Point2D(510.0, 215.0);
+        /*for(UserLight user : betMoneyControllerMap.keySet() )
+        {
+
+        }*/
+
     }
 
     /**

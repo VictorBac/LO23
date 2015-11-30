@@ -152,10 +152,12 @@ public class TableController {
         //On vie les sièges vides
         controllersList.removeAll(Collections.singleton(null));
         //On réoranise les sièges équitablement.
+        int i=0;
         for(PlayerController playerController : controllersList)
         {
-            Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
+            Point2D coords = TableUtils.getPlayerPosition(i, table.getNbPlayerMax());
             playerController.setPositions(coords);
+            i++;
         }
         //On crée les betMoneyBox
         betMoneyBoxInitializer();

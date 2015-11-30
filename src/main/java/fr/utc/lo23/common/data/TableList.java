@@ -33,7 +33,7 @@ public class TableList implements Serializable {
 
 
     /**
-     * add a new table in the list
+     * add a new table to the list
      * @param table : table to add
      */
     public void newTable(Table table){

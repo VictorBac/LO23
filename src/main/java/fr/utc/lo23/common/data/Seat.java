@@ -34,6 +34,17 @@ public class Seat implements Serializable {
     }
 
     /**
+     * Constructor called when a player join the table
+     * @param player
+     */
+    public Seat(UserLight player) {
+        this.setPlayer(player);
+        this.setStartAmount(0);
+        this.setCurrentAccount(0);
+        this.statusPlayer = EnumerationStatusPlayer.CONNECTED;
+    }
+
+    /**
      * default constructor
      */
     public Seat() {

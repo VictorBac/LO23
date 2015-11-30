@@ -16,9 +16,10 @@ public interface InterfaceDataFromIHMTable {
     public void askStopGame();
 
     /**
-     * TODO : params?
+     * Function to vote if the game can stop
+     * @param answer : true if accept
      */
-    public void vote();
+    public void vote(boolean answer);
 
 
     /**

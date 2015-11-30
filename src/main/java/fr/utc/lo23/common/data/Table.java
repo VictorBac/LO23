@@ -21,7 +21,6 @@ public class Table implements Serializable {
      * nbPlayerMin : minimum number of players on the table required to launch a game
      * listPlayers: list of players actually on the table
      * listSpectators : list of spectators
-     * currentGame : number of the actual game in the game array
      * abandonAmiable : true if authorised, false otherwise
      * maxMise : maximum amount that players can give themselves at the beginning
      * listGames : list of games that were played on this table (last = actual)
@@ -36,7 +35,6 @@ public class Table implements Serializable {
     private int nbPlayerMin;
     private UserLightList listPlayers;
     private UserLightList listSpectators;
-    private int currentGame;
     private boolean abandonAmiable;
     private int maxMise;
     private ArrayList<Game> listGames;
@@ -64,11 +62,11 @@ public class Table implements Serializable {
         this.listSpectators = new UserLightList();
         this.setNbPlayerMax(nbPlayerMax);
         this.setNbPlayerMin(nbPlayerMin);
-        this.setCurrentGame(0);
         this.setAbandonAmiable(abandonAmiable);
         this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
-        listGames.add(new Game());
+        //Add new waiting game to the list
+        this.listGames.add(new Game(this));
         this.setTimeForAction(timeForAction);
     }
 
@@ -76,11 +74,13 @@ public class Table implements Serializable {
      * method to add a player to the table, with checking if it is possible
      * Call checkConditionPlayerJoin()
      * @param player : player
+     * @throws fr.utc.lo23.common.data.exceptions.TableException
      */
     public void playerJoinTable(UserLight player) throws TableException {
         // number of players on the table < max number of players AND player not already in the table
         if (checkConditionPlayerJoin() && !this.listPlayers.getListUserLights().contains(player)){
             this.listPlayers.getListUserLights().add(player);
+            //TODO this.getCurrentGame().addPlayer(player);
         }
         else {
             throw new TableException("Impossible to add this new player");
@@ -96,9 +96,12 @@ public class Table implements Serializable {
         //if abandonAmiable = true and player already on the table
         if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
+            //TODO this.getCurrentGame().deletePlayer(player);
             //TODO gestion statistiques
         }
         else if (!this.abandonAmiable){
+            this.listPlayers.getListUserLights().remove(player);
+            //TODO this.getCurrentGame().deletePlayer(player);
             //TODO gestion statistiques
         }
         else{
@@ -108,13 +111,11 @@ public class Table implements Serializable {
 
     /**
      * Check if a player can join a table
+     * @return
      */
     public boolean checkConditionPlayerJoin(){
         // number of players on the table < max number of players
-        if (this.listPlayers.getListUserLights().size() < this.nbPlayerMax){
-            return true;
-        }
-        else return false;
+        return this.listPlayers.getListUserLights().size() < this.nbPlayerMax;
     }
 
     /**
@@ -126,6 +127,7 @@ public class Table implements Serializable {
         //  spectator not on the table yet
         if (checkConditionSpectatorJoin() && !this.listSpectators.getListUserLights().contains(spectator)){
             this.listSpectators.getListUserLights().add(spectator);
+            //TODO this.getCurrentGame().addSpectator(spectator);
         }
         else {
             throw new TableException("Impossible to add this spectator");
@@ -141,6 +143,7 @@ public class Table implements Serializable {
         //spectator already on the table
         if(this.listSpectators.getListUserLights().contains(spectator)){
             this.listSpectators.getListUserLights().remove(spectator);
+            //TODO this.getCurrentGame().deleteSpectator(spectator);
         }
         else{
             throw new TableException("Spectator you want to delete is not on the table!");
@@ -150,12 +153,8 @@ public class Table implements Serializable {
     /**
      * Check if a spectator can join the table
      */
-    //TODO vérifier si suffisant
     public boolean checkConditionSpectatorJoin(){
-        if(isAcceptSpectator())
-            return true;
-        else
-            return false;
+        return isAcceptSpectator();
     }
 
 
@@ -185,6 +184,15 @@ public class Table implements Serializable {
         this.listGames.add(game);
     }
 
+
+    /**
+     * Create a new game and add it in the table's games list
+     */
+    public void addNewGameToList(){
+        this.listGames.add(new Game(this));
+    }
+
+
     /**
      * Start a waiting game
      * @param game : game to start
@@ -201,7 +209,8 @@ public class Table implements Serializable {
                 }
             }
             if(game.getStatusOfTheGame() == EnumerationStatusGame.finished || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
-
+                game.startGame();
+                //TODO: what else??
             }
         }
         else throw new TableException("Game not in the list");
@@ -262,12 +271,8 @@ public class Table implements Serializable {
         this.nbPlayerMin = nbPlayerMin;
     }
 
-    public int getCurrentGame() {
-        return currentGame;
-    }
-
-    public void setCurrentGame(int currentGame) {
-        this.currentGame = currentGame;
+    public Game getCurrentGame(){
+        return listGames.get(listGames.size()-1);
     }
 
     public boolean isAbandonAmiable() {
@@ -319,4 +324,3 @@ public class Table implements Serializable {
     }
 
 }
-

@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_table.controllers;
 
 import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.ihm_table.TableUtils;
+import fr.utc.lo23.client.ihm_table.views.BetMoneyView;
 import fr.utc.lo23.client.ihm_table.views.PlayerView;
 import fr.utc.lo23.common.data.Game;
 import fr.utc.lo23.common.data.MessageChat;
@@ -23,6 +24,7 @@ import javafx.util.Duration;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class TableController {
@@ -31,7 +33,7 @@ public class TableController {
     private Table table;
     private HashMap<UserLight,PlayerController> playerControllerMap;
     private HashMap<UserLight,BetMoneyController> betMoneyControllerMap;
-    private ArrayList<PlayerController> controllersList; //This is used to find where you can
+    private ArrayList<PlayerController> controllersList; //This is used to find where you can seat
     private Image defaultImage;
 
     private boolean isHost = true;
@@ -62,26 +64,33 @@ public class TableController {
         enableActionBet();
         enableActionAllin();
         addLogEntry("Vous avez rejoint la salle.");
-        addLogEntry("Vous avez rejoint la salle.");
-        addLogEntry("Vous avez rejoint la salle.");
     }
 
     public void playerInitializer(){
-        int i=1;
-        Image defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
+
+        //Initialisation de la liste des sièges
         controllersList = new ArrayList<PlayerController>(table.getNbPlayerMax());
         for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
             controllersList.add(ite, null);
         }
-        for(UserLight user : table.getListPlayers().getListUserLights())
+
+        //Affichage des joueurs déjà présents, dont moi
+        for(int i=0;i<table.getListPlayers().getListUserLights().size();i++)
         {
-            Point2D coords = TableUtils.getPlayerPosition(i,table.getNbPlayerMax());
-            PlayerView playerView = new PlayerView();
-            PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
-            playerControllerMap.put(user,playerController);
-            controllersList.set(i - 1, playerController);
-            i++;
+            addPlayer(table.getListPlayers().getListUserLights().get(i));
         }
+    }
+
+    public void addPlayer(UserLight user) {
+        addPlayer(getFirstAvailableSeat(), user);
+    }
+
+    public void addPlayer(int id, UserLight user) {
+        Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
+        PlayerView playerView = new PlayerView();
+        PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
+        playerControllerMap.put(user, playerController);
+        controllersList.set(id,playerController);
     }
 
     public void chatInitializer(){
@@ -92,63 +101,64 @@ public class TableController {
         }
     }
 
+    //TODO: appeler cette fonction après avoir réorganisé les joueurs, après le lancement d'une game.
     public void betMoneyBoxInitializer(){
-        Point2D betPlayerBoxWidthHeight = new Point2D(565.0, 255.0);
+        Point2D betPlayerBoxWidthHeight = new Point2D(585.0, 155.0);
         Point2D betPlayerBoxCenter = new Point2D(510.0, 215.0);
-        /*for(UserLight user : betMoneyControllerMap.keySet() )
+        int i=0;
+        for(PlayerController playerController : controllersList)
         {
-
-        }*/
+            if(playerController!=null)
+            {
+                Point2D coords = TableUtils.getPlayerPosition(i,table.getListPlayers().getListUserLights().size(),betPlayerBoxCenter,betPlayerBoxWidthHeight);
+                BetMoneyView betMoneyView = new BetMoneyView();
+                BetMoneyController betMoneyController = betMoneyView.createBetMoneyBox(tablePane, coords);
+                betMoneyControllerMap.put(playerController.getUserLight(),betMoneyController);
+            }
+            i++;
+        }
 
     }
 
-    /**
-     *
-     * @return first available seat on table (used when initializing
-     */
     public int getFirstAvailableSeat() {
         for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
             if(controllersList.get(ite) == null) {
                 return ite;
             }
         }
-        return -1; //Should never happen because player should not be added if table is full
+        //Should never happen because player should not be added if table is full
+        System.out.println("ERROR: Il y a plus de joueurs que le max, crash intercontinental de l'univers !! Poulpe.");
+        System.exit(0);
+        return -1;
     }
 
-    /**
-     * Add player to table (called by TableToDataListener)
-     * @param user
-     */
-    public void addPlayer(UserLight user) {
-        addPlayer(getFirstAvailableSeat() + 1, user, defaultImage);
-    }
-
-    /**
-     * Add player to table
-     * @param id
-     * @param user
-     * @param image
-     */
-    public void addPlayer(int id, UserLight user, Image image) {
-        Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
-        PlayerView playerView = new PlayerView();
-        playerControllerMap.put(user, playerView.createPlayer(tablePane, user, coords, image));
-    }
-
-    /**
-     * Remove player from table at start
-     * @param user
-     */
     public void removePlayer(UserLight user) {
         PlayerController playerController = playerControllerMap.get(user);
         if(playerController == null) {
             //This user doesn't exist
+            System.out.println("ERROR: Cet utilisateur a déjà été supprimé.");
+            System.exit(0);
             return;
         }
         playerControllerMap.remove(user);
         controllersList.set(controllersList.indexOf(playerController), null);
-        //How to destroy view ?
-        //playerController.getPlayerView().destroy() ?
+        //Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
+        if(betMoneyControllerMap.get(user)!=null)
+            betMoneyControllerMap.get(user).hideBetMoneyBox();
+        playerController.destroyGraphic();
+    }
+
+    public void reorderPlayers(){
+        //On vie les sièges vides
+        controllersList.removeAll(Collections.singleton(null));
+        //On réoranise les sièges équitablement.
+        for(PlayerController playerController : controllersList)
+        {
+            Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
+            playerController.setPositions(coords);
+        }
+        //On crée les betMoneyBox
+        betMoneyBoxInitializer();
     }
 
     @FXML
@@ -282,6 +292,5 @@ public class TableController {
     public void addLogEntry(String msg){
         logView.getItems().add(msg);
     }
-
 
 }

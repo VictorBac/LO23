@@ -29,6 +29,7 @@ public class PlayerView {
             PlayerController playerController = (PlayerController) loader.getController();
             playerController.setNameAndAvatar(user,defaultImage);
             playerController.setPositions(coords);
+            playerController.setNodes(root,node);
             return playerController;
         } catch (IOException e) {
             e.printStackTrace();

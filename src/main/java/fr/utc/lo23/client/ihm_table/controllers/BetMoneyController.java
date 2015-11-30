@@ -34,15 +34,15 @@ public class BetMoneyController {
     }
 
     public void setPositions(Point2D coords){
-        betMoneyBox.setLayoutX(coords.getX()-40);
-        betMoneyBox.setLayoutY(coords.getY()-35);
+        betMoneyBox.setLayoutX(coords.getX()-35);
+        betMoneyBox.setLayoutY(coords.getY()-22.5);
     }
 
-    public void showBetMoneyAmount(){
+    public void showBetMoneyBox(){
         betMoneyBox.setVisible(true);
     }
 
-    public void hideBetMoneyAmount(){
+    public void hideBetMoneyBox(){
         betMoneyBox.setVisible(false);
     }
 }

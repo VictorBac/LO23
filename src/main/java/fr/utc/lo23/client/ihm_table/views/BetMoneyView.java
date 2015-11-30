@@ -22,6 +22,7 @@ public class BetMoneyView {
             node = (Node) loader.load();
             root.getChildren().add(node);
             BetMoneyController betMoneyController = (BetMoneyController) loader.getController();
+            betMoneyController.setPositions(coords);
 
             return betMoneyController;
         } catch (IOException e) {

@@ -80,7 +80,7 @@ public class Table implements Serializable {
         // number of players on the table < max number of players AND player not already in the table
         if (checkConditionPlayerJoin() && !this.listPlayers.getListUserLights().contains(player)){
             this.listPlayers.getListUserLights().add(player);
-            //TODO this.getCurrentGame().addPlayer(player);
+            this.getCurrentGame().addPlayer(player);
         }
         else {
             throw new TableException("Impossible to add this new player");
@@ -96,12 +96,12 @@ public class Table implements Serializable {
         //if abandonAmiable = true and player already on the table
         if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
-            //TODO this.getCurrentGame().deletePlayer(player);
-            //TODO gestion statistiques
+            this.getCurrentGame().deletePlayer(player);
+            //TODO gestion statistiques²
         }
         else if (!this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
-            //TODO this.getCurrentGame().deletePlayer(player);
+            this.getCurrentGame().deletePlayer(player);
             //TODO gestion statistiques
         }
         else{
@@ -127,7 +127,7 @@ public class Table implements Serializable {
         //  spectator not on the table yet
         if (checkConditionSpectatorJoin() && !this.listSpectators.getListUserLights().contains(spectator)){
             this.listSpectators.getListUserLights().add(spectator);
-            //TODO this.getCurrentGame().addSpectator(spectator);
+            this.getCurrentGame().addSpectator(spectator);
         }
         else {
             throw new TableException("Impossible to add this spectator");
@@ -143,7 +143,7 @@ public class Table implements Serializable {
         //spectator already on the table
         if(this.listSpectators.getListUserLights().contains(spectator)){
             this.listSpectators.getListUserLights().remove(spectator);
-            //TODO this.getCurrentGame().deleteSpectator(spectator);
+            this.getCurrentGame().deleteSpectator(spectator);
         }
         else{
             throw new TableException("Spectator you want to delete is not on the table!");
@@ -180,7 +180,15 @@ public class Table implements Serializable {
      * Add a new game in the table's games list
      * @param game : new game to add to the list
      */
-    public void addNewGameToList(Game game){
+    public void addNewGameToList(Game game) throws TableException {
+        Iterator<Game> iter = this.listGames.iterator();
+        while (iter.hasNext())
+        {
+            //if a game in the list is already started, impossible to start a new game
+            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.finished){
+                throw new TableException("Impossible to start a new game");
+            }
+        }
         this.listGames.add(game);
     }
 
@@ -188,8 +196,18 @@ public class Table implements Serializable {
     /**
      * Create a new game and add it in the table's games list
      */
-    public void addNewGameToList(){
-        this.listGames.add(new Game(this));
+    public void addNewGameToList() throws TableException {
+        Game gameToAdd = new Game(this);
+
+        Iterator<Game> iter = this.listGames.iterator();
+        while (iter.hasNext())
+        {
+            //if a game in the list is already started, impossible to start a new game
+            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.finished){
+                throw new TableException("Impossible to start a new game");
+            }
+        }
+        this.listGames.add(gameToAdd);
     }
 
 
@@ -197,18 +215,9 @@ public class Table implements Serializable {
      * Start a waiting game
      * @param game : game to start
      */
-    //TODO
     public void startGame(Game game) throws TableException{
         if (this.listGames.contains(game)){
-            Iterator<Game> iter = this.listGames.iterator();
-            while (iter.hasNext())
-            {
-                //if a game in the list is already started, impossible to start a new game
-                if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.playing){
-                    throw new TableException("Impossible to start a new game");
-                }
-            }
-            if(game.getStatusOfTheGame() == EnumerationStatusGame.finished || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
+            if(game.getStatusOfTheGame() == EnumerationStatusGame.closed || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
                 game.startGame();
                 //TODO: what else??
             }

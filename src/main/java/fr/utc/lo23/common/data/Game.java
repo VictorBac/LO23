@@ -66,6 +66,10 @@ public class Game implements Serializable{
 
     //TODO comment those method
 
+    /**
+     * Method to know the current Hand
+     * @return
+     */
     private Hand getCurrentHand(){
         return this.listHand.get(this.listHand.size()-1);
     }
@@ -83,23 +87,50 @@ public class Game implements Serializable{
      * @param userLightPlayerToRemoveFromTheGame µUserLight of the player who is disconnected
      */
     public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){
-        for(int index = 0 ; index <this.listSeatPlayerWithPeculeDepart.size()-1; index++ ){
+        int sizeListSeat = this.listSeatPlayerWithPeculeDepart.size();
+        for(int index = 0 ; index <sizeListSeat; index++ ){
             //search the player who needs to be disconnected
-            if (this.listSeatPlayerWithPeculeDepart.get(index).getPlayer().equals(userLightPlayerToRemoveFromTheGame))
+            if (this.listSeatPlayerWithPeculeDepart.get(index).getPlayer().equals(userLightPlayerToRemoveFromTheGame)){
                 this.listSeatPlayerWithPeculeDepart.get(index).setStatusPlayer(EnumerationStatusPlayer.DISCONNECTED);
+                break;
+            }
+
         }
 
     }
 
+
+    /**
+     * Method to remove a spectator from the Game
+     * @param userLightSpectatorToRemoveFromTheGame
+     */
+    public void deleteSpectator(UserLight userLightSpectatorToRemoveFromTheGame ){
+        int sizeListSpectator = this.listUserSpectator.size();
+        for(int index = 0 ; index <sizeListSpectator; index++ ){
+            //search the spectator who needs to be disconnected
+            if (this.listUserSpectator.get(index).equals(userLightSpectatorToRemoveFromTheGame)){
+                this.listUserSpectator.remove(index);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Method to add a new spectator to the Game
+     * @param newUserLightSpectatorJoinGame
+     */
+    public void addSpectator(UserLight newUserLightSpectatorJoinGame){
+        this.listUserSpectator.add(newUserLightSpectatorJoinGame);
+    }
+
+
+    private UserLight getCurrentPlayer(){
+        return null;//TODO remove this line
+    }
     private UserLight getNextPlayer(){
         return null; //TODO remove this line
     }
 
-    public void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
-    public void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
-    private UserLight getCurrentPlayer(){
-        return null;//TODO remove this line
-    }
 
     /**
      * Method that take an action that has been played and give it to the current Hand
@@ -108,7 +139,7 @@ public class Game implements Serializable{
     private void playAction(Action newActionDoneByPlayer){
         //TODO need to do some check First
         //TODO change the behaviour it is not the best way to do it
-        listHand.get(listHand.size()-1).playAction(newActionDoneByPlayer);
+        getCurrentHand().playAction(newActionDoneByPlayer);
     }
 
 

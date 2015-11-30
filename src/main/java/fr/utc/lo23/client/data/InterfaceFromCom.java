@@ -56,9 +56,12 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void userJoinedTable() {
-
+        //TODO should just increase able counter --> need id Table
+        //dManagerClient.getInterFromIHMMain()
+        //TODO or we take UserLight as a parameter and add it to the Table (maybe type Player/Spectator) waiting harold
     }
 
+    //TODO add a parameter discuss with Com to add id of the Table or maybe delete this one and see with userJoinedTable()
     public void addPlayer(UserLight userLightDistant) {
 
     }

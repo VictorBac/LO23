@@ -74,7 +74,7 @@
 }
 
 .gameLog{
-	-fx-color:#85898A;
+	-fx-color:#939699;
 	-fx-border:none;
 	-fx-border-radius:none;
 	-fx-text-fill:white;
@@ -168,5 +168,28 @@
 	-fx-border:none;
 	-fx-border-radius:none;
 	-fx-border-color:none;
+}
 
+.popup .title{
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #4c5cff;
+}
+
+.popup {
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #7889ff;
+}
+
+.blueButton{
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #4c5cff;
 }

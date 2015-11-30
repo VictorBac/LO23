@@ -72,7 +72,10 @@ public class PlayerController{
     }
 
     public void updateMoney(Integer money){
-        playerMoneyLabel.setText(money.toString());
+        if(money==-1)
+            playerMoneyLabel.setText("?????");
+        else
+            playerMoneyLabel.setText(money.toString());
     }
 
     public void setNameAndAvatar(UserLight user,Image defaultImage){

@@ -46,15 +46,35 @@
                  </children>
              </Pane>
             <Button fx:id="btnLaunchGame" layoutX="887.0" layoutY="14.0" mnemonicParsing="false" onAction="#launchGame" styleClass="launchGame" text="Lancer partie" visible="false" />
+            <TitledPane fx:id="popupAmount" animated="false" collapsible="false" layoutX="786.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup" text="Montant Initial (Max: 10 000€)" visible="false">
+              <content>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup">
+                     <children>
+                        <Button fx:id="popupAmountButton" layoutX="158.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendMoneyAmount" styleClass="blueButton" text="Envoyer" />
+                        <TextField fx:id="popupAmountInput" layoutX="4.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" styleClass="inputMessage" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+            <TitledPane fx:id="popupReady" animated="false" collapsible="false" layoutX="786.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup" text="Prêts ?" visible="false">
+               <content>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup">
+                     <children>
+                        <Button fx:id="popupReadyAccept" layoutX="118.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendReadyAccept" prefHeight="25.0" prefWidth="94.0" styleClass="blueButton" text="Accepter" />
+                        <Button fx:id="popupReadyRefuse" layoutX="9.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendReadyRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Refuser" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
          </children>
       </Pane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1020.0">
          <children>
             <TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="510.0" styleClass="gameLog" text="&gt; Logs partie">
               <content>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="510.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="510.0" styleClass="gameLog">
                      <children>
-                        <ListView fx:id="logView" layoutY="-2.0" prefHeight="176.0" prefWidth="510.0" styleClass="gameLogMessage" />
+                        <ListView fx:id="logView" layoutX="-1.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="510.0" styleClass="gameLogMessage" />
                      </children>
                   </AnchorPane>
               </content>

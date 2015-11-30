@@ -13,10 +13,7 @@ import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -37,6 +34,14 @@ public class TableController {
     private Image defaultImage;
 
     private boolean isHost = true;
+
+    public Table getTable() {
+        return table;
+    }
+
+    public PlayerController getPlayerControllerOf(UserLight user){
+        return playerControllerMap.get(user);
+    }
 
     public void setInterface(IHMTable ihmTable){
         this.ihmTable = ihmTable;
@@ -149,9 +154,9 @@ public class TableController {
     }
 
     public void reorderPlayers(){
-        //On vie les sièges vides
+        //On vire les sièges vides
         controllersList.removeAll(Collections.singleton(null));
-        //On réoranise les sièges équitablement.
+        //On réorganise les sièges équitablement.
         int i=0;
         for(PlayerController playerController : controllersList)
         {
@@ -189,6 +194,20 @@ public class TableController {
     @FXML
     private Button actionAllin;
 
+    @FXML
+    private TitledPane popupAmount;
+    @FXML
+    private Button popupAmountButton;
+    @FXML
+    private TextField popupAmountInput;
+
+    @FXML
+    private TitledPane popupReady;
+    @FXML
+    private Button popupReadyAccept;
+    @FXML
+    private Button popupReadyRefuse;
+
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {
         if(messageToSend.getText().isEmpty())
@@ -212,13 +231,12 @@ public class TableController {
 	}
 
     @FXML
-    private void launchGame(javafx.event.ActionEvent event) {
-        System.out.println("LAUNCHED");
+    private void launchGame(javafx.event.ActionEvent event){
         btnLaunchGame.setVisible(false);
         //ihmTable.getDataInterface().playGame(table.getIdTable());
     }
 
-    public void addChatMessage(MessageChat message) {
+    public void addChatMessage(MessageChat message){
         chatList.getItems().add(message.getSender().getPseudo() + " : " + message.getText());
         chatList.setStyle("-fx-graphic:red;");
     }
@@ -273,7 +291,7 @@ public class TableController {
         actionBet.getStyleClass().add("action_bet_on");
     }
 
-    public void disableAction(){
+    public void disableActionBet(){
         actionBet.getStyleClass().remove("action_bet_on");
         actionBet.getStyleClass().remove("active");
         actionBet.getStyleClass().add("action_bet_off");
@@ -294,5 +312,50 @@ public class TableController {
     public void addLogEntry(String msg){
         logView.getItems().add(msg);
     }
+
+    public void showPopupAmount(){
+        popupAmount.setVisible(true);
+    }
+
+    public void hidePopupAmount(){
+        popupAmount.setVisible(false);
+    }
+
+    public void setPopupAmountMaxMoney(Integer maxAmount){
+        popupAmount.setText("Montant Initial (Max: "+maxAmount+"€)");
+    }
+
+    @FXML
+    public void sendMoneyAmount(javafx.event.ActionEvent event){
+        if(popupAmountInput.getText().isEmpty())
+            return;
+        //TODO: Envoyer Integer.parseInt(popupAmountInput.getText()); à data
+
+        hidePopupAmount();
+    }
+
+    public void showPopupReady(){
+        popupReady.setVisible(true);
+    }
+
+    public void hidePopupReady(){
+        popupReady.setVisible(false);
+    }
+
+    @FXML
+    public void sendReadyAccept(javafx.event.ActionEvent event){
+        //TODO: Envoyer true à data
+
+        hidePopupReady();
+    }
+
+    @FXML
+    public void sendReadyRefuse(javafx.event.ActionEvent event){
+        //TODO: Envoyer false à data
+
+        hidePopupReady();
+    }
+
+
 
 }

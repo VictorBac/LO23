@@ -14,11 +14,14 @@ public class UserLightList implements Serializable{
     private ArrayList<UserLight> listUserLights;
     private static final long serialVersionUID = 1L;
 
+
+    public UserLightList(){
+        listUserLights = new ArrayList<UserLight>();
+    }
     /**
      * recherche un UserLight dans l'arrayList à partir de son UUID
      * @param userId l'UUUID du joueur à trouver
      * @return le joueur voulu, nexception si non trouvé
-
      */
     public UserLight getUser(UUID userId) throws UserLightNotFoundException{
         for (UserLight cur : listUserLights)

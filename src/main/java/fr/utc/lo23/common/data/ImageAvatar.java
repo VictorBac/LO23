@@ -19,6 +19,18 @@ public class ImageAvatar {
      private  Image img;
      private String pathToImage;
 
+
+
+    public String getPath(){
+        return pathToImage;
+    }
+
+
+    public void setPath(String newpath){
+        pathToImage = newpath;
+    }
+
+
     /**
      * méthode permettant de récupérer une image à partir de son path
      * @param path : le chemin local du fichier image
@@ -30,6 +42,7 @@ public class ImageAvatar {
         else
             return new Image(path);
     }
+
 
     /**
      * stores this.img in a local file
@@ -62,5 +75,8 @@ public class ImageAvatar {
      */
     public Image getImg() {
         return img;
+    }
+    public void setImg(Image newImg){
+        img = newImg;
     }
 }

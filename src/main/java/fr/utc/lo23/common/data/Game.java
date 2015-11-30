@@ -22,6 +22,7 @@ public class Game implements Serializable{
     private int ante;
     private EnumerationStatusGame statusOfTheGame;
     private ArrayList<UserLight> listUserSpectator;
+    private Table tableOfTheGame;
 
     /**
      * Constructor with all parameter
@@ -50,7 +51,7 @@ public class Game implements Serializable{
     /**
      * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
      */
-    public Game() {
+    public Game(Table tableOfTheGame) {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
         this.blind = 0;
@@ -60,7 +61,7 @@ public class Game implements Serializable{
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
         this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
-
+        this.tableOfTheGame = tableOfTheGame;
     }
 
     //TODO comment those method
@@ -73,15 +74,17 @@ public class Game implements Serializable{
     }
 
 
-    private void addPlayer(UserLight newUserLightPlayerJoinGame){}
-    private void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){}
+    public void addPlayer(UserLight newUserLightPlayerJoinGame){
+        //this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
+    }
+    public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){}
 
     private UserLight getNextPlayer(){
         return null; //TODO remove this line
     }
 
-    private void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
-    private void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
+    public void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
+    public void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
     private UserLight getCurrentPlayer(){
         return null;//TODO remove this line
     }
@@ -103,10 +106,13 @@ public class Game implements Serializable{
     public void startGame(){
         this.timeStampStartOfTheGame= new Timestamp(Calendar.getInstance().getTime().getTime());
         this.statusOfTheGame = EnumerationStatusGame.playing;
-
+//TODO begin to distribute the cards
     }
 
 
+    public void stopGame(){
+
+    }
 
 ///////////////////////GETTER and SETTER
     /**

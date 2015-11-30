@@ -69,7 +69,7 @@ public class Hand implements Serializable{
     public void playAction(Action actionNeededToBePlayed){
         //TODO need to do some check First
         //TODO change the behaviour it is not the best way to do it
-        listTurn.get(listTurn.size()-1).addActionToTheTurn(actionNeededToBePlayed);
+        listTurn.get(listTurn.size()-1).addAction(actionNeededToBePlayed);
     }
 
     /**

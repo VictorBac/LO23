@@ -2,9 +2,11 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.ihm_table.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.Table;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
  */
 public class InterfaceFromCom implements InterfaceDataFromCom{
 
+    private final String TAG ="InterfaceFromCom";
     private DataManagerClient dManagerClient;
 
 
@@ -26,6 +29,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
+            Console.log(TAG +"remoteUserConnected");
             dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
         } catch (ExistingUserException e) {
@@ -35,6 +39,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void remoteUserDisonnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
+            Console.log(TAG +"remoteUserDisonnected");
             dManagerClient.getListUsersLightLocal().remove(userLightDistant); //TODO add log for deconnection
             //TODO ihmain method
         } catch (UserLightNotFoundException e) {
@@ -44,7 +49,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void notifyNewTable(Table tableCreatedOnServer) {
+        Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
+
         //TODO missing IHM main interface for new Table
     }
 

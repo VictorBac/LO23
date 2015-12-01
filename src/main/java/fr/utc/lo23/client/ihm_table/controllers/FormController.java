@@ -111,7 +111,7 @@ public class FormController {
             Integer tempsMax = Integer.valueOf(formTempsMax.getText());
 
             // Sending Table to Data
-            ihmTable.getDataInterface().tableToCreate(tableName, spectator, spectatorChat, playerMax, playerMin, abandon, miseMax, tempsMax);
+            ihmTable.getDataInterface().tableToCreate(new Table(tableName, null, spectator, spectatorChat, playerMax, playerMin, abandon, miseMax, tempsMax));
         }
     }
 

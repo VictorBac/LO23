@@ -28,7 +28,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param password
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
-        User userLocal = (User) Serialization.deserializationObject(Serialization.pathUserLocal);
+        User userLocal = (User) Serialization.deserializationObject(login + "Local");
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();
@@ -51,8 +51,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param userLocal
      */
     public void saveNewProfile(User userLocal) {
-
-        Serialization.serializationObject(userLocal, Serialization.pathUserLocal);
+        String login = userLocal.getUserLight().getPseudo();
+        Serialization.serializationObject(userLocal, login + "Local");
     }
 
     public void joinTableWithMode(Table table, String mode) {

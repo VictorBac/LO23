@@ -142,6 +142,9 @@ public class IHMMainClientManager {
         managerData.setInterToIHMTable(interTableToData);
         managerData.setInterToIHMMain(interMainToData);
 
+        managerTable.setDataInterface((InterfaceFromIHMTable) interDataToTable);
+        
+
         // TODO
 //        interComToData = new
     }

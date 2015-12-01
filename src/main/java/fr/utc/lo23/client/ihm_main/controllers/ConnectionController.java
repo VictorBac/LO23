@@ -108,4 +108,9 @@ public class ConnectionController extends BaseController {
         User createUser = new User();
         //createUser.
     }
+
+    public void CreateProfilClick(ActionEvent actionEvent) {
+        mController.ClickCreateProfil();
+        
+    }
 }

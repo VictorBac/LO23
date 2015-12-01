@@ -33,7 +33,7 @@
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
-                <Button layoutX="204.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Création profil">
+                <Button fx:id="CreateButton" layoutX="204.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateProfilClick" prefHeight="40.0" prefWidth="120.0" text="Création profil">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>

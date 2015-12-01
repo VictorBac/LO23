@@ -17,9 +17,6 @@ import java.util.ArrayList;
  * @author Jean-Côme
  */
 public class NetworkManagerServer implements InterfaceServer {
-    /* Singleton -> Il faudrait passer le constructeur en privé et faire un getInstance() */
-    private static NetworkManagerServer myInstance;
-
     /* Modules instance, initiate by IHM module with setters */
     private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
     //private IhmManagerServer IhmInstance; TODO: Avoir le manager !

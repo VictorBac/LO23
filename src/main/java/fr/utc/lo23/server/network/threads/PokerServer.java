@@ -30,7 +30,7 @@ public class PokerServer extends Thread {
      */
     public PokerServer(Integer portToListen) throws NetworkFailureException{
         Console.logn("Lancement du serveur.... ");
-        ArrayList<ConnectionThread> threadsClientList = new ArrayList<ConnectionThread>();
+       threadsClientList = new ArrayList<ConnectionThread>();
 
         // Change port if needed
         if (portToListen == null) portToListen = Params.DEFAULT_SERVER_PORT;

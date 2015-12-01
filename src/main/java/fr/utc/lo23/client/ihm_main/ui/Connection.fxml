@@ -24,6 +24,11 @@
                     <font>
                         <Font size="14.0" />
                     </font></TextField>
+                <PasswordField fx:id="fieldPassword" layoutX="70.0" layoutY="162.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Mot de passe">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </PasswordField>
                 <Button fx:id="buttonConnect" layoutX="71.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didButtonConnectClick" prefHeight="40.0" prefWidth="120.0" text="Connexion">
                     <font>
                         <Font name="System Bold" size="14.0" />
@@ -41,11 +46,6 @@
                     <font>
                         <Font size="13.0" />
                     </font></Button>
-                <PasswordField fx:id="fieldPassword" layoutX="70.0" layoutY="162.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Mot de passe">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </PasswordField>
                 <Label layoutX="429.0" layoutY="55.0" style="-fx-background-color: rgb(128, 21, 21);" text="Serveurs">
                     <font>
                         <Font name="System Bold" size="20.0" />

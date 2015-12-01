@@ -46,7 +46,8 @@ public class InterData implements InterfaceMainToData {
         }
         ObservableList<String> items = FXCollections.observableArrayList(received_list);
 
-        listViewConnectedUsers.setItems(items);
+        // TODO
+        // MainWindow.refreshUsers(userList);
 
     }
 

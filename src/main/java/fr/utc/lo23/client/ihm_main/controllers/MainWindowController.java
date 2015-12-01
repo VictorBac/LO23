@@ -1,8 +1,10 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.common.data.UserLight;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -14,6 +16,12 @@ public class MainWindowController extends BaseController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+
+    public void refreshUsers(List<UserLight> userList)
+    {
 
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Rï¿½my on 20/10/2015.
  */
 public class UserLight implements Serializable {
 
@@ -48,6 +48,18 @@ public class UserLight implements Serializable {
 
     public ImageAvatar getAvatar(){ return avatar; }
 
+    public void setIdUser(UUID idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public void setAvatar(ImageAvatar avatar) {
+        this.avatar = avatar;
+    }
+
     /**
      *
      * compares the ID of two UserLights
@@ -59,5 +71,14 @@ public class UserLight implements Serializable {
         if (this.idUser.equals(toCompare.getIdUser()) && this.pseudo.equals(toCompare.getPseudo()))
             result = true;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "UserLight{" +
+                "idUser=" + idUser +
+                ", pseudo='" + pseudo + '\'' +
+                ", avatar=" + avatar +
+                '}';
     }
 }

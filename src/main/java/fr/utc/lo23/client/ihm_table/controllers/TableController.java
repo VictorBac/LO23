@@ -81,23 +81,23 @@ public class TableController {
         //Affichage des joueurs déjà présents, dont moi
         for(int i=0;i<table.getListPlayers().getListUserLights().size();i++)
         {
-            addPlayer(table.getListPlayers().getListUserLights().get(i));
+            addPlayer(i, table.getListPlayers().getListUserLights().get(i), false);
         }
     }
 
     public void addPlayer(UserLight user) {
-        addPlayer(getFirstAvailableSeat(), user);
+        addPlayer(getFirstAvailableSeat(), user, true);
         if(isHost && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
             btnLaunchGame.setVisible(true);
     }
 
-    public void addPlayer(int id, UserLight user) {
+    public void addPlayer(int id, UserLight user, boolean showLog) {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();
         PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
         playerControllerMap.put(user, playerController);
-        controllersList.set(id,playerController);
-        addLogEntry(user.getPseudo()+" a rejoint la salle.");
+        controllersList.set(id, playerController);
+        if (showLog) addLogEntry(user.getPseudo()+" a rejoint la salle.");
     }
 
     public void chatInitializer(){
@@ -148,7 +148,7 @@ public class TableController {
             return;
         }
         playerControllerMap.remove(user);
-        addLogEntry(user.getPseudo()+ " a quitté la partie.");
+        addLogEntry(user.getPseudo() + " a quitté la partie.");
         controllersList.set(controllersList.indexOf(playerController), null);
         if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
             btnLaunchGame.setVisible(false);

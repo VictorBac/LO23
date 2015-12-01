@@ -26,7 +26,7 @@ public class NetworkManagerServer implements InterfaceServer {
 
     /* =========================================== METHODES =========================================== */
     public NetworkManagerServer(int portToListen) throws NetworkFailureException{
-        server = new PokerServer(portToListen);
+        server = new PokerServer(this, portToListen);
         server.start();
     }
 
@@ -38,17 +38,6 @@ public class NetworkManagerServer implements InterfaceServer {
     public void setDataInstance(InterfaceServerDataFromCom dataInstance) {
         this.dataInstance = dataInstance;
     }
-
-    /* TODO: Avoir le manager
-    public IhmManager getIhmInstance() {
-        return IhmInstance;
-    }
-
-    public void setIhmInstance(IhmManager ihmInstance) {
-        IhmInstance = ihmInstance;
-    }
-    */
-
 
     /* == METHODES IMPLEMENTATION == */
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException {

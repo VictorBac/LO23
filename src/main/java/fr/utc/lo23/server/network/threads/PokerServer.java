@@ -8,18 +8,15 @@ import fr.utc.lo23.exceptions.network.PlayerNotConnectedException;
 import fr.utc.lo23.server.network.NetworkManagerServer;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class PokerServer extends Thread {
     private NetworkManagerServer networkManager;
     private ServerSocket listeningSocket;
     private boolean running;
-    private HashMap<UUID, ObjectOutputStream> userLinksOut;
     private ArrayList<ConnectionThread> threadsClientList;
 
     /**
@@ -28,9 +25,10 @@ public class PokerServer extends Thread {
      * @param portToListen default port to listen is defined in const var, if you would like to change it,
      *                     give an other number here
      */
-    public PokerServer(Integer portToListen) throws NetworkFailureException{
+    public PokerServer(NetworkManagerServer manager, Integer portToListen) throws NetworkFailureException{
         Console.logn("Lancement du serveur.... ");
-       threadsClientList = new ArrayList<ConnectionThread>();
+        networkManager = manager;
+        threadsClientList = new ArrayList<ConnectionThread>();
 
         // Change port if needed
         if (portToListen == null) portToListen = Params.DEFAULT_SERVER_PORT;

@@ -44,7 +44,7 @@ public class PokerServer extends Thread {
      * @throws Exception
      */
     public void initSocket(int portToListen) throws NetworkFailureException {
-        if (null != listeningSocket)
+        if (null != listeningSocket) throw new NetworkFailureException("Le socket serveur existe déjà");
         try {
             listeningSocket = new ServerSocket(portToListen);
         }

@@ -14,7 +14,6 @@ import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import java.util.ArrayList;
 
 
-
 /**
  *
  * @author Jean-Côme D LO23

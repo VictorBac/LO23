@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
@@ -22,7 +23,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     private ServerLink localClient;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerClient(InterfaceDataFromCom dataInter) throws NetworkFailureException{
+    public NetworkManagerClient(InterfaceDataFromCom dataInter) {
         this.dataInstance = dataInter;
         localClient = new ServerLink(this);
         localClient.start();

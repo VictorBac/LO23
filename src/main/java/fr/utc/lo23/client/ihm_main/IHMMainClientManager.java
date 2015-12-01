@@ -71,7 +71,7 @@ public class IHMMainClientManager {
     public IHMMainClientManager() {
 
         managerData = new DataManagerClient();
-        managerNetwork = new NetworkManagerClient();
+        managerNetwork = new NetworkManagerClient(managerData.getInterFromCom());
         managerTable = new IHMTable();
 
         interDataToMain = new InterfaceFromIHMMain(managerData);

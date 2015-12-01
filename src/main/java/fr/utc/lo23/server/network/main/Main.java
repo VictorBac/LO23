@@ -8,8 +8,7 @@ import fr.utc.lo23.server.network.NetworkManagerServer;
  */
 public class Main {
     public static void main(String[] args){
-        int portToListen = 1904;
-        NetworkManagerServer manager = new NetworkManagerServer(portToListen);
+        NetworkManagerServer manager = new NetworkManagerServer(1904);
 
     }
 }

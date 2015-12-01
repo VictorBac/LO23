@@ -54,7 +54,6 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-            <ListView layoutX="272.0" layoutY="60.0" prefHeight="220.0" prefWidth="756.0" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="269.0" layoutY="59.0" prefHeight="28.0" prefWidth="760.0" style="-fx-background-color: rgb(128, 21, 21);" text="Liste des tables disponibles">
                <font>
                   <Font name="System Bold" size="19.0" />
@@ -67,7 +66,7 @@
                </font>
             </Label>
             <ListView layoutX="269.0" layoutY="553.0" prefHeight="156.0" prefWidth="502.0" />
-            <Button fx:id="connect1" layoutX="1064.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  prefHeight="40.0" prefWidth="120.0" text="Rejoindre">
+            <Button fx:id="connect1" layoutX="1064.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Rejoindre">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -77,11 +76,20 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Button fx:id="connect2" layoutX="449.0" layoutY="720.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"  prefHeight="40.0" prefWidth="120.0" text="Rejouer partie">
+            <Button fx:id="connect2" layoutX="449.0" layoutY="720.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Rejouer partie">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <TableView layoutX="269.0" layoutY="85.0" prefHeight="193.0" prefWidth="760.0">
+              <columns>
+                <TableColumn prefWidth="132.0" text="name" />
+                <TableColumn prefWidth="157.0" text="creator" />
+                  <TableColumn prefWidth="141.0" text="mise" />
+                  <TableColumn prefWidth="208.0" text="players" />
+                  <TableColumn prefWidth="121.0" text="spectators" />
+              </columns>
+            </TableView>
             </children>
         </AnchorPane>
     </children>

@@ -20,7 +20,7 @@ public interface InterfaceServerDataFromCom {
 
     void updateTableList();
 
-    boolean canJoinTableUser(UserLight joiner, Table wantedTable, String mode);
+    boolean canJoinTableUser(UserLight joiner, Table wantedTable, EnumerationTypeOfUser mode);
 
     void validateMessage(UserLight sender, MessageChat msgSent);
 
@@ -43,4 +43,6 @@ public interface InterfaceServerDataFromCom {
     User getProfile(UserLight core);
 
     void updateProfile(User newUser);
+
+    User getUserById(UUID idUser);
 }

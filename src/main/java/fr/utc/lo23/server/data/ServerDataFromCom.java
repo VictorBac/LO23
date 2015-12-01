@@ -82,12 +82,16 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param mode
      * @return
      */
-    public boolean canJoinTableUser(UserLight joiner, Table wantedTable, String mode) {
+    public boolean canJoinTableUser(UserLight joiner, Table wantedTable, EnumerationTypeOfUser mode) {
         boolean ok;
-        if (wantedTable.getListPlayers().getListUserLights().size() > wantedTable.getNbPlayerMax())
+        if (wantedTable.getListPlayers().getListUserLights().size() > wantedTable.getNbPlayerMax()) {
             ok = false;
-        else if (mode.equals("Spectator") && !wantedTable.isAcceptSpectator())
+            Console.log(TAG + "\tPlayer can't join, table full ");
+        }
+        else if (mode.equals(EnumerationTypeOfUser.SPECTATOR) && !wantedTable.isAcceptSpectator()) {
             ok = false;
+            Console.log(TAG + "\tPlayer can't join, no spectators allowed");
+        }
         else
             ok = true;
         Console.log(TAG + "\tPlayer can join : " + Boolean.toString(ok));
@@ -184,4 +188,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
+    public User getUserById(UUID userId)
+    {
+        for (User cur : myManager.getUsers().getList()){
+            if (cur.getUserLight().getIdUser().equals(userId))
+                return cur;
+        }
+        return null;
+    }
 }

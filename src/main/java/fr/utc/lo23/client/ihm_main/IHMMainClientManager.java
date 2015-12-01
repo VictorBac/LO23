@@ -74,12 +74,23 @@ public class IHMMainClientManager {
         managerNetwork = new NetworkManagerClient();
         managerTable = new IHMTable();
 
-        interDataToMain = new InterfaceFromIHMMain(managerData);
-        interDataToCom = new InterfaceFromCom(managerData);
-        interDataToTable = new InterfaceFromIHMTable(managerData);
+        //interDataToMain = new InterfaceFromIHMMain(managerData);
+        //interDataToCom = new InterfaceFromCom(managerData);
+        //interDataToTable = new InterfaceFromIHMTable(managerData);
 
         interMainToData = new InterData(this);
         interMainToTable = new InterTable(this);
+
+        managerTable.setDataInterface(managerData.getInterFromIHMTable());
+        // TODO ajouter table to main
+        // managerTable.set;
+        managerData.setInterToCom(managerNetwork);
+        //managerData.setInterToIHMMain();
+        // managerData.setInterToIHMTable(managerTable.getDataInterface());
+        managerNetwork.setDataInstance(managerData.getInterFromCom());
+
+
+
 
         // TODO
 //        interComToData = new

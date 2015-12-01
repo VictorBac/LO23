@@ -29,9 +29,6 @@ public class NetworkManagerClient implements InterfaceClient  {
         this.dataInstance = dataInter;
         localClient = new ServerLink(this);
         localClient.start();
-
-        User user = new User();
-        requestLoginServer(user);
     }
 
     /* == GETTERS AND SETTERS == */
@@ -47,6 +44,7 @@ public class NetworkManagerClient implements InterfaceClient  {
         //Send the login request over the server
         Console.log("Creation d'un Request Login message\n");
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
+        Console.log("requestelog"+reqLog.getUser().toString());
         localClient.send(reqLog);
     }
 

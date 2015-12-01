@@ -39,7 +39,16 @@ public class AcceptLoginMessage extends Message{
      */
     @Override
     public void process(ServerLink threadClient) {
+        for(UserLight us : usersArray){
+            if(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser().equals(us.getIdUser())){
+                usersArray.remove(us);
+            }
+        }
         threadClient.getNetworkManager().getDataInstance().currentConnectedUser(usersArray);
+        Console.log("liste User reçu");
+        for(UserLight u:usersArray){
+            Console.log(u.toString());
+        }
     }
 
 }

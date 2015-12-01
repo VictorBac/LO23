@@ -1,6 +1,8 @@
 package fr.utc.lo23.client.ihm_main;
 
 import fr.utc.lo23.client.data.*;
+import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
+import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.interfaces.InterData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
@@ -81,7 +83,15 @@ public class IHMMainClientManager {
         interMainToData = new InterData(this);
         interMainToTable = new InterTable(this);
 
-        // TODO
+        managerData.setInterToCom(managerNetwork);
+
+        try {
+            managerData.getInterFromIHMMain().logUser("blabla","blublu");
+        } catch (LoginNotFoundException e) {
+            e.printStackTrace();
+        } catch (WrongPasswordException e) {
+            e.printStackTrace();
+        }
 //        interComToData = new
     }
 

@@ -6,6 +6,8 @@ import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
+import fr.utc.lo23.server.network.NetworkManagerServer;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
@@ -22,6 +24,10 @@ public class RequestLoginMessage extends Message {
 
     public RequestLoginMessage(User userLocal) {
         user = userLocal;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     /**
@@ -50,9 +56,17 @@ public class RequestLoginMessage extends Message {
 
             //Giving the user to data
             try {
-                UserLight ul = myServ.getNetworkManager().getDataInstance().userConnection(user);
+                NetworkManagerServer netMan = myServ.getNetworkManager();
+                InterfaceServerDataFromCom interF = netMan.getDataInstance();
+                Console.log("aaaaaaaaa"+interF);
+                Console.log("blka"+user);
+                UserLight ul = interF.userConnection(user);
                 threadServer.setUserId(user.getUserLight().getIdUser());
                 ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
+
+                for(UserLight use : aUsers){
+                    Console.log(""+use.getIdUser());
+                }
 
                 //On envoie un message au client pour accepter sa connexion
                 sendConnectionConfirmation(aUsers, threadServer);

@@ -136,6 +136,10 @@ public class FormController {
         }
     }
 
+    /**
+     * Réinitialise le style des champs de type Textfield
+     * @param field
+     */
     private void clearStyle(TextField field){
         field.setStyle("-fx-border-color: none ; -fx-border-width: none ;");
     }

@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 import java.io.Serializable;
 
 /**
@@ -12,33 +13,28 @@ public class Card implements Serializable {
     /**
      * value : value of the card
      * symbol: symbol of the card
-     * id: char[3] made up by value and symbol
+     * id: string made up by value and symbol
      */
     private Integer value;
     private char symbol;
-    private char[] id;
-
-    /**
-     * Constructor
-     * @param value
-     * @param symbol
-     * @param id
-     */
-    public Card(Integer value, char symbol, char[] id) {
-        this.value = value;
-        this.symbol = symbol;
-        this.id = id;
-    }
+    private String id;
 
     /**
      * Constructor with value and symbol.
      * For example Card card = new Card(13,'C');
      * @param value
-     * @param symbol
+     * @param symbol spade & heart & diamond & club
      */
-    public Card(Integer value, char symbol) {
-        this.value = value;
-        this.symbol = symbol;
+    public Card(Integer value, char symbol) throws CardFormatInvalidException{
+        if ( value > 13 || value < 0)
+            throw new CardFormatInvalidException("Number must be an integer between 1 ~ 13");
+        if ( symbol != 'S' && symbol != 'H' && symbol != 'D' && symbol != 'C' )
+            throw new CardFormatInvalidException("Symbol must be 'S' or 'H' or 'D' or 'C'");
+        else{
+            this.value = value;
+            this.symbol = symbol;
+            this.id = symbol + Integer.toString(value);
+        }
     }
 
     // getters
@@ -47,7 +43,7 @@ public class Card implements Serializable {
         return value;
     }
 
-    public char[] getId() {
+    public String getId() {
         return id;
     }
 
@@ -65,7 +61,7 @@ public class Card implements Serializable {
         this.value = value;
     }
 
-    public void setId(char[] id) {
+    public void setId(String id) {
         this.id = id;
     }
 

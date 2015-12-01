@@ -63,9 +63,9 @@ public interface InterfaceClient {
     /**
      *
      * @param userLocal
-     * @param IdTable
+     * @param tableToJoin
      */
-    public void joinTable(UserLight userLocal, int IdTable) throws NetworkFailureException, FullTableException;
+    public void joinTable(UserLight userLocal, Table tableToJoin) throws NetworkFailureException, FullTableException;
         
     /**
      *

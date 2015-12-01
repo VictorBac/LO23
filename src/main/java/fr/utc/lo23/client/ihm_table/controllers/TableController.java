@@ -61,7 +61,6 @@ public class TableController {
     }
 
     public void initialize(){
-        if(isHost) btnLaunchGame.setVisible(true);
         showActionBox();
         enableActionFold();
         enableActionCheck();
@@ -88,7 +87,7 @@ public class TableController {
 
     public void addPlayer(UserLight user) {
         addPlayer(getFirstAvailableSeat(), user);
-        if(table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
+        if(isHost && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
             btnLaunchGame.setVisible(true);
     }
 
@@ -149,7 +148,7 @@ public class TableController {
         }
         playerControllerMap.remove(user);
         controllersList.set(controllersList.indexOf(playerController), null);
-        if(table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
+        if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
             btnLaunchGame.setVisible(false);
         //Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
         if(betMoneyControllerMap.get(user)!=null)
@@ -373,8 +372,8 @@ public class TableController {
 
     @FXML
     public void sendLeaveAccept(javafx.event.ActionEvent event) {
-       // TODO :  ihmTable.getDataInterface(). data leave game
-        // TODO : ihmTable.getMainInterface(). main quitTable()
+       // TODO :  ihmTable.getDataInterface(). data notify self leave game
+        ihmTable.getMainInterface().quitGame();
     }
 
     @FXML

@@ -7,9 +7,9 @@ import javafx.fxml.Initializable;
  */
 public abstract class BaseController implements Initializable {
 
-    protected MainController mController; // big boss !
+    protected MainControllerClient mController; // big boss !
 
-    public void setMainController(MainController controllerMain) {
+    public void setMainController(MainControllerClient controllerMain) {
         this.mController = controllerMain;
     }
 }

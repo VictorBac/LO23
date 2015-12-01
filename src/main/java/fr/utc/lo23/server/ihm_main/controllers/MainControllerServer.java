@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainController extends Application {
+public class MainControllerServer extends Application {
     Scene mainScene;
 
     public static void main(String[] args) {

@@ -1,30 +1,18 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
-import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import javafx.scene.Node;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -82,7 +70,7 @@ public class ConnectionController extends BaseController {
 
 
         try { // User logged in
-            MainController.getManagerMain().getInterfaceDataToMain().logUser(login,passwd);
+            MainControllerClient.getManagerMain().getInterfaceDataToMain().logUser(login,passwd);
             mController.userLoggedIn();
 
         } catch (LoginNotFoundException e) {

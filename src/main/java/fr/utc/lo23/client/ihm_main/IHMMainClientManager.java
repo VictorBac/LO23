@@ -2,15 +2,13 @@ package fr.utc.lo23.client.ihm_main;
 
 import fr.utc.lo23.client.data.*;
 import fr.utc.lo23.client.ihm_main.controllers.ConnectionController;
-import fr.utc.lo23.client.ihm_main.controllers.MainController;
+import fr.utc.lo23.client.ihm_main.controllers.MainControllerClient;
 import fr.utc.lo23.client.ihm_main.interfaces.InterData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
 import fr.utc.lo23.client.ihm_table.*;
-import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToMainListener;
-import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.client.network.NetworkManagerClient;
 
 /**
@@ -54,7 +52,7 @@ public class IHMMainClientManager {
 
 
     private static ConnectionController controllerConnection;
-    private static MainController controllerMain;
+    private static MainControllerClient controllerMain;
     // TODO ajouter profileController
 
 
@@ -65,7 +63,7 @@ public class IHMMainClientManager {
         return controllerConnection;
     }
 
-    public static MainController getControllerMain() throws NullPointerException {
+    public static MainControllerClient getControllerMain() throws NullPointerException {
         if (controllerMain == null) {
             throw new NullPointerException("controllerMain is NULL");
         }
@@ -76,7 +74,7 @@ public class IHMMainClientManager {
         controllerConnection = controllerConnection;
     }
 
-    public static void setControllerMain(MainController controllerMain) {
+    public static void setControllerMain(MainControllerClient controllerMain) {
         controllerMain = controllerMain;
     }
 

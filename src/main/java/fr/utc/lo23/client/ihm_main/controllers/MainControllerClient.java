@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainController extends Application {
+public class MainControllerClient extends Application {
 
 
     private Stage pmStage;

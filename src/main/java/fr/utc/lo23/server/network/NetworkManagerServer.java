@@ -25,8 +25,12 @@ public class NetworkManagerServer implements InterfaceServer {
     private PokerServer server;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerServer(int portToListen) throws NetworkFailureException{
-        server = new PokerServer(this, portToListen);
+    public NetworkManagerServer(int portToListen) {
+        try {
+            server = new PokerServer(this, portToListen);
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
         server.start();
     }
 

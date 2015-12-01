@@ -66,6 +66,11 @@ public class InterData implements InterfaceMainToData {
 
     }
 
+    @Override
+    public void currentTables(List<Table> currentTables) {
+        
+    }
+
 
     private IHMMainClientManager managerMain;
 

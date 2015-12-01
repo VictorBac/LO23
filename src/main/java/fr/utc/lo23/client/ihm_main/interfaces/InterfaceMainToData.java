@@ -18,4 +18,5 @@ public interface InterfaceMainToData {
     void updateView();
     void notifyNewTable(Table t);
     void returnHome();
+    void currentTables(List<Table> currentTables);
 }

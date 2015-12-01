@@ -81,7 +81,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
 
-    public User getUser(){
-        return dManagerClient.getUserLocal();
+    public UserLight getUser(){
+        return dManagerClient.getUserLocal().getUserLight();
     }
 }

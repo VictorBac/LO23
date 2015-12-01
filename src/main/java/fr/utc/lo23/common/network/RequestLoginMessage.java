@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
@@ -44,7 +45,7 @@ public class RequestLoginMessage extends Message {
         Console.log("Request login message received");
 
         Console.log("Checking if there is room for one more user");
-        if (myServ.getNbUsers() < PokerServer.NB_MAX_USER) {
+        if (myServ.getNbUsers() < Params.NB_MAX_USER) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
 
             //Giving the user to data

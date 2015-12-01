@@ -156,8 +156,11 @@ public class TableToDataListener implements ITableToDataListener {
      * Fonction à appeler après avoir reçu une demande d'action
      * Permet à IHM-Table de demander l'action au joueur
      */
-    public void askAction(Action actionToFill, EnumerationAction[] listPossible){
-        //TODO: next step
+    public void askAction(Action actionToFill, EnumerationAction[] listPossible) {
+        ihmtable.getTableController().saveActionToFill(actionToFill);
+        ihmtable.getTableController().disableAllActions();
+        for (EnumerationAction action: listPossible)
+            ihmtable.getTableController().enableAction(action);
     }
 
     /*

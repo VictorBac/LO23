@@ -29,6 +29,7 @@ public class UserLightList implements Serializable{
             if (cur.getIdUser().equals(userId))
                 return cur;
         }
+
         throw new UserLightNotFoundException(userId);
     }
 

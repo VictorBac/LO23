@@ -6,6 +6,8 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.*;
 
+import java.util.UUID;
+
 /**
  *
  * @author Jean-Côme D LO23
@@ -50,7 +52,14 @@ public interface InterfaceClient {
      * @param userLocal
      */
     public void leaveRoom(UserLight userLocal) throws NetworkFailureException;
-    
+
+    /**
+     * @param idTable
+     * @param userInit
+     */
+    public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException;
+
+
     /**
      *
      * @param userLocal

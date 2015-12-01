@@ -30,7 +30,13 @@ public class NotifyNewPlayerMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
-        Console.log("new user connected : " + newUser);
+        if(!newUser.getIdUser().equals(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser())){
+            threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+            Console.log("new user connected : " + newUser);
+        }else{
+            Console.log("Message abbandoné : User = moi");
+        }
+
+
     }
 }

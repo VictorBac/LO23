@@ -86,7 +86,7 @@ public class IHMMainClientManager {
         managerData.setInterToCom(managerNetwork);
 
         try {
-            managerData.getInterFromIHMMain().logUser("bla","blu");
+            managerData.getInterFromIHMMain().logUser("blabla","blublu");
         } catch (LoginNotFoundException e) {
             e.printStackTrace();
         } catch (WrongPasswordException e) {

@@ -1,6 +1,8 @@
 package fr.utc.lo23.client.ihm_main;
 
 import fr.utc.lo23.client.data.*;
+import fr.utc.lo23.client.ihm_main.controllers.ConnectionController;
+import fr.utc.lo23.client.ihm_main.controllers.MainController;
 import fr.utc.lo23.client.ihm_main.interfaces.InterData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
@@ -62,10 +64,42 @@ public class IHMMainClientManager {
     /**
      * Managers
      */
-
     private static DataManagerClient managerData;
     private static NetworkManagerClient managerNetwork;
     private static IHMTable managerTable;
+
+
+
+
+    private static ConnectionController controllerConnection;
+    private static MainController controllerMain;
+    // TODO ajouter profileController
+
+
+    public static ConnectionController getControllerConnection() throws NullPointerException {
+        if (controllerConnection == null) {
+            throw  new NullPointerException("controllerConnection is NULL");
+        }
+        return controllerConnection;
+    }
+
+    public static MainController getControllerMain() throws NullPointerException {
+        if (controllerMain == null) {
+            throw new NullPointerException("controllerMain is NULL");
+        }
+        return controllerMain;
+    }
+
+    public static void setControllerConnection(ConnectionController controllerConnection) {
+        controllerConnection = controllerConnection;
+    }
+
+    public static void setControllerMain(MainController controllerMain) {
+        controllerMain = controllerMain;
+    }
+
+
+
 
 
     public IHMMainClientManager() {
@@ -80,6 +114,10 @@ public class IHMMainClientManager {
 
         interMainToData = new InterData(this);
         interMainToTable = new InterTable(this);
+
+
+//        managerData.setInterFromCom(interDataToCom);
+//        managerData.setInterFromIHMMain(interDataToMain);
 
         // TODO
 //        interComToData = new

@@ -6,6 +6,7 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.UUID;
 
 /**
@@ -28,6 +29,12 @@ public class LaunchGameMessage extends Message {
         PokerServer myServ = threadServer.getMyServer();
         Console.log("Launch Game message received");
         myServ.getNetworkManager().getDataInstance().startGame(idTable,UserInit);
+
+        LaunchGameMessage LaunchGameM = new LaunchGameMessage(idTable,UserInit);
+
+        myServ.sendToAll(LaunchGameM);
+
+
     }
 
     @Override

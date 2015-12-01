@@ -50,7 +50,7 @@ public class UserLight implements Serializable {
 
     /**
      *
-     * pas de comparaison d'image pour l'instant
+     * compares the ID of two UserLights
      * @param toCompare
      * @return
      */

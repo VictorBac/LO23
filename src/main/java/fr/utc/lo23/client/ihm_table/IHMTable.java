@@ -1,6 +1,8 @@
 package fr.utc.lo23.client.ihm_table;
 
+import fr.utc.lo23.client.data.InterfaceDataFromIHMTable;
 import fr.utc.lo23.client.data.InterfaceFromIHMTable;
+import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
 import fr.utc.lo23.client.ihm_table.controllers.FormController;
 import fr.utc.lo23.client.ihm_table.controllers.TableController;
 import javafx.scene.layout.Pane;
@@ -12,8 +14,9 @@ public class IHMTable {
 
     private TableToMainListener tableToMainListener;
     private TableToDataListener tableToDataListener;
-    private InterfaceFromIHMTable dataInterface;
-    //private FuckingInterfaceFromIHMmain qu'ils ont pas codé l'objet qui implémente l'interface
+    private InterfaceDataFromIHMTable dataInterface;
+    private InterfaceMainToTable mainInterface;
+
     private TableController tableController = null;
     private FormController formController = null;
 
@@ -33,12 +36,20 @@ public class IHMTable {
         this.tableToDataListener = tableToDataListener;
     }
 
-    public InterfaceFromIHMTable getDataInterface() {
+    public InterfaceDataFromIHMTable getDataInterface() {
         return dataInterface;
     }
 
-    public void setDataInterface(InterfaceFromIHMTable dataInterface) {
+    public void setDataInterface(InterfaceDataFromIHMTable dataInterface) {
         this.dataInterface = dataInterface;
+    }
+
+    public InterfaceMainToTable getMainInterface() {
+        return mainInterface;
+    }
+
+    public void setMainInterface(InterfaceMainToTable mainInterface) {
+        this.mainInterface = mainInterface;
     }
 
     public TableController getTableController() {

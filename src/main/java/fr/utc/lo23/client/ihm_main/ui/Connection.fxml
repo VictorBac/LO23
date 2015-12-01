@@ -20,11 +20,11 @@
     <children>
         <AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="601.0" GridPane.rowIndex="1">
             <children>
-                <TextField fx:id="textuser" layoutX="70.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Pseudo">
+                <TextField fx:id="fieldUsername" layoutX="70.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Pseudo">
                     <font>
                         <Font size="14.0" />
                     </font></TextField>
-                <Button fx:id="connect" layoutX="71.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didButtonConnectClick" prefHeight="40.0" prefWidth="120.0" text="Connexion">
+                <Button fx:id="buttonConnect" layoutX="71.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didButtonConnectClick" prefHeight="40.0" prefWidth="120.0" text="Connexion">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
@@ -41,7 +41,7 @@
                     <font>
                         <Font size="13.0" />
                     </font></Button>
-                <PasswordField fx:id="textpassword" layoutX="70.0" layoutY="162.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Mot de passe">
+                <PasswordField fx:id="fieldPassword" layoutX="70.0" layoutY="162.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Mot de passe">
                     <font>
                         <Font size="14.0" />
                     </font>

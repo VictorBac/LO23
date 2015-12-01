@@ -5,14 +5,13 @@
  */
 package fr.utc.lo23.server.network;
 
-import java.util.ArrayList;
-
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
-import fr.utc.lo23.exceptions.network.*;
+
+import java.util.ArrayList;
 
 
 

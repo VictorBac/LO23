@@ -2,20 +2,20 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
 
 /**
- * Message permettant de demander au serveur si la
- * connection est possible
- * Created by rbonneau on 14/11/2015.
+ * Created by Jean-Côme on 24/11/2015.
  */
-public class RequestListUserMessage extends Message {
+public class RequestListTableMessage extends Message {
 
-    public RequestListUserMessage() {
+
+    public RequestListTableMessage() {
+
     }
 
     /**
@@ -27,18 +27,22 @@ public class RequestListUserMessage extends Message {
     }
 
     /**
-     * Send the list of connected users to concerned thread.
+     *
      * @param threadServer
      */
     @Override
     public void process (ConnectionThread threadServer){
         PokerServer myServ = threadServer.getMyServer();
-        Console.log("Request list of users");
-        ArrayList<UserLight> listUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
-        SendListUserMessage listUserMess = new SendListUserMessage(listUsers);
-        threadServer.send(listUserMess);
+        Console.log("Request list of table");
+        ArrayList<Table> listTables = myServ.getNetworkManager().getDataInstance().getTableList();
+        SendListTableMessage listTableMess = new SendListTableMessage(listTables);
+        threadServer.send(listTableMess);
     }
 
+    /**
+     * Client-side process
+     * @param threadClient
+     */
     @Override
     public void process(ServerLink threadClient) {
 

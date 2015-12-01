@@ -1,27 +1,22 @@
 package fr.utc.lo23.server.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
-import fr.utc.lo23.common.network.*;
+import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
+import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
-
 import java.util.ArrayList;
-
 
 /**
  *
  * @author Jean-Côme
  */
 public class NetworkManagerServer implements InterfaceServer {
-    /* Singleton -> Il faudrait passer le constructeur en privé et faire un getInstance() */
-    private static NetworkManagerServer myInstance;
-
     /* Modules instance, initiate by IHM module with setters */
     private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
     //private IhmManagerServer IhmInstance; TODO: Avoir le manager !
@@ -30,8 +25,12 @@ public class NetworkManagerServer implements InterfaceServer {
     private PokerServer server;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerServer() {
-        server = new PokerServer(null);
+    public NetworkManagerServer(int portToListen) {
+        try {
+            server = new PokerServer(this, portToListen);
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
         server.start();
     }
 
@@ -43,17 +42,6 @@ public class NetworkManagerServer implements InterfaceServer {
     public void setDataInstance(InterfaceServerDataFromCom dataInstance) {
         this.dataInstance = dataInstance;
     }
-
-    /* TODO: Avoir le manager
-    public IhmManager getIhmInstance() {
-        return IhmInstance;
-    }
-
-    public void setIhmInstance(IhmManager ihmInstance) {
-        IhmInstance = ihmInstance;
-    }
-    */
-
 
     /* == METHODES IMPLEMENTATION == */
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException {

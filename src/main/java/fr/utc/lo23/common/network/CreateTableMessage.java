@@ -1,21 +1,20 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message to be sent to every users connected to notify them
- * That there is a new player
- * Created by rbonneau on 18/11/2015.
+ * Created by rbonneau on 25/11/2015.
  */
-public class NotifyNewPlayerMessage extends Message {
+public class CreateTableMessage extends Message {
 
-    private UserLight newUser;
+    private UserLight maker;
+    private Table newTable;
 
-    public NotifyNewPlayerMessage(UserLight u) {
-        newUser = u;
-    }
+    public CreateTableMessage(UserLight u, Table t) {maker = u; newTable=t;}
+
 
     @Override
     public void process() {
@@ -24,11 +23,12 @@ public class NotifyNewPlayerMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
+        threadServer.getMyServer().getNetworkManager().getDataInstance().createTable(maker,newTable);
 
     }
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+
     }
 }

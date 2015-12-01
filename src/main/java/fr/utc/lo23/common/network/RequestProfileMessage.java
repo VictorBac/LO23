@@ -5,17 +5,13 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message to be sent to every users connected to notify them
- * That there is a new player
- * Created by rbonneau on 18/11/2015.
+ * Created by rbonneau on 25/11/2015.
  */
-public class NotifyNewPlayerMessage extends Message {
+public class RequestProfileMessage extends Message {
 
-    private UserLight newUser;
+    private UserLight profile;
 
-    public NotifyNewPlayerMessage(UserLight u) {
-        newUser = u;
-    }
+    public RequestProfileMessage(UserLight u) {profile=u;}
 
     @Override
     public void process() {
@@ -24,11 +20,12 @@ public class NotifyNewPlayerMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //TODO remplacer par le bon nom de méthode
+        //User Profile threadServer.getMyServer().getNetworkManager().getDataInstance().getUserFromUserLight();
     }
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+
     }
 }

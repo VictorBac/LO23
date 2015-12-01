@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.utc.lo23.client.network;
-
-import java.util.ArrayList;
 
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
@@ -24,8 +17,19 @@ public interface InterfaceClient {
      * @param u 
      */
     public void sendProfile(User u) throws NetworkFailureException;
-    
-  
+
+    /**
+     * Demande d'envoi de la liste des users connectes
+     * @throws NetworkFailureException
+     */
+    public void requestUserList()throws NetworkFailureException;
+
+    /**
+     * Demande d'envoi de la liste des tables
+     * @throws NetworkFailureException
+     */
+    public void requestTableList()throws NetworkFailureException;
+
     /**
      * 
      * @param u
@@ -33,7 +37,7 @@ public interface InterfaceClient {
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
     
 
-    public void createTable() throws NetworkFailureException, TooManyTablesException;
+    public void createTable(UserLight maker, Table t) throws NetworkFailureException, TooManyTablesException;
     
     /**
      *
@@ -57,7 +61,7 @@ public interface InterfaceClient {
     /**
      *
      */
-    public void hearthBeat() throws NetworkFailureException;
+    public void heartBeat() throws NetworkFailureException;
     
     /**
      *
@@ -100,7 +104,10 @@ public interface InterfaceClient {
      *
      */
     public void askStopGame() throws NetworkFailureException;
-    
+    /**
+     *
+     */
+    public void notifyDisconnection(User maker) throws NetworkFailureException;
     /**
      *
      * @param userLocal

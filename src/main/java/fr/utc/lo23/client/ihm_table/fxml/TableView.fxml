@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@../css/stylesheet_table.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.TableController">
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@../css/stylesheet_table.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.TableController">
    <children>
       <Pane fx:id="tablePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1020.0" styleClass="table">
          <children>
@@ -16,27 +16,42 @@
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_fold_off" />
-                     </styleClass></Button>
+                     </styleClass>
+                     <tooltip>
+                        <Tooltip text="Se coucher" />
+                     </tooltip></Button>
                      <Button fx:id="actionCheck" layoutX="60.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_check_off" />
-                     </styleClass></Button>
+                     </styleClass>
+                     <tooltip>
+                        <Tooltip text="Check" />
+                     </tooltip></Button>
                      <Button fx:id="actionFollow" layoutX="108.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_follow_off" />
-                     </styleClass></Button>
+                     </styleClass>
+                     <tooltip>
+                        <Tooltip text="Suivre" />
+                     </tooltip></Button>
                      <Button fx:id="actionBet" layoutX="136.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_bet_off" />
-                     </styleClass></Button>
+                     </styleClass>
+                     <tooltip>
+                        <Tooltip text="Relancer" />
+                     </tooltip></Button>
                      <Button fx:id="actionAllin" layoutX="128.0" layoutY="129.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_allin_off" />
-                     </styleClass></Button>
+                     </styleClass>
+                     <tooltip>
+                        <Tooltip text="Tapis" />
+                     </tooltip></Button>
                      <ImageView fitHeight="120.0" fitWidth="120.0" layoutX="3.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
                          <image>
                              <Image url="@../images/icon_action.png" />

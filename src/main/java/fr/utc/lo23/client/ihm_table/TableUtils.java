@@ -6,7 +6,7 @@ import javafx.geometry.Point2D;
  * Created by Bastien F. on 23/11/2015.
  */
 public class TableUtils {
-    public static final Point2D tableWidthHeight = new Point2D(745.0, 335.0), tableCenter = new Point2D(510.0, 215.0);
+    public static final Point2D tableWidthHeight = new Point2D(765.0, 315.0), tableCenter = new Point2D(510.0, 215.0);
 
     /**
      *

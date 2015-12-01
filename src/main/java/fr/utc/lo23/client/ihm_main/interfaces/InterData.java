@@ -46,8 +46,7 @@ public class InterData implements InterfaceMainToData {
         }
         ObservableList<String> items = FXCollections.observableArrayList(received_list);
 
-        // TODO
-        // MainWindow.refreshUsers(userList);
+        IHMMainClientManager.getControllerMain().getMainWindowController().getListViewConnectedUsers().setItems(items);
 
     }
 
@@ -68,7 +67,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void currentTables(List<Table> currentTables) {
-        
+
     }
 
 

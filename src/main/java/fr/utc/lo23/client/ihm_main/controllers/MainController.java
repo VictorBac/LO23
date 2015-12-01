@@ -24,6 +24,13 @@ public class MainController extends Application {
 
     private static IHMMainClientManager managerMain;
 
+    public static MainWindowController getMainWindowController() {
+        return mainWindowController;
+    }
+
+
+    private static MainWindowController mainWindowController;
+
 
 
     public static void main(String[] args) {
@@ -39,7 +46,7 @@ public class MainController extends Application {
 
         pmStage = primaryStage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ConnectionController controller = fxmlLoader.<ConnectionController>getController();
         controller.setMainController(this);
@@ -56,7 +63,10 @@ public class MainController extends Application {
     {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml"));
+             root = (Parent) fxmlLoader.load();
+                    mainWindowController = fxmlLoader.<MainWindowController>getController();
+            mainWindowController.setMainController(this);
         } catch (IOException e) {
             // TODO ?
             e.printStackTrace();

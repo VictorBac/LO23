@@ -1,13 +1,11 @@
 package fr.utc.lo23.client.ihm_main;
 
 import fr.utc.lo23.client.data.*;
-import fr.utc.lo23.client.ihm_main.controllers.ConnectionController;
-import fr.utc.lo23.client.ihm_main.controllers.MainController;
 import fr.utc.lo23.client.ihm_main.interfaces.InterData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
-import fr.utc.lo23.client.ihm_table.*;
+import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.client.network.NetworkManagerClient;
 
@@ -40,13 +38,7 @@ public class IHMMainClientManager {
         return interComToData;
     }
 
-    public static ITableToDataListener getInterTableToData() {
-        return interTableToData;
-    }
 
-    public static ITableToMainListener getInterTableToMain() {
-        return interTableToMain;
-    }
 
     /**
      * Interfaces from DATA
@@ -77,59 +69,37 @@ public class IHMMainClientManager {
     /**
      * Managers
      */
+
     private static DataManagerClient managerData;
     private static NetworkManagerClient managerNetwork;
     private static IHMTable managerTable;
 
 
-
-
-    private static ConnectionController controllerConnection;
-    private static MainController controllerMain;
-    // TODO ajouter profileController
-
-
-    public static ConnectionController getControllerConnection() throws NullPointerException {
-        if (controllerConnection == null) {
-            throw  new NullPointerException("controllerConnection is NULL");
-        }
-        return controllerConnection;
-    }
-
-    public static MainController getControllerMain() throws NullPointerException {
-        if (controllerMain == null) {
-            throw new NullPointerException("controllerMain is NULL");
-        }
-        return controllerMain;
-    }
-
-    public static void setControllerConnection(ConnectionController controllerConnection) {
-        controllerConnection = controllerConnection;
-    }
-
-    public static void setControllerMain(MainController controllerMain) {
-        controllerMain = controllerMain;
-    }
-
-
-
-
-
     public IHMMainClientManager() {
 
         managerData = new DataManagerClient();
-        managerNetwork = new NetworkManagerClient();
+        managerNetwork = new NetworkManagerClient(managerData.getInterFromCom());
         managerTable = new IHMTable();
 
-        interDataToMain = new InterfaceFromIHMMain(managerData);
-        interDataToCom = new InterfaceFromCom(managerData);
-        interDataToTable = new InterfaceFromIHMTable(managerData);
+        //interDataToMain = new InterfaceFromIHMMain(managerData);
+        //interDataToCom = new InterfaceFromCom(managerData);
+        //interDataToTable = new InterfaceFromIHMTable(managerData);
 
         interMainToData = new InterData(this);
         interMainToTable = new InterTable(this);
 
-        interTableToData = new TableToDataListener(managerTable);
-        interTableToMain = new TableToMainListener(managerTable);
+        managerTable.setDataInterface(managerData.getInterFromIHMTable());
+        // TODO ajouter table to main
+        // managerTable.set;
+        managerData.setInterToCom(managerNetwork);
+        //managerData.setInterToIHMMain();
+        // managerData.setInterToIHMTable(managerTable.getDataInterface());
+        managerNetwork.setDataInstance(managerData.getInterFromCom());
+
+
+
+       // interTableToData = new TableToDataListener(managerTable);
+       // interTableToMain = new TableToMainListener(managerTable);
 
 
         // TODO decommenter quand Data aura changé le type des params
@@ -137,7 +107,7 @@ public class IHMMainClientManager {
 //        managerData.setInterFromIHMMain(interDataToMain);
 //        managerData.setInterFromIHMTable(interDataToTable);
         managerData.setInterToCom(interComToData);
-        managerData.setInterToIHMTable(interTableToData);
+        //managerData.setInterToIHMTable(interTableToData);
         managerData.setInterToIHMMain(interMainToData);
 
         // TODO

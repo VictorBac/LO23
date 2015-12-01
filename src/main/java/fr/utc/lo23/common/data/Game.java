@@ -12,6 +12,7 @@ import java.util.UUID;
  * Class used to represent a game
  */
 public class Game implements Serializable{
+    private static final long serialVersionUID = 1L;
     private UUID idGame;
     private ArrayList<Hand> listHand;
     private int blind;
@@ -21,6 +22,7 @@ public class Game implements Serializable{
     private int ante;
     private EnumerationStatusGame statusOfTheGame;
     private ArrayList<UserLight> listUserSpectator;
+    private Table tableOfTheGame;
 
     /**
      * Constructor with all parameter
@@ -47,9 +49,9 @@ public class Game implements Serializable{
     }
 
     /**
-     * Constructor used to intialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
+     * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
      */
-    public Game() {
+    public Game(Table tableOfTheGame) {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
         this.blind = 0;
@@ -59,29 +61,76 @@ public class Game implements Serializable{
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
         this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
-
+        this.tableOfTheGame = tableOfTheGame;
     }
 
     //TODO comment those method
 
+    /**
+     * Method to know the current Hand
+     * @return
+     */
     private Hand getCurrentHand(){
         return this.listHand.get(this.listHand.size()-1);
     }
     private ArrayList<UserLight> getPlayerList(){
-        return null;//TODO remove this line
+        return null;//TODO remove this line, method useless
     }
 
 
-    private void addPlayer(UserLight newUserLightPlayerJoinGame){}
-    private void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){}
+    public void addPlayer(UserLight newUserLightPlayerJoinGame){
+        this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
+    }
 
+    /**
+     * Method to set a player as disconnected on the Game
+     * @param userLightPlayerToRemoveFromTheGame µUserLight of the player who is disconnected
+     */
+    public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){
+        int sizeListSeat = this.listSeatPlayerWithPeculeDepart.size();
+        for(int index = 0 ; index <sizeListSeat; index++ ){
+            //search the player who needs to be disconnected
+            if (this.listSeatPlayerWithPeculeDepart.get(index).getPlayer().equals(userLightPlayerToRemoveFromTheGame)){
+                this.listSeatPlayerWithPeculeDepart.get(index).setStatusPlayer(EnumerationStatusPlayer.DISCONNECTED);
+                break;
+            }
+
+        }
+
+    }
+
+
+    /**
+     * Method to remove a spectator from the Game
+     * @param userLightSpectatorToRemoveFromTheGame
+     */
+    public void deleteSpectator(UserLight userLightSpectatorToRemoveFromTheGame ){
+        int sizeListSpectator = this.listUserSpectator.size();
+        for(int index = 0 ; index <sizeListSpectator; index++ ){
+            //search the spectator who needs to be disconnected
+            if (this.listUserSpectator.get(index).equals(userLightSpectatorToRemoveFromTheGame)){
+                this.listUserSpectator.remove(index);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Method to add a new spectator to the Game
+     * @param newUserLightSpectatorJoinGame
+     */
+    public void addSpectator(UserLight newUserLightSpectatorJoinGame){
+        this.listUserSpectator.add(newUserLightSpectatorJoinGame);
+    }
+
+
+    private UserLight getCurrentPlayer(){
+        return null;//TODO remove this line
+    }
     private UserLight getNextPlayer(){
         return null; //TODO remove this line
     }
 
-    private void deleteSpectator(UserLight newUserLightSpectatorJoinGame){}
-    private void addSpectator(UserLight userLightSpectatorToRemoveFromTheGame){}
-    private void getCurrentPlayer(){}
 
     /**
      * Method that take an action that has been played and give it to the current Hand
@@ -90,7 +139,7 @@ public class Game implements Serializable{
     private void playAction(Action newActionDoneByPlayer){
         //TODO need to do some check First
         //TODO change the behaviour it is not the best way to do it
-        listHand.get(listHand.size()-1).playAction(newActionDoneByPlayer);
+        getCurrentHand().playAction(newActionDoneByPlayer);
     }
 
 
@@ -100,10 +149,13 @@ public class Game implements Serializable{
     public void startGame(){
         this.timeStampStartOfTheGame= new Timestamp(Calendar.getInstance().getTime().getTime());
         this.statusOfTheGame = EnumerationStatusGame.playing;
-
+//TODO begin to distribute the cards
     }
 
 
+    public void stopGame(){
+
+    }
 
 ///////////////////////GETTER and SETTER
     /**

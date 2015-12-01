@@ -4,6 +4,7 @@ import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
+import fr.utc.lo23.common.data.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -94,7 +95,7 @@ public class ConnectionController extends BaseController {
 
     }
 
-    @Override
+    //@Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("ConnectionController start");
 
@@ -103,4 +104,8 @@ public class ConnectionController extends BaseController {
     public void change(ActionEvent actionEvent) {
     }
 
+    public void createnewuser(ActionEvent actionEvent) {
+        User createUser = new User();
+        //createUser.
+    }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="playerBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="80.0" style="-fx-border-color: black; -fx-border-width: 1px;" stylesheets="@../css/stylesheet_player.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.PlayerController">
+   <children>
+      <Label fx:id="playerNameLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" style="-fx-border-color: black; -fx-background-color: #005a46;" text="Thug Eagle" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="avatarImageView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="playerMoneyLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" style="-fx-border-color: black; -fx-background-color: #005a46;" text="TooMuch$" textFill="WHITE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerInfos" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" style="-fx-border-color: black;" textFill="WHITE" visible="false">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

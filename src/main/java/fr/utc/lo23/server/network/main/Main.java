@@ -8,7 +8,7 @@ import fr.utc.lo23.server.network.NetworkManagerServer;
  */
 public class Main {
     public static void main(String[] args){
-        NetworkManagerServer manager = new NetworkManagerServer();
+        NetworkManagerServer manager = new NetworkManagerServer(1904);
 
     }
 }

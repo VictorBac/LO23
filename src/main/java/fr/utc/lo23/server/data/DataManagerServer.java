@@ -1,5 +1,6 @@
 package fr.utc.lo23.server.data;
 
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.TableList;
 import fr.utc.lo23.common.data.UserList;
 import fr.utc.lo23.server.network.InterfaceServer;
@@ -9,6 +10,7 @@ import fr.utc.lo23.server.network.InterfaceServer;
  */
 public class DataManagerServer {
 
+    private static final String TAG = "DataManagerServer";
     private InterfaceServer interfaceToCom;
     private ServerDataFromCom interfaceFromCom;
     private UserList users;
@@ -17,6 +19,7 @@ public class DataManagerServer {
     public DataManagerServer(){
     this.interfaceToCom = null;
         this.interfaceFromCom = new ServerDataFromCom(this);
+        Console.log(TAG + "\tObject created.");
     }
     public UserList getUsers(){
         return this.users;

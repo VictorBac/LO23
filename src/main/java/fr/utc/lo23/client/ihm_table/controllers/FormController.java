@@ -43,7 +43,8 @@ public class FormController {
     }
 
     // Définition des formes régulières
-    final Pattern texte = Pattern.compile("^[A-Za-z0-9 ]+$");
+    final Pattern texte = Pattern.compile("^[A-Za-z][a-z0-9 ]*$");
+    final Pattern nombre = Pattern.compile("^[0-9]+$");
 
     @FXML
     TextField formName;
@@ -90,28 +91,33 @@ public class FormController {
         });
     }
     /**
-     * Checks form values.
+     * Vérifie la validité des données rentrées par l'utilisateur :
+     * Le nom du formulaire doit commencer par une lettre, il peut contenir des lettres, des chiffres et des espaces
+     * La mise doit être non nulle et un nombre positif
+     * Le temps doit être non nul et un nombre positif
      * @param event
      */
     @FXML
     private void formSend(ActionEvent event){
-        // Réinitialisation des borders des champs
-        formName.getStyleClass().clear();
-        /*for (String s: texteStyle){
-            formName.setStyle(s);
-        }*/
-
         // Checking form values
         ArrayList<String> errors = new ArrayList<String>(); // Si une erreur est détectée, on l'ajoute dans cette liste
+        errors.clear();
+        // Réinitialisation des borders des champs
+        clearStyle(formName);
+        clearStyle(formMiseMax);
+        clearStyle(formTempsMax);
+
         if (formName.getText().isEmpty() | !texte.matcher(formName.getText()).matches()){
             errors.add("Nom de la table");
             formName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
-        if (formMiseMax.getText().isEmpty()){
+        if (formMiseMax.getText().isEmpty() | !nombre.matcher(formMiseMax.getText()).matches()){
             errors.add("Mise Max");
+            formMiseMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
-        if (formTempsMax.getText().isEmpty()){
+        if (formTempsMax.getText().isEmpty() | !nombre.matcher(formTempsMax.getText()).matches()){
             errors.add("Temps Max");
+            formTempsMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
 
         if (errors.isEmpty()){ // Toutes les valeurs sont correctement remplies
@@ -128,6 +134,10 @@ public class FormController {
             // Sending Table to Data
             ihmTable.getDataInterface().tableToCreate(tableName, spectator, spectatorChat, playerMax, playerMin, abandon, miseMax, tempsMax);
         }
+    }
+
+    private void clearStyle(TextField field){
+        field.setStyle("-fx-border-color: none ; -fx-border-width: none ;");
     }
 
     public void goToTable(Table t){

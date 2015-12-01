@@ -46,7 +46,7 @@ public class MainController extends Application {
 
         pmStage = primaryStage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         ConnectionController controller = fxmlLoader.<ConnectionController>getController();
         controller.setMainController(this);

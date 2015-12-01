@@ -7,9 +7,9 @@ import javax.imageio.ImageIO;
 import java.io.*;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Rï¿½my on 20/10/2015.
  */
-public class ImageAvatar {
+public class ImageAvatar implements  Serializable{
 
     /**
      * Todo : implement serialization of img
@@ -18,6 +18,7 @@ public class ImageAvatar {
      */
      private  Image img;
      private String pathToImage;
+     private static final long serialVersionUID = 1L;
 
 
 
@@ -32,7 +33,7 @@ public class ImageAvatar {
 
 
     /**
-     * méthode permettant de récupérer une image à partir de son path
+     * mï¿½thode permettant de rï¿½cupï¿½rer une image ï¿½ partir de son path
      * @param path : le chemin local du fichier image
      */
     public Image searchImageWithPath(String path) throws ImageNotFoundException{

@@ -24,7 +24,7 @@ public class Table implements Serializable {
      * abandonAmiable : true if authorised, false otherwise
      * maxMise : maximum amount that players can give themselves at the beginning
      * listGames : list of games that were played on this table (last = actual)
-     * timeForAction : time between actions for the replay
+     * timeForAction : time between actions
      */
     private UUID idTable;
     private String name;
@@ -73,7 +73,7 @@ public class Table implements Serializable {
 
     /**
      * method to add a player to the table, with checking if it is possible
-     * Call checkConditionPlayerJoin()
+     * Check if it's possible (call checkConditionPlayerJoin())
      * @param player : player
      * @throws fr.utc.lo23.common.data.exceptions.TableException
      */
@@ -98,7 +98,7 @@ public class Table implements Serializable {
         if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
             this.getCurrentGame().deletePlayer(player);
-            //TODO gestion statistiques²
+            //TODO gestion statistiques
         }
         else if (!this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
@@ -112,7 +112,7 @@ public class Table implements Serializable {
 
     /**
      * Check if a player can join a table
-     * @return
+     * @return true if possible, false otherwise
      */
     public boolean checkConditionPlayerJoin(){
         // number of players on the table < max number of players
@@ -121,6 +121,7 @@ public class Table implements Serializable {
 
     /**
      * Add a spectator to the table
+     * Check if it's possible (call checkConditionSpectatorJoin())
      * @param spectator
      * @throws TableException
      */

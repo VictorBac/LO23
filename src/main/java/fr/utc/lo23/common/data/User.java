@@ -28,6 +28,7 @@ public class User implements Serializable{
     private String email;
     private Stats statsUser;
     private Contact contactUser;
+
     private static final long serialVersionUID = 1L;
 
     public User(){
@@ -83,6 +84,37 @@ public class User implements Serializable{
         return this.contactUser;
     }
 
+    public void setCore(UserLight core) {
+        this.core = core;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setStatsUser(Stats statsUser) {
+        this.statsUser = statsUser;
+    }
+
+    public void setContactUser(Contact contactUser) {
+        this.contactUser = contactUser;
+    }
 
     /**
      * @param beginMse : la mise de d�part du joueur
@@ -143,4 +175,17 @@ public class User implements Serializable{
         return match;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "core=" + core +
+                ", pwd='" + pwd + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", statsUser=" + statsUser +
+                ", contactUser=" + contactUser +
+                '}';
+    }
 }

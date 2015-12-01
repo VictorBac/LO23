@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.network;
 
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
@@ -29,6 +30,13 @@ public class NotifyNewPlayerMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+        if(!newUser.getIdUser().equals(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser())){
+            threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+            Console.log("new user connected : " + newUser);
+        }else{
+            Console.log("Message abbandoné : User = moi");
+        }
+
+
     }
 }

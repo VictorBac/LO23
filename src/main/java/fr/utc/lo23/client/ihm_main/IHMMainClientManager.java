@@ -18,18 +18,6 @@ import fr.utc.lo23.client.network.NetworkManagerClient;
  */
 public class IHMMainClientManager {
 
-    public static InterfaceDataFromIHMMain getInterfaceDataToMain() {
-        return interDataToMain;
-    }
-
-    public static InterfaceDataFromCom getInterfaceDataToCom() {
-        return interDataToCom;
-    }
-
-    public static InterfaceDataFromIHMTable getInterfaceDataToTable() {
-        return interDataToTable;
-    }
-
     public static InterfaceMainToData getInterfaceMainToData() {
         return interMainToData;
     }
@@ -38,42 +26,21 @@ public class IHMMainClientManager {
         return interMainToTable;
     }
 
-    public static InterfaceClient getInterfaceComToData() {
-        return interComToData;
+    public static InterfaceDataFromIHMMain getInterfaceDataToMain() {
+        return managerData.getInterFromIHMMain();
     }
 
-    public static ITableToDataListener getInterTableToData() {
-        return interTableToData;
+    public static ITableToMainListener getInterfaceTableToMain() {
+        return managerTable.getTableToMainListener();
     }
 
-    public static ITableToMainListener getInterTableToMain() {
-        return interTableToMain;
-    }
 
-    /**
-     * Interfaces from DATA
-     */
-    private static InterfaceDataFromIHMMain interDataToMain;
-    private static InterfaceDataFromCom interDataToCom;
-    private static InterfaceDataFromIHMTable interDataToTable;
 
     /**
      * Interfaces from MAIN
      */
     private static InterfaceMainToData interMainToData;
     private static InterfaceMainToTable interMainToTable;
-
-    /**
-     * Interfaces from COM
-     */
-    private static InterfaceClient interComToData;
-
-
-    /**
-     * Interfaces from TABLE
-     */
-    private static ITableToDataListener interTableToData;
-    private static ITableToMainListener interTableToMain;
 
 
     /**
@@ -123,26 +90,17 @@ public class IHMMainClientManager {
         managerNetwork = new NetworkManagerClient(managerData.getInterFromCom());
         managerTable = new IHMTable();
 
-        interDataToMain = new InterfaceFromIHMMain(managerData);
-        interDataToCom = new InterfaceFromCom(managerData);
-        interDataToTable = new InterfaceFromIHMTable(managerData);
-
         interMainToData = new InterData(this);
         interMainToTable = new InterTable(this);
 
-        interTableToData = new TableToDataListener(managerTable);
-        interTableToMain = new TableToMainListener(managerTable);
 
-
-        // TODO decommenter quand Data aura changé le type des params
-//        managerData.setInterFromCom(interDataToCom);
-//        managerData.setInterFromIHMMain(interDataToMain);
-//        managerData.setInterFromIHMTable(interDataToTable);
-        managerData.setInterToCom(interComToData);
-        managerData.setInterToIHMTable(interTableToData);
+        managerData.setInterToCom(managerNetwork);
+        managerData.setInterToIHMTable(managerTable.getTableToDataListener());
         managerData.setInterToIHMMain(interMainToData);
 
-        managerTable.setDataInterface((InterfaceFromIHMTable) interDataToTable);
+        managerTable.setDataInterface((InterfaceFromIHMTable) managerData.getInterFromIHMTable());
+
+        // TODO setInterMainToTable
         
 
         // TODO

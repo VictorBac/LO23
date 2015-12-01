@@ -103,25 +103,34 @@ public class FormController {
         clearStyle(formName);
         clearStyle(formMiseMax);
         clearStyle(formTempsMax);
+        clearStyle(formPlayerMin);
+        clearStyle(formPlayerMax);
 
         if (formName.getText().isEmpty() | !texte.matcher(formName.getText()).matches()){
             errors.add("Nom de la table");
             formName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
-        if (formMiseMax.getText().isEmpty() | !nombre.matcher(formMiseMax.getText()).matches()){
+        if (formMiseMax.getText().isEmpty() | formMiseMax.getText().equals("0") | !nombre.matcher(formMiseMax.getText()).matches()){
             errors.add("Mise Max");
             formMiseMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
-        if (formTempsMax.getText().isEmpty() | !nombre.matcher(formTempsMax.getText()).matches()){
+        if (formTempsMax.getText().isEmpty() | formTempsMax.getText().equals("0") | !nombre.matcher(formTempsMax.getText()).matches()){
             errors.add("Temps Max");
             formTempsMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+
+        Integer playerMin = Integer.valueOf(formPlayerMin.getValue().toString());
+        Integer playerMax = Integer.valueOf(formPlayerMax.getValue().toString());
+
+        if (playerMin > playerMax){
+            errors.add("playerMin et playerMax");
+            formPlayerMin.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            formPlayerMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
 
         if (errors.isEmpty()){ // Toutes les valeurs sont correctement remplies
             // Getting values
             String tableName = formName.getText();
-            Integer playerMin = Integer.valueOf(formPlayerMin.getValue().toString());
-            Integer playerMax = Integer.valueOf(formPlayerMax.getValue().toString());
             boolean spectator = formSpectatorYes.isSelected();
             boolean spectatorChat = formSpectatorChatYes.isSelected();
             boolean abandon = formAbandonYes.isSelected();
@@ -139,6 +148,14 @@ public class FormController {
      */
     private void clearStyle(TextField field){
         field.setStyle("-fx-border-color: none ; -fx-border-width: none ;");
+    }
+
+    /**
+     * Réinitialise le style des champs de type ComboBox
+     * @param box
+     */
+    private void clearStyle(ComboBox box){
+        box.setStyle("-fx-border-color: none ; -fx-border-width: none ;");
     }
 
     public void goToTable(Table t){

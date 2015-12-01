@@ -23,6 +23,7 @@ public class DataManagerClient {
     private UserLightList listUsersLightLocal;
     private TableList listTablesLocal;
 
+
     public DataManagerClient() {
 
         this.userLocal = null;

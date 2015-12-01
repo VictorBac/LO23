@@ -60,7 +60,9 @@ public class Hand implements Serializable{
     /**
      * Method used to give to each player (PlayerHand) its card and to put cards on the Fields
      */
-    private void distributeCard(){}
+    private void distributeCard(){
+
+    }
 
     /**
      * Method that take an action that has been played and give it to the current Turn

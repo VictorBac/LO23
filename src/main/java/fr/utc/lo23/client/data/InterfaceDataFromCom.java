@@ -117,4 +117,11 @@ public interface InterfaceDataFromCom {
     */
     public void saveLogGame(Table table);
 
+
+    /**
+     * Method to receive a message send by a remote UserLight to display it to the local user
+      * @param messageSendByRemoteUser MessageChat received by the local User
+     */
+    public void transmitMessage(MessageChat messageSendByRemoteUser);
+
 }

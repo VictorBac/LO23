@@ -41,6 +41,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserDisonnected");
             dManagerClient.getListUsersLightLocal().remove(userLightDistant); //TODO add log for deconnection
+            dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
             //TODO ihmain method
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
@@ -51,13 +52,13 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void notifyNewTable(Table tableCreatedOnServer) {
         Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
-
+        dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
         //TODO missing IHM main interface for new Table
     }
 
     public void userJoinedTable() {
         //TODO should just increase able counter --> need id Table
-        //dManagerClient.getInterFromIHMMain()
+        //dManagerClient.getInterToIHMMain();
         //TODO or we take UserLight as a parameter and add it to the Table (maybe type Player/Spectator) waiting harold
     }
 
@@ -89,6 +90,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void currentTables(ArrayList<Table> listOfTableListOnServer) {
         Console.log(TAG +"currentTables()");
         dManagerClient.getListTablesLocal().setListTable(listOfTableListOnServer);
+        dManagerClient.getInterToIHMMain();
         //TODO missing IHM main interface for table list
     }
 
@@ -98,6 +100,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void stockCards(PlayerHand playerHandUserLocal) {
 
+        //TODO see with ihm table if we send all cards at the beginning of the game or at the end of a hand
     }
 
     public void askAction(ArrayList<Action> listActionPossibleForUserLocal) {
@@ -114,5 +117,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void saveLogGame(Table table) {
 
+    }
+
+    public void transmitMessage(MessageChat messageSendByRemoteUser) {
+
+        dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
+        //TODO missing a method to recieve a MessageChat IHMTable dManagerClient.getInterFromIHMTable();
     }
 }

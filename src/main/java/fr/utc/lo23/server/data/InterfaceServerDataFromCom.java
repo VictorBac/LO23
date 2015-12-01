@@ -1,5 +1,6 @@
 package fr.utc.lo23.server.data;
 
+import fr.utc.lo23.client.data.Userlight;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.*;
 
@@ -39,4 +40,8 @@ public interface InterfaceServerDataFromCom {
     void confirmationActionReceived(UserLight sender);
 
     void endTurnConfirmation(UserLight player);
+
+    User getProfile(UserLight core);
+
+    void updateProfile(User newUser);
 }

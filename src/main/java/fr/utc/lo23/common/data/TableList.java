@@ -4,6 +4,7 @@ import fr.utc.lo23.common.data.exceptions.TableException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Class representing the list of available tables
@@ -14,7 +15,7 @@ public class TableList implements Serializable {
      * List of tables
      */
     private ArrayList<Table> listTable;
-
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructor
@@ -33,14 +34,14 @@ public class TableList implements Serializable {
 
 
     /**
-     * add a new table in the list
+     * add a new table to the list
      * @param table : table to add
      */
     public void newTable(Table table){
         this.listTable.add(table);
     }
 
-    //TODO => utile en cas d'erreur? doit on supprimer une table sinon?
+
     /**
      * Method to delete a table from the list
      * @param table
@@ -51,6 +52,17 @@ public class TableList implements Serializable {
         }
         else
             throw new TableException("Impossible to delete the table from the list!");
+    }
+
+    //TODO
+    /**
+     * method to add a user (player or spectator) to a table
+     * @param idTable
+     * @param newUser
+     * @param typeOfUser
+     */
+    public void addUserToTable(UUID idTable, UserLight newUser, EnumerationTypeOfUser typeOfUser){
+
     }
 
 

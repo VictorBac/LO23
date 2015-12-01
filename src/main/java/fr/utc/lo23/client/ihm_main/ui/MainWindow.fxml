@@ -33,7 +33,7 @@
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
-                <ListView layoutX="22.0" layoutY="27.0" prefHeight="742.0" prefWidth="200.0" />
+                <ListView id="listViewConnectedUsers" fx:id="listViewConnectedUsers" layoutX="22.0" layoutY="27.0" prefHeight="742.0" prefWidth="200.0" />
                 <Label alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="26.0" prefHeight="28.0" prefWidth="200.0" style="-fx-background-color: rgb(128, 21, 21);" text="Utilisateurs connectés">
                     <font>
                         <Font name="System Bold" size="19.0" />

@@ -1,10 +1,9 @@
 package fr.utc.lo23.common.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
-import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
 
@@ -13,8 +12,8 @@ import java.util.ArrayList;
  */
 public class SendListUserMessage extends Message {
 
-    private ArrayList<User> userList;
-    public SendListUserMessage(ArrayList<User> users) {
+    private ArrayList<UserLight> userList;
+    public SendListUserMessage(ArrayList<UserLight> users) {
         userList=users;
     }
 
@@ -23,26 +22,27 @@ public class SendListUserMessage extends Message {
      */
     @Override
     public void process() {
-        Console.logn("Envoi de la table");
+
     }
 
     /**
      * Check if we can login in the server, and send a confirmation (or not ?)
-     * @param myServ
-     * @param thread
+     * @param threadServer
      */
     @Override
-    public void process (PokerServer myServ, ConnectionThread thread){
-        Console.logn("Envoi de la table");
+    public void process (ConnectionThread threadServer){
+
     }
 
     /**
      * Client-side process
-     * @param dataInterface
+     * @param threadClient
      */
     @Override
-    public void process(InterfaceDataFromCom dataInterface) {
-
+    public void process(ServerLink threadClient) {
+        Console.logn("Envoi de la table");
+        threadClient.getNetworkManager().getDataInstance().currentConnectedUser(userList);
+        Console.logn(userList+"Envoyée");
     }
 
 }

@@ -1,0 +1,195 @@
+.action{
+    -fx-background-color:none;
+    -fx-border:none;
+}
+
+.action_fold_off{
+    -fx-graphic:url("../images/action_fold_off.png");
+}
+
+.action_fold_on {
+	-fx-graphic:url("../images/action_fold.png");
+    -fx-cursor:hand;
+}
+
+.action_fold_on:hover {
+	-fx-graphic:url("../images/action_fold_hover.png");
+}
+
+.action_check_off {
+    -fx-graphic:url("../images/action_check_off.png");
+}
+
+.action_check_on {
+	-fx-graphic:url("../images/action_check.png");
+    -fx-cursor:hand;
+}
+
+.action_check_on:hover {
+	-fx-graphic:url("../images/action_check_hover.png");
+}
+
+.action_follow_off {
+    -fx-graphic:url("../images/action_follow_off.png");
+}
+
+.action_follow_on {
+	-fx-graphic:url("../images/action_follow.png");
+    -fx-cursor:hand;
+}
+
+.action_follow_on:hover {
+	-fx-graphic:url("../images/action_follow_hover.png");
+}
+
+.action_bet_off {
+    -fx-graphic:url("../images/action_bet_off.png");
+}
+
+.action_bet_on {
+	-fx-graphic:url("../images/action_bet.png");
+    -fx-cursor:hand;
+}
+
+.action_bet_on:hover {
+	-fx-graphic:url("../images/action_bet_hover.png");
+}
+
+.action_allin_off {
+    -fx-graphic:url("../images/action_allin_off.png");
+}
+
+.action_allin_on {
+	-fx-graphic:url("../images/action_allin.png");
+    -fx-cursor:hand;
+}
+
+.action_allin_on:hover {
+	-fx-graphic:url("../images/action_allin_hover.png");
+}
+
+.table{
+	-fx-background-image:url("../images/table.png");
+	-fx-background-repeat:no-repeat;
+}
+
+.gameLog{
+	-fx-color:#939699;
+	-fx-border:none;
+	-fx-border-radius:none;
+	-fx-text-fill:white;
+	-fx-background-radius:none;
+    -fx-background-color:#85898A;
+}
+
+.gameLog .title{
+    -fx-color:#85898A;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-text-fill:white;
+    -fx-background-radius:none;
+    -fx-background-color:#85898A;
+}
+
+.gameLogMessage{
+	-fx-background-color:#939699;
+	-fx-text-fill:white;
+	-fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+}
+
+.chat{
+	-fx-color:#337364;
+	-fx-background-radius:none;
+    -fx-border-color: none;
+    -fx-border-radius:none;
+}
+
+.chat .title{
+    -fx-color:#337364;
+    -fx-background-radius:none;
+    -fx-background-color:#337364;
+    -fx-border-color: none;
+    -fx-border-radius:none;
+}
+
+.chatMessage{
+	-fx-background-color:#3B8474;
+	-fx-background-radius:none;
+    -fx-border-color: none;
+    -fx-border-radius:none;
+}
+
+
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+	-fx-background-color: none;
+}
+
+.list-cell:even {
+     -fx-background-color: none;
+}
+
+.list-cell:odd {
+    -fx-background-color: none;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: none;
+}
+
+.launchGame{
+    -fx-graphic:url("../images/launchGame.png");
+    -fx-background-color:#3B8474;
+    -fx-border:none;
+    -fx-border-radius:0px;
+    -fx-background-radius:0px;
+    -fx-text-fill:white;
+}
+
+.inputMessageBox{
+	-fx-background-color: #3B8474;
+}
+
+.inputMessage{
+	-fx-background-color: white;
+	-fx-text-fill: black;
+	-fx-background-radius: none;
+	-fx-border:none;
+	-fx-border-radius:none;
+	-fx-border-color:none;
+}
+
+.sendChat{
+	-fx-background-color:#337364;
+	-fx-background-radius:none;
+	-fx-border:none;
+	-fx-border-radius:none;
+	-fx-border-color:none;
+}
+
+.popup .title{
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #4c5cff;
+}
+
+.popup {
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #7889ff;
+}
+
+.blueButton{
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #4c5cff;
+}

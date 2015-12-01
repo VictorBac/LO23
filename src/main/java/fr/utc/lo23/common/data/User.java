@@ -1,11 +1,13 @@
 package fr.utc.lo23.common.data;
 
+import javafx.scene.image.Image;
+
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Rï¿½my on 20/10/2015.
  */
 
 public class User implements Serializable{
@@ -26,7 +28,7 @@ public class User implements Serializable{
     private String email;
     private Stats statsUser;
     private Contact contactUser;
-    private long SerialVersionUID;
+    private static final long serialVersionUID = 1L;
 
     public User(){
 
@@ -47,7 +49,6 @@ public class User implements Serializable{
         this.email = toCopy.email;
         this.statsUser = toCopy.statsUser;
         this.contactUser = toCopy.contactUser;
-        this.SerialVersionUID = toCopy.SerialVersionUID;
     }
 
     public UserLight  getUserLight(){
@@ -82,19 +83,15 @@ public class User implements Serializable{
         return this.contactUser;
     }
 
-    public long getSerialVersionUID() {
-        return this.SerialVersionUID;
-    }
 
     /**
-
-     * met à jour les statsUser du joueur
-     * @param beginMse : la mise de départ du joueur
+     * @param beginMse : la mise de dï¿½part du joueur
      * @param points : son score par partie
      */
     public void updateStats(int beginMse, int points){
         statsUser.updateStats(beginMse, points);
     };
+
 
     /**
      * hashe le password pwd du joueur en MD5 et le replace dans la string pwd
@@ -110,6 +107,22 @@ public class User implements Serializable{
     }
 
     /**
+     * gets the login of the userLight contained in the User
+     * @return the login as a String
+     */
+    public String getLogin(){
+        return core.getPseudo();
+    }
+
+    /**
+     *
+     * @return the Image in the ImageAvatar in the UserLight in the User
+     */
+    public Image getImg(){
+        return core.getAvatar().getImg();
+    }
+
+    /**
      * other option to password anonymization, just replaces it with a blank string
      */
     private void hidePassword(){
@@ -117,6 +130,11 @@ public class User implements Serializable{
     }
 
 
+    /**
+     * checks if another User is equal to this, using their UUIDs
+     * @param other the other User
+     * @return a boolean
+     */
     public boolean equals(User other){
         boolean match;
         if (this.core.getIdUser().equals(other.core.getIdUser()))

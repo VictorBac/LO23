@@ -1,7 +1,7 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
-import fr.utc.lo23.client.ihm_table.ITableToDataListener;
+import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.TableList;
 import fr.utc.lo23.common.data.User;
@@ -22,6 +22,7 @@ public class DataManagerClient {
     private User userLocal;
     private UserLightList listUsersLightLocal;
     private TableList listTablesLocal;
+
 
     public DataManagerClient() {
 

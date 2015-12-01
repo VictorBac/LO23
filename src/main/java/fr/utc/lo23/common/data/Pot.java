@@ -15,6 +15,7 @@ public class Pot implements Serializable {
      */
     private ArrayList<Integer> valeurPot;
     private UserLightList players;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructor

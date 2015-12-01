@@ -12,7 +12,7 @@ import java.util.UUID;
 public class UserList implements Serializable{
 
     private ArrayList<User> listUser;
-
+    private static final long serialVersionUID = 1L;
 
     /**
      * recherche un User dans l'arrayList à partir de son UUID

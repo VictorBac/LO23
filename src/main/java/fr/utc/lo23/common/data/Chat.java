@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * Created by Ying on 03/11/2015.
  */
 public class Chat implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
      * listMessages : table of messages sended
      * @see  fr.utc.lo23.common.data.MessageChat

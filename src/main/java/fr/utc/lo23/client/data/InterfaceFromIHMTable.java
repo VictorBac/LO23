@@ -2,6 +2,7 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.util.UUID;
 
@@ -18,47 +19,64 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         this.dManagerClient = dManagerClient;
     }
 
-    //TODO envoyer table sur le serveur via interface com
-    public void tableToCreate(String name, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeforAction) {
-        Table table = new Table(name, acceptSpectator, acceptChatSpectator, nbPlayerMax, nbPlayerMin, abandonAmiable, maxMise, timeforAction);
+    //TODO handle exceptions
+    public void tableToCreate(Table table){
+        //dManagerClient.getInterToCom().createTable(table);
     }
 
     /**
      * forwards the request to communication module : askStopGame()
      */
     public void askStopGame() {
+        try {
+            dManagerClient.getInterToCom().askStopGame();
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
+    }
 
+    //TODO Com must implement vote()
+    public void vote(boolean answer){
+        //dManagerClient.getInterToCom().vote(answer);
     }
 
     public void saveGame() {
 
     }
 
-/* TODO why theese functions exist?
+    //TODO Com must implement sendMessage(MessageChat message)
+    public void sendMessage(MessageChat message){
+        //dManagerClient.getInterToCom().sendMessage(message);
+    }
 
-
+    //TODO Com must implement sendMessage(MessageChat message)
     public void playGame(UUID idTable) {
-
+        //dManagerClient.getInterToCom().requestPlayGame();
     }
 
-    public void getUser(UserLight user) {
-
+    //TODO Com must implement confirmationCardReceived()
+    public void confirmationCardReceived() {
+        //dManagerClient.getInterToCom().confirmationCardReceived();
     }
 
-    public void confirmationCardRecieved() {
-
+    //TODO Com must implement replayAction(Action action, UserLight player)
+    public void replayAction(Action action, UserLight player) {
+        //dManagerClient.getInterToCom().replayAction(action, player);
     }
 
-    public void replayAction(Action action) {
-
+    //TODO Com must implement confirmationActionReceived(Action action)
+    public void confirmationActionReceived(Action action) {
+        //dManagerClient.getInterToCom().confirmationActionReceived(action);
     }
 
-    public void confirmationActionRecieved(Action action) {
-
-    }
-
+    //TODO Com must implement confirmationEndTurn()
     public void confirmationEndTurn() {
-
+        //dManagerClient.getInterToCom().confirmationEndTurn();
     }
-*/
+
+    //TODO Com must implement transmitRequestServer(UserLight)
+    //TODO Add UserLight in param? transmitRequest(UserLight player)
+    public void transmitRequest(){
+        //dManagerClient.getInterToCom().transmitRequestServer(player);
+    }
 }

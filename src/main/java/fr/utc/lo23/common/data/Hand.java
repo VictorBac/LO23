@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Class used to represent a hand (manche) in the game
  */
 public class Hand implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private ArrayList<Turn> listTurn;
     private ArrayList<Card> listCardField;
@@ -59,7 +60,9 @@ public class Hand implements Serializable{
     /**
      * Method used to give to each player (PlayerHand) its card and to put cards on the Fields
      */
-    private void distributeCard(){}
+    private void distributeCard(){
+
+    }
 
     /**
      * Method that take an action that has been played and give it to the current Turn
@@ -68,7 +71,7 @@ public class Hand implements Serializable{
     public void playAction(Action actionNeededToBePlayed){
         //TODO need to do some check First
         //TODO change the behaviour it is not the best way to do it
-        listTurn.get(listTurn.size()-1).addActionToTheTurn(actionNeededToBePlayed);
+        listTurn.get(listTurn.size()-1).addAction(actionNeededToBePlayed);
     }
 
     /**

@@ -1,5 +1,6 @@
-package fr.utc.lo23.client.ihm_main.controllers;
+package fr.utc.lo23.client.ihm_main.interfaces;
 
+import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.common.data.Stats;
 import fr.utc.lo23.common.data.Table;
@@ -62,5 +63,12 @@ public class InterData implements InterfaceMainToData {
     @Override
     public void returnHome() {
 
+    }
+
+
+    private IHMMainClientManager managerMain;
+
+    public InterData(IHMMainClientManager mngMain) {
+        managerMain = mngMain;
     }
 }

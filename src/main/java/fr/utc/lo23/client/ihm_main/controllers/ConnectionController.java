@@ -80,18 +80,17 @@ public class ConnectionController extends BaseController {
         String passwd = fieldPassword.getText();
 
 
-        mController.userLoggedIn();
-//        try { // User logged in
-//            MainController.getManagerMain().getInterfaceDataToMain().logUser(login,passwd);
-//            mController.userLoggedIn();
-//
-//        } catch (LoginNotFoundException e) {
-//            // TODO
-//            e.printStackTrace();
-//        } catch (WrongPasswordException e) {
-//            // TODO
-//            e.printStackTrace();
-//        }
+        try { // User logged in
+            MainController.getManagerMain().getInterfaceDataToMain().logUser(login,passwd);
+            mController.userLoggedIn();
+
+        } catch (LoginNotFoundException e) {
+            // TODO
+            e.printStackTrace();
+        } catch (WrongPasswordException e) {
+            // TODO
+            e.printStackTrace();
+        }
 
     }
 

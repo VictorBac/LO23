@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Stats;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
@@ -69,6 +70,16 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void currentTables(List<Table> currentTables) {
+
+    }
+
+    @Override
+    public void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type) {
+        
+    }
+
+    @Override
+    public void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type) {
 
     }
 

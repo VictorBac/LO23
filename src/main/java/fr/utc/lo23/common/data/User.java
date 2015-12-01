@@ -7,7 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Rï¿½my on 20/10/2015.
  */
 
 public class User implements Serializable{
@@ -85,8 +85,14 @@ public class User implements Serializable{
 
 
     /**
-     * met à jour les statsUser du joueur
-     * @param beginMse : la mise de départ du joueur
+<<<<<<< Updated upstream
+     * met ï¿½ jour les statsUser du joueur
+     * @param beginMse : la mise de dï¿½part du joueur
+=======
+
+     * met ï¿½ jour les statsUser du joueur
+     * @param beginMse : la mise de dï¿½part du joueur
+>>>>>>> Stashed changes
      * @param points : son score par partie
      */
     public void updateStats(int beginMse, int points){

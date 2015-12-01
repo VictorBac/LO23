@@ -60,6 +60,13 @@ public class IHMMainClientManager {
 
 
     /**
+     * Interfaces from TABLE
+     */
+    private static ITableToDataListener interTableToData;
+    private static ITableToMainListener interTableToMain;
+
+
+    /**
      * Managers
      */
 
@@ -91,6 +98,17 @@ public class IHMMainClientManager {
 
 
 
+       // interTableToData = new TableToDataListener(managerTable);
+       // interTableToMain = new TableToMainListener(managerTable);
+
+
+        // TODO decommenter quand Data aura changé le type des params
+//        managerData.setInterFromCom(interDataToCom);
+//        managerData.setInterFromIHMMain(interDataToMain);
+//        managerData.setInterFromIHMTable(interDataToTable);
+        managerData.setInterToCom(interComToData);
+        //managerData.setInterToIHMTable(interTableToData);
+        managerData.setInterToIHMMain(interMainToData);
 
         // TODO
 //        interComToData = new

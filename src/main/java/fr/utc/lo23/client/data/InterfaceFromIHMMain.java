@@ -58,8 +58,9 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         Serialization.serializationObject(userLocal, login);
     }
 
-    public void joinTableWithMode(UUID table, EnumerationTypeOfUser mode) {
-        // UUID table, UserLight local, enum TODO
+    public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) {
+        // TODO wait network interface
+        //dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
     }
 
     public void tableJoinAccepted(Table table, String mode) {

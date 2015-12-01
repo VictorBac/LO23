@@ -90,7 +90,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void currentTables(ArrayList<Table> listOfTableListOnServer) {
         Console.log(TAG +"currentTables()");
         dManagerClient.getListTablesLocal().setListTable(listOfTableListOnServer);
-        dManagerClient.getInterToIHMMain();
+        dManagerClient.getInterToIHMMain().currentTables(listOfTableListOnServer);
         //TODO missing IHM main interface for table list
     }
 

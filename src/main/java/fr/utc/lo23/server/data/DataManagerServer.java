@@ -37,7 +37,7 @@ public class DataManagerServer {
         this.interfaceFromCom = server;
     }
 
-    public ServerDataFromCom getInterfaceFromCom() {
+    public InterfaceServerDataFromCom getInterfaceFromCom() {
         return interfaceFromCom;
     }
 }

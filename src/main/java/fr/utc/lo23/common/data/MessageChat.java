@@ -9,6 +9,7 @@ import java.sql.Timestamp;
  */
 public class MessageChat implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     /**
      * sender : sender of the message
      * time : moment of the message, used for the coordination

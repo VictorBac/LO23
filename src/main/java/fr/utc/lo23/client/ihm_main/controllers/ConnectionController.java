@@ -95,7 +95,7 @@ public class ConnectionController extends BaseController {
 
     }
 
-    @Override
+    //@Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("ConnectionController start");
 

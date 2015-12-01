@@ -1,18 +1,15 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Jianghan on 20/10/2015.
  */
-public class Group {
-
-    /**
-     * nomGroupe = nom du groupe
-     * listContact = list of contact in this group
-     */
-    private String nomGroupe;
-    private ArrayList<UserLight> listContact;
+public class Group implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String groupName;
+    private ArrayList<UserLight> contactList;
 
     /**
      * group default constructor
@@ -24,48 +21,48 @@ public class Group {
     /**
      * group constructor
      *
-     * @param name le nom du groupe � cr�er
+     * @param name the name of group to create
      */
     public Group(String name) {
-        this.nomGroupe = name;
-        this.listContact = new ArrayList<UserLight>();
+        this.groupName = name;
+        this.contactList = new ArrayList<UserLight>();
     }
 
     /**
-     * getter de nomGroupe
+     * getter of groupName
      *
-     * @return l'attribut nomGroupe
+     * @return l'attribute groupName
      */
-    public String getNomGroupe() {
-        return nomGroupe;
+    public String getGroupName() {
+        return groupName;
     }
 
     /**
-     * getter de listContact
+     * getter of contactList
      *
-     * @return l'attribut listContact
+     * @return l'attribute contactList
      */
     public ArrayList<UserLight> getContacts() {
-        return listContact;
+        return contactList;
     }
 
     /**
-     * m�thode ajoutant un contact � la liste listContact
+     * method to add a contact to the list contactList
      *
-     * @param newUser : le Userlight � ajouter
+     * @param newUser : the Userlight to add
      */
     public void addContact(UserLight newUser) {
-        listContact.add(newUser);
+        contactList.add(newUser);
     }
 
     /**
-     * supprime un contact de la listeContact
+     * method to delete a contact from the contactList
      *
-     * @param toDelete : Userlight � supprimer
+     * @param toDelete : Userlight to delete
      */
     public void delContact(UserLight toDelete) throws UserLightNotFoundException {
-        if (listContact.contains(toDelete)) {
-            listContact.remove(toDelete);
+        if (contactList.contains(toDelete)) {
+            contactList.remove(toDelete);
         } else {
             throw new UserLightNotFoundException(toDelete.getIdUser());
         }

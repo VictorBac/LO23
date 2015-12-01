@@ -3,6 +3,8 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
 /**
  * This is the interface which will be used by the IHM Main module on the client's side
@@ -10,19 +12,19 @@ import fr.utc.lo23.common.data.*;
  */
 public interface InterfaceDataFromIHMMain {
     /**
-     * Methode to log in
+     * Method to log in
      * @param login
      * @param password
      */
     void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException;
 
     /**
-     * Methode to ask to exit
+     * Method to ask to exit
      */
     void exitAsked();
 
     /**
-     * Methode to save new profile
+     * Method to save new profile
      * @param userLocal
      */
     void saveNewProfile(User userLocal);
@@ -42,33 +44,32 @@ public interface InterfaceDataFromIHMMain {
     void tableJoinAccepted(Table table, String mode);
 
     /**
-     * Methode to get UserList online
+     * Method to get UserList online
      * @return User Light List
      */
     UserLightList getPlayerList();
 
     /**
-     * Methode to get TableList online
+     * Method to get TableList online
      * @return Table List
      */
     TableList getTableList();
 
     /**
-     * Methode to get saved game list
+     * Method to get saved game list
      * @return
      */
     TableList getSavedGamesList();
 
     /**
-     * Methode to play game on the table
+     * Method to play game on the table
      * @param idTable
      */
     void playGame(int idTable);
 
     /**
-     * Methode to get the user light information
+     * Method to get the user's all information
      * @param userlight
      */
-    void getUser(UserLight userlight);
-
+    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
 }

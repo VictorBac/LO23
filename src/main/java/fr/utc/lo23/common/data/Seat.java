@@ -12,16 +12,17 @@ public class Seat implements Serializable {
     /**
      * player : player
      * startAmount : account at the beginning of the game
-     * curentAccount : account actually possessed
+     * currentAccount : account actually possessed
      * statusPlayer : Connected, disconnected
      */
     private UserLight player;
     private int startAmount;
     private int currentAccount;
     private EnumerationStatusPlayer statusPlayer;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * Constructeur
+     * Constructor
      * @param player
      * @param startAmount
      * @param currentAccount
@@ -30,6 +31,17 @@ public class Seat implements Serializable {
         this.setPlayer(player);
         this.setStartAmount(startAmount);
         this.setCurrentAccount(currentAccount);
+        this.statusPlayer = EnumerationStatusPlayer.CONNECTED;
+    }
+
+    /**
+     * Constructor called when a player join the table
+     * @param player
+     */
+    public Seat(UserLight player) {
+        this.setPlayer(player);
+        this.setStartAmount(0);
+        this.setCurrentAccount(0);
         this.statusPlayer = EnumerationStatusPlayer.CONNECTED;
     }
 
@@ -60,14 +72,14 @@ public class Seat implements Serializable {
     }
 
     /**
-     * méthode permettant d'enlever un montant misé au montant actuel
+     * mï¿½thode permettant d'enlever un montant misï¿½ au montant actuel
      * @param amount : amount to bet
      */
     public void spendAmount(int amount) throws SeatException{
         if(this.currentAccount > amount)
             this.currentAccount -= amount;
         else
-            throw new SeatException("You're account can't be negative!");
+            throw new SeatException("Your account can't be negative!");
 
     }
 

@@ -7,18 +7,21 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Rï¿½my on 20/10/2015.
  */
 public class UserLightList implements Serializable{
 
     private ArrayList<UserLight> listUserLights;
+    private static final long serialVersionUID = 1L;
 
 
+    public UserLightList(){
+        listUserLights = new ArrayList<UserLight>();
+    }
     /**
-     * recherche un UserLight dans l'arrayList à partir de son UUID
-     * @param userId l'UUUID du joueur à trouver
-     * @return le joueur voulu, nexception si non trouvé
-
+     * recherche un UserLight dans l'arrayList ï¿½ partir de son UUID
+     * @param userId l'UUUID du joueur ï¿½ trouver
+     * @return le joueur voulu, nexception si non trouvï¿½
      */
     public UserLight getUser(UUID userId) throws UserLightNotFoundException{
         for (UserLight cur : listUserLights)

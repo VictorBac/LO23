@@ -104,7 +104,10 @@ public interface InterfaceClient {
      *
      */
     public void askStopGame() throws NetworkFailureException;
-    
+    /**
+     *
+     */
+    public void notifyDisconnection(User maker) throws NetworkFailureException;
     /**
      *
      * @param userLocal

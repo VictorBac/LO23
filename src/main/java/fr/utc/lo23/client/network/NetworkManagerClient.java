@@ -167,4 +167,14 @@ public class NetworkManagerClient implements InterfaceClient  {
     public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException {
 
     }
+    /**
+     * Envoi d'une notification de déconnexion
+     * @throws NetworkFailureException
+     */
+    public void notifyDisconnection(User maker) throws NetworkFailureException {
+        Console.log("Creation d'un notifyDisconnection message\n");
+        NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(maker);
+        localClient.send(NotifyD);
+    }
+
 }

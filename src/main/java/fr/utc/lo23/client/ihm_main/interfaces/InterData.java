@@ -19,7 +19,7 @@ import java.util.List;
 public class InterData implements InterfaceMainToData {
     @Override
     public void remoteUserConnected(UserLight remoteUser) {
-
+        IHMMainClientManager.getControllerMain().getMainWindowController().addUser(remoteUser);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void remoteUserDisconnected(UserLight remoteUser) {
-
+        IHMMainClientManager.getControllerMain().getMainWindowController().removeUser(remoteUser);
     }
 
     @Override
@@ -39,6 +39,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void onlineUsers(List<UserLight> userList) {
+        /*
         List<String> received_list = new ArrayList<String>();
 
         Iterator<UserLight> iterator = userList.iterator();
@@ -47,7 +48,8 @@ public class InterData implements InterfaceMainToData {
         }
         ObservableList<String> items = FXCollections.observableArrayList(received_list);
 
-        IHMMainClientManager.getControllerMain().getMainWindowController().getListViewConnectedUsers().setItems(items);
+        IHMMainClientManager.getControllerMain().getMainWindowController().getListViewConnectedUsers().setItems(items);*/
+        IHMMainClientManager.getControllerMain().getMainWindowController().addUsers(userList);
 
     }
 

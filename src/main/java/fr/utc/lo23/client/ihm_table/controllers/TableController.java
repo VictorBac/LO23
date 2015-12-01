@@ -97,6 +97,7 @@ public class TableController {
         PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
         playerControllerMap.put(user, playerController);
         controllersList.set(id,playerController);
+        addLogEntry(user.getPseudo()+" a rejoint la salle.");
     }
 
     public void chatInitializer(){
@@ -147,6 +148,7 @@ public class TableController {
             return;
         }
         playerControllerMap.remove(user);
+        addLogEntry(user.getPseudo()+ " a quitté la partie.");
         controllersList.set(controllersList.indexOf(playerController), null);
         if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
             btnLaunchGame.setVisible(false);

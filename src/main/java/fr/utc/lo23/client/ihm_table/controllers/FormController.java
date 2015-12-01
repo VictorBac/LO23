@@ -3,6 +3,7 @@ package fr.utc.lo23.client.ihm_table.controllers;
 import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.ihm_table.views.TableView;
 import fr.utc.lo23.common.data.Table;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Controller of the create table form
@@ -38,6 +41,9 @@ public class FormController {
     public FormController() {
 
     }
+
+    // Définition des formes régulières
+    final Pattern texte = Pattern.compile("^[A-Za-z0-9 ]+$");
 
     @FXML
     TextField formName;
@@ -72,6 +78,9 @@ public class FormController {
     @FXML
     Button formSend;
 
+    // Sauvegarde du style par défaut des champs
+    //final ObservableList<String> texteStyle = formName.;
+
     @FXML
     public void initialize() {
         formSend.setOnAction(new EventHandler<ActionEvent>() {
@@ -86,9 +95,15 @@ public class FormController {
      */
     @FXML
     private void formSend(ActionEvent event){
+        // Réinitialisation des borders des champs
+        formName.getStyleClass().clear();
+        /*for (String s: texteStyle){
+            formName.setStyle(s);
+        }*/
+
         // Checking form values
         ArrayList<String> errors = new ArrayList<String>(); // Si une erreur est détectée, on l'ajoute dans cette liste
-        if (formName.getText().isEmpty()){
+        if (formName.getText().isEmpty() | !texte.matcher(formName.getText()).matches()){
             errors.add("Nom de la table");
             formName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }

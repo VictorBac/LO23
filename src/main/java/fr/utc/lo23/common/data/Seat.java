@@ -19,6 +19,7 @@ public class Seat implements Serializable {
     private int startAmount;
     private int currentAccount;
     private EnumerationStatusPlayer statusPlayer;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructor

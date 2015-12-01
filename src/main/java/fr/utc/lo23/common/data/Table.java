@@ -39,6 +39,7 @@ public class Table implements Serializable {
     private int maxMise;
     private ArrayList<Game> listGames;
     private int timeForAction;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructor

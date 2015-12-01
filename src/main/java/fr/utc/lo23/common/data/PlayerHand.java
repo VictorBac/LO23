@@ -14,6 +14,7 @@ public class PlayerHand implements Serializable {
      */
     private ArrayList<Card> listCardsHand;
     private UserLight player;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructeur

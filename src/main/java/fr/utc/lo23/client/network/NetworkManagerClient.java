@@ -11,6 +11,8 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
 
+import java.util.UUID;
+
 /**
  *
  * @author Jean-Côme
@@ -168,6 +170,15 @@ public class NetworkManagerClient implements InterfaceClient  {
     public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException {
 
     }
+    public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
+        Console.log("Creation d'un LaunchGame message\n");
+            LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
+        localClient.send(LGMess);
+
+
+    }
+
+
     /**
      * Envoi d'une notification de déconnexion
      * @throws NetworkFailureException

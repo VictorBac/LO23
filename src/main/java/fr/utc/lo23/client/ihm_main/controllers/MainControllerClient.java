@@ -3,7 +3,6 @@ package fr.utc.lo23.client.ihm_main.controllers;
  * Created by jbmartin on 20/10/15.
  */
 
-import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +29,8 @@ public class MainControllerClient extends Application {
 
 
     private static MainWindowController mainWindowController;
+    private static ConnectionController connectionWindowController;
+    private static CreateController createProfileController;
 
 
 
@@ -43,63 +44,46 @@ public class MainControllerClient extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         managerMain = new IHMMainClientManager();
-
         pmStage = primaryStage;
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        ConnectionController controller = fxmlLoader.<ConnectionController>getController();
-        controller.setMainController(this);
-        primaryStage.setTitle("Connexion");
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
-        root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
-        primaryStage.show();
+        connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
     }
 
 
-    public void userLoggedIn()
-    {
-        Parent root = null;
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml"));
-             root = (Parent) fxmlLoader.load();
-                    mainWindowController = fxmlLoader.<MainWindowController>getController();
-            mainWindowController.setMainController(this);
-        } catch (IOException e) {
-            // TODO ?
-            e.printStackTrace();
-        }
-        pmStage.setTitle("Connexion");
-        Scene scene = new Scene(root);
-        pmStage.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
-        root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
-        pmStage.show();
-
-
+    public void userLoggedIn() {
+        mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml", "Poker");
     }
 
     public void ClickCreateProfil() {
+        createProfileController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml", "Création de profile");
+    }
 
+
+
+
+    private <T extends BaseController>T instantiateWindow(String ressource, String windowTitle)
+    {
         Parent root = null;
+
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml"));
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ressource));
             root = (Parent) fxmlLoader.load();
-                mainWindowController = fxmlLoader.<MainWindowController>getController();
-            mainWindowController.setMainController(this);
+            T controller = fxmlLoader.getController();
+            controller.setMainController(this);
+            pmStage.setTitle(windowTitle);
+            Scene scene = new Scene(root);
+            pmStage.setScene(scene);
+            scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
+            root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
+            pmStage.show();
+            return (T) controller;
+
         } catch (IOException e) {
             // TODO ?
             e.printStackTrace();
         }
-        pmStage.setTitle("Create Profile");
-        Scene scene = new Scene(root);
-        pmStage.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
-        root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
-        pmStage.show();
 
+        return null;
     }
 
 }

@@ -79,9 +79,6 @@ public class FormController {
     @FXML
     Button formSend;
 
-    // Sauvegarde du style par défaut des champs
-    //final ObservableList<String> texteStyle = formName.;
-
     @FXML
     public void initialize() {
         formSend.setOnAction(new EventHandler<ActionEvent>() {

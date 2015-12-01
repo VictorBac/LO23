@@ -72,7 +72,7 @@ public class Seat implements Serializable {
     }
 
     /**
-     * m�thode permettant d'enlever un montant mis� au montant actuel
+     * method to soustract a bet amount to the actual amount
      * @param amount : amount to bet
      */
     public void spendAmount(int amount) throws SeatException{

@@ -16,6 +16,12 @@ import java.io.IOException;
 public class MainController extends Application {
 
 
+    private Stage pmStage;
+
+    public static IHMMainClientManager getManagerMain() {
+        return managerMain;
+    }
+
     private static IHMMainClientManager managerMain;
 
 
@@ -31,15 +37,37 @@ public class MainController extends Application {
 
         managerMain = new IHMMainClientManager();
 
+        pmStage = primaryStage;
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ConnectionController controller = fxmlLoader.<ConnectionController>getController();
+        controller.setMainController(this);
         primaryStage.setTitle("Connexion");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
         root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
         primaryStage.show();
-            }
+    }
 
 
+    public void userLoggedIn()
+    {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml"));
+        } catch (IOException e) {
+            // TODO ?
+            e.printStackTrace();
+        }
+        pmStage.setTitle("Connexion");
+        Scene scene = new Scene(root);
+        pmStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
+        root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
+        pmStage.show();
+
+
+    }
 }

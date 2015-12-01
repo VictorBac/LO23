@@ -175,8 +175,6 @@ public class NetworkManagerClient implements InterfaceClient  {
         Console.log("Creation d'un LaunchGame message\n");
             LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
         localClient.send(LGMess);
-
-
     }
 
 

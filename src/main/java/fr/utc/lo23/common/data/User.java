@@ -85,14 +85,7 @@ public class User implements Serializable{
 
 
     /**
-<<<<<<< Updated upstream
-     * met � jour les statsUser du joueur
      * @param beginMse : la mise de d�part du joueur
-=======
-
-     * met � jour les statsUser du joueur
-     * @param beginMse : la mise de d�part du joueur
->>>>>>> Stashed changes
      * @param points : son score par partie
      */
     public void updateStats(int beginMse, int points){

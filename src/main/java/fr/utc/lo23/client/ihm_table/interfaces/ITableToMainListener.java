@@ -1,4 +1,4 @@
-package fr.utc.lo23.client.ihm_table;
+package fr.utc.lo23.client.ihm_table.interfaces;
 
 import fr.utc.lo23.common.data.*;
 import javafx.scene.layout.Pane;

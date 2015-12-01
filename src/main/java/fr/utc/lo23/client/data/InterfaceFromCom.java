@@ -1,6 +1,6 @@
 package fr.utc.lo23.client.data;
 
-import fr.utc.lo23.client.ihm_table.ITableToDataListener;
+import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;

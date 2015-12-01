@@ -48,6 +48,18 @@ public class UserLight implements Serializable {
 
     public ImageAvatar getAvatar(){ return avatar; }
 
+    public void setIdUser(UUID idUser) {
+        this.idUser = idUser;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public void setAvatar(ImageAvatar avatar) {
+        this.avatar = avatar;
+    }
+
     /**
      *
      * compares the ID of two UserLights

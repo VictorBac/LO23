@@ -79,4 +79,9 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     public void transmitRequest(){
         //dManagerClient.getInterToCom().transmitRequestServer(player);
     }
+
+
+    public User getUser(){
+        return dManagerClient.getUserLocal();
+    }
 }

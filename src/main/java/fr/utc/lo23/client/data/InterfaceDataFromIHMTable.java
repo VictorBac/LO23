@@ -70,5 +70,15 @@ public interface InterfaceDataFromIHMTable {
     public void confirmationEndTurn();
 
 
+    /**
+     * Transmit the "leave game" request
+     */
     public void transmitRequest();
+
+
+    /**
+     * Return the local user
+     * @return
+     */
+    public User getUser();
 }

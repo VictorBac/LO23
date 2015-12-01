@@ -37,7 +37,7 @@ public class Serialization {
      * @param namePathFile path where is the object to deserialize
      * @return an Object from a Class that implements Serializable
      */
-    public Object deserializationObject( String namePathFile){
+    public static Object deserializationObject( String namePathFile){
         Object objectDeserialized = null;
         try
         {

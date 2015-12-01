@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -8,20 +9,21 @@
    <children>
       <Pane prefHeight="528.0" prefWidth="1024.0" styleClass="table">
          <children>
-            <Pane layoutX="14.0" layoutY="348.0" prefHeight="166.0" prefWidth="166.0">
+            <Pane layoutY="270.0" prefHeight="260.0" prefWidth="1024.0">
                <children>
-                  <ImageView fitHeight="120.0" fitWidth="120.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+                  <Button layoutX="2.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" styleClass="action1" />
+                  <Button layoutX="60.0" layoutY="84.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" styleClass="action2" />
+                  <Button layoutX="108.0" layoutY="112.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" styleClass="action3" />
+                  <Button layoutX="136.0" layoutY="158.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" styleClass="action4" />
+                  <Button layoutX="128.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" styleClass="action5" />
+                  <ImageView fitHeight="120.0" fitWidth="120.0" layoutX="3.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icon_action.png" />
+                        <Image url="@images/icon_action.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="3.0" layoutY="-5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action1" />
-                  <Button layoutX="61.0" layoutY="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action2" />
-                  <Button layoutX="112.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action3" />
-                  <Button layoutX="133.0" layoutY="71.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action4" />
-                  <Button layoutX="129.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="action5" />
                </children>
             </Pane>
+            <Button fx:id="btnLaunchGame" layoutX="843.0" layoutY="458.0" mnemonicParsing="false" onAction="#launchGame" text="Lancer la partie" visible="false" />
          </children>
       </Pane>
       <HBox prefHeight="200.0" prefWidth="824.0">
@@ -41,13 +43,13 @@
                      <children>
                         <VBox>
                            <children>
-                              <ListView prefHeight="137.0" prefWidth="512.0" styleClass="chatMessage" />
+                              <ListView fx:id="chatList" editable="true" maxWidth="512.0" prefHeight="137.0" prefWidth="512.0" styleClass="chatMessage" />
                               <VBox prefHeight="39.0" prefWidth="412.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <TextField prefHeight="17.0" prefWidth="437.0" />
-                                          <Button mnemonicParsing="false" styleClass="sendChat" text="Envoyer" />
+                                          <TextField fx:id="messageToSend" onAction="#sendMessage" prefHeight="17.0" prefWidth="437.0" />
+                                          <Button mnemonicParsing="false" onAction="#sendMessage" styleClass="sendChat" text="Envoyer" />
                                        </children>
                                     </HBox>
                                  </children>

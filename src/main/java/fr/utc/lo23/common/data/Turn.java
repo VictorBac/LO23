@@ -1,15 +1,16 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 /**
- * Created by Mar on 20/10/2015.
+ * Created by Ying on 20/10/2015.
  *
  * Class used to represent a turn in the game
  */
-public class Turn {
+public class Turn implements Serializable {
 
     private ArrayList<Action> listAction;
     private Timestamp timeStampOfTurn;
@@ -61,13 +62,17 @@ public class Turn {
      * Getter that return the list of action that is associated to this turn
      * @return an ArrayList of Action from the Turn
      */
-    public ArrayList<Action> getListAction() {return listAction;}
+    public ArrayList<Action> getListAction() {
+        return listAction;
+    }
 
     /**
      * Getter that return the time when this turn started
      * @return a Timestamp returned that represent when the Turn started
      */
-    public Timestamp getTimeStampOfTurn() {return timeStampOfTurn;}
+    public Timestamp getTimeStampOfTurn() {
+        return timeStampOfTurn;
+    }
 
     /**
      * Minimal bet that a player has to do, calculated according to previous Action
@@ -88,7 +93,7 @@ public class Turn {
     }
 
     /**
-     * Method which is aimed to return the list of players that have not yet quit the game, ou qui se sont couché , for this turn
+     * Method which is aimed to return the list of players that have not yet quit the game, ou qui se sont couchï¿½ , for this turn
      * @return an arrayList of UserLight representing players that can still make action on this turn
      */
     private ArrayList<UserLight> getTheListOfPlayersStillAlive(){

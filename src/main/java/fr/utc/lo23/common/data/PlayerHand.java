@@ -1,12 +1,13 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Classe représentant les cartes dans les mains d'un joueur
  * Created by Haroldcb on 21/10/2015.
  */
-public class PlayerHand {
+public class PlayerHand implements Serializable {
     /**
      * listCardsHand : cartes dans la main du joueur
      * player : joueur
@@ -39,6 +40,8 @@ public class PlayerHand {
     public void addNewCard(Card carte){
         this.listCardsHand.add(carte);
     }
+
+    /******************* Getters and Setters ************************/
 
     public ArrayList<Card> getListCardsHand() {
         return listCardsHand;

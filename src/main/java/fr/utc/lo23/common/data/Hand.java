@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  *
  * Class used to represent a hand (manche) in the game
  */
-public class Hand {
+public class Hand implements Serializable{
 
     private ArrayList<Turn> listTurn;
     private ArrayList<Card> listCardField;
@@ -43,6 +44,46 @@ public class Hand {
         this.listPotForTheHand = listPotForTheHand;
         this.timeStampStartOfTheHand = timeStampStartOfTheHand;
     }
+
+
+
+    /**
+     * Method returning the current turn of the Hand
+     * @return current Turn, it corresponds to the last Turn of the ArrayList
+     */
+    private Turn getCurrentTurn(){
+        return listTurn.get(listTurn.size()-1); //size()-1 to get the last element
+    }
+
+
+    /**
+     * Method used to give to each player (PlayerHand) its card and to put cards on the Fields
+     */
+    private void distributeCard(){}
+
+    /**
+     * Method that take an action that has been played and give it to the current Turn
+     * @param actionNeededToBePlayed Action played on this Turn
+     */
+    public void playAction(Action actionNeededToBePlayed){
+        //TODO need to do some check First
+        //TODO change the behaviour it is not the best way to do it
+        listTurn.get(listTurn.size()-1).addActionToTheTurn(actionNeededToBePlayed);
+    }
+
+    /**
+     * Method to know an order between player according to the combination of their cards and the card on the Field
+     * @return an ArrayList of UserLight where the firstone had the best cards and the last had the worst cards
+     */
+    private ArrayList<UserLight> orderedWinner(){
+        return null; //TODO change behaviour
+    }
+
+
+
+
+
+////GETTER And SETTER
 
     /**
      * Getter that return the lis of turn of the Hand
@@ -86,39 +127,5 @@ public class Hand {
      */
     public ArrayList<Pot> getListPotForTheHand() {return listPotForTheHand;}
 
-
-
-
-
-    /**
-     * Method returning the current turn of the Hand
-     * @return current Turn, it corresponds to the last Turn of the ArrayList
-     */
-    private Turn getCurrentTurn(){
-        return listTurn.get(listTurn.size()-1); //size()-1 to get the last element
-    }
-
-
-    /**
-     * Method used to give to each player (PlayerHand) its card and to put cards on the Fields
-     */
-    private void distributeCard(){}
-
-    /**
-     * Method that take an action that has been played and give it to the current Turn
-     * @param actionNeededToBePlayed Action played on this Turn
-     */
-    public void playAction(Action actionNeededToBePlayed){
-        //TODO need to do some check First
-        //TODO change the behaviour it is not the best way to do it
-        listTurn.get(listTurn.size()-1).addActionToTheTurn(actionNeededToBePlayed);
-    }
-
-    /**
-     * Method to know an order between player according to the combination of their cards and the card on the Field
-     * @return an ArrayList of UserLight where the firstone had the best cards and the last had the worst cards
-     */
-    private ArrayList<UserLight> orderedWinner(){
-        return null; //TODO change behaviour
-    }
+    public void setFirstPlayer(UserLight firstPlayer) {this.firstPlayer = firstPlayer;}
 }

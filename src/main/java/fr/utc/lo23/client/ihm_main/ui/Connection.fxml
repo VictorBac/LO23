@@ -32,7 +32,7 @@
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
-                <ListView layoutX="369.0" layoutY="55.0" prefHeight="229.0" prefWidth="190.0" />
+                <ListView id="listViewServers" fx:id="listViewServers" layoutX="369.0" layoutY="55.0" prefHeight="229.0" prefWidth="190.0" />
                 <Button layoutX="418.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="+">
                     <font>
                         <Font size="13.0" />

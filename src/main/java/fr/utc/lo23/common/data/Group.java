@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Jianghan on 20/10/2015.
  */
-public class Groupe {
+public class Group {
 
     /**
      * nomGroupe = nom du groupe
@@ -17,7 +17,7 @@ public class Groupe {
     /**
      * group default constructor
      */
-    public Groupe() {
+    public Group() {
 
     }
 
@@ -26,7 +26,7 @@ public class Groupe {
      *
      * @param name le nom du groupe � cr�er
      */
-    public Groupe(String name) {
+    public Group(String name) {
         this.nomGroupe = name;
         this.listContact = new ArrayList<UserLight>();
     }

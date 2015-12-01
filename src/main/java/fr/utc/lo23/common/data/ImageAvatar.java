@@ -8,16 +8,16 @@ import javafx.scene.image.Image;
 public class ImageAvatar {
 
     /**
+     * Todo : implement serialization of img
      * img = l'image de l'avatar
      * pathToImage = le chemin local de l'image sur la machine
      */
-     private  Image img;
+//     private  Image img;
      private String pathToImage;
 
     /**
      * méthode permettant de récupérer une image à partir de son path
      * @param path : le chemin local du fichier image
-     * TODO : gérer les exceptions
      */
     public Image searchImageWithPath(String path) throws ImageNotFoundException{
         Image result = new Image(path);

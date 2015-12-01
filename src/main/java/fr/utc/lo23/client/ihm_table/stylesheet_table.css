@@ -1,35 +1,55 @@
 .action1 {
-	-fx-graphic:url("action_1_m.png");
+	-fx-graphic:url("images/action_fold_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
+}
+
+.action1:hover {
+	-fx-graphic:url("images/action_fold_m_hover.png");
 }
 
 .action2 {
-	-fx-graphic:url("action_2_m.png");
+	-fx-graphic:url("images/action_check_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
+}
+
+.action2:hover {
+	-fx-graphic:url("images/action_check_m_hover.png");
 }
 
 .action3 {
-	-fx-graphic:url("action_3_m.png");
+	-fx-graphic:url("images/action_follow_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
+}
+
+.action3:hover {
+	-fx-graphic:url("images/action_follow_m_hover.png");
 }
 
 .action4 {
-	-fx-graphic:url("action_4_m.png");
+	-fx-graphic:url("images/action_bet_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
+}
+
+.action4:hover {
+	-fx-graphic:url("images/action_bet_m_hover.png");
 }
 
 .action5 {
-	-fx-graphic:url("action_5_m.png");
+	-fx-graphic:url("images/action_allin_m.png");
 	-fx-background-color:none;
 	-fx-border:none;
 }
 
+.action5:hover {
+	-fx-graphic:url("images/action_allin_m_hover.png");
+}
+
 .table{
-	-fx-background-image:url("table.png");
+	-fx-background-image:url("images/table.png");
 	-fx-background-repeat:no-repeat;
 }
 
@@ -59,4 +79,20 @@
 
 .sendChat{
 	-fx-background-radius:none;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+	-fx-background-color: none;
+}
+
+.list-cell:even {
+     -fx-background-color: none;
+}
+
+.list-cell:odd {
+    -fx-background-color: none;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: none;
 }

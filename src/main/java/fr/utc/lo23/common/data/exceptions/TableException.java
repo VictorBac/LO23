@@ -5,6 +5,6 @@ package fr.utc.lo23.common.data.exceptions;
  */
 public class TableException extends Exception{
     public TableException(String message){
-        System.out.println(message);
+        super(message);
     }
 }

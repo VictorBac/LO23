@@ -1,10 +1,12 @@
 package fr.utc.lo23.common.data;
 
+import java.io.Serializable;
+
 /**
  * Class to represent a card
  * Created by Ying on 21/10/2015.
  */
-public class Card {
+public class Card implements Serializable {
     /**
      * value : value of the card
      * symbol: symbol of the card

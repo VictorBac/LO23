@@ -49,13 +49,13 @@ public interface InterfaceDataFromIHMMain {
      * Method to get UserList online
      * @return User Light List
      */
-    UserLightList getPlayerList();
+    void getPlayerList() throws NetworkFailureException;
 
     /**
      * Method to get TableList online
      * @return Table List
      */
-    TableList getTableList();
+    void getTableList() throws NetworkFailureException;
 
     /**
      * Method to get saved game list
@@ -65,9 +65,9 @@ public interface InterfaceDataFromIHMMain {
 
     /**
      * Method to play game on the table
-     * @param idTable
+     * @param tableId
      */
-    void playGame(int idTable);
+    void playGame(UUID tableId);
 
     /**
      * Method to ask to exit

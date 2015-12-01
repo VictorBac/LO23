@@ -6,7 +6,6 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.UUID;
 
 /**

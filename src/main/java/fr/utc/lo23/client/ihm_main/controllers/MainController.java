@@ -87,13 +87,13 @@ public class MainController extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml"));
             root = (Parent) fxmlLoader.load();
-            mainWindowController = fxmlLoader.<MainWindowController>getController();
+                mainWindowController = fxmlLoader.<MainWindowController>getController();
             mainWindowController.setMainController(this);
         } catch (IOException e) {
             // TODO ?
             e.printStackTrace();
         }
-        pmStage.setTitle("Connexion");
+        pmStage.setTitle("Create Profile");
         Scene scene = new Scene(root);
         pmStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());

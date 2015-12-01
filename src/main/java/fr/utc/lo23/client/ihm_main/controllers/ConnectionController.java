@@ -110,7 +110,8 @@ public class ConnectionController extends BaseController {
     }
 
     public void CreateProfilClick(ActionEvent actionEvent) {
+        System.out.println("CreateProfilButton");
         mController.ClickCreateProfil();
-        
+
     }
 }

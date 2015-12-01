@@ -80,5 +80,5 @@ public interface InterfaceDataFromIHMTable {
      * Return the local user
      * @return
      */
-    public User getUser();
+    public UserLight getUser();
 }

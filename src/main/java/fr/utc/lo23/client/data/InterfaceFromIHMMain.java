@@ -5,6 +5,7 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+import java.util.UUID;
 
 
 /**
@@ -12,9 +13,8 @@ import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
  */
 public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
-    // Constructor
-
     private DataManagerClient dManagerClient;
+    private User userLogin;
 
     public InterfaceFromIHMMain(DataManagerClient dManagerClient) {
         this.dManagerClient = dManagerClient;
@@ -44,6 +44,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             Console.log("loguser "+ userLocal.toString());
 
             dManagerClient.getInterToCom().requestLoginServer(userLocal);
+            userLogin = userLocal;
         }
     }
 
@@ -60,8 +61,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         Serialization.serializationObject(userLocal, login);
     }
 
-    public void joinTableWithMode(Table table, String mode) {
-
+    public void joinTableWithMode(UUID table, EnumerationTypeOfUser mode) {
+        // UUID table, UserLight local, enum TODO
     }
 
     public void tableJoinAccepted(Table table, String mode) {

@@ -5,6 +5,7 @@ import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+import java.util.UUID;
 
 /**
  * This is the interface which will be used by the IHM Main module on the client's side
@@ -34,7 +35,7 @@ public interface InterfaceDataFromIHMMain {
      * @param table
      * @param mode
      */
-    void joinTableWithMode(Table table, String mode);
+    void joinTableWithMode(UUID table, EnumerationTypeOfUser mode);
 
     /**
      * Methode to pass on when accepted to join a table

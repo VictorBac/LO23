@@ -91,6 +91,12 @@ public class TableController {
             btnLaunchGame.setVisible(true);
     }
 
+    /**
+     * Add a player to the game
+     * @param id
+     * @param user
+     * @param showLog : this boolean is used to show log only after the player joined the game
+     */
     public void addPlayer(int id, UserLight user, boolean showLog) {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();

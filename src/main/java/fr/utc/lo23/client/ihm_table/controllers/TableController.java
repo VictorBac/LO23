@@ -88,6 +88,8 @@ public class TableController {
 
     public void addPlayer(UserLight user) {
         addPlayer(getFirstAvailableSeat(), user);
+        if(table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
+            btnLaunchGame.setVisible(true);
     }
 
     public void addPlayer(int id, UserLight user) {
@@ -147,6 +149,8 @@ public class TableController {
         }
         playerControllerMap.remove(user);
         controllersList.set(controllersList.indexOf(playerController), null);
+        if(table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
+            btnLaunchGame.setVisible(false);
         //Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
         if(betMoneyControllerMap.get(user)!=null)
             betMoneyControllerMap.get(user).hideBetMoneyBox();
@@ -200,6 +204,14 @@ public class TableController {
     private Button popupAmountButton;
     @FXML
     private TextField popupAmountInput;
+
+
+    @FXML
+    private TitledPane popupLeave;
+    @FXML
+    private Button popupLeaveAccept;
+    @FXML
+    private Button popupLeaveRefuse;
 
     @FXML
     private TitledPane popupReady;
@@ -356,6 +368,15 @@ public class TableController {
         hidePopupReady();
     }
 
+    @FXML
+    public void showPopupLeave(javafx.event.ActionEvent event) { popupLeave.setVisible(true); }
 
+    @FXML
+    public void sendLeaveAccept(javafx.event.ActionEvent event) {
+       // TODO :  ihmTable.getDataInterface(). data leave game
+        // TODO : ihmTable.getMainInterface(). main quitTable()
+    }
 
+    @FXML
+    public void sendLeaveRefuse(javafx.event.ActionEvent event) { popupLeave.setVisible(false); }
 }

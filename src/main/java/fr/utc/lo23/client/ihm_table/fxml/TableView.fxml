@@ -66,6 +66,17 @@
                   </AnchorPane>
                </content>
             </TitledPane>
+            <TitledPane fx:id="popupLeave" animated="false" collapsible="false" layoutX="383.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="233.0" styleClass="popup" text="Êtes-vous sûr de vouloir quitter la table ?">
+               <content>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="254.0" styleClass="popup">
+                     <children>
+                        <Button fx:id="popupLeaveAccept" layoutX="146.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendLeaveAccept" prefHeight="25.0" prefWidth="94.0" styleClass="blueButton" text="Oui" />
+                        <Button fx:id="popupLeaveRefuse" layoutX="9.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendLeaveRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Non" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <Button fx:id="BtnLeaveTable" layoutX="30.0" layoutY="16.0" mnemonicParsing="false" onAction="#showPopupLeave" text="Quitter la table" />
          </children>
       </Pane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1020.0">

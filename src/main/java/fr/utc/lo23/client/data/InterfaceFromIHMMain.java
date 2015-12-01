@@ -76,23 +76,24 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param mode
      */
     public void tableJoinAccepted(Table table, String mode) {
-
+        // TODO wait network interface
+        //dManagerClient.getInterToCom().tableJoinAccepted();
     }
 
     /**
-     * TODO
+     * Ask server to return UserLightList
      * @return
      */
-    public UserLightList getPlayerList() {
-        return null;
+    public void getPlayerList() throws NetworkFailureException {
+        dManagerClient.getInterToCom().requestUserList();
     }
 
     /**
-     * TODO
+     * Ask server to return TableList
      * @return
      */
-    public TableList getTableList() {
-        return null;
+    public void getTableList() throws NetworkFailureException {
+        dManagerClient.getInterToCom().requestTableList();
     }
 
     /**
@@ -104,18 +105,20 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * TODO
-     * @param idTable
+     * Ask server to play a game.
+     * @param tableId
      */
-    public void playGame(int idTable) {
-
+    public void playGame(UUID tableId) {
+        // TODO wait network interface
+        // dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
     }
 
     /**
-     * 
+     *
      */
     public void exitAsked() {
-
+        // TODO wait network interface
+        // dManagerClient.getInterToCom().askDisconnection(userLogin.getUserLight());
     }
 
 }

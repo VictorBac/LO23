@@ -20,9 +20,10 @@ public interface InterfaceDataFromIHMMain {
     void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException;
 
     /**
-     * Method to ask to exit
+     * Method to get the user's all information
+     * @param userlight
      */
-    void exitAsked();
+    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
 
     /**
      * Method to save new profile
@@ -69,8 +70,7 @@ public interface InterfaceDataFromIHMMain {
     void playGame(int idTable);
 
     /**
-     * Method to get the user's all information
-     * @param userlight
+     * Method to ask to exit
      */
-    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
+    void exitAsked();
 }

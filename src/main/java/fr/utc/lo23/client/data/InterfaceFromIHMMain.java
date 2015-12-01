@@ -21,10 +21,6 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
 
-
-
-    // Interface functions.
-
     /**
      * Connexion with login and password, call com interface
      * @param login
@@ -48,8 +44,14 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
-    public void exitAsked() {
-
+    /**
+     * Method to get the user's all information
+     * @param userlight
+     * @throws ProfileNotFoundOnServerException
+     * @throws NetworkFailureException
+     */
+    public void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException {
+        dManagerClient.getInterToCom().consultProfile(userlight);
     }
 
     /**
@@ -61,39 +63,62 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         Serialization.serializationObject(userLocal, login);
     }
 
+    /**
+     *
+     * @param tableId
+     * @param mode
+     */
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) {
         // TODO wait network interface
         //dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
     }
 
+    /**
+     * TODO
+     * @param table
+     * @param mode
+     */
     public void tableJoinAccepted(Table table, String mode) {
 
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public UserLightList getPlayerList() {
         return null;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public TableList getTableList() {
         return null;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public TableList getSavedGamesList() {
         return null;
     }
 
+    /**
+     * TODO
+     * @param idTable
+     */
     public void playGame(int idTable) {
 
     }
 
-
     /**
-     * Method to get the user's all information
-     * @param userlight
-     * @throws ProfileNotFoundOnServerException
-     * @throws NetworkFailureException
+     * 
      */
-    public void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException {
-        dManagerClient.getInterToCom().consultProfile(userlight);
+    public void exitAsked() {
+
     }
+
 }

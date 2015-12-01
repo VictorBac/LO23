@@ -5,6 +5,7 @@ import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+import java.util.UUID;
 
 /**
  * This is the interface which will be used by the IHM Main module on the client's side
@@ -19,9 +20,10 @@ public interface InterfaceDataFromIHMMain {
     void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException;
 
     /**
-     * Method to ask to exit
+     * Method to get the user's all information
+     * @param userlight
      */
-    void exitAsked();
+    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
 
     /**
      * Method to save new profile
@@ -34,7 +36,7 @@ public interface InterfaceDataFromIHMMain {
      * @param table
      * @param mode
      */
-    void joinTableWithMode(Table table, String mode);
+    void joinTableWithMode(UUID table, EnumerationTypeOfUser mode);
 
     /**
      * Methode to pass on when accepted to join a table
@@ -47,13 +49,13 @@ public interface InterfaceDataFromIHMMain {
      * Method to get UserList online
      * @return User Light List
      */
-    UserLightList getPlayerList();
+    void getPlayerList() throws NetworkFailureException;
 
     /**
      * Method to get TableList online
      * @return Table List
      */
-    TableList getTableList();
+    void getTableList() throws NetworkFailureException;
 
     /**
      * Method to get saved game list
@@ -63,13 +65,12 @@ public interface InterfaceDataFromIHMMain {
 
     /**
      * Method to play game on the table
-     * @param idTable
+     * @param tableId
      */
-    void playGame(int idTable);
+    void playGame(UUID tableId);
 
     /**
-     * Method to get the user's all information
-     * @param userlight
+     * Method to ask to exit
      */
-    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
+    void exitAsked();
 }

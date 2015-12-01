@@ -59,11 +59,13 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         //dManagerClient.getInterToCom().confirmationCardReceived();
     }
 
-    //TODO Com must implement replayAction(Action action, UserLight player)
-    public void replayAction(Action action, UserLight player) {
-        //dManagerClient.getInterToCom().replayAction(action, player);
+    //TODO Com must implement replyAction(Action action)
+    public void replyAction(Action action) {
+        //dManagerClient.getInterToCom().replyAction(action);
     }
 
+
+    //TODO check if action is valid on server side or here??
     //TODO Com must implement confirmationActionReceived(Action action)
     public void confirmationActionReceived(Action action) {
         //dManagerClient.getInterToCom().confirmationActionReceived(action);
@@ -78,5 +80,15 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     //TODO Add UserLight in param? transmitRequest(UserLight player)
     public void transmitRequest(){
         //dManagerClient.getInterToCom().transmitRequestServer(player);
+    }
+
+    public UserLight getUser(){
+        return dManagerClient.getUserLocal().getUserLight();
+    }
+
+
+    //TODO
+    public void quitGame(){
+
     }
 }

@@ -57,7 +57,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
     /**
      * creates a new table
-     *
      * @param maker
      * @param newTb TODO : remove the maker attribute ?
      */
@@ -76,18 +75,21 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
     /**
      * checks if a user can join a table
-     *
-     * @param joiner
-     * @param wantedTable
-     * @param mode
-     * @return
+     * @param joiner the user trying to join
+     * @param wantedTable the table to join
+     * @param mode the connection mode (player / spectator)
+     * @return a boolean
      */
-    public boolean canJoinTableUser(UserLight joiner, Table wantedTable, String mode) {
+    public boolean canJoinTableUser(UserLight joiner, Table wantedTable, EnumerationTypeOfUser mode) {
         boolean ok;
-        if (wantedTable.getListPlayers().getListUserLights().size() > wantedTable.getNbPlayerMax())
+        if (wantedTable.getListPlayers().getListUserLights().size() > wantedTable.getNbPlayerMax()) {
             ok = false;
-        else if (mode.equals("Spectator") && !wantedTable.isAcceptSpectator())
+            Console.log(TAG + "\tPlayer can't join, table full ");
+        }
+        else if (mode.equals(EnumerationTypeOfUser.SPECTATOR) && !wantedTable.isAcceptSpectator()) {
             ok = false;
+            Console.log(TAG + "\tPlayer can't join, no spectators allowed");
+        }
         else
             ok = true;
         Console.log(TAG + "\tPlayer can join : " + Boolean.toString(ok));
@@ -105,9 +107,9 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     /**
      * starts a game with a given ID
      *
-     * @param idTable
-     * @param player
-     * @return
+     * @param idTable the id of the table of the game
+     * @param player the player launching the game
+     * @return the created game
      */
     public Game startGame(UUID idTable, UserLight player) {
         Table toStart;
@@ -127,7 +129,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
     /**
      * deletes a player from the list connectedusers
-     *
      * @param deletedUsr the user to delete
      */
     public void deletePlayer(UserLight deletedUsr) throws UserNotFoundException {
@@ -159,7 +160,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * updates a user with a whole new User
+     * updates a user info with a whole new User
      * @param newUser the new information
      */
     public void updateProfile(User newUser) {
@@ -184,4 +185,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
+    public User getUserById(UUID userId)
+    {
+        for (User cur : myManager.getUsers().getList()){
+            if (cur.getUserLight().getIdUser().equals(userId))
+                return cur;
+        }
+        return null;
+    }
 }

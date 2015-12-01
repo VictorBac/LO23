@@ -19,25 +19,49 @@ import java.io.IOException;
 
 public class MainController extends Application {
 
+    public static InterfaceDataFromIHMMain getIntfaceDataToMain() {
+        return intfaceDataToMain;
+    }
+
+    public static InterfaceDataFromCom getInterfaceDataToCom() {
+        return interfaceDataToCom;
+    }
+
+    public static InterfaceDataFromIHMTable getInterfaceDataToTable() {
+        return interfaceDataToTable;
+    }
+
+    public static InterfaceMainToData getInterfaceMainToData() {
+        return interfaceMainToData;
+    }
+
+    public static InterfaceMainToTable getInterfaceMainToTable() {
+        return interfaceMainToTable;
+    }
+
+    public static InterfaceClient getInterfaceComToData() {
+        return interfaceComToData;
+    }
+
+
+
     /**
      * Interfaces from DATA
      */
-    private InterfaceDataFromIHMMain m_interfaceDataToMain;
-    private InterfaceDataFromCom m_interfaceDataToCom;
-    private InterfaceDataFromIHMTable m_interfaceDataToTable;
-
+    private static InterfaceDataFromIHMMain intfaceDataToMain;
+    private static InterfaceDataFromCom interfaceDataToCom;
+    private static InterfaceDataFromIHMTable interfaceDataToTable;
 
     /**
      * Interfaces from MAIN
      */
-    private InterfaceMainToData m_interfaceMainToData;
-    private InterfaceMainToTable m_interfaceMainToTable;
-
+    private static InterfaceMainToData interfaceMainToData;
+    private static InterfaceMainToTable interfaceMainToTable;
 
     /**
      * Interfaces from COM
      */
-    private InterfaceClient m_interfaceComToData;
+    private static InterfaceClient interfaceComToData;
 
 
 

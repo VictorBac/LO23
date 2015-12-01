@@ -27,7 +27,7 @@ public class ConnectionController implements Initializable {
 
     @FXML
     void didButtonConnectClick(ActionEvent event) {
-        System.out.println("didButtonConnectClick");
+        System.out.println("-- ConnectionController -- didButtonConnectClick");
     }
 
     @Override

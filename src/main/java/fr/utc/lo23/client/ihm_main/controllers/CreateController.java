@@ -3,10 +3,12 @@ package fr.utc.lo23.client.ihm_main.controllers;
 import fr.utc.lo23.common.data.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 
 import javax.swing.text.html.ImageView;
 import java.awt.*;
+import java.awt.Button;
+import java.awt.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,34 +18,34 @@ import java.util.ResourceBundle;
 public class CreateController extends BaseController {
 
     @FXML
-    private Button cancel;
+    private javafx.scene.control.Button cancel;
 
     @FXML
-    private Button create;
+    private javafx.scene.control.Button create;
 
     @FXML
-    private TextField username;
+    private javafx.scene.control.TextField password;
 
     @FXML
-    private TextField firstname;
+    private javafx.scene.control.TextField firstname;
 
     @FXML
-    private TextField lastname;
+    private javafx.scene.control.TextField lastname;
 
     @FXML
-    private TextField birthdate;
+    private javafx.scene.control.TextField age;
 
     @FXML
-    private TextField email;
+    private javafx.scene.control.TextField email;
 
     @FXML
-    private PasswordField password;
+    private PasswordField username;
 
     @FXML
     private PasswordField repassword;
 
     @FXML
-    private ImageView imageviewer;
+    private javafx.scene.image.ImageView imageviewer;
 
 
     public void createNewUser(ActionEvent actionEvent) {

@@ -104,9 +104,7 @@ public class User implements Serializable{
         this.age = age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
     public void setStatsUser(Stats statsUser) {
         this.statsUser = statsUser;

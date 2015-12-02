@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,7 +25,7 @@ public class CreateController extends BaseController {
     private javafx.scene.control.Button create;
 
     @FXML
-    private javafx.scene.control.TextField password;
+    private javafx.scene.control.TextField username;
 
     @FXML
     private javafx.scene.control.TextField firstname;
@@ -39,7 +40,7 @@ public class CreateController extends BaseController {
     private javafx.scene.control.TextField email;
 
     @FXML
-    private PasswordField username;
+    private PasswordField password;
 
     @FXML
     private PasswordField repassword;
@@ -49,15 +50,30 @@ public class CreateController extends BaseController {
 
 
     public void createNewUser(ActionEvent actionEvent) {
+        String testpass;
+        String verifpass;
+
+        testpass = password.getText();
+        verifpass = repassword.getText();
+        int createAge = Integer.parseInt(age.getText());
+
+        UserLight createUserLight = new UserLight(username.getText());
+
+
+        if (testpass.equals(verifpass)) {
+            System.out.println("Test ok");
+        } else {
+            System.out.println("Please type the same password...");
+            return;
+        }
 
         User createUser = new User();
-        //TODO quand data aura commit dans le main on pourra recuperer les setters du USER.
-
-        //createUser.setUSERNAME(username.getText());
-        //createUser.setFIRSTNAME(firstname.getText());
-        //createUser.setLASTNAME(lastname.getText());
-        //createUser.setEMAIL(email.getText());
-        // ETC....
+        createUser.setFirstName(firstname.getText());
+        createUser.setLastName(lastname.getText());
+        createUser.setEmail(email.getText());
+        createUser.setAge(createAge);
+        createUser.setCore(createUserLight);
+        createUser.setPwd(password.getText());
 
 
         mController.getManagerMain().getInterfaceDataToMain().saveNewProfile(createUser);

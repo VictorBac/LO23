@@ -138,13 +138,12 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 3: Two pairs TODO
+     * Rank 3: Two pairs
      * @param cardValues
      * @return
      * @throws Exception
      */
     public ArrayList<Integer> hasTwoPair(ArrayList<Integer> cardValues) {
-        this.hasOnePair(cardValues);
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 1; i < 7; i++) {
@@ -152,8 +151,31 @@ public class CombinationCalculator {
                 break;
             }
         }
-
-        return null;
+        if (i < 5) {
+            // move the pair to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            for (i=i+2; i < 7; i++) {
+                if (cardValues.get(i -1) == cardValues.get(i)) {
+                    break;
+                }
+            }
+            if (i < 7) {
+                // move the pair to the start
+                cardRank.add(2, cardRank.remove(i));
+                cardRank.add(2, cardRank.remove(i));
+                // remove the last two card values
+                cardRank.remove(5);
+                cardRank.remove(5);
+                // add card rank 2
+                cardRank.add(0, 3);
+                return cardRank;
+            }  else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     /**

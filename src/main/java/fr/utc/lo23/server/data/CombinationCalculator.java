@@ -79,9 +79,9 @@ public class CombinationCalculator {
 
         ArrayList<Integer> cardValues = new ArrayList<Integer>();
 
-        ArrayList<Integer> cardRank = hasRoyalFlush(cardValues);
-        if (cardRank == null) cardRank = hasRoyalFlush(cardValues);
-        if (cardRank == null) cardRank = hasStraightFlush(cardValues);
+        ArrayList<Integer> cardRank = hasRoyalFlush(cards);
+        if (cardRank == null) cardRank = hasRoyalFlush(cards);
+        if (cardRank == null) cardRank = hasStraightFlush(cards);
         if (cardRank == null) cardRank = hasFullHouse(cardValues);
         if (cardRank == null) cardRank = hasFour(cardValues);
         if (cardRank == null) cardRank = hasFlush(cards);
@@ -319,23 +319,58 @@ public class CombinationCalculator {
 
 
     /**
-     * Rank 9: Straight Flush TODO
-     * @param cardValues
+     * Rank 9: Straight Flush
+     * @param cards
      * @return
      * @throws Exception
      */
-    protected ArrayList<Integer> hasStraightFlush (ArrayList<Integer> cardValues) {
-        return null;
+    protected ArrayList<Integer> hasStraightFlush (ArrayList<Card> cards) {
+        ArrayList<Integer> cardRank = new ArrayList<Integer>();
+        ArrayList<Integer> spade = new ArrayList<Integer>();
+        ArrayList<Integer> heart = new ArrayList<Integer>();
+        ArrayList<Integer> diamond = new ArrayList<Integer>();
+        ArrayList<Integer> club = new ArrayList<Integer>();
+        for (int i = 0; i < cards.size(); i++) {
+            char symbol = cards.get(i).getSymbol();
+            Integer value = cards.get(i).getValue();
+            if (symbol == 'S') spade.add(value);
+            if (symbol == 'H') heart.add(value);
+            if (symbol == 'D') diamond.add(value);
+            if (symbol == 'C') club.add(value);
+        }
+        if (spade.size() >= 5) {
+            cardRank = spade;
+        }
+        if (heart.size() >= 5) {
+            cardRank = heart;
+        }
+        if (diamond.size() >= 5) {
+            cardRank = diamond;
+        }
+        if (club.size() >= 5) {
+            cardRank = club;
+        }
+        if (cardRank.size() == 0) {
+            return null;
+        } else {
+            cardRank = hasStraight(cardRank);
+        }
+        if (cardRank == null) {
+            return null;
+        } else {
+            cardRank.set(0,9);
+            return cardRank;
+        }
     }
 
     /**
      * Rank 10: Royal Flush
-     * @param cardValues
+     * @param cards
      * @return
      * @throws Exception
      */
-    protected ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) {
-        ArrayList<Integer> cardRank = hasStraightFlush(cardValues);
+    protected ArrayList<Integer> hasRoyalFlush(ArrayList<Card> cards) {
+        ArrayList<Integer> cardRank = hasStraightFlush(cards);
         if (cardRank == null ) {
             return null;
         } else if (cardRank.get(1) == 14) {

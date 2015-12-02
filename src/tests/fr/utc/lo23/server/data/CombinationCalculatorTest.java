@@ -22,12 +22,12 @@ public class CombinationCalculatorTest {
 
         cards = new ArrayList<Card>();
         try {
+            cards.add(new Card(14,'C'));
             cards.add(new Card(13,'C'));
-            cards.add(new Card(10,'C'));
-            cards.add(new Card(10,'S'));
-            cards.add(new Card(9,'C'));
-            cards.add(new Card(7,'C'));
-            cards.add(new Card(6,'H'));
+            cards.add(new Card(5,'S'));
+            cards.add(new Card(4,'C'));
+            cards.add(new Card(3,'C'));
+            cards.add(new Card(3,'C'));
             cards.add(new Card(2,'C'));
         } catch (CardFormatInvalidException e) {
             e.printStackTrace();
@@ -115,6 +115,13 @@ public class CombinationCalculatorTest {
         assertEquals(expected, test);
     }
 
+    @Test
+    public void testStraightFlush() throws Exception {
+        ArrayList<Integer> test = calculator.hasFlush(cards);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{9, 5, 4, 3, 2, 1}));
+        assertEquals(expected, test);
+    }
 
 
     @Test

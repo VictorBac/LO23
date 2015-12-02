@@ -4,10 +4,7 @@ import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
 
@@ -169,6 +166,32 @@ public class NetworkManagerClient implements InterfaceClient  {
     public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException {
 
     }
+
+    @Override
+    public void sendMessage(MessageChat message) {
+
+    }
+
+    @Override
+    public void confirmationCardReceived() {
+
+    }
+
+    @Override
+    public void replayAction(Action action, UserLight player) {
+
+    }
+
+    @Override
+    public void confirmationEndTurn() {
+
+    }
+
+    @Override
+    public void transmitRequestServer(UserLight player) {
+
+    }
+
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
             LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);

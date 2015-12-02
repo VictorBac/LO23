@@ -3,6 +3,7 @@ package fr.utc.lo23.common.network;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.Params;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
@@ -63,13 +64,14 @@ public class RequestLoginMessage extends Message {
                 UserLight ul = interF.userConnection(user);
                 threadServer.setUserId(user.getUserLight().getIdUser());
                 ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
+                ArrayList<Table> aTables = myServ.getNetworkManager().getDataInstance().getTableList();
 
                 for(UserLight use : aUsers){
                     Console.log(""+use.getIdUser());
                 }
 
                 //On envoie un message au client pour accepter sa connexion
-                sendConnectionConfirmation(aUsers, threadServer);
+                sendConnectionConfirmation(aUsers, aTables, threadServer);
 
                 //On envoie à tous les autres clients un notify new client.
                 notifyNewUserToCurrentPlayers(ul, myServ);
@@ -108,8 +110,8 @@ public class RequestLoginMessage extends Message {
      * des joueurs actuels
      * @param aUsers
      */
-    private void sendConnectionConfirmation(ArrayList<UserLight> aUsers, ConnectionThread threadServer) {
-        AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
+    private void sendConnectionConfirmation(ArrayList<UserLight> aUsers, ArrayList<Table> aTables, ConnectionThread threadServer) {
+        AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers, aTables);
         threadServer.send(acceptL);
     }
 

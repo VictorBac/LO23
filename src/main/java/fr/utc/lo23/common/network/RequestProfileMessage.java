@@ -22,6 +22,8 @@ public class RequestProfileMessage extends Message {
     public void process(ConnectionThread threadServer) {
         //TODO remplacer par le bon nom de méthode
         //User Profile threadServer.getMyServer().getNetworkManager().getDataInstance().getUserFromUserLight();
+        //SendRequestedProfileMessage reqProf = new SendRequestedProfile(profile);
+        //threadServer.send(reqProf);
     }
 
     @Override

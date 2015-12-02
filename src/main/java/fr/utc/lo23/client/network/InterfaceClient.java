@@ -1,9 +1,6 @@
 package fr.utc.lo23.client.network;
 
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.*;
 
 import java.util.UUID;
@@ -123,6 +120,16 @@ public interface InterfaceClient {
      * @param activeTable
      */
     public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException;
+
+    public void sendMessage(MessageChat message);
+
+    public void confirmationCardReceived();
+
+    public void replayAction(Action action, UserLight player);
+
+    public void confirmationEndTurn();
+
+    public void transmitRequestServer(UserLight player);
 }
     
 

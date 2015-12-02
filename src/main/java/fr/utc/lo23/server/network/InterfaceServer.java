@@ -14,20 +14,21 @@ import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import java.util.ArrayList;
 
 
+
 /**
  *
- * @author Jean-Côme D LO23
+ * @author Jean-CÃ´me D LO23
  */
 public interface InterfaceServer {
-    
+
     /**
-     *
+     * DEPRECATED, envoyé au passage dans AcceptLoginMessage
      * @param tableList
      */
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException;
 
     /**
-     *
+     * DEPRECATED, envoyé au passage dans AcceptLoginMessage
      * @param userList
      */
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException;
@@ -36,7 +37,7 @@ public interface InterfaceServer {
     public void sendLogGame() throws NetworkFailureException;
 
     /**
-     *
+     * DEPRECATED, envoyé au passage dans NotifyNewPlayerMessage
      * @param userDistant
      */
     public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException;
@@ -60,6 +61,6 @@ public interface InterfaceServer {
     public void notifyDisconnection(User distantUser) throws NetworkFailureException;
 
     public void sendChatPacket() throws NetworkFailureException;
-    
+
 
 }

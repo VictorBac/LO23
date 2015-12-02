@@ -80,13 +80,14 @@ public class CombinationCalculatorTest {
     }
 
     @Test
-    public void testFour() throws Exception {
+    public void testStraight() throws Exception {
         ArrayList<Integer> test = new ArrayList<Integer>();
-        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 9, 5}));
-        test = calculator.hasFour(test);
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 7, 6}));
+        test = calculator.hasStraight(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{7, 9, 9, 9, 9, 12}));
+        expected.addAll(Arrays.asList(new Integer[]{5, 10, 9, 8, 7, 6}));
         assertEquals(expected, test);
+
     }
 
     @Test
@@ -96,6 +97,16 @@ public class CombinationCalculatorTest {
         expected.addAll(Arrays.asList(new Integer[]{6, 13, 10, 9, 7, 2}));
         assertEquals(expected, test);
 
+    }
+
+    @Test
+    public void testFour() throws Exception {
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 9, 5}));
+        test = calculator.hasFour(test);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{7, 9, 9, 9, 9, 12}));
+        assertEquals(expected, test);
     }
 
 

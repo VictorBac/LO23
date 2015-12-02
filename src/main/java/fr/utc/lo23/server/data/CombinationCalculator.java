@@ -209,12 +209,28 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 5: Straight TODO
+     * Rank 5: Straight
      * @param cardValues
      * @return
      * @throws Exception
      */
     protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
+        ArrayList<Integer> cardRank = new ArrayList<Integer>();
+        for (int i = 0; i < 3; i++) {
+            Integer highcard = cardValues.get(i);
+            if (cardValues.contains(highcard - 1) &&
+                    cardValues.contains(highcard - 2) &&
+                    cardValues.contains(highcard - 3) &&
+                    cardValues.contains(highcard - 4))
+            {
+                cardRank.add(5);
+                for (int j = highcard; j > highcard - 5 ; j--) {
+                    cardRank.add(j);
+                }
+                return cardRank;
+            }
+
+        }
         return null;
     }
 

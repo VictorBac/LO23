@@ -60,6 +60,16 @@ public class CombinationCalculatorTest {
     }
 
     @Test
+    public void testTwoPair() throws Exception {
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 5, 5}));
+        test = calculator.hasOnePair(test);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{3, 9, 9, 5, 5, 12}));
+        assertEquals(test, expected);
+    }
+
+    @Test
     public void testThree() throws Exception {
         ArrayList<Integer> test = new ArrayList<Integer>();
         test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 8, 5}));

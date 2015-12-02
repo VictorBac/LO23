@@ -99,7 +99,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         // Just remove the two smallest values since cardValues has been sorted.
         cardRank.remove(5);
@@ -114,7 +114,7 @@ public class CombinationCalculator {
      * @return cardRank if has one pair. null if not.
      * @throws Exception
      */
-    public ArrayList<Integer> hasOnePair(ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasOnePair(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 1; i < 7; i++) {
@@ -143,7 +143,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasTwoPair(ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasTwoPair(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 1; i < 7; i++) {
@@ -184,7 +184,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasThree(ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasThree(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 2; i < 7; i++) {
@@ -214,7 +214,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
         return null;
     }
 
@@ -224,7 +224,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasFlush (ArrayList<Card> cards) {
+    protected ArrayList<Integer> hasFlush (ArrayList<Card> cards) {
         ArrayList<Integer> spade = new ArrayList<Integer>();
         ArrayList<Integer> heart = new ArrayList<Integer>();
         ArrayList<Integer> diamond = new ArrayList<Integer>();
@@ -260,7 +260,7 @@ public class CombinationCalculator {
         return null;
     }
 
-    public ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) {
         return null;
     }
 
@@ -302,7 +302,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasStraightFlush (ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasStraightFlush (ArrayList<Integer> cardValues) {
         return null;
     }
 
@@ -313,7 +313,7 @@ public class CombinationCalculator {
      * @throws Exception
      */
 
-    public ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) {
+    protected ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) {
         return null;
     }
 

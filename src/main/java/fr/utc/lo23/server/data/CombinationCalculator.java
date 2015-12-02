@@ -216,7 +216,8 @@ public class CombinationCalculator {
      */
     protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = new ArrayList<Integer>();
-        for (int i = 0; i < 3; i++) {
+        if (cardValues.get(0) == 14)  cardValues.add(1);
+        for (int i = 0; i < 4; i++) {
             Integer highcard = cardValues.get(i);
             if (cardValues.contains(highcard - 1) &&
                     cardValues.contains(highcard - 2) &&
@@ -276,12 +277,17 @@ public class CombinationCalculator {
         return null;
     }
 
+    /**
+     * Rank 7: FullHouse
+     * @param cardValues
+     * @return
+     */
     protected ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) {
         return null;
     }
 
     /**
-     * Rank 7: Four of a kind
+     * Rank 8: Four of a kind
      * @param cardValues
      * @return
      * @throws Exception
@@ -304,7 +310,7 @@ public class CombinationCalculator {
             cardRank.remove(5);
             cardRank.remove(5);
             // add card rank 7
-            cardRank.add(0, 7);
+            cardRank.add(0, 8);
             return cardRank;
         }  else {
             return null;
@@ -313,7 +319,7 @@ public class CombinationCalculator {
 
 
     /**
-     * Rank 8: Straight Flush TODO
+     * Rank 9: Straight Flush TODO
      * @param cardValues
      * @return
      * @throws Exception
@@ -323,14 +329,20 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 9: Royal Flush TODO
+     * Rank 10: Royal Flush
      * @param cardValues
      * @return
      * @throws Exception
      */
-
     protected ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) {
-        return null;
+        ArrayList<Integer> cardRank = hasStraightFlush(cardValues);
+        if (cardRank == null ) {
+            return null;
+        } else if (cardRank.get(1) == 14) {
+            cardRank.set(0,10);
+            return  cardRank;
+        } else return null;
+
     }
 
 }

@@ -1,12 +1,9 @@
 package fr.utc.lo23.common.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
-import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
-import fr.utc.lo23.server.network.threads.PokerServer;
-
-import java.io.ObjectOutputStream;
 
 /**
  * Message to be sent to every users connected to notify them
@@ -27,12 +24,19 @@ public class NotifyNewPlayerMessage extends Message {
     }
 
     @Override
-    public void process(PokerServer myServ, ConnectionThread thread) {
+    public void process(ConnectionThread threadServer) {
 
     }
 
     @Override
-    public void process(InterfaceDataFromCom dataInterface) {
-        dataInterface.remoteUserConnected(newUser);
+    public void process(ServerLink threadClient) {
+        if(!newUser.getIdUser().equals(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser())){
+            threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+            Console.log("new user connected : " + newUser);
+        }else{
+            Console.log("Message abbandoné : User = moi");
+        }
+
+
     }
 }

@@ -106,7 +106,7 @@ public class TableController {
 
     public void chatInitializer(){
         //TODO: modifier ça quand ils auront modifié leur fucking fonction getCurrentGame
-        for(MessageChat msg : table.getListGames().get(table.getCurrentGame()).getChatGame().getListMessages())
+        for(MessageChat msg : table.getCurrentGame().getChatGame().getListMessages())
         {
             addChatMessage(msg);
         }

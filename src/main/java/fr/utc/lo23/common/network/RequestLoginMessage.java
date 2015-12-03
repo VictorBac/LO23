@@ -1,14 +1,16 @@
 package fr.utc.lo23.common.network;
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
+import fr.utc.lo23.server.network.NetworkManagerServer;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +26,10 @@ public class RequestLoginMessage extends Message {
         user = userLocal;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     /**
      * Generic process
      */
@@ -36,38 +42,80 @@ public class RequestLoginMessage extends Message {
      * Check if we can login in the server, and send a confirmation (or not ?)
      * We put in the acceptloginmessage all users currently connected to have them directly at the confirmation
      * We also notify all other users that now we're in da place
-     * @param myServ
-     * @param thread
+     * @param threadServer
      */
     @Override
-    public void process (PokerServer myServ, ConnectionThread thread){
+    public void process (ConnectionThread threadServer){
+        PokerServer myServ = threadServer.getMyServer();
+
         Console.log("Request login message received");
 
         Console.log("Checking if there is room for one more user");
-        if (true) {
+        if (myServ.getNbUsers() < Params.NB_MAX_USER) {
             Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
 
-            ArrayList<UserLight> aUsers = myServ.stockUserAndNotifyOthers(user.getUserLight());
-
-            AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
+            //Giving the user to data
             try {
-                thread.getOutputStream().writeObject(acceptL);
-            } catch (IOException e) {
+                NetworkManagerServer netMan = myServ.getNetworkManager();
+                InterfaceServerDataFromCom interF = netMan.getDataInstance();
+                Console.log("aaaaaaaaa"+interF);
+                Console.log("blka"+user);
+                UserLight ul = interF.userConnection(user);
+                threadServer.setUserId(user.getUserLight().getIdUser());
+                ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
+
+                for(UserLight use : aUsers){
+                    Console.log(""+use.getIdUser());
+                }
+
+                //On envoie un message au client pour accepter sa connexion
+                sendConnectionConfirmation(aUsers, threadServer);
+
+                //On envoie à tous les autres clients un notify new client.
+                notifyNewUserToCurrentPlayers(ul, myServ);
+            } catch (ExistingUserException e) {
                 e.printStackTrace();
             }
 
         } else {
             Console.log("Connection impossible ! ");
+            sendConnectionRejection(threadServer);
         }
     }
 
     /**
      * Client-side process
-     * @param dataInterface
+     * @param threadClient
      */
     @Override
-    public void process(InterfaceDataFromCom dataInterface) {
+    public void process(ServerLink threadClient) {
 
+    }
+
+    /**
+     * Notifie aux joueurs connecté la présence
+     * d'un nouveau joueur
+     * @param ul
+     */
+    private void notifyNewUserToCurrentPlayers(UserLight ul, PokerServer myServ) {
+        NotifyNewPlayerMessage newPlayerM = new NotifyNewPlayerMessage(ul);
+        myServ.sendToAll(newPlayerM);
+    }
+
+    /**
+     * Envoie la confirmation de connection
+     * au nouveau joueur ainsi que la liste
+     * des joueurs actuels
+     * @param aUsers
+     */
+    private void sendConnectionConfirmation(ArrayList<UserLight> aUsers, ConnectionThread threadServer) {
+        AcceptLoginMessage acceptL = new AcceptLoginMessage(aUsers);
+        threadServer.send(acceptL);
+    }
+
+    private void sendConnectionRejection(ConnectionThread threadServer) {
+        RefuseLoginMessage refuseL = new RefuseLoginMessage();
+        threadServer.send(refuseL);
     }
 
 }

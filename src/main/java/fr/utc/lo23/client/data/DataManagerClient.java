@@ -11,9 +11,9 @@ import fr.utc.lo23.common.data.UserLightList;
  * Created by Mar on 01/11/2015.
  */
 public class DataManagerClient {
-    private InterfaceFromCom interFromCom;
-    private InterfaceFromIHMTable interFromIHMTable;
-    private InterfaceFromIHMMain interFromIHMMain;
+    private InterfaceDataFromCom interFromCom;
+    private InterfaceDataFromIHMTable interFromIHMTable;
+    private InterfaceDataFromIHMMain interFromIHMMain;
 
     private ITableToDataListener interToIHMTable;
     private InterfaceClient  interToCom;
@@ -22,6 +22,7 @@ public class DataManagerClient {
     private User userLocal;
     private UserLightList listUsersLightLocal;
     private TableList listTablesLocal;
+
 
     public DataManagerClient() {
 
@@ -39,23 +40,23 @@ public class DataManagerClient {
 
     }
 
-    public InterfaceFromCom getInterFromCom() {
+    public InterfaceDataFromCom getInterFromCom() {
         return interFromCom;
     }
 
-    public void setInterFromCom(InterfaceFromCom interFromCom) {this.interFromCom = interFromCom;}
+    public void setInterFromCom(InterfaceDataFromCom interFromCom) {this.interFromCom = interFromCom;}
 
-    public InterfaceFromIHMTable getInterFromIHMTable() {
+    public InterfaceDataFromIHMTable getInterFromIHMTable() {
         return interFromIHMTable;
     }
 
-    public void setInterFromIHMTable(InterfaceFromIHMTable interFromIHMTable) {this.interFromIHMTable = interFromIHMTable;}
+    public void setInterFromIHMTable(InterfaceDataFromIHMTable interFromIHMTable) {this.interFromIHMTable = interFromIHMTable;}
 
-    public InterfaceFromIHMMain getInterFromIHMMain() {
+    public InterfaceDataFromIHMMain getInterFromIHMMain() {
         return interFromIHMMain;
     }
 
-    public void setInterFromIHMMain(InterfaceFromIHMMain interFromIHMMain) {
+    public void setInterFromIHMMain(InterfaceDataFromIHMMain interFromIHMMain) {
         this.interFromIHMMain = interFromIHMMain;
     }
 

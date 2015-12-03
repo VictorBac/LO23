@@ -3,6 +3,9 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+import java.util.UUID;
 
 /**
  * This is the interface which will be used by the IHM Main module on the client's side
@@ -10,19 +13,20 @@ import fr.utc.lo23.common.data.*;
  */
 public interface InterfaceDataFromIHMMain {
     /**
-     * Methode to log in
+     * Method to log in
      * @param login
      * @param password
      */
     void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException;
 
     /**
-     * Methode to ask to exit
+     * Method to get the user's all information
+     * @param userlight
      */
-    void exitAsked();
+    void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
 
     /**
-     * Methode to save new profile
+     * Method to save new profile
      * @param userLocal
      */
     void saveNewProfile(User userLocal);
@@ -32,7 +36,7 @@ public interface InterfaceDataFromIHMMain {
      * @param table
      * @param mode
      */
-    void joinTableWithMode(Table table, String mode);
+    void joinTableWithMode(UUID table, EnumerationTypeOfUser mode);
 
     /**
      * Methode to pass on when accepted to join a table
@@ -42,32 +46,31 @@ public interface InterfaceDataFromIHMMain {
     void tableJoinAccepted(Table table, String mode);
 
     /**
-     * Methode to get UserList online
+     * Method to get UserList online
      * @return User Light List
      */
-    UserLightList getPlayerList();
+    void getPlayerList() throws NetworkFailureException;
 
     /**
-     * Methode to get TableList online
+     * Method to get TableList online
      * @return Table List
      */
-    TableList getTableList();
+    void getTableList() throws NetworkFailureException;
 
     /**
-     * Methode to get saved game list
+     * Method to get saved game list
      * @return
      */
     TableList getSavedGamesList();
 
     /**
-     * Methode to play game on the table
-     * @param idTable
+     * Method to play game on the table
+     * @param tableId
      */
-    void playGame(int idTable);
+    void playGame(UUID tableId);
 
     /**
-     * Methode to get the user light information
-     * @param userlight
+     * Method to ask to exit
      */
-    void getUser(UserLight userlight);
+    void exitAsked();
 }

@@ -1,7 +1,11 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.*;
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+import java.util.UUID;
 
 
 /**
@@ -9,16 +13,13 @@ import fr.utc.lo23.common.data.*;
  */
 public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
-    // Constructor
-
     private DataManagerClient dManagerClient;
+    private User userLogin;
 
     public InterfaceFromIHMMain(DataManagerClient dManagerClient) {
         this.dManagerClient = dManagerClient;
     }
 
-
-    // Interface functions.
 
     /**
      * Connexion with login and password, call com interface
@@ -26,23 +27,33 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param password
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
-        User userLocal = (User) Serialization.deserializationObject(Serialization.pathUserLocal);
+        //User userLocal = (User) Serialization.deserializationObject(login);
+        //TODO ligne précédente à remettre quand la creation de profil marchera, et ligne suivante à delete
+        User userLocal = new User(login, password);
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();
         // Check correctness of login and password
-        if (login.equals(loginLocal)) {
+        if (!login.equals(loginLocal)) {
             throw new LoginNotFoundException(login);
-        } else if (password.equals(passwordLocal)) {
+        } else if (!password.equals(passwordLocal)) {
             throw new WrongPasswordException();
         } else {
-            //TODO: wait com interface to be ready.
-            //dManagerClient.getInterToCom().requestLoginServer(localUser);
+            Console.log("loguser "+ userLocal.toString());
+
+            dManagerClient.getInterToCom().requestLoginServer(userLocal);
+            userLogin = userLocal;
         }
     }
 
-    public void exitAsked() {
-
+    /**
+     * Method to get the user's all information
+     * @param userlight
+     * @throws ProfileNotFoundOnServerException
+     * @throws NetworkFailureException
+     */
+    public void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException {
+        dManagerClient.getInterToCom().consultProfile(userlight);
     }
 
     /**
@@ -50,35 +61,69 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param userLocal
      */
     public void saveNewProfile(User userLocal) {
-
-        Serialization.serializationObject(userLocal, Serialization.pathUserLocal);
+        String login = userLocal.getUserLight().getPseudo();
+        Serialization.serializationObject(userLocal, login);
     }
 
-    public void joinTableWithMode(Table table, String mode) {
-
+    /**
+     *
+     * @param tableId
+     * @param mode
+     */
+    public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) {
+        // TODO wait network interface
+        //dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
     }
 
+    /**
+     * TODO
+     * @param table
+     * @param mode
+     */
     public void tableJoinAccepted(Table table, String mode) {
-
+        // TODO wait network interface
+        //dManagerClient.getInterToCom().tableJoinAccepted();
     }
 
-    public UserLightList getPlayerList() {
-        return null;
+    /**
+     * Ask server to return UserLightList
+     * @return
+     */
+    public void getPlayerList() throws NetworkFailureException {
+        dManagerClient.getInterToCom().requestUserList();
     }
 
-    public TableList getTableList() {
-        return null;
+    /**
+     * Ask server to return TableList
+     * @return
+     */
+    public void getTableList() throws NetworkFailureException {
+        dManagerClient.getInterToCom().requestTableList();
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public TableList getSavedGamesList() {
         return null;
     }
 
-    public void playGame(int idTable) {
-
+    /**
+     * Ask server to play a game.
+     * @param tableId
+     */
+    public void playGame(UUID tableId) {
+        // TODO wait network interface
+        // dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
     }
 
-    public void getUser(UserLight userlight) {
-
+    /**
+     *
+     */
+    public void exitAsked() {
+        // TODO wait network interface
+        // dManagerClient.getInterToCom().askDisconnection(userLogin.getUserLight());
     }
+
 }

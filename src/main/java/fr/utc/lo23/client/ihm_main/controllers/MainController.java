@@ -3,12 +3,8 @@ package fr.utc.lo23.client.ihm_main.controllers;
  * Created by jbmartin on 20/10/15.
  */
 
-import fr.utc.lo23.client.data.InterfaceDataFromCom;
-import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
-import fr.utc.lo23.client.data.InterfaceDataFromIHMTable;
-import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
-import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
-import fr.utc.lo23.client.network.InterfaceClient;
+import fr.utc.lo23.client.data.DataManagerClient;
+import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,26 +15,14 @@ import java.io.IOException;
 
 public class MainController extends Application {
 
-    /**
-     * Interfaces from DATA
-     */
-    private InterfaceDataFromIHMMain m_interfaceDataToMain;
-    private InterfaceDataFromCom m_interfaceDataToCom;
-    private InterfaceDataFromIHMTable m_interfaceDataToTable;
 
+    private Stage pmStage;
 
-    /**
-     * Interfaces from MAIN
-     */
-    private InterfaceMainToData m_interfaceMainToData;
-    private InterfaceMainToTable m_interfaceMainToTable;
+    public static IHMMainClientManager getManagerMain() {
+        return managerMain;
+    }
 
-
-    /**
-     * Interfaces from COM
-     */
-    private InterfaceClient m_interfaceComToData;
-
+    private static IHMMainClientManager managerMain;
 
 
 
@@ -50,12 +34,40 @@ public class MainController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
+
+        managerMain = new IHMMainClientManager();
+
+        pmStage = primaryStage;
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ConnectionController controller = fxmlLoader.<ConnectionController>getController();
+        controller.setMainController(this);
         primaryStage.setTitle("Connexion");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
         root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
         primaryStage.show();
+    }
+
+
+    public void userLoggedIn()
+    {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml"));
+        } catch (IOException e) {
+            // TODO ?
+            e.printStackTrace();
+        }
+        pmStage.setTitle("Connexion");
+        Scene scene = new Scene(root);
+        pmStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
+        root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
+        pmStage.show();
+
+
     }
 }

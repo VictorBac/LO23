@@ -11,14 +11,17 @@ import java.util.UUID;
  */
 public class UserLightList implements Serializable{
 
-    private ArrayList<UserLight> listUserLights = new ArrayList<UserLight>();
+    private ArrayList<UserLight> listUserLights;
+    private static final long serialVersionUID = 1L;
 
 
+    public UserLightList(){
+        listUserLights = new ArrayList<UserLight>();
+    }
     /**
      * recherche un UserLight dans l'arrayList � partir de son UUID
      * @param userId l'UUUID du joueur � trouver
      * @return le joueur voulu, nexception si non trouv�
-
      */
     public UserLight getUser(UUID userId) throws UserLightNotFoundException{
         for (UserLight cur : listUserLights)
@@ -26,6 +29,7 @@ public class UserLightList implements Serializable{
             if (cur.getIdUser().equals(userId))
                 return cur;
         }
+
         throw new UserLightNotFoundException(userId);
     }
 

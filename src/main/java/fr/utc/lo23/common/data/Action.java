@@ -4,6 +4,7 @@ import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  * Created by Mar on 20/10/2015.
@@ -11,6 +12,7 @@ import java.sql.Timestamp;
  * Class used to represent an action of a player in the game
  */
 public class Action implements Serializable{
+    private static final long serialVersionUID = 1L;
     private EnumerationAction name;
     private int amount;
     private UserLight userLightOfPlayer;
@@ -38,6 +40,30 @@ public class Action implements Serializable{
             this.userLightOfPlayer = userLightOfPlayer;
             this.timeStampOfAction = timeStampOfAction;
         }
+
+    }
+
+    /**
+     * @param name an EnumerationAction to specify the type of action
+     * @param amount an int to specify how much money is bet (when action is bet)
+     * @param userLightOfPlayer attribute to characterize the player who made the action
+     */
+    public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer) throws ActionInvalidException {
+        if(name==null || userLightOfPlayer == null)
+            throw new NullPointerException("No null argument");
+        if(amount < 0)
+            throw new ActionInvalidException("Amount cannot be less than zero");
+        //check if action is bet first
+        if(!(name.equals(EnumerationAction.bet)) && amount!=0)//TODO check if there is only bet than can have an amount (all-in)
+            throw new ActionInvalidException("Amount cannot be different from zero when action is not bet");
+        else
+        {
+            this.name = name;
+            this.amount = amount;
+            this.userLightOfPlayer = userLightOfPlayer;
+            this.timeStampOfAction = new Timestamp(Calendar.getInstance().getTime().getTime());
+        }
+
 
     }
 

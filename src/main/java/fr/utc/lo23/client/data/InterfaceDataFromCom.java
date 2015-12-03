@@ -48,9 +48,11 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to notify that a user left the game
-     * @param userLightDistant UserLight of a user who left the Game
+     * @param idTable id of the table the user left
+     * @param userLightDistant UserLight of a user who left a Game
+     * @param typeOfUserWhoLeftTable the user is a spectator or a player
      */
-    public void transmitLeaveGame(UserLight userLightDistant);
+    public void transmitLeaveGame(UUID idTable,UserLight userLightDistant,EnumerationTypeOfUser typeOfUserWhoLeftTable);
 
     /**
      * Method that return  a UserLightList that contain all UserLight that the Local user has locally
@@ -60,10 +62,10 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to confirm that the local user has actually correctly join the table
-     * @param tableLocalUserJoined the Table the User joined
+     * @param idTableLocalUserJoined the id of the Table the User joined
      * @param modeUserLocal an EnumerationTypeOfUser the mode which he has chosen to adopt spectator or player
      */
-    public void tableJoinAccepted(Table tableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
+    public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
 
     /**
      * Method to keep locally the list of UserLight connected to the server

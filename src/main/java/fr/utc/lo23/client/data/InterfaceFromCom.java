@@ -6,6 +6,7 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.exceptions.TableException;
 import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             Console.log(TAG +"remoteUserDisonnected");
             dManagerClient.getListUsersLightLocal().remove(userLightDistant); //TODO add log for deconnection
             dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
-            //TODO ihmain method
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,24 +58,53 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         Console.log(TAG +"userJoinedTable()");
-        dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
-        dManagerClient.getListTablesLocal();
-        dManagerClient.getInterToIHMMain();
-        //TODO search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
+        try {
+            dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
+            //search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
+            //TODO dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getListTable().get(dManagerClient.getListTablesLocal().getTableById(idTable)),userWhoJoinTheTable,typeOfUserWhoJoinTable);
+
+        } catch (TableException e) {
+            Console.log(TAG +"User already on the table");
+            e.printStackTrace();
+        }
     }
 
 
+    public void transmitLeaveGame(UUID idTable, UserLight userLightDistant, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
+        int indexOfTableInTableList = dManagerClient.getListTablesLocal().getTableById(idTable);
+        Console.log(TAG +"transmitLeaveGame()");
+        if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
+            try {
+                dManagerClient.getListTablesLocal().getListTable().get(indexOfTableInTableList).playerLeaveTable(userLightDistant);
+               // dManagerClient.getTableLocal().playerLeaveTable(userLightDistant); //TODO check in if it is necessary, maybe already done since it it a reference
+            } catch (TableException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
+            try {
+                dManagerClient.getListTablesLocal().getListTable().get(indexOfTableInTableList).spectatorLeaveTable(userLightDistant);
+                //dManagerClient.getTableLocal().spectatorLeaveTable(userLightDistant);//TODO check in if it is necessary, maybe already done since it it a reference
+            } catch (TableException e) {
+                e.printStackTrace();
+            }
 
-    public void transmitLeaveGame(UserLight userLightDistant) {
+        }
+        //TODO dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getListTable().get(indexOfTableInTableList),userWhoJoinTheTable,typeOfUserWhoJoinTable);
+    }
 
+    public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
+            //TODO see if necessary to contact ihm main or ihm table
+        try {
+            dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(),modeUserLocal);
+        } catch (TableException e) {
+            e.printStackTrace();
+        }
+        //TODO dManagerClient.getInterToIHMTable().showTable();
     }
 
     public UserLightList getPlayerList() {
         return null;
-    }
-
-    public void tableJoinAccepted(Table tableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
-
     }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {

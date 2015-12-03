@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_main.interfaces;
 
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Stats;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
@@ -19,4 +20,6 @@ public interface InterfaceMainToData {
     void notifyNewTable(Table t);
     void returnHome();
     void currentTables(List<Table> currentTables);
+    void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type);
+    void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type);
 }

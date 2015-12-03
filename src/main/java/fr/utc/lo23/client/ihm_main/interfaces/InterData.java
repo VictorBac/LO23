@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Stats;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
@@ -16,9 +17,16 @@ import java.util.List;
  * Created by leclercvictor on 24/11/2015.
  */
 public class InterData implements InterfaceMainToData {
+
+    private IHMMainClientManager managerMain;
+
+    public InterData(IHMMainClientManager mngMain) {
+        managerMain = mngMain;
+    }
+
     @Override
     public void remoteUserConnected(UserLight remoteUser) {
-
+        managerMain.getControllerMain().getMainWindowController().addUser(remoteUser);
     }
 
     @Override
@@ -28,7 +36,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void remoteUserDisconnected(UserLight remoteUser) {
-
+        managerMain.getControllerMain().getMainWindowController().removeUser(remoteUser);
     }
 
     @Override
@@ -38,6 +46,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void onlineUsers(List<UserLight> userList) {
+        /*
         List<String> received_list = new ArrayList<String>();
 
         Iterator<UserLight> iterator = userList.iterator();
@@ -46,8 +55,8 @@ public class InterData implements InterfaceMainToData {
         }
         ObservableList<String> items = FXCollections.observableArrayList(received_list);
 
-        // TODO
-        // MainWindow.refreshUsers(userList);
+        IHMMainClientManager.getControllerMain().getMainWindowController().getListViewConnectedUsers().setItems(items);*/
+        managerMain.getControllerMain().getMainWindowController().addUsers(userList);
 
     }
 
@@ -68,13 +77,18 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void currentTables(List<Table> currentTables) {
+
+    }
+
+    @Override
+    public void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type) {
         
     }
 
+    @Override
+    public void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type) {
 
-    private IHMMainClientManager managerMain;
-
-    public InterData(IHMMainClientManager mngMain) {
-        managerMain = mngMain;
     }
+
+
 }

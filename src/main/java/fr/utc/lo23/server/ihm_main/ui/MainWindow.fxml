@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="581.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.server.ihm_main.controllers.MainController">
+<GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="581.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.server.ihm_main.controllers.MainWindowController">
     <columnConstraints>
         <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="600.0" />
         <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
@@ -19,7 +20,7 @@
     <children>
         <AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="603.0" stylesheets="@style.css" GridPane.rowIndex="1">
             <children>
-                <TextField fx:id="textPort" layoutX="136.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="56.0" promptText="Port">
+                <TextField fx:id="fieldPort" layoutX="136.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="56.0" promptText="Port">
                     <font>
                         <Font size="14.0" />
                     </font></TextField>

@@ -40,4 +40,6 @@ public class DataManagerServer {
     public InterfaceServerDataFromCom getInterfaceFromCom() {
         return interfaceFromCom;
     }
+
+
 }

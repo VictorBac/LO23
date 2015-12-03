@@ -59,6 +59,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         Console.log(TAG +"userJoinedTable()");
         dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
+        dManagerClient.getListTablesLocal();
+        dManagerClient.getInterToIHMMain();
         //TODO search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
     }
 

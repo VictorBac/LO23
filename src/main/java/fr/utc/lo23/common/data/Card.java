@@ -26,7 +26,7 @@ public class Card implements Serializable {
      * @param symbol spade & heart & diamond & club
      */
     public Card(Integer value, char symbol) throws CardFormatInvalidException{
-        if ( value > 13 || value < 0)
+        if ( value > 14 || value < 1)
             throw new CardFormatInvalidException("Number must be an integer between 1 ~ 13");
         if ( symbol != 'S' && symbol != 'H' && symbol != 'D' && symbol != 'C' )
             throw new CardFormatInvalidException("Symbol must be 'S' or 'H' or 'D' or 'C'");

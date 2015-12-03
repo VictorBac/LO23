@@ -40,7 +40,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             throw new WrongPasswordException();
         } else {
             Console.log("loguser "+ userLocal.toString());
-
+            //remove the psw and send userLocal to server
+            userLocal.setPwd(null);
             dManagerClient.getInterToCom().requestLoginServer(userLocal);
             userLogin = userLocal;
         }

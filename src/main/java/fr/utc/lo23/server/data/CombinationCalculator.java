@@ -2,7 +2,7 @@ package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.Card;
 import fr.utc.lo23.common.data.PlayerHand;
-
+import fr.utc.lo23.server.data.exceptions.*;
 import java.util.ArrayList;
 
 /**
@@ -15,23 +15,73 @@ public class CombinationCalculator {
      * @param listOfPlayer : player list and their hand cards
      * @param cardsOnField : cards on the table
      */
-    public ArrayList<PlayerHand> getWinner(ArrayList<PlayerHand> listOfPlayer, ArrayList<Card> cardsOnField){
+    public ArrayList<PlayerHand> getWinner(ArrayList<PlayerHand> listOfPlayer, ArrayList<Card> cardsOnField) {
+        try {
+            if (cardsOnField.size() != 2) {
+                throw new CardsNumberException(cardsOnField);
+            }
+        } catch (CardsNumberException e) {
+            e.printStackTrace();
+        }
 
-        return null; //TODO remove this line
+        ArrayList<PlayerHand> winnerList = new ArrayList<PlayerHand>();
+        ArrayList<Integer> biggestCardRank = new ArrayList<Integer>(7);
+        for (int i = 0; i < 7; i++) {
+            biggestCardRank.add(0);
+        }
+        ArrayList<Card> currentHand;
+        ArrayList<Integer> currentRank;
+
+        // Bubble sort the winner list
+        for (int i = 0; i < listOfPlayer.size(); i++) {
+            currentHand = listOfPlayer.get(i).getListCardsHand();
+            try {
+                if (cardsOnField.size() != 5) {
+                    throw new CardsNumberException(currentHand);
+                }
+            } catch (CardsNumberException e) {
+                e.printStackTrace();
+            }
+
+            currentRank = getHandRank(currentHand, cardsOnField);
+            if (greaterThan(currentRank, biggestCardRank)) {
+                biggestCardRank = currentRank;
+                winnerList.clear();
+                winnerList.add(listOfPlayer.get(i));
+            } else if (currentRank.equals(biggestCardRank)) {
+                winnerList.add(listOfPlayer.get(i));
+            }
+        }
+        return winnerList;
     }
 
-    public ArrayList<Integer> getHandType(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) throws Exception {
+    private boolean greaterThan(ArrayList<Integer> left, ArrayList<Integer> right) {
+        try {
+            if (left.size() != right.size()) {
+                throw new CardValueNumberInvalidException(right);
+            }
+        } catch (CardValueNumberInvalidException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < left.size(); i++) {
+            if (left.get(i) > right.get(i)) return true;
+            if (left.get(i) < right.get(i)) return false;
+        }
+        return false;
+    }
+
+
+
+    public ArrayList<Integer> getHandRank(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) {
         ArrayList<Card> cards = null;
         cards.addAll(cardsOnHand);
         cards.addAll(cardsOnField);
-        if (cards.size() != 7) {
-            throw new Exception();
-        }
+
         ArrayList<Integer> cardValues = new ArrayList<Integer>();
 
-        ArrayList<Integer> cardRank = hasRoyalFlush(cardValues);
-        if (cardRank == null) cardRank = hasRoyalFlush(cardValues);
-        if (cardRank == null) cardRank = hasStraightFlush(cardValues);
+        ArrayList<Integer> cardRank = hasRoyalFlush(cards);
+        if (cardRank == null) cardRank = hasRoyalFlush(cards);
+        if (cardRank == null) cardRank = hasStraightFlush(cards);
         if (cardRank == null) cardRank = hasFullHouse(cardValues);
         if (cardRank == null) cardRank = hasFour(cardValues);
         if (cardRank == null) cardRank = hasFlush(cards);
@@ -49,7 +99,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) throws Exception {
+    protected ArrayList<Integer> hasHighCard(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         // Just remove the two smallest values since cardValues has been sorted.
         cardRank.remove(5);
@@ -64,7 +114,7 @@ public class CombinationCalculator {
      * @return cardRank if has one pair. null if not.
      * @throws Exception
      */
-    public ArrayList<Integer> hasOnePair(ArrayList<Integer> cardValues) throws Exception {
+    protected ArrayList<Integer> hasOnePair(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 1; i < 7; i++) {
@@ -88,13 +138,12 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 3: Two pairs TODO
+     * Rank 3: Two pairs
      * @param cardValues
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasTwoPair(ArrayList<Integer> cardValues) throws Exception {
-        this.hasOnePair(cardValues);
+    protected ArrayList<Integer> hasTwoPair(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 1; i < 7; i++) {
@@ -102,8 +151,31 @@ public class CombinationCalculator {
                 break;
             }
         }
-
-        return null;
+        if (i < 5) {
+            // move the pair to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            for (i=i+2; i < 7; i++) {
+                if (cardValues.get(i -1) == cardValues.get(i)) {
+                    break;
+                }
+            }
+            if (i < 7) {
+                // move the pair to the start
+                cardRank.add(2, cardRank.remove(i));
+                cardRank.add(2, cardRank.remove(i));
+                // remove the last two card values
+                cardRank.remove(5);
+                cardRank.remove(5);
+                // add card rank 2
+                cardRank.add(0, 3);
+                return cardRank;
+            }  else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -112,7 +184,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasThree(ArrayList<Integer> cardValues) throws Exception {
+    protected ArrayList<Integer> hasThree(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 2; i < 7; i++) {
@@ -137,12 +209,29 @@ public class CombinationCalculator {
     }
 
     /**
-     * Rank 5: Straight TODO
+     * Rank 5: Straight
      * @param cardValues
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) throws Exception {
+    protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
+        ArrayList<Integer> cardRank = new ArrayList<Integer>();
+        if (cardValues.get(0) == 14)  cardValues.add(1);
+        for (int i = 0; i < 4; i++) {
+            Integer highcard = cardValues.get(i);
+            if (cardValues.contains(highcard - 1) &&
+                    cardValues.contains(highcard - 2) &&
+                    cardValues.contains(highcard - 3) &&
+                    cardValues.contains(highcard - 4))
+            {
+                cardRank.add(5);
+                for (int j = highcard; j > highcard - 5 ; j--) {
+                    cardRank.add(j);
+                }
+                return cardRank;
+            }
+
+        }
         return null;
     }
 
@@ -152,7 +241,7 @@ public class CombinationCalculator {
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasFlush (ArrayList<Card> cards) throws Exception {
+    protected ArrayList<Integer> hasFlush (ArrayList<Card> cards) {
         ArrayList<Integer> spade = new ArrayList<Integer>();
         ArrayList<Integer> heart = new ArrayList<Integer>();
         ArrayList<Integer> diamond = new ArrayList<Integer>();
@@ -188,17 +277,22 @@ public class CombinationCalculator {
         return null;
     }
 
-    public ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) throws Exception {
+    /**
+     * Rank 7: FullHouse
+     * @param cardValues
+     * @return
+     */
+    protected ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) {
         return null;
     }
 
     /**
-     * Rank 7: Four of a kind
+     * Rank 8: Four of a kind
      * @param cardValues
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasFour(ArrayList<Integer> cardValues) throws Exception {
+    public ArrayList<Integer> hasFour(ArrayList<Integer> cardValues) {
         ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
         int i;
         for (i = 3; i < 7; i++) {
@@ -216,7 +310,7 @@ public class CombinationCalculator {
             cardRank.remove(5);
             cardRank.remove(5);
             // add card rank 7
-            cardRank.add(0, 7);
+            cardRank.add(0, 8);
             return cardRank;
         }  else {
             return null;
@@ -225,24 +319,65 @@ public class CombinationCalculator {
 
 
     /**
-     * Rank 8: Straight Flush TODO
-     * @param cardValues
+     * Rank 9: Straight Flush
+     * @param cards
      * @return
      * @throws Exception
      */
-    public ArrayList<Integer> hasStraightFlush (ArrayList<Integer> cardValues) throws Exception {
-        return null;
+    protected ArrayList<Integer> hasStraightFlush (ArrayList<Card> cards) {
+        ArrayList<Integer> cardRank = new ArrayList<Integer>();
+        ArrayList<Integer> spade = new ArrayList<Integer>();
+        ArrayList<Integer> heart = new ArrayList<Integer>();
+        ArrayList<Integer> diamond = new ArrayList<Integer>();
+        ArrayList<Integer> club = new ArrayList<Integer>();
+        for (int i = 0; i < cards.size(); i++) {
+            char symbol = cards.get(i).getSymbol();
+            Integer value = cards.get(i).getValue();
+            if (symbol == 'S') spade.add(value);
+            if (symbol == 'H') heart.add(value);
+            if (symbol == 'D') diamond.add(value);
+            if (symbol == 'C') club.add(value);
+        }
+        if (spade.size() >= 5) {
+            cardRank = spade;
+        }
+        if (heart.size() >= 5) {
+            cardRank = heart;
+        }
+        if (diamond.size() >= 5) {
+            cardRank = diamond;
+        }
+        if (club.size() >= 5) {
+            cardRank = club;
+        }
+        if (cardRank.size() == 0) {
+            return null;
+        } else {
+            cardRank = hasStraight(cardRank);
+        }
+        if (cardRank == null) {
+            return null;
+        } else {
+            cardRank.set(0,9);
+            return cardRank;
+        }
     }
 
     /**
-     * Rank 9: Royal Flush TODO
-     * @param cardValues
+     * Rank 10: Royal Flush
+     * @param cards
      * @return
      * @throws Exception
      */
+    protected ArrayList<Integer> hasRoyalFlush(ArrayList<Card> cards) {
+        ArrayList<Integer> cardRank = hasStraightFlush(cards);
+        if (cardRank == null ) {
+            return null;
+        } else if (cardRank.get(1) == 14) {
+            cardRank.set(0,10);
+            return  cardRank;
+        } else return null;
 
-    public ArrayList<Integer> hasRoyalFlush(ArrayList<Integer> cardValues) throws Exception {
-        return null;
     }
 
 }

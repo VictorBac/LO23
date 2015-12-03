@@ -9,6 +9,7 @@ import fr.utc.lo23.common.data.Table;
 import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Mar on 24/10/2015.
@@ -53,19 +54,15 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
         dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
-        //TODO missing IHM main interface for new Table
     }
 
-    public void userJoinedTable() {
-        //TODO should just increase able counter --> need id Table
-        //dManagerClient.getInterToIHMMain();
-        //TODO or we take UserLight as a parameter and add it to the Table (maybe type Player/Spectator) waiting harold
+    public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
+        Console.log(TAG +"userJoinedTable()");
+        dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
+        //TODO search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
     }
 
-    //TODO add a parameter discuss with Com to add id of the Table or maybe delete this one and see with userJoinedTable()
-    public void addPlayer(UserLight userLightDistant) {
 
-    }
 
     public void transmitLeaveGame(UserLight userLightDistant) {
 
@@ -75,7 +72,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         return null;
     }
 
-    public void tableJoinAccepted(Table tableLocalUserJoined, String modeUserLocal) {
+    public void tableJoinAccepted(Table tableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
 
     }
 
@@ -107,7 +104,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     }
 
-    public void notifyAction(Action action, UserLight userLight) {
+    public void notifyAction(Action action) {
 
     }
 
@@ -120,8 +117,20 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
-
+        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser);
         dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
-        //TODO missing a method to recieve a MessageChat IHMTable dManagerClient.getInterFromIHMTable();
     }
+
+/*
+    public void userJoinedTable() { //Useless
+        //TODO should just increase able counter --> need id Table
+        //dManagerClient.getInterToIHMMain();
+        //TODO or we take UserLight as a parameter and add it to the Table (maybe type Player/Spectator) waiting harold
+    }
+
+    //TODO add a parameter discuss with Com to add id of the Table or maybe delete this one and see with userJoinedTable()
+    public void addPlayer(UserLight userLightDistant) {//useless
+    }*/
+
+
 }

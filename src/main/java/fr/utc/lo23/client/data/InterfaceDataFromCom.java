@@ -4,6 +4,7 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Mar on 20/10/2015.
@@ -37,15 +38,13 @@ public interface InterfaceDataFromCom {
     public void notifyNewTable(Table tableCreatedOnServer);
 
     /**
-     * ?????
+     * Method to call when a remote user is connected on a specific Table
+     * @param idTable Table on which the remote user connect to
+     * @param userWhoJoinTheTable the UserLight for the remote User
+     * @param typeOfUserWhoJoinTable type of User Spectator/Player
      */
-    public void userJoinedTable();
+    public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable);
 
-    /**
-     * ?????
-     * @param userLightDistant
-     */
-    public void addPlayer(UserLight userLightDistant);
 
     /**
      * Method to notify that a user left the game
@@ -62,9 +61,9 @@ public interface InterfaceDataFromCom {
     /**
      * Method to confirm that the local user has actually correctly join the table
      * @param tableLocalUserJoined the Table the User joined
-     * @param modeUserLocal the mode which he has chosen to adopt spectator or player
+     * @param modeUserLocal an EnumerationTypeOfUser the mode which he has chosen to adopt spectator or player
      */
-    public void tableJoinAccepted(Table tableLocalUserJoined, String modeUserLocal);
+    public void tableJoinAccepted(Table tableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
 
     /**
      * Method to keep locally the list of UserLight connected to the server
@@ -99,9 +98,8 @@ public interface InterfaceDataFromCom {
     /**
      * Method to notify the local User of the Action of a Player
      * @param action Action that a user played
-     * @param userLight UserLight of the user who played
      */
-    public void notifyAction(Action action, UserLight userLight);
+    public void notifyAction(Action action);
 
     /**
      * Method to inform the local user that the Turn ended with a list of winner and the list of points they earned

@@ -70,7 +70,8 @@ public class ServerLink extends Thread {
                 Message msg = (Message) inputStream.readObject();
                 msg.process(this);
             } catch (Exception e) {
-                Console.err("Erreur de traitement de message: " + e.getMessage());
+                Console.err("Erreur de traitement de message: ");
+                e.printStackTrace();
             }
         }
     }

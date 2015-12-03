@@ -27,7 +27,8 @@ public class MainController {
 
 	@FXML
 	private void joinTable(javafx.event.ActionEvent event) throws ExistingUserException {
-		Table ta = new Table("", null, true,true,6,2,true,100,30);
+		Table ta = new Table("", null, true,true,8,2,true,100,30);
+
 		ta.getListPlayers().addUser(new UserLight("pseudo1"));
 		ta.getListPlayers().addUser(new UserLight("pseudo2"));
 		ta.getListPlayers().addUser(new UserLight("pseudo3"));

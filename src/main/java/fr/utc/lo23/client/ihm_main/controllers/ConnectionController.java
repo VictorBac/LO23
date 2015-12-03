@@ -70,7 +70,7 @@ public class ConnectionController extends BaseController {
 
 
         try { // User logged in
-            MainControllerClient.getManagerMain().getInterfaceDataToMain().logUser(login,passwd);
+            mController.getManagerMain().getInterDataToMain().logUser(login,passwd);
             mController.userLoggedIn();
 
         } catch (LoginNotFoundException e) {

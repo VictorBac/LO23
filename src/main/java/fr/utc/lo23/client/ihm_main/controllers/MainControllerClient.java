@@ -15,35 +15,34 @@ import java.io.IOException;
 public class MainControllerClient extends Application {
 
 
+    public static void main(String[] args) {
+        IHMMainClientManager manager = new IHMMainClientManager();
+        managerMain = manager;
+        launch(args);
+    }
+
+
     private Stage pmStage;
 
-    public static IHMMainClientManager getManagerMain() {
+    public static IHMMainClientManager managerMain;
+
+    public IHMMainClientManager getManagerMain(){
         return managerMain;
     }
 
-    private static IHMMainClientManager managerMain;
-
-    public static MainWindowController getMainWindowController() {
+    public MainWindowController getMainWindowController() {
         return mainWindowController;
     }
 
-
-    private static MainWindowController mainWindowController;
-    private static ConnectionController connectionWindowController;
-    private static CreateController createProfileController;
-
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
+    private MainWindowController mainWindowController;
+    private ConnectionController connectionWindowController;
+    private CreateController createProfileController;
 
 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        managerMain = new IHMMainClientManager();
         pmStage = primaryStage;
         connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
     }

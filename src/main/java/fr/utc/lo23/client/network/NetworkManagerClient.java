@@ -167,27 +167,22 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    @Override
     public void sendMessage(MessageChat message) {
 
     }
 
-    @Override
     public void confirmationCardReceived() {
 
     }
 
-    @Override
     public void replayAction(Action action, UserLight player) {
 
     }
 
-    @Override
     public void confirmationEndTurn() {
 
     }
 
-    @Override
     public void transmitRequestServer(UserLight player) {
 
     }

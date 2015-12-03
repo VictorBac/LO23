@@ -12,4 +12,6 @@ public abstract class BaseController implements Initializable {
     public void setMainController(MainControllerClient controllerMain) {
         this.mController = controllerMain;
     }
+
+
 }

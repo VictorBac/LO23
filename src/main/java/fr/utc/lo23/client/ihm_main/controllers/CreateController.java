@@ -76,7 +76,7 @@ public class CreateController extends BaseController {
         createUser.setPwd(password.getText());
 
 
-        mController.getManagerMain().getInterfaceDataToMain().saveNewProfile(createUser);
+        mController.getManagerMain().getInterDataToMain().saveNewProfile(createUser);
 
 
     }

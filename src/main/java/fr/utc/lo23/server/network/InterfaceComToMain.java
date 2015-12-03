@@ -5,5 +5,5 @@ package fr.utc.lo23.server.network;
  */
 public interface InterfaceComToMain {
 
-
+    public void start(int portToListen);
 }

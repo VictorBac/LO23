@@ -2,6 +2,7 @@ package fr.utc.lo23.server.ihm_main.controllers;
 /**
  * Created by jennypau on 24/11/15.
  */
+import fr.utc.lo23.server.ihm_main.IHMMainServerManager;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,18 +19,29 @@ import java.io.IOException;
 public class MainControllerServer extends Application {
     Scene mainScene;
 
+    //MAIN FUNCTION
     public static void main(String[] args) {
-        launch(args);
+        IHMMainServerManager managerMain =  new IHMMainServerManager();
+        MainControllerServer.manager = managerMain;
+        MainControllerServer.launch(args);
     }
+
+    public static IHMMainServerManager manager;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fr/utc/lo23/server/ihm_main/ui/MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fr/utc/lo23/server/ihm_main/ui/MainWindow.fxml"));
+        Parent root = loader.load();
+        MainWindowController controller = loader.getController();
         primaryStage.setTitle("Administration du serveur");
         mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
         mainScene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/server/ihm_main/ui/style.css").toExternalForm());
         root.setStyle("-fx-background-image: url('/fr/utc/lo23/server/ihm_main/ui/poker.png')");
+        controller.setManager(manager);
         primaryStage.show();
     }
+
+
 }

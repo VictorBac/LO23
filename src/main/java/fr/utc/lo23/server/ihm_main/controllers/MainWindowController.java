@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Created by jbmartin on 01/12/2015.
  */
 
-public class MainWindowController implements Initializable {
+public class MainWindowController {
 
     private IHMMainServerManager manager;
 
@@ -41,6 +41,18 @@ public class MainWindowController implements Initializable {
     @FXML
     private TextArea textLog;
 
+    public void setManager(IHMMainServerManager manager) {
+        this.manager = manager;
+    }
+
+    public MainWindowController(){
+
+    }
+
+    public void initialize() {
+
+    }
+
     @FXML
     void handleButtonStartAction(ActionEvent event) {
         addTextLog("Starting server...");
@@ -48,13 +60,13 @@ public class MainWindowController implements Initializable {
         buttonStart.setDisable(true);
         buttonStop.setDisable(false);
 
-        // TODO quand ils l'auront implémentée
-//        IHMMainServerManager.getInterfaceComToData().start(fieldPort.getText());
+
+       manager.getInterfaceComToMain().start(Integer.parseInt(fieldPort.getText()));
     }
 
     @FXML
     void handleButtonStopAction(ActionEvent event) {
-        addTextLog("Stopping server !");
+        addTextLog("Stopping server ! qui ne marche pas actuellement");
         fieldPort.setDisable(false);
         buttonStart.setDisable(false);
         buttonStop.setDisable(true);
@@ -70,8 +82,5 @@ public class MainWindowController implements Initializable {
         textLog.appendText("[" + timestamp + "] " + msg + "\n");
     }
 
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("In MainWindowController");
-        manager = new IHMMainServerManager();
-    }
+
 }

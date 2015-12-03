@@ -17,9 +17,16 @@ import java.util.List;
  * Created by leclercvictor on 24/11/2015.
  */
 public class InterData implements InterfaceMainToData {
+
+    private IHMMainClientManager managerMain;
+
+    public InterData(IHMMainClientManager mngMain) {
+        managerMain = mngMain;
+    }
+
     @Override
     public void remoteUserConnected(UserLight remoteUser) {
-        IHMMainClientManager.getControllerMain().getMainWindowController().addUser(remoteUser);
+        managerMain.getControllerMain().getMainWindowController().addUser(remoteUser);
     }
 
     @Override
@@ -29,7 +36,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void remoteUserDisconnected(UserLight remoteUser) {
-        IHMMainClientManager.getControllerMain().getMainWindowController().removeUser(remoteUser);
+        managerMain.getControllerMain().getMainWindowController().removeUser(remoteUser);
     }
 
     @Override
@@ -49,7 +56,7 @@ public class InterData implements InterfaceMainToData {
         ObservableList<String> items = FXCollections.observableArrayList(received_list);
 
         IHMMainClientManager.getControllerMain().getMainWindowController().getListViewConnectedUsers().setItems(items);*/
-        IHMMainClientManager.getControllerMain().getMainWindowController().addUsers(userList);
+        managerMain.getControllerMain().getMainWindowController().addUsers(userList);
 
     }
 
@@ -84,9 +91,4 @@ public class InterData implements InterfaceMainToData {
     }
 
 
-    private IHMMainClientManager managerMain;
-
-    public InterData(IHMMainClientManager mngMain) {
-        managerMain = mngMain;
-    }
 }

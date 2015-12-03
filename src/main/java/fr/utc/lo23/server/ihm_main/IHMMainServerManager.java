@@ -1,8 +1,10 @@
 package fr.utc.lo23.server.ihm_main;
 
+import fr.utc.lo23.client.ihm_table.controllers.MainController;
 import fr.utc.lo23.server.data.DataManagerServer;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.data.ServerDataFromCom;
+import fr.utc.lo23.server.ihm_main.controllers.MainControllerServer;
 import fr.utc.lo23.server.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
 import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
@@ -17,10 +19,6 @@ public class IHMMainServerManager {
 
     // Nos interfaces
     private InterMain interMain;
-
-    // A quoi sert cette interface ??
-    // private ServerWindowInterface interMainToCom;
-
 
     // Interfaces à récupérer
     private InterfaceComToMain interfaceComToMain;
@@ -73,12 +71,18 @@ public class IHMMainServerManager {
         this.windowController = windowController;
     }
 
+
+
     public IHMMainServerManager() {
-        // TODO: au prochain merge
+        // création des managers
+        managerData = new DataManagerServer();
+        managerCom = new NetworkManagerServer();
 
-        //managerData = new DataManagerServer();
-        //managerCom = new NetworkManagerServer();
-
+        //Link des interfaces
+        this.setInterfaceComToMain(managerCom);
+        managerCom.setDataInstance(managerData.getInterfaceFromCom());
+        managerCom.setInterMain(this.getInterMain());
+        managerData.setInterfaceFromCom(managerCom.getDataInstance());
     }
 
 

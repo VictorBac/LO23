@@ -11,7 +11,6 @@ public class InterMain implements ServerWindowInterface {
     private  IHMMainServerManager managerMain;
 
 
-    @Override
     public void addLogLine(String line) {
         managerMain.addLogLine(line);
     }

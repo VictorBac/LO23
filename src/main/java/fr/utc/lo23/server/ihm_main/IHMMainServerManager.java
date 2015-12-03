@@ -6,6 +6,7 @@ import fr.utc.lo23.server.data.ServerDataFromCom;
 import fr.utc.lo23.server.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
 import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
+import fr.utc.lo23.server.network.InterfaceComToMain;
 import fr.utc.lo23.server.network.InterfaceServer;
 import fr.utc.lo23.server.network.NetworkManagerServer;
 
@@ -14,75 +15,69 @@ import fr.utc.lo23.server.network.NetworkManagerServer;
  */
 public class IHMMainServerManager {
 
-    public static ServerWindowInterface getInterMainToCom() {
-        return interMainToCom;
+    // Nos interfaces
+    private InterMain interMain;
+
+    // A quoi sert cette interface ??
+    // private ServerWindowInterface interMainToCom;
+
+
+    // Interfaces à récupérer
+    private InterfaceComToMain interfaceComToMain;
+
+    // Managers
+    private DataManagerServer managerData;
+    private NetworkManagerServer managerCom;
+
+
+    // Getters et Setters
+
+    public InterMain getInterMain() {
+        return interMain;
     }
 
-    public static InterfaceServer getInterfaceComToData() {
-        return interfaceComToData;
+    public void setInterMain(InterMain interMain) {
+        this.interMain = interMain;
     }
 
-    public static InterfaceServerDataFromCom getInterfaceDataToCom() {
-        return interfaceDataToCom;
+    public InterfaceComToMain getInterfaceComToMain() {
+        return interfaceComToMain;
     }
 
-    public static DataManagerServer getManagerData() {
-        return managerData;
+    public void setInterfaceComToMain(InterfaceComToMain interfaceComToMain) {
+        this.interfaceComToMain = interfaceComToMain;
     }
 
-    public static NetworkManagerServer getManagerCom() {
+    public void setManagerCom(NetworkManagerServer managerCom) {
+        this.managerCom = managerCom;
+    }
+
+    public void setManagerData(DataManagerServer managerData) {
+        this.managerData = managerData;
+    }
+
+    public NetworkManagerServer getManagerCom() {
         return managerCom;
     }
 
-    /**
-     * Interfaces from Main
-     */
-    private static ServerWindowInterface interMainToCom;
-
-    /**
-     * Interfaces from COM
-     */
-    private static InterfaceServer interfaceComToData;
-
-    /**
-     * Interfaces from DATA
-     */
-    private static InterfaceServerDataFromCom interfaceDataToCom;
-
-
-    /**
-     * Managers
-     */
-    private static DataManagerServer managerData;
-    private static NetworkManagerServer managerCom;
-
+    public DataManagerServer getManagerData() {
+        return managerData;
+    }
 
     /**
      * MainWindowController
      */
-    private static MainWindowController windowController;
+    private MainWindowController windowController;
 
-    public static void setWindowController(MainWindowController windowController) {
-        IHMMainServerManager.windowController = windowController;
+    public void setWindowController(MainWindowController windowController) {
+        this.windowController = windowController;
     }
 
     public IHMMainServerManager() {
+        // TODO: au prochain merge
 
-        managerData = new DataManagerServer();
-
-        // TODO quand ils auront changé constructeur et ajouté setters (interfaces)
-        // managerCom = new NetworkManagerServer();
-
-        interMainToCom = new InterMain(this);
-
-        // TODO voir précédent
-//        interfaceComToData = new
-
-        interfaceDataToCom = new ServerDataFromCom(managerData);
-
-
-        // TODO quand ils auront changé le type
-//        managerData.setInterfaceFromCom(interfaceDataToCom);
+        //managerData = new DataManagerServer();
+        //managerCom = new NetworkManagerServer();
 
     }
 

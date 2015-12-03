@@ -70,7 +70,6 @@ public class MainWindowController implements Initializable {
         textLog.appendText("[" + timestamp + "] " + msg + "\n");
     }
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("In MainWindowController");
         manager = new IHMMainServerManager();

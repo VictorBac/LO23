@@ -53,13 +53,13 @@ public interface InterfaceDataFromIHMTable {
     public void confirmationCardReceived();
 
     /**
-     * method to replay an action
-     * @param action : action to replay
+     * method to reply an action
+     * @param action : action to reply
      */
-    public void replayAction(Action action, UserLight player);
+    public void replyAction(Action action);
 
     /**
-     * confirms reception of an action
+     * ask aconfirmation reception of an action
      * @param action : action to send
      */
     public void confirmationActionReceived(Action action);
@@ -70,5 +70,18 @@ public interface InterfaceDataFromIHMTable {
     public void confirmationEndTurn();
 
 
+    /**
+     * Transmit the "leave game" request
+     */
     public void transmitRequest();
+
+
+    /**
+     * Return the local user
+     * @return
+     */
+    public UserLight getUser();
+
+
+    public void quitGame();
 }

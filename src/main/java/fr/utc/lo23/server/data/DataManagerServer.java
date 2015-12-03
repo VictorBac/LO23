@@ -12,7 +12,7 @@ public class DataManagerServer {
 
     private static final String TAG = "DataManagerServer";
     private InterfaceServer interfaceToCom;
-    private ServerDataFromCom interfaceFromCom;
+    private InterfaceServerDataFromCom interfaceFromCom;
     private UserList users;
     private TableList tables;
 
@@ -33,11 +33,11 @@ public class DataManagerServer {
         return interfaceToCom;
     }
 
-    public void setInterfaceFromCom(ServerDataFromCom server){
+    public void setInterfaceFromCom(InterfaceServerDataFromCom server){
         this.interfaceFromCom = server;
     }
 
-    public ServerDataFromCom getInterfaceFromCom() {
+    public InterfaceServerDataFromCom getInterfaceFromCom() {
         return interfaceFromCom;
     }
 }

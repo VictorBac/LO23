@@ -19,14 +19,6 @@ public class RequestListUserMessage extends Message {
     }
 
     /**
-     * Generic process
-     */
-    @Override
-    public void process() {
-
-    }
-
-    /**
      * Send the list of connected users to concerned thread.
      * @param threadServer
      */

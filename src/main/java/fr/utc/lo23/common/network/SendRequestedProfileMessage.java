@@ -15,11 +15,6 @@ public class SendRequestedProfileMessage  extends Message {
     public SendRequestedProfileMessage(User u) {reqProfile=u;}
 
     @Override
-    public void process() {
-
-    }
-
-    @Override
     public void process(ConnectionThread threadServer) {
 
     }

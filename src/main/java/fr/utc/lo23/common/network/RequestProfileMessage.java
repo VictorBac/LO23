@@ -14,11 +14,6 @@ public class RequestProfileMessage extends Message {
     public RequestProfileMessage(UserLight u) {profile=u;}
 
     @Override
-    public void process() {
-
-    }
-
-    @Override
     public void process(ConnectionThread threadServer) {
         //TODO remplacer par le bon nom de méthode
         //User Profile threadServer.getMyServer().getNetworkManager().getDataInstance().getUserFromUserLight();

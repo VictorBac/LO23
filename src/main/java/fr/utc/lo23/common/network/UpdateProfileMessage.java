@@ -12,7 +12,7 @@ public class UpdateProfileMessage extends Message {
     private User newProfile;
 
     public UpdateProfileMessage(User profile) {newProfile=profile;}
-    
+
     @Override
     public void process(ConnectionThread threadServer) {
         threadServer.getMyServer().getNetworkManager().getDataInstance().updateProfile(newProfile);

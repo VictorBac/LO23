@@ -20,6 +20,7 @@ public class UpdateProfileMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
+        threadServer.getMyServer().getNetworkManager().getDataInstance().updateProfile(newProfile);
     }
 
     @Override

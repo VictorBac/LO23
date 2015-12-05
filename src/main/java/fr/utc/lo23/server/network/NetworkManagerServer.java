@@ -11,6 +11,8 @@ import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
 import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
+import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
+import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
@@ -19,9 +21,11 @@ import java.util.ArrayList;
  *
  * @author Jean-Côme
  */
-public class NetworkManagerServer implements InterfaceServer {
+public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     /* Modules instance, initiate by IHM module with setters */
-    private InterfaceServerDataFromCom dataInstance;
+    private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
+    //private IhmManagerServer IhmInstance; TODO: Avoir le manager !
+    private ServerWindowInterface interMain;
 
     /* Attributes */
     private PokerServer server = null;
@@ -39,6 +43,14 @@ public class NetworkManagerServer implements InterfaceServer {
 
     public void setDataInstance(InterfaceServerDataFromCom dataInstance) {
         this.dataInstance = dataInstance;
+    }
+
+    public ServerWindowInterface getInterMain() {
+        return interMain;
+    }
+
+    public void setInterMain(InterMain interMain) {
+        this.interMain = interMain;
     }
 
     /* == METHODES IMPLEMENTATION == */

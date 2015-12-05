@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.Card;
+import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,14 +21,18 @@ public class CombinationCalculatorTest {
         calculator = new CombinationCalculator();
 
         cards = new ArrayList<Card>();
-        cards.add(new Card(13,'C'));
-        cards.add(new Card(10,'C'));
-        cards.add(new Card(10,'S'));
-        cards.add(new Card(9,'C'));
-        cards.add(new Card(7,'C'));
-        cards.add(new Card(6,'H'));
-        cards.add(new Card(2,'C'));
-
+        try {
+            cards.add(new Card(14,'C'));
+            cards.add(new Card(13,'C'));
+            cards.add(new Card(5,'S'));
+            cards.add(new Card(4,'C'));
+            cards.add(new Card(3,'C'));
+            cards.add(new Card(3,'C'));
+            cards.add(new Card(2,'C'));
+        } catch (CardFormatInvalidException e) {
+            e.printStackTrace();
+        }
+        
         cardValues = new ArrayList<Integer>();
         for (int i = 0; i < cards.size(); i++) {
             cardValues.add(cards.get(i).getValue());
@@ -55,6 +60,16 @@ public class CombinationCalculatorTest {
     }
 
     @Test
+    public void testTwoPair() throws Exception {
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 5, 5}));
+        test = calculator.hasOnePair(test);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{3, 9, 9, 5, 5, 12}));
+        assertEquals(test, expected);
+    }
+
+    @Test
     public void testThree() throws Exception {
         ArrayList<Integer> test = new ArrayList<Integer>();
         test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 8, 5}));
@@ -65,13 +80,20 @@ public class CombinationCalculatorTest {
     }
 
     @Test
-    public void testFour() throws Exception {
+    public void testStraight() throws Exception {
         ArrayList<Integer> test = new ArrayList<Integer>();
-        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 9, 5}));
-        test = calculator.hasFour(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{7, 9, 9, 9, 9, 12}));
+        // test 1
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 7, 6}));
+        test = calculator.hasStraight(test);
+        expected.addAll(Arrays.asList(new Integer[]{5, 10, 9, 8, 7, 6}));
         assertEquals(expected, test);
+        // test 2
+        test.addAll(Arrays.asList(new Integer[]{14, 5, 4, 4, 4, 3, 2}));
+        test = calculator.hasStraight(test);
+        expected.addAll(Arrays.asList(new Integer[]{5, 5, 4, 3, 2, 1}));
+        assertEquals(expected, test);
+
     }
 
     @Test
@@ -83,6 +105,23 @@ public class CombinationCalculatorTest {
 
     }
 
+    @Test
+    public void testFour() throws Exception {
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 9, 9, 5}));
+        test = calculator.hasFour(test);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{8, 9, 9, 9, 9, 12}));
+        assertEquals(expected, test);
+    }
+
+    @Test
+    public void testStraightFlush() throws Exception {
+        ArrayList<Integer> test = calculator.hasFlush(cards);
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        expected.addAll(Arrays.asList(new Integer[]{9, 5, 4, 3, 2, 1}));
+        assertEquals(expected, test);
+    }
 
 
     @Test

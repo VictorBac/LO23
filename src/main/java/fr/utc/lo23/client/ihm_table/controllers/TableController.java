@@ -4,10 +4,7 @@ import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.ihm_table.TableUtils;
 import fr.utc.lo23.client.ihm_table.views.BetMoneyView;
 import fr.utc.lo23.client.ihm_table.views.PlayerView;
-import fr.utc.lo23.common.data.Game;
-import fr.utc.lo23.common.data.MessageChat;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
@@ -32,6 +29,7 @@ public class TableController {
     private HashMap<UserLight,BetMoneyController> betMoneyControllerMap;
     private ArrayList<PlayerController> controllersList; //This is used to find where you can seat
     private Image defaultImage;
+    private Action actionToFill;
 
     private boolean isHost = true;
 
@@ -61,7 +59,6 @@ public class TableController {
     }
 
     public void initialize(){
-        if(isHost) btnLaunchGame.setVisible(true);
         showActionBox();
         enableActionFold();
         enableActionCheck();
@@ -82,20 +79,29 @@ public class TableController {
         //Affichage des joueurs déjà présents, dont moi
         for(int i=0;i<table.getListPlayers().getListUserLights().size();i++)
         {
-            addPlayer(table.getListPlayers().getListUserLights().get(i));
+            addPlayer(i, table.getListPlayers().getListUserLights().get(i), false);
         }
     }
 
     public void addPlayer(UserLight user) {
-        addPlayer(getFirstAvailableSeat(), user);
+        addPlayer(getFirstAvailableSeat(), user, true);
+        if(isHost && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
+            btnLaunchGame.setVisible(true);
     }
 
-    public void addPlayer(int id, UserLight user) {
+    /**
+     * Add a player to the game
+     * @param id
+     * @param user
+     * @param showLog : this boolean is used to show log only after the player joined the game
+     */
+    public void addPlayer(int id, UserLight user, boolean showLog) {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();
         PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
         playerControllerMap.put(user, playerController);
-        controllersList.set(id,playerController);
+        controllersList.set(id, playerController);
+        if (showLog) addLogEntry(user.getPseudo()+" a rejoint la salle.");
     }
 
     public void chatInitializer(){
@@ -146,7 +152,10 @@ public class TableController {
             return;
         }
         playerControllerMap.remove(user);
+        addLogEntry(user.getPseudo() + " a quitté la partie.");
         controllersList.set(controllersList.indexOf(playerController), null);
+        if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
+            btnLaunchGame.setVisible(false);
         //Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
         if(betMoneyControllerMap.get(user)!=null)
             betMoneyControllerMap.get(user).hideBetMoneyBox();
@@ -201,6 +210,14 @@ public class TableController {
     @FXML
     private TextField popupAmountInput;
 
+
+    @FXML
+    private TitledPane popupLeave;
+    @FXML
+    private Button popupLeaveAccept;
+    @FXML
+    private Button popupLeaveRefuse;
+
     @FXML
     private TitledPane popupReady;
     @FXML
@@ -249,6 +266,8 @@ public class TableController {
         actionBox.setVisible(false);
     }
 
+    public void saveActionToFill(Action actionToFill) { this.actionToFill = actionToFill; }
+
     public void enableActionFold(){
         actionFold.getStyleClass().remove("action_fold_off");
         actionFold.getStyleClass().add("active");
@@ -289,12 +308,16 @@ public class TableController {
         actionBet.getStyleClass().remove("action_bet_off");
         actionBet.getStyleClass().add("active");
         actionBet.getStyleClass().add("action_bet_on");
+        actionBetMoneySelector.setMin(0);   //TODO : get last raise
+        actionBetMoneySelector.setMax(100); //TODO: get allin value (self.money)
+        actionBetMoneySelector.setVisible(true);
     }
 
     public void disableActionBet(){
         actionBet.getStyleClass().remove("action_bet_on");
         actionBet.getStyleClass().remove("active");
         actionBet.getStyleClass().add("action_bet_off");
+        actionBetMoneySelector.setVisible(false);
     }
 
     public void enableActionAllin(){
@@ -308,6 +331,70 @@ public class TableController {
         actionAllin.getStyleClass().remove("active");
         actionAllin.getStyleClass().add("action_allin_off");
     }
+
+    public void enableAction(EnumerationAction action) {
+        if(action == EnumerationAction.allIn) enableActionAllin();
+        else if(action == EnumerationAction.bet) enableActionBet();
+        else if(action == EnumerationAction.check) enableActionCheck();
+        else if(action == EnumerationAction.fold) enableActionFold();
+        else if(action == EnumerationAction.call) enableActionFollow();
+    }
+
+    public void disableAllActions() {
+        disableActionAllin();
+        disableActionBet();
+        disableActionCheck();
+        disableActionFold();
+        disableActionFollow();
+    }
+
+    @FXML
+    public void fold(javafx.event.ActionEvent event) {
+        if(actionFold.getStyleClass().contains("active")) {
+            //TODO : "quand ces connards auront mis des setters"
+            // actionToFill.set
+            System.out.println("DODO");
+
+        }
+    }
+
+    @FXML
+    public void check(javafx.event.ActionEvent event) {
+        if (actionCheck.getStyleClass().contains("active")) {
+            //TODO : "quand ces *** auront mis des setters"
+            // actionToFill.set
+            System.out.println("CHECK");
+
+        }
+    }
+
+    @FXML
+    public void call(javafx.event.ActionEvent event) {
+        if (actionFollow.getStyleClass().contains("active")) {
+            //TODO : "quand ces *** auront mis des setters"
+            // actionToFill.set
+            System.out.println("APPEL");
+
+        }
+    }
+
+    @FXML
+    public void allin(javafx.event.ActionEvent event) {
+        if (actionAllin.getStyleClass().contains("active")) {
+            //TODO : "quand ces *** auront mis des setters"
+            // actionToFill.set
+            System.out.println("ALLIN");
+
+        }
+    }
+
+    @FXML
+    public void bet(javafx.event.ActionEvent event) {
+        if(actionBet.getStyleClass().contains("active")) {
+
+        }
+    }
+
 
     public void addLogEntry(String msg){
         logView.getItems().add(msg);
@@ -356,6 +443,15 @@ public class TableController {
         hidePopupReady();
     }
 
+    @FXML
+    public void showPopupLeave(javafx.event.ActionEvent event) { popupLeave.setVisible(true); }
 
+    @FXML
+    public void sendLeaveAccept(javafx.event.ActionEvent event) {
+       // TODO :  ihmTable.getDataInterface(). data notify self leave game
+        ihmTable.getMainInterface().quitGame();
+    }
 
+    @FXML
+    public void sendLeaveRefuse(javafx.event.ActionEvent event) { popupLeave.setVisible(false); }
 }

@@ -88,10 +88,11 @@ public class TableList implements Serializable {
         return this.getListTable().indexOf(table);
     }
 
+    //TODO
     /**
      * Find the index of the table which got idTable as UUID, if contained in the list
-     * @param idTable : UUID of the Table to return
-     * @return : Table if found, null otherwise
+     * @param idTable : UUID of the Table to find
+     * @return : index if found, null otherwise
      */
     public int getTableById(UUID idTable){
         int index = 0;

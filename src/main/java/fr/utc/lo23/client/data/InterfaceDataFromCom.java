@@ -38,7 +38,8 @@ public interface InterfaceDataFromCom {
     public void notifyNewTable(Table tableCreatedOnServer);
 
     /**
-     * Method to call when a remote user is connected on a specific Table
+     * Method to call when a remote user is connected on a specific Table,
+     * Warning :  DO Not use it for local user (=userWhoJoinTheTable)
      * @param idTable Table on which the remote user connect to
      * @param userWhoJoinTheTable the UserLight for the remote User
      * @param typeOfUserWhoJoinTable type of User Spectator/Player

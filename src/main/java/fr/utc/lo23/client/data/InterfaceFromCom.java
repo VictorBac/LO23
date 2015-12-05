@@ -42,7 +42,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void remoteUserDisonnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserDisonnected");
-            dManagerClient.getListUsersLightLocal().remove(userLightDistant); //TODO add log for deconnection
+            dManagerClient.getListUsersLightLocal().remove(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {
             dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
             //search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
-            //TODO dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getListTable().get(dManagerClient.getListTablesLocal().getTableById(idTable)),userWhoJoinTheTable,typeOfUserWhoJoinTable);
+             dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable),userWhoJoinTheTable,typeOfUserWhoJoinTable);
 
         } catch (TableException e) {
             Console.log(TAG +"User already on the table");
@@ -71,41 +71,37 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
     public void transmitLeaveGame(UUID idTable, UserLight userLightDistant, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
-        int indexOfTableInTableList = dManagerClient.getListTablesLocal().getTableById(idTable);
+
         Console.log(TAG +"transmitLeaveGame()");
         if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
             try {
-                dManagerClient.getListTablesLocal().getListTable().get(indexOfTableInTableList).playerLeaveTable(userLightDistant);
-               // dManagerClient.getTableLocal().playerLeaveTable(userLightDistant); //TODO check in if it is necessary, maybe already done since it it a reference
+                dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightDistant);
+                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightDistant,typeOfUserWhoLeftTable);
             } catch (TableException e) {
                 e.printStackTrace();
             }
         }
         else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
             try {
-                dManagerClient.getListTablesLocal().getListTable().get(indexOfTableInTableList).spectatorLeaveTable(userLightDistant);
-                //dManagerClient.getTableLocal().spectatorLeaveTable(userLightDistant);//TODO check in if it is necessary, maybe already done since it it a reference
+                dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightDistant);
+                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightDistant,typeOfUserWhoLeftTable);
             } catch (TableException e) {
                 e.printStackTrace();
             }
-
         }
-        //TODO dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getListTable().get(indexOfTableInTableList),userWhoJoinTheTable,typeOfUserWhoJoinTable);
+
     }
 
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
             //TODO see if necessary to contact ihm main or ihm table
         try {
-            dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(),modeUserLocal);
+            dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
+            dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
         } catch (TableException e) {
             e.printStackTrace();
         }
-        //TODO dManagerClient.getInterToIHMTable().showTable();
     }
 
-    public UserLightList getPlayerList() {
-        return null;
-    }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
         //TODO test
@@ -119,7 +115,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"currentTables()");
         dManagerClient.getListTablesLocal().setListTable(listOfTableListOnServer);
         dManagerClient.getInterToIHMMain().currentTables(listOfTableListOnServer);
-        //TODO missing IHM main interface for table list
     }
 
     public UserLight getUserLightLocal() {
@@ -127,9 +122,18 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void stockCards(PlayerHand playerHandUserLocal) {
-
-        //TODO see with ihm table if we send all cards at the beginning of the game or at the end of a hand
+        Console.log(TAG +"stockCards()");
+        dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand().add(playerHandUserLocal);
+        dManagerClient.getInterToIHMTable().notifyPlayersCards(dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand());
+        //we send first cards at the beginning of the hand from the local user and
     }
+
+    public void transmitMessage(MessageChat messageSendByRemoteUser) {
+        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser);
+        dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
+    }
+
+
 
     public void askAction(ArrayList<Action> listActionPossibleForUserLocal) {
 
@@ -147,10 +151,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     }
 
-    public void transmitMessage(MessageChat messageSendByRemoteUser) {
-        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser);
-        dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
+    public UserLightList getPlayerList() {
+        return null;
     }
+
+
 
 /*
     public void userJoinedTable() { //Useless

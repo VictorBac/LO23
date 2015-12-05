@@ -23,15 +23,9 @@ import java.util.ArrayList;
  */
 public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     /* Modules instance, initiate by IHM module with setters */
-<<<<<<< HEAD
-    private InterfaceServerDataFromCom dataInstance;
-||||||| merged common ancestors
     private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
     //private IhmManagerServer IhmInstance; TODO: Avoir le manager !
-=======
-    private InterfaceServerDataFromCom dataInstance;
     private ServerWindowInterface interMain;
->>>>>>> ihm-main
 
     /* Attributes */
     private PokerServer server = null;

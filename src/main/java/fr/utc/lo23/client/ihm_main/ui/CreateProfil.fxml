@@ -16,7 +16,7 @@
       <Label layoutX="137.0" layoutY="415.0" text="Nom" textAlignment="RIGHT" />
       <Label layoutX="142.0" layoutY="500.0" text="Age" textAlignment="RIGHT" />
       <Label layoutX="134.0" layoutY="587.0" text="Email" textAlignment="RIGHT" />
-      <Button fx:id="cancel" layoutX="321.0" layoutY="675.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="cancel" layoutX="321.0" layoutY="675.0" mnemonicParsing="false" onAction="#didClickCancelButton" text="Cancel" />
       <Button fx:id="create" layoutX="518.0" layoutY="675.0" mnemonicParsing="false" onAction="#createNewUser" text="Create" />
       <TextField fx:id="username" layoutX="321.0" layoutY="49.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
       <TextField fx:id="firstname" layoutX="321.0" layoutY="319.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />

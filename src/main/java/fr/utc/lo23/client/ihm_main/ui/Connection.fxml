@@ -38,11 +38,11 @@
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
                 <ListView id="listViewServers" fx:id="listViewServers" layoutX="369.0" layoutY="55.0" prefHeight="229.0" prefWidth="190.0" />
-                <Button fx:id="buttonAddServer" layoutX="509.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" text="+">
+                <Button fx:id="buttonAddServer" layoutX="509.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didClickAddServerButton" prefHeight="23.0" prefWidth="23.0" text="+">
                     <font>
                         <Font name="System Bold" size="9.0" />
                     </font></Button>
-                <Button fx:id="buttonRemoveServer" layoutX="536.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" text="-">
+                <Button fx:id="buttonRemoveServer" layoutX="536.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didClickRemoveServerButton" prefHeight="23.0" prefWidth="23.0" text="-">
                     <font>
                         <Font name="System Bold" size="9.0" />
                     </font></Button>

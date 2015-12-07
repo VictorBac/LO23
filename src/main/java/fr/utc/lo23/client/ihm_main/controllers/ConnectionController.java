@@ -1,6 +1,5 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
-import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
@@ -52,11 +51,10 @@ public class ConnectionController extends BaseController {
             mController.userLoggedIn();
 
         } catch (LoginNotFoundException e) {
-            // TODO
-            e.printStackTrace();
+            mController.showErrorPopup("Error", "Nom d'utilisateur inexistant sur le poste.");
+
         } catch (WrongPasswordException e) {
-            // TODO
-            e.printStackTrace();
+            mController.showErrorPopup("Error", "Mot de passe incorrect.");
         }
 
     }

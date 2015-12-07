@@ -78,4 +78,15 @@ public class ConnectionController extends BaseController {
         mController.ClickCreateProfil();
 
     }
+
+    @FXML
+    void didClickAddServerButton(ActionEvent event) {
+        mController.showAddServerWindow();
+    }
+
+    @FXML
+    void didClickRemoveServerButton(ActionEvent event) {
+        // TODO appeler méthode de interface Data pour supprimer server
+        // rafraichir la liste
+    }
 }

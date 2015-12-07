@@ -38,13 +38,13 @@
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
                 <ListView id="listViewServers" fx:id="listViewServers" layoutX="369.0" layoutY="55.0" prefHeight="229.0" prefWidth="190.0" />
-                <Button layoutX="418.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="+">
+                <Button fx:id="buttonAddServer" layoutX="509.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" text="+">
                     <font>
-                        <Font size="13.0" />
+                        <Font name="System Bold" size="9.0" />
                     </font></Button>
-                <Button layoutX="493.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="-">
+                <Button fx:id="buttonRemoveServer" layoutX="536.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="23.0" text="-">
                     <font>
-                        <Font size="13.0" />
+                        <Font name="System Bold" size="9.0" />
                     </font></Button>
                 <Label layoutX="429.0" layoutY="55.0" style="-fx-background-color: rgb(128, 21, 21);" text="Serveurs">
                     <font>

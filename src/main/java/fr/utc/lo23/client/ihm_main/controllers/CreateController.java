@@ -81,6 +81,11 @@ public class CreateController extends BaseController {
 
     }
 
+    @FXML
+    void didClickCancelButton(ActionEvent event) {
+        mController.showConnectionWindow();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

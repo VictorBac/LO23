@@ -25,9 +25,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         this.dManagerClient = dManagerClient;
     }
 
-    public void updateStats(Stats statsLocalUser) {
 
-    }
 
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
@@ -134,6 +132,16 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
 
+    public void remoteUserProfile(User profileReturnedByTheServer){
+        dManagerClient.getInterToIHMMain();
+    }
+
+    public void updateStats(Stats statsLocalUser) {
+
+        //TODO if this the correct way to change the stats or add the latest stats
+        dManagerClient.getUserLocal().setStatsUser(statsLocalUser);
+        //TODO ask IHM Main to implement an interface to for notifying the player that its Stats has changed
+    }
 
     public void askAction(ArrayList<Action> listActionPossibleForUserLocal) {
 

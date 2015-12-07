@@ -63,7 +63,7 @@ public class MainWindowController {
             int portNumber = Integer.parseInt(fieldPort.getText());
             manager.getInterfaceComToMain().start(portNumber);
 
-            addTextLog("Starting server...");
+            addTextLog("Starting server on port " + portNumber + "...");
             fieldPort.setDisable(true);
             buttonStart.setDisable(true);
             buttonStop.setDisable(false);

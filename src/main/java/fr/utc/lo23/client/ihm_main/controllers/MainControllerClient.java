@@ -43,7 +43,7 @@ public class MainControllerClient extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         pmStage = primaryStage;
-        connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
+        showConnectionWindow();
     }
 
 
@@ -55,6 +55,16 @@ public class MainControllerClient extends Application {
         createProfileController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml", "Création de profile");
     }
 
+
+    public void showAddServerWindow()
+    {
+        instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/AddServer.fxml", "Ajouter un serveur");
+    }
+
+    public void showConnectionWindow()
+    {
+        connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
+    }
 
 
 

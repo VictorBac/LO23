@@ -22,4 +22,5 @@ public interface InterfaceMainToData {
     void currentTables(List<Table> currentTables);
     void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type);
     void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type);
+    void userStatsUpdated(UserLight user, Stats st);
 }

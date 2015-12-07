@@ -20,7 +20,7 @@
                      <tooltip>
                         <Tooltip text="Se coucher" />
                      </tooltip></Button>
-                     <Button fx:id="actionCheck" layoutX="60.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <Button fx:id="actionCheck" layoutX="60.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#check" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_check_off" />
@@ -28,7 +28,7 @@
                      <tooltip>
                         <Tooltip text="Check" />
                      </tooltip></Button>
-                     <Button fx:id="actionFollow" layoutX="108.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <Button fx:id="actionCall" layoutX="101.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#call" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_follow_off" />
@@ -36,7 +36,7 @@
                      <tooltip>
                         <Tooltip text="Suivre" />
                      </tooltip></Button>
-                     <Button fx:id="actionBet" layoutX="136.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <Button fx:id="actionBet" layoutX="136.0" layoutY="78.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#bet" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_bet_off" />
@@ -44,7 +44,7 @@
                      <tooltip>
                         <Tooltip text="Relancer" />
                      </tooltip></Button>
-                     <Button fx:id="actionAllin" layoutX="128.0" layoutY="129.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0">
+                     <Button fx:id="actionAllin" layoutX="128.0" layoutY="129.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#allIn" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
                         <String fx:value="action_allin_off" />

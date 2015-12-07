@@ -81,7 +81,7 @@ public class TableController {
         showActionBox();
         enableActionFold();
         enableActionCheck();
-        enableActionFollow();
+        enableActionCall();
         enableActionBet();
         enableActionAllin();
         addLogEntry("Vous avez rejoint la salle.");
@@ -214,7 +214,7 @@ public class TableController {
     @FXML
     private Button actionCheck;
     @FXML
-    private Button actionFollow;
+    private Button actionCall;
     @FXML
     private Button actionBet;
     @FXML
@@ -309,16 +309,16 @@ public class TableController {
         actionCheck.getStyleClass().add("action_check_off");
     }
 
-    public void enableActionFollow(){
-        actionFollow.getStyleClass().remove("action_follow_off");
-        actionFollow.getStyleClass().add("active");
-        actionFollow.getStyleClass().add("action_follow_on");
+    public void enableActionCall(){
+        actionCall.getStyleClass().remove("action_call_off");
+        actionCall.getStyleClass().add("active");
+        actionCall.getStyleClass().add("action_call_on");
     }
 
-    public void disableActionFollow(){
-        actionFollow.getStyleClass().remove("action_follow_on");
-        actionFollow.getStyleClass().remove("active");
-        actionFollow.getStyleClass().add("action_follow_off");
+    public void disableActionCall(){
+        actionCall.getStyleClass().remove("action_call_on");
+        actionCall.getStyleClass().remove("active");
+        actionCall.getStyleClass().add("action_call_off");
     }
 
     public void enableActionBet(){
@@ -354,7 +354,7 @@ public class TableController {
         else if(action == EnumerationAction.bet) enableActionBet();
         else if(action == EnumerationAction.check) enableActionCheck();
         else if(action == EnumerationAction.fold) enableActionFold();
-        else if(action == EnumerationAction.call) enableActionFollow();
+        else if(action == EnumerationAction.call) enableActionCall();
     }
 
     public void disableAllActions() {
@@ -362,7 +362,7 @@ public class TableController {
         disableActionBet();
         disableActionCheck();
         disableActionFold();
-        disableActionFollow();
+        disableActionCall();
     }
 
     @FXML
@@ -387,7 +387,7 @@ public class TableController {
 
     @FXML
     public void call(javafx.event.ActionEvent event) {
-        if (actionFollow.getStyleClass().contains("active")) {
+        if (actionCall.getStyleClass().contains("active")) {
             //TODO : "quand ces *** auront mis des setters"
             //actionToFill.setAction(EnumerationAction.call);
             System.out.println("APPEL");
@@ -396,7 +396,7 @@ public class TableController {
     }
 
     @FXML
-    public void allin(javafx.event.ActionEvent event) {
+    public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
             //TODO : "quand ces *** auront mis des setters"
             //actionToFill.setAction(EnumerationAction.allIn);

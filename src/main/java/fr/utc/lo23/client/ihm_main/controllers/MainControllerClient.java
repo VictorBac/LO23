@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,15 +58,15 @@ public class MainControllerClient extends Application {
 
 
 
-    private <T extends BaseController>T instantiateWindow(String ressource, String windowTitle)
+    private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)
     {
         Parent root = null;
 
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ressource));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resource));
             root = (Parent) fxmlLoader.load();
-            T controller = fxmlLoader.getController();
+            T controller =  fxmlLoader.getController();
             controller.setMainController(this);
             pmStage.setTitle(windowTitle);
             Scene scene = new Scene(root);
@@ -83,5 +84,13 @@ public class MainControllerClient extends Application {
         return null;
     }
 
+
+    public void showErrorPopup(String title, String msg)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 }
 

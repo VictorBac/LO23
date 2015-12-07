@@ -1,8 +1,10 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
+import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.common.data.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,38 +41,14 @@ public class ConnectionController extends BaseController {
     void didButtonConnectClick(ActionEvent event) throws IOException {
         System.out.println("didButtonConnectClick");
 
-//        Node node=(Node) event.getSource();
-//        Stage stage=(Stage) node.getScene().getWindow();
-//        URL tmp = getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/principal.fxml");
-//        System.out.println(tmp.toString());
-//        Parent root = FXMLLoader.load(tmp);/* Exception */
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
-//        root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
-//        stage.show();
-
-
-        //interfromIHMMAIN.logUser(log, pass);
-
-
-
-//        List<String> listerecue = new ArrayList<String>();
-//        listerecue.add("Premier");
-//        listerecue.add("Deuxieme");
-//
-//        ObservableList<String> items = FXCollections.observableArrayList(listerecue);
-
-        //ObservableList<String> items = FXCollections.observableArrayList("Serveur 1", "Cerberus 2", "World 3", "Europe 3");
-//        listViewServers.setItems(items);
-
 
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
 
 
         try { // User logged in
-            mController.getManagerMain().getInterDataToMain().logUser(login,passwd);
+            IHMMainClientManager manager = mController.getManagerMain();
+            manager.getInterDataToMain().logUser(login,passwd);
             mController.userLoggedIn();
 
         } catch (LoginNotFoundException e) {

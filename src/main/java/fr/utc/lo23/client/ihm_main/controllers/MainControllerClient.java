@@ -14,17 +14,9 @@ import java.io.IOException;
 
 public class MainControllerClient extends Application {
 
-
-    public static void main(String[] args) {
-        IHMMainClientManager manager = new IHMMainClientManager();
-        managerMain = manager;
-        launch(args);
-    }
-
-
     private Stage pmStage;
 
-    public static IHMMainClientManager managerMain;
+    private static IHMMainClientManager managerMain;
 
     public IHMMainClientManager getManagerMain(){
         return managerMain;
@@ -38,6 +30,12 @@ public class MainControllerClient extends Application {
     private ConnectionController connectionWindowController;
     private CreateController createProfileController;
 
+
+    public static void main(String[] args) {
+        IHMMainClientManager manager = new IHMMainClientManager();
+        managerMain = manager;
+        launch(args);
+    }
 
 
     @Override

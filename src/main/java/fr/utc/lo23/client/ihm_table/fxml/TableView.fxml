@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@../css/stylesheet_table.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.TableController">
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@../css/stylesheet_table.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.TableController">
    <children>
       <Pane fx:id="tablePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1020.0" styleClass="table">
          <children>
@@ -57,7 +57,7 @@
                              <Image url="@../images/icon_action.png" />
                          </image>
                      </ImageView>
-                  <Slider fx:id="actionBetMoneySelector" layoutX="190.0" layoutY="92.0" prefHeight="17.0" prefWidth="140.0" />
+                  <Slider fx:id="actionBetMoneySelector" layoutX="190.0" layoutY="92.0" max="150.0" prefHeight="17.0" prefWidth="140.0" />
                   <Label fx:id="betLabel" layoutX="215.0" layoutY="70.0" text="Label" />
                  </children>
              </Pane>

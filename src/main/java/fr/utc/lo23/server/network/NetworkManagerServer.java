@@ -1,13 +1,18 @@
 package fr.utc.lo23.server.network;
 
+import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
 import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
+import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
+import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
+import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
@@ -16,22 +21,19 @@ import java.util.ArrayList;
  *
  * @author Jean-Côme
  */
-public class NetworkManagerServer implements InterfaceServer {
+public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     /* Modules instance, initiate by IHM module with setters */
     private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
     //private IhmManagerServer IhmInstance; TODO: Avoir le manager !
+    private ServerWindowInterface interMain;
 
     /* Attributes */
-    private PokerServer server;
+    private PokerServer server = null;
+    private Integer listeningPort = null;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerServer(int portToListen) {
-        try {
-            server = new PokerServer(this, portToListen);
-        } catch (NetworkFailureException e) {
-            e.printStackTrace();
-        }
-        server.start();
+    public NetworkManagerServer() {
+        listeningPort = Params.DEFAULT_SERVER_PORT;
     }
 
     /* == GETTERS AND SETTERS == */
@@ -43,7 +45,36 @@ public class NetworkManagerServer implements InterfaceServer {
         this.dataInstance = dataInstance;
     }
 
+    public ServerWindowInterface getInterMain() {
+        return interMain;
+    }
+
+    public void setInterMain(InterMain interMain) {
+        this.interMain = interMain;
+    }
+
     /* == METHODES IMPLEMENTATION == */
+    public void start(int portToListen) {
+        if(dataInstance == null)Console.log("Interface data non set dans network");
+        try {
+            server = new PokerServer(this, listeningPort);
+        }
+        catch (Exception e){
+            Console.log(e.getMessage());
+        }
+        server.start();
+    }
+
+    public void stop() {
+        try{
+            server.shutdown();
+        }
+        catch (Exception e){
+            Console.log(e.getMessage());
+        }
+
+    }
+
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException {
 
     }

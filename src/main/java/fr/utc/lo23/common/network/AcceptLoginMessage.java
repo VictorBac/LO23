@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
@@ -13,8 +14,12 @@ import java.util.ArrayList;
 public class AcceptLoginMessage extends Message{
 
     private ArrayList<UserLight> usersArray;
+    private ArrayList<Table> tablesArray;
 
-    public AcceptLoginMessage(ArrayList<UserLight> aUser) {usersArray=aUser;}
+    public AcceptLoginMessage(ArrayList<UserLight> aUser, ArrayList<Table> aTable) {
+        usersArray=aUser;
+        tablesArray=aTable;
+    }
 
     /**
      * Generic process (both server and client)
@@ -39,7 +44,17 @@ public class AcceptLoginMessage extends Message{
      */
     @Override
     public void process(ServerLink threadClient) {
+        for(UserLight us : usersArray){
+            if(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser().equals(us.getIdUser())){
+                usersArray.remove(us);
+            }
+        }
         threadClient.getNetworkManager().getDataInstance().currentConnectedUser(usersArray);
+        threadClient.getNetworkManager().getDataInstance().currentTables(tablesArray);
+        Console.log("liste User reçu");
+        for(UserLight u:usersArray){
+            Console.log(u.toString());
+        }
     }
 
 }

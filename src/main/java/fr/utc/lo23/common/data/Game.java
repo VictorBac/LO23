@@ -70,7 +70,7 @@ public class Game implements Serializable{
      * Method to know the current Hand
      * @return
      */
-    private Hand getCurrentHand(){
+    public Hand getCurrentHand(){
         return this.listHand.get(this.listHand.size()-1);
     }
     private ArrayList<UserLight> getPlayerList(){
@@ -147,7 +147,7 @@ public class Game implements Serializable{
      * Method to start the Game
       */
     public void startGame(){
-        this.timeStampStartOfTheGame= new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.statusOfTheGame = EnumerationStatusGame.playing;
 //TODO begin to distribute the cards
     }

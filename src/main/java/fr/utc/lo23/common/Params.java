@@ -5,7 +5,7 @@ package fr.utc.lo23.common;
  */
 public class Params {
     public static final String DEFAULT_SERVER_ADDRESS = "localhost";
-    public static final int DEFAULT_SERVER_PORT = 1902;
+    public static final int DEFAULT_SERVER_PORT = 1904;
 
     public static final int NB_MAX_USER = 100;
 }

@@ -1,5 +1,6 @@
 package fr.utc.lo23.server.network.main;
 
+import fr.utc.lo23.server.data.DataManagerServer;
 import fr.utc.lo23.server.network.NetworkManagerServer;
 
 /**
@@ -8,8 +9,9 @@ import fr.utc.lo23.server.network.NetworkManagerServer;
  */
 public class Main {
     public static void main(String[] args){
-        int portToListen = 1904;
-        NetworkManagerServer manager = new NetworkManagerServer(portToListen);
-
+        NetworkManagerServer manager = new NetworkManagerServer();
+        manager.start(1904);
+        DataManagerServer dataManServ = new DataManagerServer();
+        manager.setDataInstance(dataManServ.getInterfaceFromCom());
     }
 }

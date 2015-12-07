@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.*;
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
@@ -26,16 +27,21 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param password
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
-        User userLocal = (User) Serialization.deserializationObject(login);
+        //User userLocal = (User) Serialization.deserializationObject(login);
+        //TODO ligne précédente à remettre quand la creation de profil marchera, et ligne suivante à delete
+        User userLocal = new User(login, password);
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();
         // Check correctness of login and password
-        if (login.equals(loginLocal)) {
+        if (!login.equals(loginLocal)) {
             throw new LoginNotFoundException(login);
-        } else if (password.equals(passwordLocal)) {
+        } else if (!password.equals(passwordLocal)) {
             throw new WrongPasswordException();
         } else {
+            Console.log("loguser "+ userLocal.toString());
+            //remove the psw and send userLocal to server
+            userLocal.setPwd(null);
             dManagerClient.getInterToCom().requestLoginServer(userLocal);
             userLogin = userLocal;
         }

@@ -6,7 +6,7 @@ import fr.utc.lo23.common.data.UserList;
 import fr.utc.lo23.server.network.InterfaceServer;
 
 /**
- * Created by Rémy on 17/11/2015.
+ * Created by Rï¿½my on 17/11/2015.
  */
 public class DataManagerServer {
 
@@ -19,6 +19,8 @@ public class DataManagerServer {
     public DataManagerServer(){
     this.interfaceToCom = null;
         this.interfaceFromCom = new ServerDataFromCom(this);
+        users = new UserList();
+        tables = new TableList();
         Console.log(TAG + "\tObject created.");
     }
     public UserList getUsers(){
@@ -33,6 +35,10 @@ public class DataManagerServer {
 
     public void setInterfaceFromCom(InterfaceServerDataFromCom server){
         this.interfaceFromCom = server;
+    }
+
+    public InterfaceServerDataFromCom getInterfaceFromCom() {
+        return interfaceFromCom;
     }
 
 

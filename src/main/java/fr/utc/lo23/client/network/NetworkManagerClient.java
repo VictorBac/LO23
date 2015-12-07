@@ -1,14 +1,14 @@
 package fr.utc.lo23.client.network;
 
+import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
+
+import java.util.UUID;
 
 /**
  *
@@ -22,13 +22,10 @@ public class NetworkManagerClient implements InterfaceClient  {
     private ServerLink localClient;
 
     /* =========================================== METHODES =========================================== */
-    public NetworkManagerClient(InterfaceDataFromCom dataInter) throws NetworkFailureException{
+    public NetworkManagerClient(InterfaceDataFromCom dataInter) {
         this.dataInstance = dataInter;
         localClient = new ServerLink(this);
         localClient.start();
-
-        User user = new User();
-        requestLoginServer(user);
     }
 
     /* == GETTERS AND SETTERS == */
@@ -44,6 +41,7 @@ public class NetworkManagerClient implements InterfaceClient  {
         //Send the login request over the server
         Console.log("Creation d'un Request Login message\n");
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
+        Console.log("requestelog"+reqLog.getUser().toString());
         localClient.send(reqLog);
     }
 
@@ -116,8 +114,9 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void joinTable(UserLight userLocal, int IdTable) throws NetworkFailureException, FullTableException {
-
+    public void joinTable(UserLight userLocal, Table tableToJoin) throws NetworkFailureException, FullTableException {
+        Console.log("Tentative de rejoingnement de table");
+        //RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,IdTable);
     }
 
     /**
@@ -167,6 +166,34 @@ public class NetworkManagerClient implements InterfaceClient  {
     public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException {
 
     }
+
+
+    public void sendMessage(MessageChat message) {
+
+    }
+
+    public void confirmationCardReceived() {
+
+    }
+
+    public void replayAction(Action action, UserLight player) {
+
+    }
+
+    public void confirmationEndTurn() {
+
+    }
+
+    public void transmitRequestServer(UserLight player) {
+
+    }
+
+    public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
+        Console.log("Creation d'un LaunchGame message\n");
+            LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
+        localClient.send(LGMess);
+    }
+
     /**
      * Envoi d'une notification de déconnexion
      * @throws NetworkFailureException

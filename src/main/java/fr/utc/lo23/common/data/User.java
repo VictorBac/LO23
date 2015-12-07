@@ -7,7 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by Rémy on 20/10/2015.
+ * Created by Rï¿½my on 20/10/2015.
  */
 
 public class User implements Serializable{
@@ -104,9 +104,7 @@ public class User implements Serializable{
         this.age = age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) { this.email = email; }
 
     public void setStatsUser(Stats statsUser) {
         this.statsUser = statsUser;
@@ -117,8 +115,7 @@ public class User implements Serializable{
     }
 
     /**
-     * met à jour les statsUser du joueur
-     * @param beginMse : la mise de départ du joueur
+     * @param beginMse : la mise de dï¿½part du joueur
      * @param points : son score par partie
      */
     public void updateStats(int beginMse, int points){
@@ -176,4 +173,17 @@ public class User implements Serializable{
         return match;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "core=" + core +
+                ", pwd='" + pwd + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", statsUser=" + statsUser +
+                ", contactUser=" + contactUser +
+                '}';
+    }
 }

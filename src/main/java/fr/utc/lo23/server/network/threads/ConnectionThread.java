@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.UUID;
 
 public class ConnectionThread extends Thread {
@@ -16,12 +17,14 @@ public class ConnectionThread extends Thread {
     private Socket socketClient;
 
     //Heartbeat
-    private int nbHeartBeat;
+    private long last_message_timestamp;
 
     //To send objects between client and server
     private UUID userId;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
+
+    private long HEARTBEAT_TIMEOUT = 1000; // en ms
 
     public ObjectOutputStream getOutputStream() {
         return outputStream;
@@ -31,7 +34,7 @@ public class ConnectionThread extends Thread {
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
         myServer = pokerServer;
         socketClient = socket;
-        nbHeartBeat = 5;
+        last_message_timestamp = System.currentTimeMillis();
 
         try {
             inputStream = new ObjectInputStream(socketClient.getInputStream());
@@ -67,9 +70,11 @@ public class ConnectionThread extends Thread {
             while (running) {
                 try {
                     // Call suitable processing method
+                    this.socketClient.setSoTimeout(100);// en ms
                     Message msg = (Message) inputStream.readObject();
                     msg.process(this);
-
+                } catch (SocketTimeoutException e) {
+                    this.checkHeartBeat();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -121,12 +126,11 @@ public class ConnectionThread extends Thread {
      * Décrémente le heartbeat et regarde s'il en a reçu depuis
      * Si ce n'est pas le cas, déconnecte
      */
-    private void checkHeatBeat() {
-        nbHeartBeat--;
-        Console.log("Valeur HB : "+nbHeartBeat);
-        if (nbHeartBeat == 0) {
-            Console.log("HB nul, déconnexion");
-            //Procéder à la déconnection
+    private void checkHeartBeat() {
+        Console.log("Valeur HB : " + last_message_timestamp);
+        if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
+            Console.log("HB nul, déconnexion (TODO)");
+            //TODO: Procéder à la déconnection
         }
     }
 
@@ -135,6 +139,6 @@ public class ConnectionThread extends Thread {
      * Suite à la réception d'un message de ce type
      */
     public void updateHeartbeat() {
-        nbHeartBeat++;
+        last_message_timestamp = System.currentTimeMillis();
     }
 }

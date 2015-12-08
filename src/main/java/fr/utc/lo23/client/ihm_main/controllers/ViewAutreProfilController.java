@@ -12,13 +12,10 @@ import javafx.scene.image.ImageView;
 /**
  * Created by leclercvictor on 08/12/2015.
  */
-public class ViewOwnProfilController extends BaseController {
+public class ViewAutreProfilController extends BaseController {
 
     @FXML
     private Button back;
-
-    @FXML
-    private Button edit;
 
     @FXML
     private TextField username;
@@ -27,25 +24,14 @@ public class ViewOwnProfilController extends BaseController {
     private TextField age;
 
     @FXML
-    private TextField email;
-
-    @FXML
     private ImageView imageviewer;
-
-    @FXML
-    void didClickBackButton(ActionEvent event) {
-        mController.showMainWindow();
-    }
-
-    @FXML
-    void openEditProfile(ActionEvent event) {
-        mController.showEditProfilWindow();
-    }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
+    public void didClickBackButton(ActionEvent actionEvent) {
+        //TODO retour au controlleur précedent. A voir une fois qu'on connaitra quand on appelle ce controlleur.
+    }
 }

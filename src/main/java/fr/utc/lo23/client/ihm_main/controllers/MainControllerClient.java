@@ -48,6 +48,7 @@ public class MainControllerClient extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         pmStage = primaryStage;
+        managerMain.setControllerMain(this);
         showConnectionWindow();
     }
 

@@ -124,7 +124,10 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet de prévenir IHM-Table que la Game a été lancée.
      */
     public void notifyStartGame(Table table){
-        //TODO: next step
+        getIhmtable().getTableController().addLogEntry("La partie a été lancée ! Préparez-vous !");
+        for(UserLight player : getIhmtable().getTableController().getTable().getListPlayers().getListUserLights()) {
+            getIhmtable().getTableController().getPlayerControllerOf(player).clearReadyStatus();
+        }
     }
 
     /*
@@ -168,8 +171,27 @@ public class TableToDataListener implements ITableToDataListener {
      * Fonction à appeler après avoir reçu une action faite par un joueur
      * Permet à iHM-Table d'afficher cette action
      */
-    public void notifyAction(Action action){
-        //TODO: next step
+    public void notifyAction(UserLight player, Action action){
+        if(action.equals(EnumerationAction.allIn)) {
+            ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
+            //TODO : animation plein de jetons vers le milieu
+        }
+        else if(action.equals(EnumerationAction.bet)) {
+            ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
+            //TODO : animation quelques jetons vers le milieu
+        }
+        else if(action.equals(EnumerationAction.call)) {
+            ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
+            //TODO : animation quelques jetons vers le milieu aussi
+        }
+        else if(action.equals(EnumerationAction.check)) {
+            ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
+            //TODO : ?
+        }
+        else if(action.equals(EnumerationAction.fold)) {
+            ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
+            //TODO : cartes qui dégagent vers le milieu
+        }
     }
 
     /*

@@ -99,7 +99,7 @@ public interface ITableToDataListener {
      * Fonction à appeler après avoir reçu une action faite par un joueur
      * Permet à iHM-Table d'afficher cette action
      */
-    public void notifyAction(Action action);
+    public void notifyAction(UserLight player, Action action);
 
     /*
      * Fonction à appeler après que tous les joueurs aient fait leur action de ce tour

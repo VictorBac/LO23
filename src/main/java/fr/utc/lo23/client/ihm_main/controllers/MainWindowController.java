@@ -54,4 +54,8 @@ public class MainWindowController extends BaseController {
     {
 
     }
+
+    public void openViewOwnProfil(ActionEvent actionEvent) {
+        mController.showEditOwnWindow();
+    }
 }

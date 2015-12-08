@@ -169,7 +169,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException {
+    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException {
 
     }
 

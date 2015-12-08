@@ -7,6 +7,7 @@ import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 
 import java.util.UUID;
 
@@ -29,7 +30,12 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     /* == GETTERS AND SETTERS == */
-    public InterfaceDataFromCom getDataInstance() { return dataInstance; }
+    public InterfaceDataFromCom getDataInstance() {
+        return dataInstance;
+    }
+    public void setDataInstance(InterfaceDataFromCom dataInstance) {
+        this.dataInstance = dataInstance;
+    }
 
     /* == METHODES IMPLEMENTATION == */
     /**

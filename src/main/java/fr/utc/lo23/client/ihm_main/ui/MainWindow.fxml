@@ -25,7 +25,7 @@
     <children>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1220.0" GridPane.rowIndex="1">
             <children>
-                <Button fx:id="connect" layoutX="911.0" layoutY="625.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Créer table">
+                <Button fx:id="connect" layoutX="911.0" layoutY="625.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createTable" prefHeight="40.0" prefWidth="120.0" text="Créer table">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font></Button>
@@ -66,7 +66,7 @@
                </font>
             </Label>
             <ListView layoutX="269.0" layoutY="553.0" prefHeight="156.0" prefWidth="502.0" />
-            <Button fx:id="connect1" layoutX="1064.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Rejoindre">
+            <Button fx:id="connect1" layoutX="1064.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTable" prefHeight="40.0" prefWidth="120.0" text="Rejoindre">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

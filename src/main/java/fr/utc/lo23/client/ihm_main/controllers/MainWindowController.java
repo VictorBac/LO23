@@ -58,4 +58,14 @@ public class MainWindowController extends BaseController {
     public void openViewOwnProfil(ActionEvent actionEvent) {
         mController.showViewOwnWindow();
     }
+
+    public void createTable(ActionEvent actionEvent) {
+
+        mController.getManagerMain().getInterTableToMain().showTableCreationForm(mController.showCreateTableView().getMainPane());
+
+    }
+
+    public void joinTable(ActionEvent actionEvent) {
+
+    }
 }

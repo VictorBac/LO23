@@ -260,6 +260,7 @@ public class TableController {
     private void launchGame(javafx.event.ActionEvent event){
         btnLaunchGame.setVisible(false);
         //ihmTable.getDataInterface().playGame(table.getIdTable());
+
     }
 
     public void addChatMessage(MessageChat message){
@@ -486,4 +487,13 @@ public class TableController {
         getPlayerControllerOf(player).showVoteEndGame(accept);
     }
 
+    /**
+     * Arrête la partie en cours en réinitialisant les joueurs et en masquant les actions
+     * @param game
+     */
+    public void stopGame(Game game) {
+        playerInitializer();
+        hideActionBox();
+        disableAllActions();
+    }
 }

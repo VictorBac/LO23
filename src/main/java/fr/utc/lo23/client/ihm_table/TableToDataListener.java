@@ -210,6 +210,7 @@ public class TableToDataListener implements ITableToDataListener {
      */
     public void stopGame(Game game){
         //TODO: next step
+        ihmtable.getTableController().stopGame(game);
     }
 
     /*

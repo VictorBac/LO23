@@ -174,7 +174,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
 
-    public void sendMessage(MessageChat message) {
+    public void sendMessage(MessageChat message, UUID tableId) {
 
     }
 

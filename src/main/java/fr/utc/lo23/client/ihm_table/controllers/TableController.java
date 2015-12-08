@@ -65,7 +65,8 @@ public class TableController {
         //TODO : je suis pas certain qu'il faille mettre ça ici, mais bon, ça fonctionne
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
         actionBetMoneySelector.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 if (newValue == null) {
                     betLabel.setText("");
                     return;
@@ -492,6 +493,9 @@ public class TableController {
      * @param game
      */
     public void stopGame(Game game) {
+        for(PlayerController p : controllersList){
+            removePlayer(p.getUserLight());
+        }
         playerInitializer();
         hideActionBox();
         disableAllActions();

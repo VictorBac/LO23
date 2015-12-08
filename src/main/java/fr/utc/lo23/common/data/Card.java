@@ -40,8 +40,8 @@ public class Card implements Serializable {
         }
     }
 
-    public char enumSymbolToCharSymbol(EnumerationCard symbolEnum){
-        char symbolChar = 'X';
+    public char enumSymbolToCharSymbol(EnumerationCard symbolEnum) throws CardFormatInvalidException{
+        char symbolChar;
         if (symbolEnum.equals(EnumerationCard.SPADE))
             symbolChar = spade;
         else if (symbolEnum.equals(EnumerationCard.HEART))
@@ -50,6 +50,7 @@ public class Card implements Serializable {
             symbolChar = diamond;
         else if (symbolEnum.equals(EnumerationCard.CLUB))
             symbolChar = club;
+        else throw new CardFormatInvalidException("Convert error!");
         return symbolChar;
     }
     // getters

@@ -76,27 +76,45 @@ public class Turn implements Serializable {
     public void addAction(Action newAction) throws ActionInvalidException{
         if ( newAction == null )
             throw new NullPointerException("Action is null");
-        if ( newAction.getName().name() == "fold" ){
+        else if ( newAction.getName().name() == "ALLIN" ){
+            listAction.add(newAction);
+        }
+        else if ( newAction.getName().name() == "FOLD" ){
             listAction.add(newAction);
             listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
         }
-        if ( newAction.getName().name() == "check" ){
-            if ( newAction.getAmount() < minimalBet() )
-                throw new ActionInvalidException("You cannot check when your amount is less than the minimum.");
+        else if ( newAction.getName().name() == "CHECK" ){
+            if ( getTotalAmountForAUser(newAction) < minimalBet() )
+                throw new ActionInvalidException("You cannot CHECK when your amount is less than the minimum.");
             else
                 listAction.add(newAction);
         }
-        if ( newAction.getName().name() == "call" ){
-            if ( newAction.getAmount() != minimalBet() )
-                throw new ActionInvalidException("You cannot call when your amount is different from the minimum.");
+        else if ( newAction.getName().name() == "CALL" ){
+            if ( minimalBet() - getTotalAmountForAUser(newAction) != newAction.getAmount()  )
+                throw new ActionInvalidException("You cannot CALL when your amount is different from the minimum.");
             else
                 listAction.add(newAction);
         }
-
-        //TODO need to do some check first in the case the Action is not valid
+        else if ( newAction.getName().name() == "BET" ){
+            if ( getTotalAmountForAUser(newAction) + newAction.getAmount() <= minimalBet()){
+                throw new ActionInvalidException("You cannot BET then your total amount is less the the minimum.");
+            }
+            else
+                listAction.add(newAction);
+        }
 
     }
 
+    private int getTotalAmountForAUser ( Action newAction ){
+        int amount = 0;
+        for (Action a : listAction
+             ) {
+            if ( a.getUserLightOfPlayer() == newAction.getUserLightOfPlayer() ){
+                amount += a.getAmount();
+            }
+        }
+        return amount;
+    }
 
 
 

@@ -5,15 +5,15 @@ import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.common.data.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 /**
@@ -21,6 +21,9 @@ import java.util.ResourceBundle;
  */
 public class ConnectionController extends BaseController {
     public InterfaceFromIHMMain interfromIHMMAIN;
+
+
+    private ObservableList<String> serverList;
 
     @FXML
     private Button buttonConnect;
@@ -63,6 +66,15 @@ public class ConnectionController extends BaseController {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("ConnectionController start");
 
+        serverList = FXCollections.observableArrayList();
+        listViewServers.setItems(serverList);
+        listViewServers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        // TODO get server list from DATA
+        //  mController.getManagerMain().getInterDataToMain().getServerList();
+
+        // test
+        // TODO remove when data methods are implemented
+        serverList.add("000.000.000.000:0000");
     }
 
     public void change(ActionEvent actionEvent) {
@@ -85,8 +97,17 @@ public class ConnectionController extends BaseController {
     }
 
     @FXML
-    void didClickRemoveServerButton(ActionEvent event) {
-        // TODO appeler méthode de interface Data pour supprimer server
-        // rafraichir la liste
+    void didClickRemoveServerButton(ActionEvent event)
+    {
+        int selectedIndex = listViewServers.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+
+            // TODO appeler méthode de interface Data pour supprimer server
+            serverList.remove(listViewServers.getSelectionModel().getSelectedIndex());
+
+        }else {
+
+            mController.showErrorPopup("Error", "Vous devez sélectionner un server pour le supprimer.");
+        }
     }
 }

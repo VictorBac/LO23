@@ -11,11 +11,6 @@ import java.io.Serializable;
 public abstract class Message implements Serializable {
 
     /**
-     * Basic process
-     */
-    public abstract void process();
-
-    /**
      * Server-side process
      * @param threadServer
      */

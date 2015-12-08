@@ -15,12 +15,6 @@ public class CreateTableMessage extends Message {
 
     public CreateTableMessage(UserLight u, Table t) {maker = u; newTable=t;}
 
-
-    @Override
-    public void process() {
-
-    }
-
     @Override
     public void process(ConnectionThread threadServer) {
         threadServer.getMyServer().getNetworkManager().getDataInstance().createTable(maker,newTable);

@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
@@ -12,12 +13,8 @@ public class SendRequestedProfileMessage  extends Message {
 
     private User reqProfile;
 
+
     public SendRequestedProfileMessage(User u) {reqProfile=u;}
-
-    @Override
-    public void process() {
-
-    }
 
     @Override
     public void process(ConnectionThread threadServer) {
@@ -26,7 +23,7 @@ public class SendRequestedProfileMessage  extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //threadClient.getNetworkManager().getDataInstance().remoteUserProfile(reqProfile);
     }
 
 }

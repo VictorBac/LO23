@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.EditOwnProfilController">
+   <children>
+      <Label layoutX="108.0" layoutY="62.0" text="Username" textAlignment="RIGHT" />
+      <Label layoutX="88.0" layoutY="158.0" text="Old Password" textAlignment="RIGHT" />
+      <Label layoutX="83.0" layoutY="244.0" text="New Password" textAlignment="RIGHT" />
+      <Label layoutX="141.0" layoutY="339.0" text="Age" textAlignment="RIGHT" />
+      <Label layoutX="135.0" layoutY="427.0" text="Email" textAlignment="RIGHT" />
+      <Button fx:id="cancel" layoutX="321.0" layoutY="517.0" mnemonicParsing="false" onAction="#didClickCancelButton" text="Cancel" />
+      <Button fx:id="update" layoutX="511.0" layoutY="517.0" mnemonicParsing="false" onAction="#UpdateProfil" text="Update" />
+      <TextField fx:id="username" layoutX="321.0" layoutY="49.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
+      <PasswordField fx:id="password" layoutX="321.0" layoutY="145.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
+      <PasswordField fx:id="repassword" layoutX="321.0" layoutY="231.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
+      <TextField fx:id="age" layoutX="321.0" layoutY="327.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
+      <TextField fx:id="email" layoutX="321.0" layoutY="415.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
+      <ImageView fx:id="imageviewer" fitHeight="304.0" fitWidth="349.0" layoutX="801.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@avatar.jpg" />
+         </image></ImageView>
+
+   </children>
+</AnchorPane>

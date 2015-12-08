@@ -13,14 +13,6 @@ public class RefuseLoginMessage extends Message {
     }
 
     /**
-     * Generic process (both server and client)
-     */
-    @Override
-    public void process() {
-        Console.log("Login refused");
-    }
-
-    /**
      * For message processed server-side
      * @param threadServer
      */

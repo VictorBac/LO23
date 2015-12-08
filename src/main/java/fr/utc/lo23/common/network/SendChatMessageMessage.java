@@ -22,11 +22,6 @@ import fr.utc.lo23.server.network.threads.PokerServer;
         }
 
         @Override
-        public void process() {
-
-        }
-
-        @Override
         public void process(ConnectionThread threadServer) {
             PokerServer myServ = threadServer.getMyServer();
 

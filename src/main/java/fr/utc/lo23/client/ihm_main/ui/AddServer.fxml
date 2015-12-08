@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="254.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.AddServerController">
+   <children>
+      <Button fx:id="buttonAdd" layoutX="258.0" layoutY="143.0" mnemonicParsing="false" onAction="#didClickAddButton" text="Ajouter" />
+      <Button fx:id="buttonCancel" layoutX="394.0" layoutY="143.0" mnemonicParsing="false" onAction="#didClickCancelButton" text="Annuler" />
+      <TextField fx:id="fieldIPAddress" layoutX="28.0" layoutY="50.0" promptText="Adresse IP" />
+      <TextField fx:id="fieldPort" layoutX="365.0" layoutY="50.0" prefHeight="68.0" prefWidth="143.0" promptText="Port" />
+   </children>
+</Pane>

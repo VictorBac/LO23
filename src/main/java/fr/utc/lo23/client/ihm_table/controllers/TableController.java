@@ -74,12 +74,8 @@ public class TableController {
             }
         });
 
-        showActionBox();
-        enableActionFold();
-        enableActionCheck();
-        enableActionCall();
-        enableActionBet();
-        enableActionAllin();
+        hideActionBox();
+        disableAllActions();
         addLogEntry("Vous avez rejoint la salle.");
     }
 
@@ -184,7 +180,7 @@ public class TableController {
         int i=0;
         for(PlayerController playerController : controllersList)
         {
-            Point2D coords = TableUtils.getPlayerPosition(i, table.getNbPlayerMax());
+            Point2D coords = TableUtils.getPlayerPosition(i, table.getListPlayers().getListUserLights().size());
             playerController.setPositions(coords);
             i++;
         }
@@ -429,7 +425,11 @@ public class TableController {
 
     @FXML
     public void sendMoneyAmount(javafx.event.ActionEvent event){
+        int amount;
         if(popupAmountInput.getText().isEmpty())
+            return;
+        amount = Integer.parseInt(popupAmountInput.getText());
+        if(amount <= 0 || amount > table.getMaxMise())
             return;
         //TODO: Envoyer Integer.parseInt(popupAmountInput.getText()); à data
 

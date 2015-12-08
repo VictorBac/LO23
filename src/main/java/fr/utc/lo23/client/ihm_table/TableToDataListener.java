@@ -79,6 +79,7 @@ public class TableToDataListener implements ITableToDataListener {
     * permet à IHM-Table de savoir que les joueurs vont devoir mettre leurs montants de départ
     */
     public void notifyPreparationPhase(){
+        getIhmtable().getTableController().reorderPlayers();
         for(UserLight user : getIhmtable().getTableController().getTable().getListPlayers().getListUserLights())
         {
             getIhmtable().getTableController().getPlayerControllerOf(user).updateMoney(-1);

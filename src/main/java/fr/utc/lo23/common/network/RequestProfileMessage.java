@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
@@ -14,16 +15,10 @@ public class RequestProfileMessage extends Message {
     public RequestProfileMessage(UserLight u) {profile=u;}
 
     @Override
-    public void process() {
-
-    }
-
-    @Override
     public void process(ConnectionThread threadServer) {
-        //TODO remplacer par le bon nom de méthode
-        //User Profile threadServer.getMyServer().getNetworkManager().getDataInstance().getUserFromUserLight();
-        //SendRequestedProfileMessage reqProf = new SendRequestedProfile(profile);
-        //threadServer.send(reqProf);
+        User fullProfile = threadServer.getMyServer().getNetworkManager().getDataInstance().getProfile(profile);
+        SendRequestedProfileMessage reqProf = new SendRequestedProfileMessage(profile,fullProfile);
+        threadServer.send(reqProf);
     }
 
     @Override

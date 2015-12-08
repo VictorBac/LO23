@@ -7,10 +7,6 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
  * Created by Ghark on 25/11/2015.
  */
 public class HeartbeatMessage extends Message {
-    @Override
-    public void process() {
-
-    }
 
     @Override
     public void process(ConnectionThread threadServer) {

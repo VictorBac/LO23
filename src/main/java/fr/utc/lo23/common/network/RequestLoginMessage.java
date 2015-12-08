@@ -32,14 +32,6 @@ public class RequestLoginMessage extends Message {
     }
 
     /**
-     * Generic process
-     */
-    @Override
-    public void process() {
-
-    }
-
-    /**
      * Check if we can login in the server, and send a confirmation (or not ?)
      * We put in the acceptloginmessage all users currently connected to have them directly at the confirmation
      * We also notify all other users that now we're in da place

@@ -21,15 +21,6 @@ private User u;
     }
 
     /**
-     * Generic process
-     */
-    @Override
-    public void process() {
-        Console.log("Disconnection of Player");
-        //TODO
-    }
-
-    /**
      * For message processed server-side
      * @param threadServer
      */

@@ -167,6 +167,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
+
     public void sendMessage(MessageChat message) {
 
     }
@@ -192,7 +193,6 @@ public class NetworkManagerClient implements InterfaceClient  {
             LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
         localClient.send(LGMess);
     }
-
 
     /**
      * Envoi d'une notification de déconnexion

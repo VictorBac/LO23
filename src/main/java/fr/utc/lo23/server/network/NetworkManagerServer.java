@@ -23,7 +23,8 @@ import java.util.ArrayList;
  */
 public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     /* Modules instance, initiate by IHM module with setters */
-    private InterfaceServerDataFromCom dataInstance;
+    private InterfaceServerDataFromCom dataInstance; //TODO: Mettre un DataManager plutot...
+    //private IhmManagerServer IhmInstance; TODO: Avoir le manager !
     private ServerWindowInterface interMain;
 
     /* Attributes */

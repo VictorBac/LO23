@@ -16,11 +16,6 @@ public class LaunchGameMessage extends Message {
     private UserLight UserInit;
     public LaunchGameMessage(UUID idTable,UserLight u) {
         this.idTable = idTable;
-        this.UserInit = u;
-    }
-
-    @Override
-    public void process() {
     }
 
     @Override

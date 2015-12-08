@@ -19,11 +19,6 @@ public class NotifyNewPlayerMessage extends Message {
     }
 
     @Override
-    public void process() {
-
-    }
-
-    @Override
     public void process(ConnectionThread threadServer) {
 
     }

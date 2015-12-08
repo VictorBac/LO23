@@ -76,12 +76,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     /**
      * checks if a user can join a table
      * @param joiner the user trying to join
-     * @param wantedTable the table to join
+     * @param idTable the id of the table to join
      * @param mode the connection mode (player / spectator)
      * @return a boolean
      */
-    public boolean canJoinTableUser(UserLight joiner, Table wantedTable, EnumerationTypeOfUser mode) {
+    public boolean canJoinTableUser(UserLight joiner, UUID idTable, EnumerationTypeOfUser mode) {
         boolean ok;
+        Table wantedTable = getTableFromId(idTable);
         if (wantedTable.getListPlayers().getListUserLights().size() > wantedTable.getNbPlayerMax()) {
             ok = false;
             Console.log(TAG + "\tPlayer can't join, table full ");
@@ -114,11 +115,19 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public Game startGame(UUID idTable, UserLight player) {
         Table toStart;
         for (Table cur : myManager.getTables().getListTable()) {
-//            if (cur.getIdTable().equals(idTable))
-            toStart = cur;
-//                cur.startGame(cur.getCurrentGame());
-//                return cur.getCurrentGame();
-            Console.log(TAG + "\tGame started.");
+            if (cur.getIdTable().equals(idTable)) {
+                toStart = cur;
+                try {
+                    cur.startGame(cur.getCurrentGame());
+                    Console.log(TAG + "\tGame started.");
+                    return cur.getCurrentGame();
+                }
+                catch(TableException e){
+                    Console.log(TAG + "\tGame failed to start.");
+                }
+
+
+            }
         }
         return null;
     }
@@ -189,6 +198,27 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     {
         for (User cur : myManager.getUsers().getList()){
             if (cur.getUserLight().getIdUser().equals(userId))
+                return cur;
+        }
+        return null;
+    }
+
+    /**
+     * returns a list of all the players of the given table
+     * @param tableID the UUID of the table to look for
+     * @return an arrayList of Userlight with all the players
+     */
+    public ArrayList<UserLight> getPlayersByTable(UUID tableID){
+        ArrayList<UserLight> players = new ArrayList<UserLight>();
+        Table current = getTableFromId(tableID);
+        return current.getListPlayers().getListUserLights();
+    }
+
+    private Table getTableFromId(UUID idTable){
+        Table wantedTable = null;
+        ArrayList<Table> tableList = getTableList();
+        for (Table cur : tableList){
+            if (cur.getIdTable().equals(idTable))
                 return cur;
         }
         return null;

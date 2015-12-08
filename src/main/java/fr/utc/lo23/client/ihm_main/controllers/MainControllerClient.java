@@ -32,6 +32,8 @@ public class MainControllerClient extends Application {
     private ConnectionController connectionWindowController;
     private CreateController createProfileController;
     private ViewOwnProfilController viewOwnProfilWindowController;
+    private EditOwnProfilController editProfilWindowController;
+    private ViewAutreProfilController viewAutreProfilWindowController;
 
 
     public static void main(String[] args) {
@@ -72,8 +74,16 @@ public class MainControllerClient extends Application {
         mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml","Poker");
     }
 
-    public void showEditOwnWindow(){
+    public void showViewOwnWindow(){
         viewOwnProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewOwnProfil.fxml", "Your Profile");
+    }
+
+    public void showEditProfilWindow(){
+        editProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/EditProfil.fxml", "Edit your profile");
+    }
+
+    public void showAutreProfilWindow(){
+        viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
     }
 
     private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)

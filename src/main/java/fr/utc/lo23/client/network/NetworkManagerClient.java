@@ -48,6 +48,11 @@ public class NetworkManagerClient implements InterfaceClient  {
         Console.log("Creation d'un Request Login message\n");
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
         Console.log("requestelog"+reqLog.getUser().toString());
+        try {
+            localClient.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         localClient.send(reqLog);
     }
 

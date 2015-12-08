@@ -26,12 +26,6 @@ public class ServerLink extends Thread {
     /* ============================ METHODS ============================ */
     public ServerLink(NetworkManagerClient networkManagerClient) {
         this.networkManager = networkManagerClient;
-        try {
-            //TODO: Gerer le changement de port
-            connect();
-        } catch (Exception e) {
-            Console.log("Erreur de connexion: " + e.getMessage());
-        }
     }
 
     /**

@@ -52,11 +52,11 @@ public class MainControllerClient extends Application {
 
 
     public void userLoggedIn() {
-        mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml", "Poker");
+        mainWindowController = instantiateWindow("../ui/MainWindow.fxml", "Poker");
     }
 
     public void ClickCreateProfil() {
-        createProfileController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml", "Création de profile");
+        createProfileController = instantiateWindow("../ui/CreateProfil.fxml", "Création de profile");
     }
 
 
@@ -92,7 +92,8 @@ public class MainControllerClient extends Application {
 
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resource));
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(resource));
             root = (Parent) fxmlLoader.load();
             T controller =  fxmlLoader.getController();
             controller.setMainController(this);

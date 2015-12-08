@@ -36,7 +36,7 @@ public class MainWindowController extends BaseController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listViewConnectedUsers.setCellFactory(column-> {
+        /*listViewConnectedUsers.setCellFactory(column-> {
             return new ListCell<UserLight>(){
                 @Override
                 protected void updateItem(UserLight user, boolean empty){
@@ -46,7 +46,7 @@ public class MainWindowController extends BaseController {
                         setText(user.getPseudo());
                 }
             };
-        });
+        });*/
     }
 
 

@@ -35,11 +35,12 @@ public class AcceptLoginMessage extends Message{
      */
     @Override
     public void process(ServerLink threadClient) {
-        for(UserLight us : usersArray){
+        usersArray.remove(threadClient.getNetworkManager().getDataInstance().getUserLightLocal());
+        /*for(UserLight us : usersArray){
             if(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser().equals(us.getIdUser())){
                 usersArray.remove(us);
             }
-        }
+        } /!\ Concurrent modification... */
         threadClient.getNetworkManager().getDataInstance().currentConnectedUser(usersArray);
         threadClient.getNetworkManager().getDataInstance().currentTables(tablesArray);
         Console.log("liste User reçu");

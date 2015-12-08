@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
+import java.util.concurrent.Exchanger;
 
 public class ConnectionThread extends Thread {
     private boolean running;
@@ -75,6 +76,9 @@ public class ConnectionThread extends Thread {
                     msg.process(this);
                 } catch (SocketTimeoutException e) {
                     this.checkHeartBeat();
+                } catch (java.io.EOFException e) {
+                    Console.log("Le client s'est déconnecté sans prévenir !");
+                    this.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
                     this.shutdown();

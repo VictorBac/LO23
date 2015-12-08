@@ -3,13 +3,18 @@ package fr.utc.lo23.client.ihm_main.controllers;
 import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
-import javafx.beans.property.*;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -34,6 +39,9 @@ public class MainWindowController extends BaseController {
     private TableColumn<Table, Integer> columnTableMise;
 
     private ObservableList<Table> tablesList;
+
+    @FXML
+    private Button buttonQuit;
 
     public void addUsers(List<UserLight> users) {
         for (UserLight user : users) {
@@ -127,5 +135,12 @@ public class MainWindowController extends BaseController {
         List<Table> list = new ArrayList<Table>();
         list.add(table1);
         mController.getManagerMain().getInterMainToData().currentTables(list);
+    }
+
+
+    @FXML
+    void didClickQuitButton(ActionEvent event) {
+        mController.getManagerMain().getInterDataToMain().exitAsked();
+        Platform.exit();
     }
 }

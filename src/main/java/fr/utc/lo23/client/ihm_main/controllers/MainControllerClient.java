@@ -5,6 +5,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +31,7 @@ public class MainControllerClient extends Application {
     private MainWindowController mainWindowController;
     private ConnectionController connectionWindowController;
     private CreateController createProfileController;
+    private ViewOwnProfilController viewOwnProfilWindowController;
 
 
     public static void main(String[] args) {
@@ -66,7 +68,13 @@ public class MainControllerClient extends Application {
         connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
     }
 
+    public void showMainWindow(){
+        mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml","Poker");
+    }
 
+    public void showEditOwnWindow(){
+        viewOwnProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewOwnProfil.fxml", "Your Profile");
+    }
 
     private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)
     {
@@ -102,5 +110,6 @@ public class MainControllerClient extends Application {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
 }
 

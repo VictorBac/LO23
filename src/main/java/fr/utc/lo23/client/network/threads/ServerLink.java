@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class ServerLink extends Thread {
     private NetworkManagerClient networkManager;
@@ -67,8 +68,13 @@ public class ServerLink extends Thread {
     public void run() {
         while (running) {
             try {
-                Message msg = (Message) inputStream.readObject();
-                msg.process(this);
+                try {
+                    this.socket.setSoTimeout(100);
+                    Message msg = (Message) inputStream.readObject();
+                    msg.process(this);
+                } catch (SocketTimeoutException e) {
+                    this.networkManager.sendHeartbeat();
+                }
             } catch (Exception e) {
                 Console.err("Erreur de traitement de message: ");
                 e.printStackTrace();

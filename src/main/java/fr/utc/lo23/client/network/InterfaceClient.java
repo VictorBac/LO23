@@ -67,7 +67,7 @@ public interface InterfaceClient {
     /**
      *
      */
-    public void heartBeat() throws NetworkFailureException;
+    public void sendHeartbeat() throws NetworkFailureException;
     
     /**
      *

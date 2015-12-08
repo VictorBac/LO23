@@ -129,10 +129,10 @@ public class NetworkManagerClient implements InterfaceClient  {
      * Envoyer le heartbeat pour ne pas se faire déco
      * @throws NetworkFailureException
      */
-    public void heartBeat() throws NetworkFailureException {
-        Console.log("Creation d'un Heartbeat message\n");
-        HeartbeatMessage hBeat = new HeartbeatMessage();
-        localClient.send(hBeat);
+    public void sendHeartbeat() throws NetworkFailureException {
+        //Console.log("Creation d'un Heartbeat message\n");
+        HeartbeatMessage message = new HeartbeatMessage();
+        localClient.send(message);
     }
 
     public void sendAction(Action act, UserLight userLocal) throws NetworkFailureException, IncorrectActionException {

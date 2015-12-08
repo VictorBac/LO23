@@ -71,8 +71,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param mode
      */
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) {
-        // TODO wait network interface
-        //dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
+        dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
     }
 
     /**
@@ -114,8 +113,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param tableId
      */
     public void playGame(UUID tableId) {
-        // TODO wait network interface
-        // dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
+        dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
     }
 
     /**

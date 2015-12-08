@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
+import java.util.concurrent.Exchanger;
 
 public class ConnectionThread extends Thread {
     private boolean running;
@@ -75,8 +76,12 @@ public class ConnectionThread extends Thread {
                     msg.process(this);
                 } catch (SocketTimeoutException e) {
                     this.checkHeartBeat();
+                } catch (java.io.EOFException e) {
+                    Console.log("Le client s'est déconnecté sans prévenir !");
+                    this.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    this.shutdown();
                 }
             }
         } catch (Exception e) {
@@ -101,12 +106,12 @@ public class ConnectionThread extends Thread {
 
     public void shutdown() throws NetworkFailureException {
         try {
+            running = false;
             socketClient.close();
         }
         catch (Exception e){
             throw new NetworkFailureException("Impossible de fermer la socket proprement");
         }
-        running = false;
     }
 
     public UUID getUserId() {
@@ -126,11 +131,11 @@ public class ConnectionThread extends Thread {
      * Décrémente le heartbeat et regarde s'il en a reçu depuis
      * Si ce n'est pas le cas, déconnecte
      */
-    private void checkHeartBeat() {
+    private void checkHeartBeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
         if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            Console.log("HB nul, on doit deconnecter le client ici (TODO)");
-            //TODO: Procéder à la déconnection
+            Console.log("HB nul, on doit deconnecter le client ici");
+            this.shutdown();
         }
     }
 

@@ -7,13 +7,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.CreateController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ViewOwnProfilController">
    <children>
       <Label layoutX="131.0" layoutY="50.0" text="Player" textAlignment="RIGHT" />
       <Label layoutX="141.0" layoutY="125.0" text="Age" textAlignment="RIGHT" />
       <Label layoutX="135.0" layoutY="202.0" text="Email" textAlignment="RIGHT" />
-      <Button fx:id="back" layoutX="321.0" layoutY="675.0" mnemonicParsing="false" onAction="#didClickCancelButton" prefHeight="66.0" prefWidth="95.0" text="Back" />
-      <Button fx:id="edit" layoutX="521.0" layoutY="675.0" mnemonicParsing="false" onAction="#createNewUser" prefHeight="66.0" prefWidth="89.0" text="Edit" />
+      <Button fx:id="back" layoutX="321.0" layoutY="675.0" mnemonicParsing="false" onAction="#didClickBackButton" prefHeight="66.0" prefWidth="95.0" text="Back" />
+      <Button fx:id="edit" layoutX="521.0" layoutY="675.0" mnemonicParsing="false" onAction="#openEditProfile" prefHeight="66.0" prefWidth="89.0" text="Edit" />
       <TextField fx:id="username" layoutX="321.0" layoutY="37.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
       <TextField fx:id="age" layoutX="321.0" layoutY="113.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
       <TextField fx:id="email" layoutX="321.0" layoutY="190.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />

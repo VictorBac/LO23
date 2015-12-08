@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.net.InetAddress;
 
 /**
- * Created by Rémy on 08/12/2015.
+ * Created by RÃ©my on 08/12/2015.
  */
 public class Server implements Serializable {
 

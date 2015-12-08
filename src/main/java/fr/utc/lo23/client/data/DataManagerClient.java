@@ -3,10 +3,9 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
-import fr.utc.lo23.common.data.TableList;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLightList;
+import fr.utc.lo23.common.data.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by Mar on 01/11/2015.
@@ -26,13 +25,16 @@ public class DataManagerClient {
 
     private Table tableLocal;
 
+    private ArrayList<Server> listServers;
+    private static final String pathServers = "./servers";
+
 
     public DataManagerClient() {
-
         this.userLocal = null;
         this.listUsersLightLocal = new UserLightList();
         this.listTablesLocal = new TableList();
         this.tableLocal = null;
+        this.listServers = (ArrayList<Server>) Serialization.deserializationObject(pathServers);
 
         this.interToIHMTable = null;
         this.interToCom = null;
@@ -42,6 +44,14 @@ public class DataManagerClient {
         this.interFromIHMMain = new InterfaceFromIHMMain(this);
         this.interFromCom = new InterfaceFromCom(this);
 
+    }
+
+    public ArrayList<Server> getListServers() {
+        return listServers;
+    }
+
+    public void setListServers(ArrayList<Server> listServers) {
+        this.listServers = listServers;
     }
 
     public InterfaceDataFromCom getInterFromCom() {

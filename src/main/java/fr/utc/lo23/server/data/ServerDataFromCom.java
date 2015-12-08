@@ -113,23 +113,17 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return the created game
      */
     public Game startGame(UUID idTable, UserLight player) {
-        Table toStart;
-        for (Table cur : myManager.getTables().getListTable()) {
-            if (cur.getIdTable().equals(idTable)) {
-                toStart = cur;
+        Table toStart = getTableFromId(idTable);
+
                 try {
-                    cur.startGame(cur.getCurrentGame());
+                    toStart.startGame(toStart.getCurrentGame());
                     Console.log(TAG + "\tGame started.");
-                    return cur.getCurrentGame();
+                    return toStart.getCurrentGame();
                 }
                 catch(TableException e){
                     Console.log(TAG + "\tGame failed to start.");
+                    return null;
                 }
-
-
-            }
-        }
-        return null;
     }
 
     public void nextStepReplay() {
@@ -214,6 +208,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return current.getListPlayers().getListUserLights();
     }
 
+    /**
+     * looks for the table with the corresponding UUID
+     * @param idTable the id to look for
+     * @return the table if found, else null
+     */
     private Table getTableFromId(UUID idTable){
         Table wantedTable = null;
         ArrayList<Table> tableList = getTableList();

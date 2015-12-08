@@ -85,8 +85,8 @@ public class PlayerController{
     }
 
     public void setPositions(Point2D coords){
-        playerBox.setLayoutX(coords.getX()-40);
-        playerBox.setLayoutY(coords.getY()-55);
+        playerBox.setLayoutX(coords.getX() - 40);
+        playerBox.setLayoutY(coords.getY() - 55);
     }
 
     public void setReadyStatus(boolean isReady){
@@ -106,5 +106,26 @@ public class PlayerController{
         playerInfos.getStyleClass().remove("refuse");
         playerInfos.getStyleClass().remove("ready");
         playerInfos.setText("");
+    }
+
+    /**
+     * Modifie la bordure de l'avatar du joueur selon son vote pour mettre fin à une partie
+     * Si accept = true, la bordure est verte
+     * Sinon, elle est rouge
+     * @param accept
+     */
+    public void showVoteEndGame(boolean accept) {
+        if(accept) {
+            playerBox.setStyle("-fx-border-color: green ; -fx-border-width: 3px ;");
+        } else {
+            playerBox.setStyle("-fx-border-color: red ; -fx-border-width: 3px ;");
+        }
+    }
+
+    /**
+     * Réinitialise le style de la bordure de playerbox
+     */
+    public void cleanPlayerBox(){
+        playerBox.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
     }
 }

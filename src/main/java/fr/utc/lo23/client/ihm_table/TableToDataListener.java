@@ -216,7 +216,7 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher la réponse d'un utilisateur au vote de fin de jeu
      */
     public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept){
-        //TODO: next step
+        ihmtable.getTableController().notifyPlayerVoteEndGameAnswer(player, accept);
     }
 
 }

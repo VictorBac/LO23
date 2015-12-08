@@ -5,9 +5,6 @@ import fr.utc.lo23.client.ihm_table.TableUtils;
 import fr.utc.lo23.client.ihm_table.views.BetMoneyView;
 import fr.utc.lo23.client.ihm_table.views.PlayerView;
 import fr.utc.lo23.common.data.*;
-import fr.utc.lo23.common.data.exceptions.ExistingUserException;
-import javafx.animation.Animation;
-import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -15,7 +12,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -428,7 +424,7 @@ public class TableController {
     }
 
     public void setPopupAmountMaxMoney(Integer maxAmount){
-        popupAmount.setText("Montant Initial (Max: "+maxAmount+"€)");
+        popupAmount.setText("Montant Initial (Max: " + maxAmount + "€)");
     }
 
     @FXML
@@ -473,4 +469,21 @@ public class TableController {
 
     @FXML
     public void sendLeaveRefuse(javafx.event.ActionEvent event) { popupLeave.setVisible(false); }
+
+    /**
+     * Affiche la réponse d'un utilisateur au vote de fin de jeu en rajoutant une bordure verte (accepte)
+     * ou rouge (refuse) autour de la box du player
+     * @param player
+     * @param accept
+     */
+    public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept) {
+        if(accept) {
+            addLogEntry(player.getPseudo() + " a accepté de mettre fin au jeu.");
+        } else {
+            addLogEntry(player.getPseudo() + " a refusé de mettre fin au jeu.");
+
+        }
+        getPlayerControllerOf(player).showVoteEndGame(accept);
+    }
+
 }

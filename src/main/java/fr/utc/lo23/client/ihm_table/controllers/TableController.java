@@ -155,7 +155,11 @@ public class TableController {
         return -1;
     }
 
-    public void removePlayer(UserLight user) {
+    public void removePlayer(UserLight user){
+        removePlayer(user, true);
+    }
+
+    public void removePlayer(UserLight user, boolean showLog) {
         PlayerController playerController = playerControllerMap.get(user);
         if(playerController == null) {
             //This user doesn't exist
@@ -164,7 +168,7 @@ public class TableController {
             return;
         }
         playerControllerMap.remove(user);
-        addLogEntry(user.getPseudo() + " a quitté la partie.");
+        if (showLog) addLogEntry(user.getPseudo() + " a quitté la partie.");
         controllersList.set(controllersList.indexOf(playerController), null);
         if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
             btnLaunchGame.setVisible(false);
@@ -493,11 +497,12 @@ public class TableController {
      * @param game
      */
     public void stopGame(Game game) {
-        for(PlayerController p : controllersList){
-            removePlayer(p.getUserLight());
+        for(PlayerController p : controllersList){ // Suppression des joueurs
+            removePlayer(p.getUserLight(), false);
         }
-        playerInitializer();
+        playerInitializer(); // Réinitialisation des joueurs
         hideActionBox();
         disableAllActions();
+        addLogEntry("Partie terminée.");
     }
 }

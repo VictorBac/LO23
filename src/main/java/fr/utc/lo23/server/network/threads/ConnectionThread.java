@@ -127,9 +127,9 @@ public class ConnectionThread extends Thread {
      * Si ce n'est pas le cas, déconnecte
      */
     private void checkHeartBeat() {
-        Console.log("Valeur HB : " + last_message_timestamp);
+        //Console.log("Valeur HB : " + last_message_timestamp);
         if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            Console.log("HB nul, déconnexion (TODO)");
+            Console.log("HB nul, on doit deconnecter le client ici (TODO)");
             //TODO: Procéder à la déconnection
         }
     }
@@ -139,6 +139,7 @@ public class ConnectionThread extends Thread {
      * Suite à la réception d'un message de ce type
      */
     public void updateHeartbeat() {
+        //Console.log("Update HB" + last_message_timestamp);
         last_message_timestamp = System.currentTimeMillis();
     }
 }

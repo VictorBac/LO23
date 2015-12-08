@@ -67,7 +67,7 @@ public interface InterfaceClient {
     /**
      *
      */
-    public void heartBeat() throws NetworkFailureException;
+    public void sendHeartbeat() throws NetworkFailureException;
     
     /**
      *
@@ -117,9 +117,9 @@ public interface InterfaceClient {
     /**
      *
      * @param userLocal
-     * @param activeTable
+     * @param tableId
      */
-    public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException;
+    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
 
     public void sendMessage(MessageChat message);
 

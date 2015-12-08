@@ -3,6 +3,8 @@ package fr.utc.lo23.client.ihm_main.controllers;
 import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.FullTableException;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -110,8 +112,15 @@ public class MainWindowController extends BaseController {
     }
 
     public void joinTable(ActionEvent actionEvent) {
-        mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
-                EnumerationTypeOfUser.PLAYER);
+        try {
+            mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
+                    EnumerationTypeOfUser.PLAYER);
+        } catch (FullTableException e) {
+            mController.showErrorPopup("Erreur", "Table pleine !");
+        } catch (NetworkFailureException e) {
+            mController.showErrorPopup("Erreur", "Erreur réseau !");
+            e.printStackTrace();
+        }
     }
 
     public void addTables(List<Table> currentTables) {

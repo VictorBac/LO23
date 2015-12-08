@@ -11,11 +11,10 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 public class SendRequestedProfileMessage  extends Message {
 
-    private UserLight lightProfile;
     private User reqProfile;
 
 
-    public SendRequestedProfileMessage(UserLight ul, User u) {lightProfile = ul;reqProfile=u;}
+    public SendRequestedProfileMessage(User u) {reqProfile=u;}
 
     @Override
     public void process(ConnectionThread threadServer) {
@@ -24,7 +23,7 @@ public class SendRequestedProfileMessage  extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().getFullProfile(UserLight u, User p);
+        //threadClient.getNetworkManager().getDataInstance().remoteUserProfile(reqProfile);
     }
 
 }

@@ -90,5 +90,10 @@ public class InterData implements InterfaceMainToData {
 
     }
 
+    @Override
+    public void userStatsUpdated(UserLight user, Stats st) {
+
+    }
+
 
 }

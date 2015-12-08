@@ -16,8 +16,13 @@ public class Card implements Serializable {
      * id: string made up by value and symbol
      */
     private Integer value;
-    private char symbol;
+    //private char symbol;
     private String id;
+    private EnumerationCard symbol;
+    private final char spade = 'S';
+    private final char heart = 'H';
+    private final char diamond = 'D';
+    private final char club = 'C';
 
     /**
      * Constructor with value and symbol.
@@ -25,11 +30,9 @@ public class Card implements Serializable {
      * @param value
      * @param symbol spade & heart & diamond & club
      */
-    public Card(Integer value, char symbol) throws CardFormatInvalidException{
-        if ( value > 14 || value < 1)
+    public Card(Integer value, EnumerationCard symbol) throws CardFormatInvalidException{
+        if ( value > 13 || value < 1)
             throw new CardFormatInvalidException("Number must be an integer between 1 ~ 13");
-        if ( symbol != 'S' && symbol != 'H' && symbol != 'D' && symbol != 'C' )
-            throw new CardFormatInvalidException("Symbol must be 'S' or 'H' or 'D' or 'C'");
         else{
             this.value = value;
             this.symbol = symbol;
@@ -37,6 +40,18 @@ public class Card implements Serializable {
         }
     }
 
+    public char enumSymbolToCharSymbol(EnumerationCard symbolEnum){
+        char symbolChar = 'X';
+        if (symbolEnum.equals(EnumerationCard.SPADE))
+            symbolChar = spade;
+        else if (symbolEnum.equals(EnumerationCard.HEART))
+            symbolChar = heart;
+        else if (symbolEnum.equals(EnumerationCard.DIAMOND))
+            symbolChar = diamond;
+        else if (symbolEnum.equals(EnumerationCard.CLUB))
+            symbolChar = club;
+        return symbolChar;
+    }
     // getters
 
     public Integer getValue() {
@@ -47,13 +62,13 @@ public class Card implements Serializable {
         return id;
     }
 
-    public char getSymbol() {
+    public EnumerationCard getSymbol() {
         return symbol;
     }
 
     //setters
 
-    public void setSymbol(char symbol) {
+    public void setSymbol(EnumerationCard symbol) {
         this.symbol = symbol;
     }
 

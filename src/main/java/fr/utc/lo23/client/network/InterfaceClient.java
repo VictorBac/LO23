@@ -62,12 +62,12 @@ public interface InterfaceClient {
      * @param userLocal
      * @param tableToJoin
      */
-    public void joinTable(UserLight userLocal, Table tableToJoin) throws NetworkFailureException, FullTableException;
+    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException;
         
     /**
      *
      */
-    public void heartBeat() throws NetworkFailureException;
+    public void sendHeartbeat() throws NetworkFailureException;
     
     /**
      *
@@ -117,9 +117,9 @@ public interface InterfaceClient {
     /**
      *
      * @param userLocal
-     * @param activeTable
+     * @param tableId
      */
-    public void requestPlayGame(UserLight userLocal, Table activeTable) throws NetworkFailureException;
+    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
 
     public void sendMessage(MessageChat message);
 

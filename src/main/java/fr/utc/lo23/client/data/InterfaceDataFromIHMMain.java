@@ -3,6 +3,7 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 import java.util.UUID;
@@ -36,7 +37,7 @@ public interface InterfaceDataFromIHMMain {
      * @param table
      * @param mode
      */
-    void joinTableWithMode(UUID table, EnumerationTypeOfUser mode);
+    void joinTableWithMode(UUID table, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException;
 
     /**
      * Methode to pass on when accepted to join a table
@@ -67,7 +68,7 @@ public interface InterfaceDataFromIHMMain {
      * Method to play game on the table
      * @param tableId
      */
-    void playGame(UUID tableId);
+    void playGame(UUID tableId) throws NetworkFailureException;
 
     /**
      * Method to ask to exit

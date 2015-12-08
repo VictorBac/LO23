@@ -439,10 +439,6 @@
 .progress-indicator:indeterminate .segment6 {-fx-shape:null;}
 .progress-indicator:indeterminate .segment7 {-fx-shape:null;} */
 
-#bgimage {
-    -fx-background-image: url('http://img07.deviantart.net/15e4/i/2007/138/7/c/poker_by_mimiss.jpg');
-}
-
 .button{
     -fx-background-color: rgb(128, 21, 21);
 }

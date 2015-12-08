@@ -17,7 +17,7 @@ public class RequestProfileMessage extends Message {
     @Override
     public void process(ConnectionThread threadServer) {
         User fullProfile = threadServer.getMyServer().getNetworkManager().getDataInstance().getProfile(profile);
-        SendRequestedProfileMessage reqProf = new SendRequestedProfileMessage(profile,fullProfile);
+        SendRequestedProfileMessage reqProf = new SendRequestedProfileMessage(fullProfile);
         threadServer.send(reqProf);
     }
 

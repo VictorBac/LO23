@@ -63,7 +63,7 @@ public class CreateController extends BaseController {
         if (testpass.equals(verifpass)) {
             System.out.println("Test ok");
         } else {
-            System.out.println("Please type the same password...");
+            mController.showErrorPopup("Error", "Mot de passe incorrect.");
             return;
         }
 
@@ -75,10 +75,19 @@ public class CreateController extends BaseController {
         createUser.setCore(createUserLight);
         createUser.setPwd(password.getText());
 
+        System.out.println("user ok");
 
+        //Appel de la fonction de data pour creer un utilisateur.
         mController.getManagerMain().getInterDataToMain().saveNewProfile(createUser);
 
+        //Retour à la fenetre de connexion
+        mController.showConnectionWindow();
 
+    }
+
+    @FXML
+    void didClickCancelButton(ActionEvent event) {
+        mController.showConnectionWindow();
     }
 
     @Override

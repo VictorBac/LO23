@@ -18,14 +18,6 @@ public class SendListTableMessage extends Message {
     }
 
     /**
-     * Generic process
-     */
-    @Override
-    public void process() {
-
-    }
-
-    /**
      *
      * @param threadServer
      */

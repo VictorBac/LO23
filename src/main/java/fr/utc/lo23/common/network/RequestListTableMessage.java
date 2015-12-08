@@ -19,14 +19,6 @@ public class RequestListTableMessage extends Message {
     }
 
     /**
-     * Generic process
-     */
-    @Override
-    public void process() {
-
-    }
-
-    /**
      *
      * @param threadServer
      */

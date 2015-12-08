@@ -18,14 +18,6 @@ public class SendListUserMessage extends Message {
     }
 
     /**
-     * Generic process
-     */
-    @Override
-    public void process() {
-
-    }
-
-    /**
      * Check if we can login in the server, and send a confirmation (or not ?)
      * @param threadServer
      */

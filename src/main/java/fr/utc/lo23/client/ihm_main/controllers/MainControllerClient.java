@@ -45,8 +45,8 @@ public class MainControllerClient extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         pmStage = primaryStage;
+        managerMain.setControllerMain(this);
         showConnectionWindow();
     }
 

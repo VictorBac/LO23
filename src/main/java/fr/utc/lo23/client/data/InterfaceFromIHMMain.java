@@ -41,9 +41,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         } else {
             Console.log("loguser "+ userLocal.toString());
             //remove the psw and send userLocal to server
-            userLocal.setPwd(null);
-            dManagerClient.getInterToCom().requestLoginServer(userLocal);
-            userLogin = userLocal;
+            dManagerClient.setUserLocal(userLocal);
+            userLogin = new User(userLocal);
+            userLogin.setPwd(null);
+            dManagerClient.getInterToCom().requestLoginServer(userLogin);
         }
     }
 

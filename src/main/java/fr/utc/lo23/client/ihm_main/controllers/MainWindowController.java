@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  */
 public class MainWindowController extends BaseController {
     @FXML
-    private static ListView<UserLight> listViewConnectedUsers;
+    public ListView<UserLight> listViewConnectedUsers;
 
 
     public void addUsers(List<UserLight> users) {

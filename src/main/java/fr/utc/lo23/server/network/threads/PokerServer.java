@@ -81,6 +81,9 @@ public class PokerServer extends Thread {
                 ConnectionThread thread = new ConnectionThread(soClient, this);
                 thread.start();
                 threadsClientList.add(thread);
+                for(ConnectionThread thr : threadsClientList) {
+                    Console.log("=============" + thr.getName());
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -95,8 +98,8 @@ public class PokerServer extends Thread {
     public boolean userDisconnect(UUID userId) throws Exception{
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
-                threadClient.shutdown();
-                threadsClientList.remove(threadClient);
+                //threadClient.shutdown();
+                //threadsClientList.remove(threadClient);
                 return true;
             }
         }
@@ -113,6 +116,7 @@ public class PokerServer extends Thread {
     public void sendToAll(Message message){
         for (ConnectionThread threadClient : threadsClientList) {
             threadClient.send(message);
+            Console.log("a : " + message);
         }
     }
 

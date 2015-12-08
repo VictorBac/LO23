@@ -71,7 +71,7 @@ public class ConnectionThread extends Thread {
             while (running) {
                 try {
                     // Call suitable processing method
-                    this.socketClient.setSoTimeout(100);// en ms
+                    this.socketClient.setSoTimeout(1000);// en ms
                     Message msg = (Message) inputStream.readObject();
                     msg.process(this);
                 } catch (SocketTimeoutException e) {
@@ -81,7 +81,7 @@ public class ConnectionThread extends Thread {
                     this.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    this.shutdown();
+                    //this.shutdown();
                 }
             }
         } catch (Exception e) {
@@ -134,8 +134,8 @@ public class ConnectionThread extends Thread {
     private void checkHeartBeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
         if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            Console.log("HB nul, on doit deconnecter le client ici");
-            this.shutdown();
+            //Console.log("HB nul, on doit deconnecter le client ici");
+            //this.shutdown();
         }
     }
 

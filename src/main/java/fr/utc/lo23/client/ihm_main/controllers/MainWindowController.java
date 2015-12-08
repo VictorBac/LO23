@@ -1,8 +1,10 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.common.data.UserLight;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
@@ -16,6 +18,9 @@ import java.util.ResourceBundle;
 public class MainWindowController extends BaseController {
     @FXML
     private static ListView<UserLight> listViewConnectedUsers;
+
+    @FXML
+    private Button buttonQuit;
 
 
     public void addUsers(List<UserLight> users) {
@@ -67,5 +72,12 @@ public class MainWindowController extends BaseController {
 
     public void joinTable(ActionEvent actionEvent) {
 
+    }
+
+
+    @FXML
+    void didClickQuitButton(ActionEvent event) {
+        mController.getManagerMain().getInterDataToMain().exitAsked();
+        Platform.exit();
     }
 }

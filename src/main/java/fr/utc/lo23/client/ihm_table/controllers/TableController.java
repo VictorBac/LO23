@@ -239,6 +239,13 @@ public class TableController {
     @FXML
     private Button popupReadyRefuse;
 
+    @FXML
+    private TitledPane popupEndGameVote;
+    @FXML
+    private Button popupEndGameVoteAccept;
+    @FXML
+    private Button popupEndGameVoteRefuse;
+
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {
         if(messageToSend.getText().isEmpty())
@@ -504,5 +511,26 @@ public class TableController {
         hideActionBox();
         disableAllActions();
         addLogEntry("Partie terminée.");
+    }
+
+    public void showPopupEndGameVote() {
+        popupEndGameVote.setVisible(true);
+
+    }
+
+    public void hidePopupEndGameVote(){
+        popupEndGameVote.setVisible(false);
+    }
+
+    @FXML
+    public void sendEndGameVoteAccept(javafx.event.ActionEvent event){
+        ihmTable.getDataInterface().vote(true);
+        hidePopupEndGameVote();
+    }
+
+    @FXML
+    public void sendEndGameVoteRefuse(javafx.event.ActionEvent event){
+        ihmTable.getDataInterface().vote(false);
+        hidePopupEndGameVote();
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
@@ -93,6 +94,16 @@
                </content>
             </TitledPane>
             <Button fx:id="BtnLeaveTable" layoutX="30.0" layoutY="16.0" mnemonicParsing="false" onAction="#showPopupLeave" text="Quitter la table" />
+            <TitledPane fx:id="popupEndGameVote" animated="false" layoutX="737.0" layoutY="417.0" prefHeight="78.0" prefWidth="202.0" styleClass="popup" text="Voulez-vous mettre fin à la partie ?" visible="false">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="popup" visible="false">
+                     <children>
+                        <Button fx:id="popupEndGameVoteAccept" layoutX="25.0" layoutY="12.0" mnemonicParsing="false" onAction="#sendEndGameVoteAccept" prefHeight="27.0" prefWidth="90.0" styleClass="blueButton" text="Oui" />
+                        <Button fx:id="popupEndGameVoteRefuse" layoutX="139.0" layoutY="12.0" mnemonicParsing="false" onAction="#sendEndGameVoteRefuse" prefHeight="27.0" prefWidth="90.0" styleClass="blueButton" text="Non" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
          </children>
       </Pane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1020.0">

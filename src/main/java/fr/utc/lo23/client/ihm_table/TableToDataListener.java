@@ -223,7 +223,7 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher la demande de fin de jeu auprès des utilisateurs
      */
     public void askEndGameVote(Game game){
-        //TODO: next step
+        ihmtable.getTableController().showPopupEndGameVote();
     }
 
     /*
@@ -231,7 +231,6 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'arrêter le jeu.
      */
     public void stopGame(Game game){
-        //TODO: next step
         ihmtable.getTableController().stopGame(game);
     }
 

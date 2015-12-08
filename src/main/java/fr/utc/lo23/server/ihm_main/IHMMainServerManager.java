@@ -78,11 +78,13 @@ public class IHMMainServerManager {
         managerData = new DataManagerServer();
         managerCom = new NetworkManagerServer();
 
+        interfaceMainToCom = new InterMain(this);
+
         //Link des interfaces
-        this.setInterfaceComToMain(managerCom);
-        managerCom.setDataInstance(managerData.getInterfaceFromCom());
-        managerCom.setInterMain(this.getInterMain());
-        managerData.setInterfaceFromCom(managerCom.getDataInstance());
+        managerCom.setInterMain(interfaceMainToCom);
+
+
+        interfaceComToMain = managerCom;
     }
 
 

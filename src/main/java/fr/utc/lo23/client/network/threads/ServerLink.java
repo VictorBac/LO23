@@ -22,6 +22,7 @@ public class ServerLink extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
+    private int HEARTBEAT_PERIODE = 100; // en ms
 
     /* ============================ METHODS ============================ */
     public ServerLink(NetworkManagerClient networkManagerClient) {
@@ -69,7 +70,7 @@ public class ServerLink extends Thread {
         while (running) {
             try {
                 try {
-                    this.socket.setSoTimeout(100);
+                    this.socket.setSoTimeout(HEARTBEAT_PERIODE);
                     Message msg = (Message) inputStream.readObject();
                     msg.process(this);
                 } catch (SocketTimeoutException e) {

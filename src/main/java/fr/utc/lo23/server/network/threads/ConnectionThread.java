@@ -25,7 +25,8 @@ public class ConnectionThread extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
-    private long HEARTBEAT_TIMEOUT = 1000; // en ms
+    private int HEARTBEAT_PERIODE = 100; // en ms
+    private int HEARTBEAT_TIMEOUT = 3000; // en ms
 
     public ObjectOutputStream getOutputStream() {
         return outputStream;
@@ -71,11 +72,11 @@ public class ConnectionThread extends Thread {
             while (running) {
                 try {
                     // Call suitable processing method
-                    this.socketClient.setSoTimeout(100);// en ms
+                    this.socketClient.setSoTimeout(HEARTBEAT_PERIODE);// en ms
                     Message msg = (Message) inputStream.readObject();
                     msg.process(this);
                 } catch (SocketTimeoutException e) {
-                    this.checkHeartBeat();
+                    this.checkHeartbeat();
                 } catch (java.io.EOFException e) {
                     Console.log("Le client s'est déconnecté sans prévenir !");
                     this.shutdown();
@@ -131,10 +132,10 @@ public class ConnectionThread extends Thread {
      * Décrémente le heartbeat et regarde s'il en a reçu depuis
      * Si ce n'est pas le cas, déconnecte
      */
-    private void checkHeartBeat() throws NetworkFailureException {
+    private void checkHeartbeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
         if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            Console.log("HB nul, on doit deconnecter le client ici");
+            Console.log("Heartbeat: on a pas recu de message depuis plus de " +HEARTBEAT_TIMEOUT+ " ms donc deconnection du client.");
             this.shutdown();
         }
     }

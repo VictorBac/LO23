@@ -5,26 +5,20 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainControllerClient extends Application {
 
-
-    public static void main(String[] args) {
-        IHMMainClientManager manager = new IHMMainClientManager();
-        managerMain = manager;
-        launch(args);
-    }
-
-
     private Stage pmStage;
 
-    public static IHMMainClientManager managerMain;
+    private static IHMMainClientManager managerMain;
 
     public IHMMainClientManager getManagerMain(){
         return managerMain;
@@ -37,14 +31,23 @@ public class MainControllerClient extends Application {
     private MainWindowController mainWindowController;
     private ConnectionController connectionWindowController;
     private CreateController createProfileController;
+    private ViewOwnProfilController viewOwnProfilWindowController;
+    private EditOwnProfilController editProfilWindowController;
+    private ViewAutreProfilController viewAutreProfilWindowController;
 
+
+    public static void main(String[] args) {
+        IHMMainClientManager manager = new IHMMainClientManager();
+        managerMain = manager;
+        launch(args);
+    }
 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
         pmStage = primaryStage;
-        connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
+        showConnectionWindow();
     }
 
 
@@ -57,17 +60,41 @@ public class MainControllerClient extends Application {
     }
 
 
+    public void showAddServerWindow()
+    {
+        instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/AddServer.fxml", "Ajouter un serveur");
+    }
 
+    public void showConnectionWindow()
+    {
+        connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
+    }
 
-    private <T extends BaseController>T instantiateWindow(String ressource, String windowTitle)
+    public void showMainWindow(){
+        mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml","Poker");
+    }
+
+    public void showViewOwnWindow(){
+        viewOwnProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewOwnProfil.fxml", "Your Profile");
+    }
+
+    public void showEditProfilWindow(){
+        editProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/EditProfil.fxml", "Edit your profile");
+    }
+
+    public void showAutreProfilWindow(){
+        viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
+    }
+
+    private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)
     {
         Parent root = null;
 
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ressource));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resource));
             root = (Parent) fxmlLoader.load();
-            T controller = fxmlLoader.getController();
+            T controller =  fxmlLoader.getController();
             controller.setMainController(this);
             pmStage.setTitle(windowTitle);
             Scene scene = new Scene(root);
@@ -83,6 +110,15 @@ public class MainControllerClient extends Application {
         }
 
         return null;
+    }
+
+
+    public void showErrorPopup(String title, String msg)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
 }

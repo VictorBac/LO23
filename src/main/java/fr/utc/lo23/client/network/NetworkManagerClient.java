@@ -120,9 +120,9 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void joinTable(UserLight userLocal, Table tableToJoin) throws NetworkFailureException, FullTableException {
+    public void joinTable(UserLight userLocal, UUID tableToJoinID, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
         Console.log("Tentative de rejoingnement de table");
-        //RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,IdTable);
+        RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoinID,mode);
     }
 
     /**

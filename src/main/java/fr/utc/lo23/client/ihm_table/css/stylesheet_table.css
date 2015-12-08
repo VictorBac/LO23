@@ -29,17 +29,17 @@
 	-fx-graphic:url("../images/action_check_hover.png");
 }
 
-.action_follow_off {
-    -fx-graphic:url("../images/action_follow_off.png");
+.action_call_off {
+    -fx-graphic:url("../images/action_call_off.png");
 }
 
-.action_follow_on {
-	-fx-graphic:url("../images/action_follow.png");
+.action_call_on {
+	-fx-graphic:url("../images/action_call.png");
     -fx-cursor:hand;
 }
 
-.action_follow_on:hover {
-	-fx-graphic:url("../images/action_follow_hover.png");
+.action_call_on:hover {
+	-fx-graphic:url("../images/action_call_hover.png");
 }
 
 .action_bet_off {

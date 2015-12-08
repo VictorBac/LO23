@@ -3,6 +3,7 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.data.exceptions.*;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 import java.util.UUID;
@@ -27,9 +28,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param password
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
-        //User userLocal = (User) Serialization.deserializationObject(login);
-        //TODO ligne précédente à remettre quand la creation de profil marchera, et ligne suivante à delete
-        User userLocal = new User(login, password);
+        User userLocal = (User) Serialization.deserializationObject(login);
+        //User userLocal = new User(login, password); //Create a User to test
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();
@@ -41,9 +41,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         } else {
             Console.log("loguser "+ userLocal.toString());
             //remove the psw and send userLocal to server
-            userLocal.setPwd(null);
-            dManagerClient.getInterToCom().requestLoginServer(userLocal);
-            userLogin = userLocal;
+            dManagerClient.setUserLocal(userLocal);
+            userLogin = new User(userLocal);
+            userLogin.setPwd(null);
+            dManagerClient.getInterToCom().requestLoginServer(userLogin);
         }
     }
 
@@ -71,9 +72,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param tableId
      * @param mode
      */
-    public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) {
-        // TODO wait network interface
-        //dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
+    public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException {
+        dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
     }
 
     /**
@@ -114,9 +114,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * Ask server to play a game.
      * @param tableId
      */
-    public void playGame(UUID tableId) {
-        // TODO wait network interface
-        // dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
+    public void playGame(UUID tableId) throws NetworkFailureException {
+        dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
     }
 
     /**

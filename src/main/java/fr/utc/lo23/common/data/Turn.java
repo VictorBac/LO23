@@ -1,10 +1,12 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.ListIterator;
+//import java.util.ListIterator;
 
 /**
  * Created by Ying on 20/10/2015.
@@ -14,34 +16,24 @@ import java.util.ListIterator;
 public class Turn implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private ArrayList<Action> listAction;
     private ArrayList<UserLight> listPlayerInThisTurn;
     private Game currentGame;
     private Timestamp timeStampOfTurn;
+
     /**
      *  Constructor void
-     *  @param currentGameToAddToNewTurn The current game from which we can the information to add to the new turn
+     *  @param currentGameToAdd The current game from which we can the information to add to the new turn
      */
-    public Turn(Game currentGameToAddToNewTurn){
-        //TODO add a copy constructor in the class Game
+    public Turn(Game currentGameToAdd){
         this.listAction = new ArrayList<Action>();
         this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
-        this.currentGame = currentGameToAddToNewTurn;
-        for (Seat item : currentGameToAddToNewTurn.getListSeatPlayerWithPeculeDepart()
+        this.currentGame = currentGameToAdd;
+        for (Seat item : currentGameToAdd.getListSeatPlayerWithPeculeDepart()
              ) {
             this.listPlayerInThisTurn.add(item.getPlayer());
         }
-    }
-
-    /**
-     * Copy Constructor
-     * @param originalTurn The original turn that we want to copy
-     */
-    public Turn (Turn originalTurn){
-        this.listAction = originalTurn.listAction;
-        this.listPlayerInThisTurn = originalTurn.listPlayerInThisTurn;
-        this.timeStampOfTurn = originalTurn.timeStampOfTurn;
-        this.currentGame = originalTurn.currentGame;
     }
 
     /**
@@ -81,18 +73,28 @@ public class Turn implements Serializable {
      * Method which is designed to add a new action to the turn
      * @param newAction Action that a Player made and that needs to be added to the turn
      */
-    public void addAction(Action newAction){
+    public void addAction(Action newAction) throws ActionInvalidException{
+        if ( newAction == null )
+            throw new NullPointerException("Action is null");
         if ( newAction.getName().name() == "fold" ){
-            addAction(newAction);
+            listAction.add(newAction);
             listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
-        }else if ( newAction.getName().name() == "bet" ){
+        }
+        if ( newAction.getName().name() == "check" ){
+            if ( newAction.getAmount() < minimalBet() )
+                throw new ActionInvalidException("You cannot check when your amount is less than the minimum.");
+            else
+                listAction.add(newAction);
+        }
+        if ( newAction.getName().name() == "call" ){
+            if ( newAction.getAmount() != minimalBet() )
+                throw new ActionInvalidException("You cannot call when your amount is different from the minimum.");
+            else
+                listAction.add(newAction);
         }
 
         //TODO need to do some check first in the case the Action is not valid
-        if(newAction==null)
-            throw new NullPointerException("Action is null");
-        else
-            listAction.add(newAction);
+
     }
 
 
@@ -132,38 +134,4 @@ public class Turn implements Serializable {
         return timeStampOfTurn;
     }
 
-    /**
-     * Constructor
-     * @param aListOfAction A list of action to copy into the new turn
-     * @param timeStampOfTurn The time stamp to copy into the new turn
-     * @param currentGameToAddToNewTurn The current game from which we can the information to add to the new turn
-     */
-    /*
-    public Turn(ArrayList<Action> aListOfAction, Timestamp timeStampOfTurn, Game currentGameToAddToNewTurn){
-        this.listAction = copyListOfActionToAvoidShallowCopy(aListOfAction);
-        this.timeStampOfTurn = timeStampOfTurn;
-        this.currentGame = currentGameToAddToNewTurn;
-        for (Seat item : currentGameToAddToNewTurn.getListSeatPlayerWithPeculeDepart()
-                ) {
-            this.listPlayerActif.add(item.getPlayer());
-        }
-    }
-    */
-
-    /**
-     * Method that take an ArrayList of Action and then return a copy of it
-     * @param originalListAction ArrayList of Action original that we want to get a complete copy from without shallow copy
-     * @return copy of the original ArrayList of Action
-     */
-    /*
-    private ArrayList<Action> copyListOfActionToAvoidShallowCopy(ArrayList<Action> originalListAction){
-        ListIterator<Action> listIterator = originalListAction.listIterator();
-        ArrayList<Action> copyListAction = new ArrayList<Action>();
-        while(listIterator.hasNext()) {
-            Action elementActionOfTheArray = listIterator.next();
-            copyListAction.add(elementActionOfTheArray);
-        }
-        return copyListAction;
-    }
-    */
 }

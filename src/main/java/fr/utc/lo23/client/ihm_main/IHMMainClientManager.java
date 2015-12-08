@@ -50,16 +50,8 @@ public class IHMMainClientManager {
         return interMainToData;
     }
 
-    public void setInterMainToData(InterfaceMainToData interMainToData) {
-        this.interMainToData = interMainToData;
-    }
-
     public InterfaceMainToTable getInterMainToTable() {
         return interMainToTable;
-    }
-
-    public void setInterMainToTable(InterfaceMainToTable interMainToTable) {
-        this.interMainToTable = interMainToTable;
     }
 
 
@@ -69,16 +61,8 @@ public class IHMMainClientManager {
         return interDataToMain;
     }
 
-    public void setInterDataToMain(InterfaceDataFromIHMMain interDataToMain) {
-        this.interDataToMain = interDataToMain;
-    }
-
     public ITableToMainListener getInterTableToMain() {
         return interTableToMain;
-    }
-
-    public void setInterTableToMain(ITableToMainListener interTableToMain) {
-        this.interTableToMain = interTableToMain;
     }
 
 
@@ -88,25 +72,14 @@ public class IHMMainClientManager {
         return managerTable;
     }
 
-    public void setManagerTable(IHMTable managerTable) {
-        this.managerTable = managerTable;
-    }
-
     public NetworkManagerClient getManagerNetwork() {
         return managerNetwork;
-    }
-
-    public void setManagerNetwork(NetworkManagerClient managerNetwork) {
-        this.managerNetwork = managerNetwork;
     }
 
     public DataManagerClient getManagerData() {
         return managerData;
     }
 
-    public void setManagerData(DataManagerClient managerData) {
-        this.managerData = managerData;
-    }
 
 
     //Getters et setters de nos attributs privés
@@ -127,11 +100,11 @@ public class IHMMainClientManager {
     }
 
     public void setControllerConnection(ConnectionController controllerConnection) {
-        controllerConnection = controllerConnection;
+        this.controllerConnection = controllerConnection;
     }
 
     public void setControllerMain(MainControllerClient controllerMain) {
-        controllerMain = controllerMain;
+        this.controllerMain = controllerMain;
     }
 
 
@@ -156,9 +129,8 @@ public class IHMMainClientManager {
         managerTable.setDataInterface(managerData.getInterFromIHMTable());
         managerTable.setMainInterface(this.getInterMainToTable());
 
-        //Link de nos interfaces
-        this.setInterMainToData(managerData.getInterToIHMMain());
-        this.setInterMainToTable(managerTable.getMainInterface());
+        interTableToMain = managerTable.getTableToMainListener();
+        interDataToMain = managerData.getInterFromIHMMain();
 
     }
 

@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  */
 public class MainWindowController extends BaseController {
     @FXML
-    private static ListView<UserLight> listViewConnectedUsers;
+    public ListView<UserLight> listViewConnectedUsers;
 
 
     public void addUsers(List<UserLight> users) {
@@ -36,22 +36,16 @@ public class MainWindowController extends BaseController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        listViewConnectedUsers.setCellFactory(column-> {
-            return new ListCell<UserLight>(){
-                @Override
-                protected void updateItem(UserLight user, boolean empty){
-                    if(user==null || empty)
-                        setText(null);
-                    else
-                        setText(user.getPseudo());
-                }
-            };
-        });
+
     }
 
 
     public void refreshUsers(List<UserLight> userList)
     {
 
+    }
+
+    public void openViewOwnProfil(ActionEvent actionEvent) {
+        mController.showViewOwnWindow();
     }
 }

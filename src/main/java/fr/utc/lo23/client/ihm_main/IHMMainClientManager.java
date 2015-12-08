@@ -104,7 +104,7 @@ public class IHMMainClientManager {
     }
 
     public void setControllerMain(MainControllerClient controllerMain) {
-        controllerMain = controllerMain;
+        this.controllerMain = controllerMain;
     }
 
 

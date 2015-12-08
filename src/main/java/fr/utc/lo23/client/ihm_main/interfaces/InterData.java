@@ -77,7 +77,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void currentTables(List<Table> currentTables) {
-
+        managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
     }
 
     @Override

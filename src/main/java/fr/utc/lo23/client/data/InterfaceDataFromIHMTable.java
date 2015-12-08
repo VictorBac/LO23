@@ -22,9 +22,10 @@ public interface InterfaceDataFromIHMTable {
     public void vote(boolean answer);
 
 
-    /**
-     * method to create a new table
-     * @param table
+     /**
+     * Table is created by IHM Table, which transmit it as parameter
+     * This function transmit the table to COM to create it on the server.
+     * @param table : Table to transmit
      */
     public void tableToCreate(Table table);
 

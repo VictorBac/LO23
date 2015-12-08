@@ -20,6 +20,12 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         this.dManagerClient = dManagerClient;
     }
 
+
+    /**
+     * Table is created by IHM Table, which transmit it as parameter
+     * This function transmit the table to COM to create it on the server.
+     * @param table : Table to transmit
+     */
     //TODO handle exceptions
     public void tableToCreate(Table table){
         try {
@@ -47,6 +53,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         //dManagerClient.getInterToCom().vote(answer);
     }
 
+    //TODO
     public void saveGame() {
 
     }

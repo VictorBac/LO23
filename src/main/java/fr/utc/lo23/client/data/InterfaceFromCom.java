@@ -95,11 +95,16 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
             dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
+            //TODO need to contact IHMMain not TABLE ERROR
         } catch (TableException e) {
             e.printStackTrace();
         }
     }
 
+    public void tableJoinRefused(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal){
+        //TODO add dManagerClient.getInterToIHMMain()
+
+    }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
         //TODO test
@@ -145,6 +150,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getUserLocal().setStatsUser(statsLocalUser);
         //TODO ask IHM Main to implement an interface to for notifying the player that its Stats has changed
     }
+
+    public void startGame(UUID idTable){
+        dManagerClient.getInterToIHMTable().notifyStartGame(dManagerClient.getListTablesLocal().getTable(idTable));
+    }
+
 
     public void askAction(ArrayList<Action> listActionPossibleForUserLocal) {
 

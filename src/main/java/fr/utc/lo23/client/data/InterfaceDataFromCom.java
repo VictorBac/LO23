@@ -77,6 +77,14 @@ public interface InterfaceDataFromCom {
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
 
     /**
+     * Method to notify that the local user is not able to join the table
+     *
+     * @param idTableLocalUserJoined the id of the Table the User has not joined
+     * @param modeUserLocal          an EnumerationTypeOfUser the mode which he has chosen to adopt spectator or player
+     */
+    public void tableJoinRefused(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
+
+    /**
      * Method to keep locally the list of UserLight connected to the server
      *
      * @param listUserLightConnectedOnServer ArrayList of  UserLight connected on the server
@@ -96,6 +104,12 @@ public interface InterfaceDataFromCom {
      * @return UserLight that corresponds to the local user
      */
     public UserLight getUserLightLocal();
+
+    /**
+     * Method to notify the player that the Game starts
+     * @param idTable UUID of the Table the user is connected to
+     */
+    public void startGame(UUID idTable);
 
     /**
      * Method to keep the local player hand locally

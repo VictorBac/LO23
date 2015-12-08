@@ -51,8 +51,8 @@ public class ConnectionController extends BaseController {
         try { // User logged in
             IHMMainClientManager manager = mController.getManagerMain();
             manager.getInterDataToMain().logUser(login,passwd);
+            //TODO asynchronous...
             mController.userLoggedIn();
-
         } catch (LoginNotFoundException e) {
             mController.showErrorPopup("Error", "Nom d'utilisateur inexistant sur le poste.");
 

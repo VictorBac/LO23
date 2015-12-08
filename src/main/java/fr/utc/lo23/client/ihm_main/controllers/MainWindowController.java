@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  */
 public class MainWindowController extends BaseController {
     @FXML
-    private static ListView<UserLight> listViewConnectedUsers;
+    public ListView<UserLight> listViewConnectedUsers;
 
     @FXML
     private TableView<Table> tableViewCurrentTables;
@@ -62,24 +62,13 @@ public class MainWindowController extends BaseController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        /*listViewConnectedUsers.setCellFactory(column-> {
-            return new ListCell<UserLight>(){
-                @Override
-                protected void updateItem(UserLight user, boolean empty){
-                    if(user==null || empty)
-                        setText(null);
-                    else
-                        setText(user.getPseudo());
-                }
-            };
-        });*/
-
         columnTableCreator.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
                 return new SimpleStringProperty(param.getValue().getCreator().getPseudo());
             }
         });
+
 
         columnTableName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
             @Override

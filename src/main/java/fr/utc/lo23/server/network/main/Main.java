@@ -9,9 +9,9 @@ import fr.utc.lo23.server.network.NetworkManagerServer;
  */
 public class Main {
     public static void main(String[] args){
-        NetworkManagerServer manager = new NetworkManagerServer();
-        manager.start(1904);
-        DataManagerServer dataManServ = new DataManagerServer();
-        manager.setDataInstance(dataManServ.getInterfaceFromCom());
+        NetworkManagerServer networkManager = new NetworkManagerServer();
+        networkManager.start(1904);
+        DataManagerServer dataManager = new DataManagerServer();
+        networkManager.setDataInstance(dataManager.getInterfaceFromCom());
     }
 }

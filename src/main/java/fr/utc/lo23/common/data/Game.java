@@ -1,5 +1,7 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class Game implements Serializable{
      * Method to know the current Hand
      * @return
      */
-    private Hand getCurrentHand(){
+    public Hand getCurrentHand(){
         return this.listHand.get(this.listHand.size()-1);
     }
     private ArrayList<UserLight> getPlayerList(){
@@ -136,7 +138,7 @@ public class Game implements Serializable{
      * Method that take an action that has been played and give it to the current Hand
      * @param newActionDoneByPlayer Action played on this Hand
      */
-    private void playAction(Action newActionDoneByPlayer){
+    private void playAction(Action newActionDoneByPlayer) throws ActionInvalidException {
         //TODO need to do some check First
         //TODO change the behaviour it is not the best way to do it
         getCurrentHand().playAction(newActionDoneByPlayer);
@@ -147,7 +149,7 @@ public class Game implements Serializable{
      * Method to start the Game
       */
     public void startGame(){
-        this.timeStampStartOfTheGame= new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.statusOfTheGame = EnumerationStatusGame.playing;
 //TODO begin to distribute the cards
     }

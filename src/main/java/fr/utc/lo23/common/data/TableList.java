@@ -55,14 +55,16 @@ public class TableList implements Serializable {
     }
 
     /**
-     * method to add a user (player or spectator) to a table
-     * @param idTable
-     * @param newUser
-     * @param typeOfUser
+     * Add a player/spectator in a table, if it's in the list
+     * @param idTable : Table's id in which we want to add the player/spectator
+     * @param newUser : User to add
+     * @param typeOfUser : player or spectator
+     * @return Table the User is in
+     * @throws TableException
      */
-    public void addUserToTable(UUID idTable, UserLight newUser, EnumerationTypeOfUser typeOfUser) throws TableException {
+    public Table addUserToTable(UUID idTable, UserLight newUser, EnumerationTypeOfUser typeOfUser) throws TableException {
         //get the index of the table  if it is in the list
-        int ind = getTableById(idTable);
+        int ind = getIDTable(idTable);
         //The table is in the table list
         if(ind != -1) {
             //ask to add a player
@@ -75,25 +77,18 @@ public class TableList implements Serializable {
                 //Call method in Table
                 this.listTable.get(ind).spectatorJoinTable(newUser);
             }
+            return this.listTable.get(ind);
         }
         else throw new TableException("Can't add this user to the table");
     }
 
-    /**
-     * Return the index of the table if it's in the tables list
-     * @param table : table to check
-     * @return : index of the table if contained, -1 if not
-     */
-    public int getTable(Table table){
-        return this.getListTable().indexOf(table);
-    }
 
     /**
-     * Find the index of the table which got idTable as UUID, if contained in the list
-     * @param idTable : UUID of the Table to return
-     * @return : Table if found, null otherwise
+     *
+     * @param idTable
+     * @return
      */
-    public int getTableById(UUID idTable){
+    private int getIDTable(UUID idTable) {
         int index = 0;
         Iterator<Table> iter = this.listTable.iterator();
         while (iter.hasNext())
@@ -104,6 +99,27 @@ public class TableList implements Serializable {
             index++;
         }
         return -1;
+    }
+
+    /**
+     * Return the index of the table if it's in the tables list
+     * @param table : table to check
+     * @return : index of the table if contained, -1 if not
+     */
+    public int getIDTable(Table table){
+        return this.getListTable().indexOf(table);
+    }
+
+    /**
+     * Return the table which got idTable as UUID, if contained in the list
+     * @param idTable : UUID of the Table to find
+     * @return : Table if found, null otherwise
+     */
+    public Table getTable(UUID idTable){
+        int index = getIDTable(idTable);
+        if(index != -1)
+            return this.listTable.get(getIDTable(idTable));
+        else return null;
     }
 
 

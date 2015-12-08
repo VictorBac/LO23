@@ -100,7 +100,7 @@ public class IHMMainClientManager {
     }
 
     public void setControllerConnection(ConnectionController controllerConnection) {
-        controllerConnection = controllerConnection;
+        this.controllerConnection = controllerConnection;
     }
 
     public void setControllerMain(MainControllerClient controllerMain) {

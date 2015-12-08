@@ -77,6 +77,18 @@ public class Action implements Serializable{
     }
 
 
+    public Action(){
+
+        this.name = null;
+        this.amount = 0;
+        this.userLightOfPlayer = null;
+        this.timeStampOfAction = null;
+    }
+
+
+
+
+
 
 
 
@@ -105,4 +117,36 @@ public class Action implements Serializable{
      * @return time as a Timestamp
      */
     public Timestamp getTimeStampOfAction() {return timeStampOfAction;}
+
+
+    public void setName(EnumerationAction name) {
+        this.name = name;
+    }
+
+    public void setAmount(int amount) {
+        if(amount < 0)
+            this.amount = 0;
+        else
+            this.amount = amount;
+    }
+
+    public void setUserLightOfPlayer(UserLight userLightOfPlayer) {
+        this.userLightOfPlayer = userLightOfPlayer;
+    }
+
+    /**
+     *  method to set the time manually, avoid to use and use instead setActionTime()
+     *  @deprecated
+     * @param timeStampOfAction
+     */
+    public void setTimeStampOfAction(Timestamp timeStampOfAction) {
+        this.timeStampOfAction = timeStampOfAction;
+    }
+
+    /**
+     * Method to set the time to the current date
+     */
+    public void setActionTime(){
+        this.timeStampOfAction = new Timestamp(Calendar.getInstance().getTime().getTime());
+    }
 }

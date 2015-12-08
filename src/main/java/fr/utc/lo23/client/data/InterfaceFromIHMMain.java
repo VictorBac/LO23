@@ -27,9 +27,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param password
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
-        //User userLocal = (User) Serialization.deserializationObject(login);
-        //TODO ligne précédente à remettre quand la creation de profil marchera, et ligne suivante à delete
-        User userLocal = new User(login, password);
+        User userLocal = (User) Serialization.deserializationObject(login);
+        //User userLocal = new User(login, password); //Create a User to test
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();
@@ -72,8 +71,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param mode
      */
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) {
-        // TODO wait network interface
-        //dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
+        dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
     }
 
     /**
@@ -115,8 +113,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param tableId
      */
     public void playGame(UUID tableId) {
-        // TODO wait network interface
-        // dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
+        dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
     }
 
     /**

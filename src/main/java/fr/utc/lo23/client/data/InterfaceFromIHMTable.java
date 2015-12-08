@@ -26,7 +26,6 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
      * This function transmit the table to COM to create it on the server.
      * @param table : Table to transmit
      */
-    //TODO handle exceptions
     public void tableToCreate(Table table){
         try {
             dManagerClient.getInterToCom().createTable(getUser(),table);
@@ -54,13 +53,14 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
     //TODO
+    //params : idGame, idTable?
     public void saveGame() {
-
+        //TODO pour com cloner table sans liste games, insérer juste le bon game, retourner
     }
 
-    //TODO Com must implement sendMessage(MessageChat message)
-    public void sendMessage(MessageChat message){
-        //dManagerClient.getInterToCom().sendMessage(message);
+    //TODO Com must implement sendMessage(MessageChat message, UUID idTableLocale)
+    public void sendMessage(MessageChat message, UUID idTableLocale){
+        //dManagerClient.getInterToCom().sendMessage(message, idTableLocale);
     }
 
     //TODO Com must implement sendMessage(MessageChat message)

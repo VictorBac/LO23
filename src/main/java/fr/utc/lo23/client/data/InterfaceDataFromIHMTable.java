@@ -39,7 +39,7 @@ public interface InterfaceDataFromIHMTable {
     /**
      * method to send a chat message
      */
-    public void sendMessage(MessageChat message);
+    public void sendMessage(MessageChat message, UUID idTableLocale);
 
     /**
      * method to play a game
@@ -83,6 +83,8 @@ public interface InterfaceDataFromIHMTable {
      */
     public UserLight getUser();
 
-
+    /**
+     *
+     */
     public void quitGame();
 }

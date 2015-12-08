@@ -95,5 +95,10 @@ public class InterData implements InterfaceMainToData {
 
     }
 
+    @Override
+    public void tableJoinRefused(Table t) {
+
+    }
+
 
 }

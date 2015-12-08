@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
 import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 
 import java.io.Serializable;
@@ -79,7 +80,7 @@ public class Hand implements Serializable{
      * Method used to give to the each player (PlayerHand) of the Hand its card and to put cards on the Fields
      */
     public void distributeCard(){
-        int[] deckCards = new int[NUMBER_OF_CARD_IN_DECK];
+       /* int[] deckCards = new int[NUMBER_OF_CARD_IN_DECK];
 
         int cardDrawn = 0;
         boolean nextDraw = true;
@@ -103,16 +104,16 @@ public class Hand implements Serializable{
                         newCardValue = 13;
                     try {
                         if(0 <= cardDrawn && cardDrawn < 13  ){ // spade card
-                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'S');
+                            //TODO add this cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'S');
                         }
                         else if(13 <= cardDrawn && cardDrawn < 26 ) {// heart card
-                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'H');
+                            //TODO add this cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'H');
                         }
                         else if (26 <= cardDrawn && cardDrawn < 39 ){// diamond card
-                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'D');
+                            //TODO add this cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'D');
                         }
                         else if(39 <= cardDrawn && cardDrawn < 52 ){// club card
-                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'C');
+                           //TODO add thiscardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'C');
                         }
                         else{
                             Console.log("Hand class- error when distribute cards");
@@ -140,7 +141,7 @@ public class Hand implements Serializable{
                 indexPlus = index+1;
                 this.getListPlayerHand().get(((indexPlus/2)+(indexPlus%2))-1).addNewCard(cardsDistributed[index]);
             }
-        }
+        }*/
 
 
     }
@@ -163,7 +164,7 @@ public class Hand implements Serializable{
      * Method that take an action that has been played and give it to the current Turn
      * @param actionNeededToBePlayed Action played on this Turn
      */
-    public void playAction(Action actionNeededToBePlayed){
+    public void playAction(Action actionNeededToBePlayed) throws ActionInvalidException {
         //TODO need to do some check First
         //TODO change the behaviour it is not the best way to do it
         listTurn.get(listTurn.size()-1).addAction(actionNeededToBePlayed);

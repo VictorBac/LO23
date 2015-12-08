@@ -133,7 +133,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
     public void remoteUserProfile(User profileReturnedByTheServer){
-        dManagerClient.getInterToIHMMain();
+        Console.log(TAG +"remoteUserProfile()");
+        //TODO add this line after integration dManagerClient.getInterToIHMMain().profileRemoteUserFromServer(profileReturnedByTheServer);
     }
 
     public void updateStats(Stats statsLocalUser) {

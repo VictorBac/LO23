@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@../css/stylesheet_table.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.TableController">
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" stylesheets="@../css/stylesheet_table.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.TableController">
    <children>
       <Pane fx:id="tablePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="1020.0" styleClass="table">
          <children>
@@ -29,10 +29,10 @@
                      <tooltip>
                         <Tooltip text="Check" />
                      </tooltip></Button>
-                     <Button fx:id="actionCall" layoutX="101.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#call" prefHeight="45.0" prefWidth="45.0">
+                     <Button fx:id="actionCall" layoutX="110.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#call" prefHeight="45.0" prefWidth="45.0">
                      <styleClass>
                         <String fx:value="action" />
-                        <String fx:value="action_follow_off" />
+                        <String fx:value="action_call_off" />
                      </styleClass>
                      <tooltip>
                         <Tooltip text="Suivre" />
@@ -59,41 +59,44 @@
                          </image>
                      </ImageView>
                   <Slider fx:id="actionBetMoneySelector" layoutX="190.0" layoutY="92.0" max="150.0" prefHeight="17.0" prefWidth="140.0" />
-                  <Label fx:id="betLabel" layoutX="215.0" layoutY="70.0" text="Label" />
+                  <Label fx:id="betLabel" layoutX="215.0" layoutY="70.0" text="Money Amount" />
                  </children>
              </Pane>
             <Button fx:id="btnLaunchGame" layoutX="887.0" layoutY="14.0" mnemonicParsing="false" onAction="#launchGame" styleClass="launchGame" text="Lancer partie" visible="false" />
             <TitledPane fx:id="popupAmount" animated="false" collapsible="false" layoutX="786.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup" text="Montant Initial (Max: 10 000€)" visible="false">
               <content>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="220.0" styleClass="popup">
                      <children>
-                        <Button fx:id="popupAmountButton" layoutX="158.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendMoneyAmount" styleClass="blueButton" text="Envoyer" />
-                        <TextField fx:id="popupAmountInput" layoutX="4.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" styleClass="inputMessage" />
+                        <Button fx:id="popupAmountButton" layoutX="158.0" layoutY="10.0" mnemonicParsing="false" onAction="#sendMoneyAmount" styleClass="blueButton" text="Envoyer" />
+                        <TextField fx:id="popupAmountInput" layoutX="4.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" styleClass="inputMessage" />
                      </children>
                   </AnchorPane>
               </content>
             </TitledPane>
             <TitledPane fx:id="popupReady" animated="false" collapsible="false" layoutX="786.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup" text="Prêts ?" visible="false">
                <content>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="220.0" styleClass="popup">
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="220.0" styleClass="popup">
                      <children>
-                        <Button fx:id="popupReadyAccept" layoutX="118.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendReadyAccept" prefHeight="25.0" prefWidth="94.0" styleClass="blueButton" text="Accepter" />
-                        <Button fx:id="popupReadyRefuse" layoutX="9.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendReadyRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Refuser" />
+                        <Button fx:id="popupReadyAccept" layoutX="122.0" layoutY="10.0" mnemonicParsing="false" onAction="#sendReadyAccept" prefHeight="25.0" prefWidth="94.0" styleClass="blueButton" text="Accepter" />
+                        <Button fx:id="popupReadyRefuse" layoutX="4.0" layoutY="10.0" mnemonicParsing="false" onAction="#sendReadyRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Refuser" />
                      </children>
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane fx:id="popupLeave" animated="false" collapsible="false" layoutX="383.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="233.0" styleClass="popup" text="Êtes-vous sûr de vouloir quitter la table ?" visible="false">
+            <TitledPane fx:id="popupLeave" animated="false" collapsible="false" layoutX="786.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="230.0" styleClass="popup" text="Êtes-vous sûr de vouloir quitter la table ?" visible="false">
                <content>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="254.0" styleClass="popup">
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" styleClass="popup">
                      <children>
-                        <Button fx:id="popupLeaveAccept" layoutX="146.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendLeaveAccept" prefHeight="25.0" prefWidth="94.0" styleClass="blueButton" text="Oui" />
-                        <Button fx:id="popupLeaveRefuse" layoutX="9.0" layoutY="30.0" mnemonicParsing="false" onAction="#sendLeaveRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Non" />
+                        <Button fx:id="popupLeaveAccept" layoutX="131.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendLeaveAccept" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Oui" />
+                        <Button fx:id="popupLeaveRefuse" layoutX="4.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendLeaveRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Non" />
                      </children>
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
                   </AnchorPane>
                </content>
             </TitledPane>
-            <Button fx:id="BtnLeaveTable" layoutX="30.0" layoutY="16.0" mnemonicParsing="false" onAction="#showPopupLeave" text="Quitter la table" />
+            <Button fx:id="BtnLeaveTable" layoutX="30.0" layoutY="16.0" mnemonicParsing="false" onAction="#showPopupLeave" styleClass="blueButton" text="Quitter la table" />
             <TitledPane fx:id="popupEndGameVote" animated="false" layoutX="737.0" layoutY="417.0" prefHeight="78.0" prefWidth="202.0" styleClass="popup" text="Voulez-vous mettre fin à la partie ?" visible="false">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="popup" visible="false">

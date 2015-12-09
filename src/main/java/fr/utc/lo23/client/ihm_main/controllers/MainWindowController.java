@@ -13,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -101,6 +98,7 @@ public class MainWindowController extends BaseController {
         });
 
         tablesList = FXCollections.observableArrayList();
+        tableViewCurrentTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     public void openViewOwnProfil(ActionEvent actionEvent) {

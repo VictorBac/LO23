@@ -6,6 +6,7 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -77,7 +78,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * TODO
+     * table join accepted
      * @param table
      * @param mode
      */
@@ -119,11 +120,36 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     *
+     * Ask server for disconnection
      */
     public void exitAsked() {
         // TODO wait network interface
         // dManagerClient.getInterToCom().askDisconnection(userLogin.getUserLight());
+    }
+
+    /**
+     * getServersList TODO
+     * @return server list
+     */
+    public List<Server> getServersList() {
+        return null;
+    }
+
+    /**
+     * Add server TODO
+     * @param ip
+     * @param port
+     */
+    public void addServer(String ip, String port) {
+
+    }
+
+    /**
+     * remove server TODO
+     * @param server server to remove
+     */
+    public void removeServer(Server server) {
+
     }
 
 }

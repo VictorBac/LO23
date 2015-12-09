@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.Card;
+import fr.utc.lo23.common.data.EnumerationCard;
 import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ public class CombinationCalculatorTest {
 
         cards = new ArrayList<Card>();
         try {
-            cards.add(new Card(14,'C'));
-            cards.add(new Card(13,'C'));
-            cards.add(new Card(5,'S'));
-            cards.add(new Card(4,'C'));
-            cards.add(new Card(3,'C'));
-            cards.add(new Card(3,'C'));
-            cards.add(new Card(2,'C'));
+            cards.add(new Card(14, EnumerationCard.CLUB));
+            cards.add(new Card(13,EnumerationCard.CLUB));
+            cards.add(new Card(5,EnumerationCard.SPADE));
+            cards.add(new Card(4,EnumerationCard.CLUB));
+            cards.add(new Card(3,EnumerationCard.CLUB));
+            cards.add(new Card(3,EnumerationCard.CLUB));
+            cards.add(new Card(2,EnumerationCard.CLUB));
         } catch (CardFormatInvalidException e) {
             e.printStackTrace();
         }

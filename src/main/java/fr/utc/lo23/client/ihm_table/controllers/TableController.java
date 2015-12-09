@@ -62,10 +62,9 @@ public class TableController {
     }
 
     public void initialize(){
-        //TODO : je suis pas certain qu'il faille mettre ça ici, mais bon, ça fonctionne
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
         actionBetMoneySelector.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
+
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                 if (newValue == null) {
                     betLabel.setText("");
@@ -117,14 +116,12 @@ public class TableController {
     }
 
     public void chatInitializer(){
-        //TODO: modifier ça quand ils auront modifié leur fucking fonction getCurrentGame
         for(MessageChat msg : table.getCurrentGame().getChatGame().getListMessages())
         {
             addChatMessage(msg);
         }
     }
 
-    //TODO: appeler cette fonction après avoir réorganisé les joueurs, après le lancement d'une game.
     public void betMoneyBoxInitializer(){
         Point2D betPlayerBoxWidthHeight = new Point2D(585.0, 155.0);
         Point2D betPlayerBoxCenter = new Point2D(510.0, 215.0);
@@ -251,19 +248,9 @@ public class TableController {
         if(messageToSend.getText().isEmpty())
             return;
 
-        //TODO : getUserLight
-        // à voir comment on fait ? est-ce qu'on doit le récupérer de data ou de ihm main ? plutot de data, donc il nous faut une fonction
-        //TO DELETE
-        UserLight self = new UserLight();
-
         Timestamp time = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        MessageChat message = new MessageChat(self,time,messageToSend.getText());
-
-        //TODO : Raccorder à DATA
-        //ihmTable.getDataInterface(). fucking fontion qui existe pas
-
-        //TO DELETE
-        addChatMessage(message);
+        MessageChat message = new MessageChat(ihmTable.getDataInterface().getUser(),time,messageToSend.getText());
+        ihmTable.getDataInterface().sendMessage(message);
 
         messageToSend.clear();
 	}
@@ -271,8 +258,7 @@ public class TableController {
     @FXML
     private void launchGame(javafx.event.ActionEvent event){
         btnLaunchGame.setVisible(false);
-        //ihmTable.getDataInterface().playGame(table.getIdTable());
-
+        ihmTable.getDataInterface().playGame(table.getIdTable());
     }
 
     public void addChatMessage(MessageChat message){
@@ -373,7 +359,7 @@ public class TableController {
     @FXML
     public void fold(javafx.event.ActionEvent event) {
         if(actionFold.getStyleClass().contains("active")) {
-            //TODO : "quand ces connards auront mis des setters"
+            //TODO : "quand ces **** auront mis des setters"
             //actionToFill.setAction(EnumerationAction.fold);
             System.out.println("DODO");
 

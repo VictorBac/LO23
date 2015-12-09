@@ -83,11 +83,11 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane fx:id="popupLeave" animated="false" collapsible="false" layoutX="786.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="230.0" styleClass="popup" text="Êtes-vous sûr de vouloir quitter la table ?" visible="false">
+            <TitledPane fx:id="popupLeave" animated="false" collapsible="false" layoutX="767.0" layoutY="456.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="240.0" styleClass="popup" text="Êtes-vous sûr de vouloir quitter la table ?" visible="false">
                <content>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="230.0" styleClass="popup">
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" styleClass="popup">
                      <children>
-                        <Button fx:id="popupLeaveAccept" layoutX="131.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendLeaveAccept" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Oui" />
+                        <Button fx:id="popupLeaveAccept" layoutX="141.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendLeaveAccept" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Oui" />
                         <Button fx:id="popupLeaveRefuse" layoutX="4.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendLeaveRefuse" prefHeight="25.0" prefWidth="95.0" styleClass="blueButton" text="Non" />
                      </children>
                      <padding>

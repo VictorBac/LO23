@@ -26,13 +26,14 @@ public class Card implements Serializable {
 
     /**
      * Constructor with value and symbol.
-     * For example Card card = new Card(13,'C');
+     * 2 ~ 14 represent 2 ~ 10 J Q K A. DONT CHANGE IT ANYMORE PLS.
+     * For example Card card = new Card(14,'C');
      * @param value
      * @param symbol spade & heart & diamond & club
      */
     public Card(Integer value, EnumerationCard symbol) throws CardFormatInvalidException{
-        if ( value > 13 || value < 1)
-            throw new CardFormatInvalidException("Number must be an integer between 1 ~ 13");
+        if ( value > 14 || value < 2)
+            throw new CardFormatInvalidException("Number must be an integer between 2 ~ 14");
         else{
             this.value = value;
             this.symbol = symbol;

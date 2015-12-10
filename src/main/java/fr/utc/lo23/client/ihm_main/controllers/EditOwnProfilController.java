@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.common.data.User;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
@@ -51,5 +52,9 @@ public class EditOwnProfilController extends BaseController {
     public void UpdateProfil(ActionEvent actionEvent) {
     //TODO update profil
         mController.showViewOwnWindow();
+    }
+
+    public void fillUserform(User UserLocal) {
+
     }
 }

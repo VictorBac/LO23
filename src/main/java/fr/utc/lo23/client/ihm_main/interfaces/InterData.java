@@ -2,10 +2,7 @@ package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
-import fr.utc.lo23.common.data.EnumerationTypeOfUser;
-import fr.utc.lo23.common.data.Stats;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +13,7 @@ import java.util.List;
 /**
  * Created by leclercvictor on 24/11/2015.
  */
-public class InterData implements InterfaceMainToData {
+    public class InterData implements InterfaceMainToData {
 
     private IHMMainClientManager managerMain;
 
@@ -98,6 +95,11 @@ public class InterData implements InterfaceMainToData {
     @Override
     public void tableJoinRefused(Table t) {
 
+    }
+
+    @Override
+    public void profileRemoteUserFromServer(User profileReturnedByTheServer) {
+        
     }
 
 

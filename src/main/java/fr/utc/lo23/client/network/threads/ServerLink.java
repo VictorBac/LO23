@@ -70,7 +70,7 @@ public class ServerLink extends Thread {
                 try {
                     try {
                         this.socket.setSoTimeout(1000);
-                        Console.log("Waiting for message...");
+                        //Console.log("Waiting for message...");
                         Message msg = (Message) inputStream.readObject();
                         msg.process(this);
                     } catch (SocketTimeoutException e) {

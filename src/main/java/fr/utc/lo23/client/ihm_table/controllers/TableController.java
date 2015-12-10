@@ -81,7 +81,7 @@ public class TableController {
             Action action = new Action();
             action.setUserLightOfPlayer(controllersList.get(0).getUserLight());
             action.setAmount(50);
-            action.setName(EnumerationAction.allIn);
+            action.setName(EnumerationAction.ALLIN);
 
 
             ihmTable.getTableToDataListener().notifyAction(action);
@@ -403,11 +403,11 @@ public class TableController {
     }
 
     public void enableAction(EnumerationAction action) {
-        if(action == EnumerationAction.allIn) enableActionAllin();
-        else if(action == EnumerationAction.bet) enableActionBet();
-        else if(action == EnumerationAction.check) enableActionCheck();
-        else if(action == EnumerationAction.fold) enableActionFold();
-        else if(action == EnumerationAction.call) enableActionCall();
+        if(action == EnumerationAction.ALLIN) enableActionAllin();
+        else if(action == EnumerationAction.BET) enableActionBet();
+        else if(action == EnumerationAction.CHECK) enableActionCheck();
+        else if(action == EnumerationAction.FOLD) enableActionFold();
+        else if(action == EnumerationAction.CALL) enableActionCall();
     }
 
     public void disableAllActions() {

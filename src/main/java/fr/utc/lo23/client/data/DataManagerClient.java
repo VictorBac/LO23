@@ -26,7 +26,7 @@ public class DataManagerClient {
     private Table tableLocal;
 
     private ArrayList<Server> listServers;
-    private static final String pathServers = "./servers";
+    private static final String pathServers = "servers";
 
 
     public DataManagerClient() {
@@ -34,7 +34,7 @@ public class DataManagerClient {
         this.listUsersLightLocal = new UserLightList();
         this.listTablesLocal = new TableList();
         this.tableLocal = null;
-        this.listServers = (ArrayList<Server>) Serialization.deserializationObject(pathServers);
+        //this.listServers = (ArrayList<Server>) Serialization.deserializationObject(pathServers);
 
         this.interToIHMTable = null;
         this.interToCom = null;

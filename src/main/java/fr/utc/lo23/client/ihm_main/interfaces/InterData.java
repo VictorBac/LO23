@@ -77,7 +77,7 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void currentTables(List<Table> currentTables) {
-
+        managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
     }
 
     @Override
@@ -92,6 +92,11 @@ public class InterData implements InterfaceMainToData {
 
     @Override
     public void userStatsUpdated(UserLight user, Stats st) {
+
+    }
+
+    @Override
+    public void tableJoinRefused(Table t) {
 
     }
 

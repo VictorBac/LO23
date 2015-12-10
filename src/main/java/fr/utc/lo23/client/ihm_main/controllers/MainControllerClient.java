@@ -34,6 +34,7 @@ public class MainControllerClient extends Application {
     private ViewOwnProfilController viewOwnProfilWindowController;
     private EditOwnProfilController editProfilWindowController;
     private ViewAutreProfilController viewAutreProfilWindowController;
+    private CreateTableController createTableController;
 
 
     public static void main(String[] args) {
@@ -84,6 +85,11 @@ public class MainControllerClient extends Application {
 
     public void showAutreProfilWindow(){
         viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
+    }
+
+    public CreateTableController showCreateTableView() {
+        createTableController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateTableWindow.fxml", "Création de table");
+        return createTableController;
     }
 
     private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)

@@ -75,7 +75,7 @@ public interface InterfaceDataFromIHMMain {
     /**
      * Method to ask to exit
      */
-    void exitAsked();
+    void exitAsked() throws NetworkFailureException;
 
     /**
      * Methode to get servers list

@@ -122,9 +122,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     /**
      * Ask server for disconnection
      */
-    public void exitAsked() {
-        // TODO wait network interface
-        // dManagerClient.getInterToCom().askDisconnection(userLogin.getUserLight());
+    public void exitAsked() throws NetworkFailureException {
+        dManagerClient.getInterToCom().notifyDisconnection(dManagerClient.getUserLocal());
     }
 
     /**

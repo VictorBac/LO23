@@ -30,6 +30,8 @@ public class NotifyNewPlayerInTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().userJoinedTable(idTab,user,mode);
+        if(!threadClient.getNetworkManager().getDataInstance().getUserLightLocal().equals(user)) {
+            threadClient.getNetworkManager().getDataInstance().userJoinedTable(idTab, user, mode);
+        }
     }
 }

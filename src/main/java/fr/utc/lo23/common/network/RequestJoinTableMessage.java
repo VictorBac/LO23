@@ -33,7 +33,8 @@ public class RequestJoinTableMessage extends Message {
         if(myServ.getNetworkManager().getDataInstance().canJoinTableUser(user,idTab,mode)){
             AcceptJoinTableMessage accept = new AcceptJoinTableMessage(idTab,mode);
             threadServer.send(accept);
-            //TODO Avertir les autres clients
+            NotifyNewPlayerInTableMessage notifNewPlayTable = new NotifyNewPlayerInTableMessage(user,idTab,mode);
+            myServ.sendToAll(notifNewPlayTable);
          }else {
             RefuseJoinTableMessage refuse = new RefuseJoinTableMessage(idTab,mode);
             threadServer.send(refuse);

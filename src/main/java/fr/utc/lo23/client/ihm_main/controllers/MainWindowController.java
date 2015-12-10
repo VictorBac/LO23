@@ -66,11 +66,9 @@ public class MainWindowController extends BaseController {
     public void change(ActionEvent actionEvent) {
     }
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         columnTableCreator.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
                 return new SimpleStringProperty(param.getValue().getCreator().getPseudo());
             }
@@ -78,28 +76,24 @@ public class MainWindowController extends BaseController {
 
 
         columnTableName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
                 return new SimpleStringProperty(param.getValue().getName());
             }
         });
 
         columnTableMise.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, Integer>, ObservableValue<Integer>>() {
-            @Override
             public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Table, Integer> param) {
                 return new SimpleIntegerProperty(param.getValue().getMaxMise()).asObject();
             }
         });
 
         columnTablePlayers.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
                 return new SimpleStringProperty(param.getValue().getNbPlayerMin() + " / " + param.getValue().getListPlayers().getListUserLights().size() + " / " + param.getValue().getNbPlayerMax());
             }
         });
 
         columnTableSpectators.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
                 return new SimpleStringProperty(param.getValue().isAcceptSpectator() ? "Oui" : "Non");
             }

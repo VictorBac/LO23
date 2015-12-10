@@ -94,8 +94,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             //TODO see if necessary to contact ihm main or ihm table
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
-            dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
             //TODO need to contact IHMMain not TABLE ERROR
+            dManagerClient.getInterFromIHMMain();
+            //dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
         } catch (TableException e) {
             e.printStackTrace();
         }
@@ -130,11 +131,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"stockCards()");
         dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand().add(playerHandUserLocal);
         dManagerClient.getInterToIHMTable().notifyPlayersCards(dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand());
-        //we send first cards at the beginning of the hand from the local user and
+        //we send first cards at the beginning of the hand from the local user and at the end of the hand we show other cards
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
-        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser); //TODO maybe useless
+        Console.log(TAG +"transmitMessage()");
         dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
     }
 
@@ -148,7 +149,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
         //TODO if this the correct way to change the stats or add the latest stats
         dManagerClient.getUserLocal().setStatsUser(statsLocalUser);
-        //TODO ask IHM Main to implement an interface to for notifying the player that its Stats has changed
+        //for notifying the player that its Stats has changed
+        dManagerClient.getInterToIHMMain().userStatsUpdated(dManagerClient.getUserLocal().getUserLight(),statsLocalUser );
     }
 
     public void startGame(UUID idTable){

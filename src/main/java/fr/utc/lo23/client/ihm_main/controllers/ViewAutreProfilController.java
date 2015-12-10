@@ -26,7 +26,6 @@ public class ViewAutreProfilController extends BaseController {
     @FXML
     private ImageView imageviewer;
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }

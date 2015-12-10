@@ -777,14 +777,14 @@ public class TableController {
 
         double svgWidth = img.getFitWidth();
 
-        Timeline timeline3 = new Timeline();
+        final Timeline timeline3 = new Timeline();
         timeline3.setCycleCount(1);
         timeline3.setAutoReverse(false);
         KeyValue kv3 = new KeyValue(img.fitWidthProperty(), svgWidth);
         KeyFrame kf3 = new KeyFrame(Duration.millis(200), kv3);
         timeline3.getKeyFrames().add(kf3);
 
-        Timeline timeline2 = new Timeline();
+        final Timeline timeline2 = new Timeline();
         timeline2.setCycleCount(1);
         timeline2.setAutoReverse(false);
         KeyValue kv2 = new KeyValue(img.fitWidthProperty(), 0);

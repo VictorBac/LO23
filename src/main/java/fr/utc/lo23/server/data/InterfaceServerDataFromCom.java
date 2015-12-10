@@ -44,11 +44,11 @@ public interface InterfaceServerDataFromCom {
     /**
      * checks if a user can join a table
      * @param joiner the user trying to join
-     * @param wantedTable the table to join
+     * @param idTable the id of the table to join
      * @param mode the connection mode (player / spectator)
      * @return a boolean
      */
-    boolean canJoinTableUser(UserLight joiner, Table wantedTable, EnumerationTypeOfUser mode);
+    boolean canJoinTableUser(UserLight joiner, UUID idTable, EnumerationTypeOfUser mode);
 
     void validateMessage(UserLight sender, MessageChat msgSent);
 
@@ -92,4 +92,6 @@ public interface InterfaceServerDataFromCom {
     void updateProfile(User newUser);
 
     User getUserById(UUID idUser);
+
+    ArrayList<UserLight> getPlayersByTable(UUID tableID);
 }

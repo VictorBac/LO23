@@ -28,6 +28,11 @@ public class PlayerController{
     private Node node;
     private Pane root;
 
+    private ImageView card1;
+    private ImageView card2;
+
+    private Integer betMoney;
+
     private UserLight userLight;
 
     public UserLight getUserLight() {
@@ -49,6 +54,30 @@ public class PlayerController{
     public void setNodes(Pane root,Node node) {
         this.root = root;
         this.node = node;
+    }
+
+    public Integer getBetMoney() {
+        return betMoney;
+    }
+
+    public void setBetMoney(Integer betMoney) {
+        this.betMoney = betMoney;
+    }
+
+    public ImageView getCard1() {
+        return card1;
+    }
+
+    public void setCard1(ImageView card1) {
+        this.card1 = card1;
+    }
+
+    public ImageView getCard2() {
+        return card2;
+    }
+
+    public void setCard2(ImageView card2) {
+        this.card2 = card2;
     }
 
     public Pane getRoot() {
@@ -75,7 +104,7 @@ public class PlayerController{
         if(money==-1)
             playerMoneyLabel.setText("?????");
         else
-            playerMoneyLabel.setText(money.toString());
+            playerMoneyLabel.setText(money.toString()+" $");
     }
 
     public void setNameAndAvatar(UserLight user,Image defaultImage){
@@ -85,8 +114,8 @@ public class PlayerController{
     }
 
     public void setPositions(Point2D coords){
-        playerBox.setLayoutX(coords.getX()-40);
-        playerBox.setLayoutY(coords.getY()-55);
+        playerBox.setLayoutX(coords.getX() - 40);
+        playerBox.setLayoutY(coords.getY() - 55);
     }
 
     public void setReadyStatus(boolean isReady){
@@ -101,10 +130,52 @@ public class PlayerController{
         }
     }
 
+    public void setThinkingStatus(){
+        playerInfos.setVisible(true);
+        playerInfos.setText("Réfléchit...");
+        if(!playerInfos.getStyleClass().contains("money"))
+            playerInfos.getStyleClass().add("money");
+    }
+
+    public void setBetMoneyAmount(Integer amount){
+        playerInfos.setVisible(true);
+        betMoney = amount;
+        if(!playerInfos.getStyleClass().contains("money"))
+            playerInfos.getStyleClass().add("money");
+        if(amount==-1)
+            playerInfos.setText("Couché");
+        else
+        {
+            playerInfos.setText(amount.toString()+" $");
+        }
+    }
+
     public void clearReadyStatus(){
         playerInfos.setVisible(false);
         playerInfos.getStyleClass().remove("refuse");
         playerInfos.getStyleClass().remove("ready");
+        playerInfos.getStyleClass().remove("money");
         playerInfos.setText("");
+    }
+
+    /**
+     * Modifie la bordure de l'avatar du joueur selon son vote pour mettre fin à une partie
+     * Si accept = true, la bordure est verte
+     * Sinon, elle est rouge
+     * @param accept
+     */
+    public void showVoteEndGame(boolean accept) {
+        if(accept) {
+            playerBox.setStyle("-fx-border-color: green ; -fx-border-width: 3px ;");
+        } else {
+            playerBox.setStyle("-fx-border-color: red ; -fx-border-width: 3px ;");
+        }
+    }
+
+    /**
+     * Réinitialise le style de la bordure de playerbox
+     */
+    public void cleanPlayerBox(){
+        playerBox.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
     }
 }

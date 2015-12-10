@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_table.views;
 
+import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_table.controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

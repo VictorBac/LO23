@@ -127,7 +127,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
         Console.log("Tentative de rejoingnement de table");
-        //RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,IdTable);
+        RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoin,mode);
     }
 
     /**
@@ -179,7 +179,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
 
-    public void sendMessage(MessageChat message) {
+    public void sendMessage(MessageChat message, UUID tableId) {
 
     }
 

@@ -23,6 +23,7 @@ public class ServerLink extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
+    private int HEARTBEAT_PERIODE = 100; // en ms
 
     /* ============================ METHODS ============================ */
     public ServerLink(NetworkManagerClient networkManagerClient) {
@@ -69,7 +70,7 @@ public class ServerLink extends Thread {
                 try {
                     try {
                         this.socket.setSoTimeout(1000);
-                        Console.log("Waiting for message...");
+                        //Console.log("Waiting for message...");
                         Message msg = (Message) inputStream.readObject();
                         msg.process(this);
                     } catch (SocketTimeoutException e) {
@@ -82,6 +83,14 @@ public class ServerLink extends Thread {
             }
             if(!connected) {
                 try {
+            // TODO vérifier quelle est la solution (fix de conflit, je ne suis pas sur)
+          /*        this.socket.setSoTimeout(HEARTBEAT_PERIODE);
+                    Message msg = (Message) inputStream.readObject();
+                    msg.process(this);
+                } catch (SocketTimeoutException e) {
+                    this.networkManager.sendHeartbeat();
+            */
+
                     this.sleep(100);
                 } catch (InterruptedException e) {
                     Console.log("Thread exception");

@@ -52,9 +52,13 @@ public class IHMMainServerManager {
         managerData = new DataManagerServer();
         managerCom = new NetworkManagerServer();
 
+        interfaceMainToCom = new InterMain(this);
+
         //Link des interfaces
+        managerCom.setInterMain(interfaceMainToCom);
         managerCom.setDataInstance(managerData.getInterfaceFromCom());
         managerData.setInterfaceFromCom(managerCom.getDataInstance());
+
 
         interfaceComToMain = managerCom;
     }

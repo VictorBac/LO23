@@ -8,7 +8,8 @@ import java.io.*;
  */
 public class Serialization {
     private static final String dirUserLocalSavedProfile ="./tmp/";
-    public static final String pathSavedGame ="userLocalSavedGame";
+    public static final String pathSavedGame ="SavedGame";
+    public static final String pathServerList ="ServerList";
 
     /**
      * Method to serializable an Object of a class that implements Serializable at the path that is specified

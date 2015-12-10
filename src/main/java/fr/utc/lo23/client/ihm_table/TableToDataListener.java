@@ -183,7 +183,7 @@ public class TableToDataListener implements ITableToDataListener {
         UserLight player = action.getUserLightOfPlayer();
         System.out.println(player);
         System.out.println(ihmtable.getDataInterface().getUser());
-        if(action.getName().equals(EnumerationAction.allIn)) {
+        if(action.getName().equals(EnumerationAction.ALLIN)) {
             if(player==ihmtable.getDataInterface().getUser())
                 ihmtable.getTableController().addLogEntry("Vous avez fait tapis !");
             else
@@ -191,7 +191,7 @@ public class TableToDataListener implements ITableToDataListener {
             // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
             ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(action.getAmount());
         }
-        else if(action.getName().equals(EnumerationAction.bet)) {
+        else if(action.getName().equals(EnumerationAction.BET)) {
             if(player==ihmtable.getDataInterface().getUser())
                 ihmtable.getTableController().addLogEntry("Vous avez relancé de " + action.getAmount() + "$.");
             else
@@ -199,7 +199,7 @@ public class TableToDataListener implements ITableToDataListener {
             // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
             ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(action.getAmount());
         }
-        else if(action.getName().equals(EnumerationAction.call)) {
+        else if(action.getName().equals(EnumerationAction.CALL)) {
             if(player==ihmtable.getDataInterface().getUser())
                 ihmtable.getTableController().addLogEntry("Vous avez suivi.");
             else
@@ -207,14 +207,14 @@ public class TableToDataListener implements ITableToDataListener {
             // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
             ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(action.getAmount());
         }
-        else if(action.getName().equals(EnumerationAction.check)) {
+        else if(action.getName().equals(EnumerationAction.CHECK)) {
             if(player==ihmtable.getDataInterface().getUser())
                 ihmtable.getTableController().addLogEntry("Parole.");
             else
                 ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
             ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(0);
         }
-        else if(action.getName().equals(EnumerationAction.fold)) {
+        else if(action.getName().equals(EnumerationAction.FOLD)) {
             if(player==ihmtable.getDataInterface().getUser())
                 ihmtable.getTableController().addLogEntry("Vous vous couchez.");
             else

@@ -34,6 +34,7 @@ public class MainControllerClient extends Application {
     private ViewOwnProfilController viewOwnProfilWindowController;
     private EditOwnProfilController editProfilWindowController;
     private ViewAutreProfilController viewAutreProfilWindowController;
+    private CreateTableController createTableController;
 
 
     public static void main(String[] args) {
@@ -86,6 +87,11 @@ public class MainControllerClient extends Application {
         viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
     }
 
+    public CreateTableController showCreateTableView() {
+        createTableController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateTableWindow.fxml", "Création de table");
+        return createTableController;
+    }
+
     private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)
     {
         Parent root = null;
@@ -100,7 +106,7 @@ public class MainControllerClient extends Application {
             pmStage.setTitle(windowTitle);
             Scene scene = new Scene(root);
             pmStage.setScene(scene);
-            scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
+            //root.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
             root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
             pmStage.show();
             return (T) controller;

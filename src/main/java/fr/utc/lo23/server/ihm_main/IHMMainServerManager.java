@@ -1,15 +1,9 @@
 package fr.utc.lo23.server.ihm_main;
 
-import fr.utc.lo23.client.ihm_table.controllers.MainController;
 import fr.utc.lo23.server.data.DataManagerServer;
-import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
-import fr.utc.lo23.server.data.ServerDataFromCom;
-import fr.utc.lo23.server.ihm_main.controllers.MainControllerServer;
 import fr.utc.lo23.server.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
-import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
 import fr.utc.lo23.server.network.InterfaceComToMain;
-import fr.utc.lo23.server.network.InterfaceServer;
 import fr.utc.lo23.server.network.NetworkManagerServer;
 
 /**
@@ -18,7 +12,7 @@ import fr.utc.lo23.server.network.NetworkManagerServer;
 public class IHMMainServerManager {
 
     // Nos interfaces
-    private InterMain interMain;
+    private InterMain interfaceMainToCom;
 
     // Interfaces à récupérer
     private InterfaceComToMain interfaceComToMain;
@@ -30,36 +24,16 @@ public class IHMMainServerManager {
 
     // Getters et Setters
 
-    public InterMain getInterMain() {
-        return interMain;
-    }
-
-    public void setInterMain(InterMain interMain) {
-        this.interMain = interMain;
+    public InterMain getInterfaceMainToCom() {
+        return interfaceMainToCom;
     }
 
     public InterfaceComToMain getInterfaceComToMain() {
         return interfaceComToMain;
     }
 
-    public void setInterfaceComToMain(InterfaceComToMain interfaceComToMain) {
-        this.interfaceComToMain = interfaceComToMain;
-    }
-
-    public void setManagerCom(NetworkManagerServer managerCom) {
-        this.managerCom = managerCom;
-    }
-
-    public void setManagerData(DataManagerServer managerData) {
-        this.managerData = managerData;
-    }
-
     public NetworkManagerServer getManagerCom() {
         return managerCom;
-    }
-
-    public DataManagerServer getManagerData() {
-        return managerData;
     }
 
     /**
@@ -82,7 +56,8 @@ public class IHMMainServerManager {
 
         //Link des interfaces
         managerCom.setInterMain(interfaceMainToCom);
-
+        managerCom.setDataInstance(managerData.getInterfaceFromCom());
+        managerData.setInterfaceFromCom(managerCom.getDataInstance());
 
         interfaceComToMain = managerCom;
     }

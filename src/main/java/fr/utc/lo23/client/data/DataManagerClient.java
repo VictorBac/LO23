@@ -5,6 +5,7 @@ import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.common.data.TableList;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLightList;
 
 /**
@@ -23,12 +24,15 @@ public class DataManagerClient {
     private UserLightList listUsersLightLocal;
     private TableList listTablesLocal;
 
+    private Table tableLocal;
+
 
     public DataManagerClient() {
 
         this.userLocal = null;
         this.listUsersLightLocal = new UserLightList();
         this.listTablesLocal = new TableList();
+        this.tableLocal = null;
 
         this.interToIHMTable = null;
         this.interToCom = null;
@@ -100,5 +104,13 @@ public class DataManagerClient {
 
     public void setListTablesLocal(TableList listTablesLocal) {
         this.listTablesLocal = listTablesLocal;
+    }
+
+    public Table getTableLocal() {
+        return tableLocal;
+    }
+
+    public void setTableLocal(Table tableLocal) {
+        this.tableLocal = tableLocal;
     }
 }

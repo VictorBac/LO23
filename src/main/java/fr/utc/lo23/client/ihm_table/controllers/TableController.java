@@ -8,6 +8,8 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -52,6 +54,11 @@ public class TableController {
         chatInitializer();
     }
 
+    @FXML
+    private Slider actionBetMoneySelector;
+    @FXML
+    private Label betLabel;
+
     public TableController(){
         playerControllerMap = new HashMap<UserLight,PlayerController>();
         betMoneyControllerMap = new HashMap<UserLight,BetMoneyController>();
@@ -59,10 +66,22 @@ public class TableController {
     }
 
     public void initialize(){
+        //TODO : je suis pas certain qu'il faille mettre ça ici, mais bon, ça fonctionne
+        betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
+        actionBetMoneySelector.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                if (newValue == null) {
+                    betLabel.setText("");
+                    return;
+                }
+                betLabel.setText(Math.round(newValue.intValue()) + "");
+            }
+        });
+
         showActionBox();
         enableActionFold();
         enableActionCheck();
-        enableActionFollow();
+        enableActionCall();
         enableActionBet();
         enableActionAllin();
         addLogEntry("Vous avez rejoint la salle.");
@@ -85,8 +104,6 @@ public class TableController {
 
     public void addPlayer(UserLight user) {
         addPlayer(getFirstAvailableSeat(), user, true);
-        if(isHost && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
-            btnLaunchGame.setVisible(true);
     }
 
     /**
@@ -102,6 +119,8 @@ public class TableController {
         playerControllerMap.put(user, playerController);
         controllersList.set(id, playerController);
         if (showLog) addLogEntry(user.getPseudo()+" a rejoint la salle.");
+        if(isHost && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
+            btnLaunchGame.setVisible(true);
     }
 
     public void chatInitializer(){
@@ -195,11 +214,9 @@ public class TableController {
     @FXML
     private Button actionCheck;
     @FXML
-    private Button actionFollow;
+    private Button actionCall;
     @FXML
     private Button actionBet;
-    @FXML
-    private Slider actionBetMoneySelector;
     @FXML
     private Button actionAllin;
 
@@ -292,16 +309,16 @@ public class TableController {
         actionCheck.getStyleClass().add("action_check_off");
     }
 
-    public void enableActionFollow(){
-        actionFollow.getStyleClass().remove("action_follow_off");
-        actionFollow.getStyleClass().add("active");
-        actionFollow.getStyleClass().add("action_follow_on");
+    public void enableActionCall(){
+        actionCall.getStyleClass().remove("action_call_off");
+        actionCall.getStyleClass().add("active");
+        actionCall.getStyleClass().add("action_call_on");
     }
 
-    public void disableActionFollow(){
-        actionFollow.getStyleClass().remove("action_follow_on");
-        actionFollow.getStyleClass().remove("active");
-        actionFollow.getStyleClass().add("action_follow_off");
+    public void disableActionCall(){
+        actionCall.getStyleClass().remove("action_call_on");
+        actionCall.getStyleClass().remove("active");
+        actionCall.getStyleClass().add("action_call_off");
     }
 
     public void enableActionBet(){
@@ -309,7 +326,7 @@ public class TableController {
         actionBet.getStyleClass().add("active");
         actionBet.getStyleClass().add("action_bet_on");
         actionBetMoneySelector.setMin(0);   //TODO : get last raise
-        actionBetMoneySelector.setMax(100); //TODO: get allin value (self.money)
+        actionBetMoneySelector.setMax(150); //TODO: get allin value (self.money)
         actionBetMoneySelector.setVisible(true);
     }
 
@@ -337,7 +354,7 @@ public class TableController {
         else if(action == EnumerationAction.bet) enableActionBet();
         else if(action == EnumerationAction.check) enableActionCheck();
         else if(action == EnumerationAction.fold) enableActionFold();
-        else if(action == EnumerationAction.call) enableActionFollow();
+        else if(action == EnumerationAction.call) enableActionCall();
     }
 
     public void disableAllActions() {
@@ -345,14 +362,14 @@ public class TableController {
         disableActionBet();
         disableActionCheck();
         disableActionFold();
-        disableActionFollow();
+        disableActionCall();
     }
 
     @FXML
     public void fold(javafx.event.ActionEvent event) {
         if(actionFold.getStyleClass().contains("active")) {
             //TODO : "quand ces connards auront mis des setters"
-            // actionToFill.set
+            //actionToFill.setAction(EnumerationAction.fold);
             System.out.println("DODO");
 
         }
@@ -362,7 +379,7 @@ public class TableController {
     public void check(javafx.event.ActionEvent event) {
         if (actionCheck.getStyleClass().contains("active")) {
             //TODO : "quand ces *** auront mis des setters"
-            // actionToFill.set
+            //actionToFill.setAction(EnumerationAction.check);
             System.out.println("CHECK");
 
         }
@@ -370,19 +387,19 @@ public class TableController {
 
     @FXML
     public void call(javafx.event.ActionEvent event) {
-        if (actionFollow.getStyleClass().contains("active")) {
+        if (actionCall.getStyleClass().contains("active")) {
             //TODO : "quand ces *** auront mis des setters"
-            // actionToFill.set
+            //actionToFill.setAction(EnumerationAction.call);
             System.out.println("APPEL");
 
         }
     }
 
     @FXML
-    public void allin(javafx.event.ActionEvent event) {
+    public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
             //TODO : "quand ces *** auront mis des setters"
-            // actionToFill.set
+            //actionToFill.setAction(EnumerationAction.allIn);
             System.out.println("ALLIN");
 
         }
@@ -391,7 +408,9 @@ public class TableController {
     @FXML
     public void bet(javafx.event.ActionEvent event) {
         if(actionBet.getStyleClass().contains("active")) {
-
+            //TODO : "quand ces *** auront mis des setters"
+            //actionToFill.setAction(EnumerationAction.bet);
+            //actionToFill.setAmount((int) actionBetMoneySelector.getValue());
         }
     }
 

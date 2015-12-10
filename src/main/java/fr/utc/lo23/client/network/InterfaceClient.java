@@ -62,7 +62,7 @@ public interface InterfaceClient {
      * @param userLocal
      * @param tableToJoin
      */
-    public void joinTable(UserLight userLocal, UUID tableToJoinID, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException;
+    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException;
         
     /**
      *

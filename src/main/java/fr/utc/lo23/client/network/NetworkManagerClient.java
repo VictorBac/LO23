@@ -48,6 +48,11 @@ public class NetworkManagerClient implements InterfaceClient  {
         Console.log("Creation d'un Request Login message\n");
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
         Console.log("requestelog"+reqLog.getUser().toString());
+        try {
+            localClient.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         localClient.send(reqLog);
     }
 
@@ -120,7 +125,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void joinTable(UserLight userLocal, UUID tableToJoinID, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
+    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
         Console.log("Tentative de rejoingnement de table");
         RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoinID,mode);
     }

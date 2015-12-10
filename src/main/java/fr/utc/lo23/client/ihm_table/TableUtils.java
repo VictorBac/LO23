@@ -21,7 +21,7 @@ public class TableUtils {
         // y = height / 2 * sin(angle) + center.y
         //angle
         //Angle depart = 270 - ((360 / maxPlayers) * (playerId - 1))
-        double angle = (1.0/2.0 * Math.PI) + ((2.0 * Math.PI / maxPlayers) * (playerId - 1));
+        double angle = (1.0/2.0 * Math.PI) + ((2.0 * Math.PI / maxPlayers) * (playerId));
         double x = (width_height.getX() / 2.0) * Math.cos(angle) + center.getX();
         double y = (width_height.getY() / 2.0) * Math.sin(angle) + center.getY();
         return new Point2D(x, y);

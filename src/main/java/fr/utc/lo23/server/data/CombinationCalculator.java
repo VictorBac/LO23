@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.Card;
+import fr.utc.lo23.common.data.EnumerationCard;
 import fr.utc.lo23.common.data.PlayerHand;
 import fr.utc.lo23.server.data.exceptions.*;
 import java.util.ArrayList;
@@ -247,12 +248,12 @@ public class CombinationCalculator {
         ArrayList<Integer> diamond = new ArrayList<Integer>();
         ArrayList<Integer> club = new ArrayList<Integer>();
         for (int i = 0; i < cards.size(); i++) {
-            char symbol = cards.get(i).getSymbol();
+            EnumerationCard symbol = cards.get(i).getSymbol();
             Integer value = cards.get(i).getValue();
-            if (symbol == 'S') spade.add(value);
+            /*if (symbol == 'S') spade.add(value);
             if (symbol == 'H') heart.add(value);
             if (symbol == 'D') diamond.add(value);
-            if (symbol == 'C') club.add(value);
+            if (symbol == 'C') club.add(value);*/
         }
         if (spade.size() >= 5) {
             while (spade.size() > 5) spade.remove(5);
@@ -331,12 +332,12 @@ public class CombinationCalculator {
         ArrayList<Integer> diamond = new ArrayList<Integer>();
         ArrayList<Integer> club = new ArrayList<Integer>();
         for (int i = 0; i < cards.size(); i++) {
-            char symbol = cards.get(i).getSymbol();
+            EnumerationCard symbol = cards.get(i).getSymbol();
             Integer value = cards.get(i).getValue();
-            if (symbol == 'S') spade.add(value);
+            /*if (symbol == 'S') spade.add(value);
             if (symbol == 'H') heart.add(value);
             if (symbol == 'D') diamond.add(value);
-            if (symbol == 'C') club.add(value);
+            if (symbol == 'C') club.add(value);*/
         }
         if (spade.size() >= 5) {
             cardRank = spade;

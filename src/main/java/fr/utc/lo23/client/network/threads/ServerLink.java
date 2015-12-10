@@ -19,6 +19,7 @@ public class ServerLink extends Thread {
     /* ============================ ATTRIBUTES ============================ */
     private Socket socket;
     private boolean running = false;
+    private boolean connected = false;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
@@ -27,12 +28,8 @@ public class ServerLink extends Thread {
     /* ============================ METHODS ============================ */
     public ServerLink(NetworkManagerClient networkManagerClient) {
         this.networkManager = networkManagerClient;
-        try {
-            //TODO: Gerer le changement de port
-            connect();
-        } catch (Exception e) {
-            Console.log("Erreur de connexion: " + e.getMessage());
-        }
+        running = true;
+        connected = false;
     }
 
     /**
@@ -45,7 +42,7 @@ public class ServerLink extends Thread {
         socket = new Socket();
         Console.logn("Le client tente de se connecter...");
         socket.connect(new InetSocketAddress(Params.DEFAULT_SERVER_ADDRESS, Params.DEFAULT_SERVER_PORT));
-        running = true;
+        connected = true;
         Console.log("Done");
         Console.log("Client connecté sur: " + Params.DEFAULT_SERVER_ADDRESS + ":" + Params.DEFAULT_SERVER_PORT + "\n");
 
@@ -59,6 +56,7 @@ public class ServerLink extends Thread {
      */
     public void disconnect() throws IOException {
         running = false;
+        connected = false;
         socket.close();
     }
 
@@ -68,17 +66,35 @@ public class ServerLink extends Thread {
     @Override
     public void run() {
         while (running) {
-            try {
+            while(connected) {
                 try {
-                    this.socket.setSoTimeout(HEARTBEAT_PERIODE);
+                    try {
+                        this.socket.setSoTimeout(1000);
+                        Console.log("Waiting for message...");
+                        Message msg = (Message) inputStream.readObject();
+                        msg.process(this);
+                    } catch (SocketTimeoutException e) {
+                        this.networkManager.sendHeartbeat();
+                    }
+                } catch (Exception e) {
+                    Console.err("Erreur de traitement de message: ");
+                    e.printStackTrace();
+                }
+            }
+            if(!connected) {
+                try {
+            // TODO vérifier quelle est la solution (fix de conflit, je ne suis pas sur)
+          /*        this.socket.setSoTimeout(HEARTBEAT_PERIODE);
                     Message msg = (Message) inputStream.readObject();
                     msg.process(this);
                 } catch (SocketTimeoutException e) {
                     this.networkManager.sendHeartbeat();
+            */
+
+                    this.sleep(100);
+                } catch (InterruptedException e) {
+                    Console.log("Thread exception");
                 }
-            } catch (Exception e) {
-                Console.err("Erreur de traitement de message: ");
-                e.printStackTrace();
             }
         }
     }

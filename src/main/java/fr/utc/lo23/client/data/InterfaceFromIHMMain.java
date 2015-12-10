@@ -63,7 +63,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param userLocal
      */
     public void saveNewProfile(User userLocal) {
-        String login = userLocal.getUserLight().getPseudo();
+        String login = userLocal.getLogin();
         Serialization.serializationObject(userLocal, login);
     }
 

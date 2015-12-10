@@ -5,19 +5,28 @@ import fr.utc.lo23.client.ihm_table.TableUtils;
 import fr.utc.lo23.client.ihm_table.views.BetMoneyView;
 import fr.utc.lo23.client.ihm_table.views.PlayerView;
 import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class TableController {
 
@@ -28,6 +37,7 @@ public class TableController {
     private ArrayList<PlayerController> controllersList; //This is used to find where you can seat
     private Image defaultImage;
     private Action actionToFill;
+    private String turnStatus = null; // null,warmup,flop,turn,river
 
     private boolean isHost = true;
 
@@ -48,6 +58,30 @@ public class TableController {
         this.table = table;
         playerInitializer();
         chatInitializer();
+
+        // Commenter ce qu'il y a dessous pour virer les tests
+        try {
+            Card card = new Card(5,EnumerationCard.CLUB);
+            ArrayList<Card> cards = new ArrayList<Card>();
+            cards.add(card);
+            cards.add(card);
+
+            PlayerHand player = new PlayerHand();
+            player.setPlayer(controllersList.get(0).getUserLight());
+
+            player.setListCardsHand(cards);
+            ArrayList<PlayerHand> players = new ArrayList<PlayerHand>();
+            players.add(player);
+
+            showCommonCards();
+
+            controllersList.get(0).setBetMoneyAmount(1000);
+
+            setPlayerCards(players);
+
+        } catch (CardFormatInvalidException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -77,6 +111,8 @@ public class TableController {
         hideActionBox();
         disableAllActions();
         addLogEntry("Vous avez rejoint la salle.");
+
+
     }
 
     public void playerInitializer(){
@@ -242,6 +278,21 @@ public class TableController {
     private Button popupEndGameVoteAccept;
     @FXML
     private Button popupEndGameVoteRefuse;
+
+    @FXML
+    private Pane commonCardPane;
+    @FXML
+    private ImageView commonCardFlop1;
+    @FXML
+    private ImageView commonCardFlop2;
+    @FXML
+    private ImageView commonCardFlop3;
+    @FXML
+    private ImageView commonCardTurn;
+    @FXML
+    private ImageView commonCardRiver;
+    @FXML
+    private ImageView commonCardBack;
 
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {
@@ -462,12 +513,15 @@ public class TableController {
 
     @FXML
     public void sendLeaveAccept(javafx.event.ActionEvent event) {
-       // TODO :  ihmTable.getDataInterface(). data notify self leave game
+        ihmTable.getDataInterface().quitGame();
+        popupLeave.setVisible(false);
         ihmTable.getMainInterface().quitGame();
     }
 
     @FXML
-    public void sendLeaveRefuse(javafx.event.ActionEvent event) { popupLeave.setVisible(false); }
+    public void sendLeaveRefuse(javafx.event.ActionEvent event) {
+        popupLeave.setVisible(false);
+    }
 
     /**
      * Affiche la réponse d'un utilisateur au vote de fin de jeu en rajoutant une bordure verte (accepte)
@@ -501,7 +555,7 @@ public class TableController {
 
     public void showPopupEndGameVote() {
         popupEndGameVote.setVisible(true);
-
+        btnLaunchGame.setVisible(false);
     }
 
     public void hidePopupEndGameVote(){
@@ -518,5 +572,192 @@ public class TableController {
     public void sendEndGameVoteRefuse(javafx.event.ActionEvent event){
         ihmTable.getDataInterface().vote(false);
         hidePopupEndGameVote();
+    }
+
+    public void hideCommonCards(){
+        commonCardPane.setVisible(false);
+    }
+
+    public void showCommonCards(){
+        commonCardPane.setVisible(true);
+    }
+
+    public void resetCommonCards(){
+        commonCardFlop1.setImage(null);
+        commonCardFlop1.setVisible(false);
+        commonCardFlop2.setImage(null);
+        commonCardFlop2.setVisible(false);
+        commonCardFlop3.setImage(null);
+        commonCardFlop3.setVisible(false);
+        commonCardTurn.setImage(null);
+        commonCardTurn.setVisible(false);
+        commonCardRiver.setImage(null);
+        commonCardRiver.setVisible(false);
+    }
+
+    public void setCards(ArrayList<Card> cards){
+        if(turnStatus.equals("turn"))
+        {
+            //Afficher les cartes du river
+            if(cards.size()>1)
+            {
+                System.out.println("Comportement anormal, il ne devrait y avoir qu'une seule carte dans la river");
+                System.exit(0);
+            }
+            setRiverCard(cards.get(0));
+            turnStatus = "river";
+        }
+        else if(turnStatus.equals("flop"))
+        {
+            //Afficher les cartes du turn
+            if(cards.size()>1)
+            {
+                System.out.println("Comportement anormal, il ne devrait y avoir qu'une seule carte dans le turn");
+                System.exit(0);
+            }
+            setTurnCard(cards.get(0));
+            turnStatus = "turn";
+        }
+        else if(turnStatus.equals("warmup"))
+        {
+            //Afficher les cartes du flop
+            if(cards.size()!=3)
+            {
+                System.out.println("Comportement anormal, il devrait y avoir 3 cartes dans le flop");
+                System.exit(0);
+            }
+            setFlopCards(cards);
+            turnStatus = "flop";
+        }
+        else
+        {
+            System.out.println("Comportement anormal, cette fonction ne devrait être appelée que si turnStatus est bien complété. (ie warmup, flop, turn)");
+            System.exit(0);
+        }
+    }
+
+    public void setPlayerCards(ArrayList<PlayerHand> playerHands){
+        int wait = 1;
+        if(playerHands.size()==1)
+        {
+            for(PlayerController playerController :controllersList)
+            {
+                if(playerController!=null)
+                {
+                    ImageView img1 = new ImageView();
+                    img1.setVisible(false);
+                    img1.setFitWidth(40);
+                    img1.setFitHeight(60);
+                    img1.setX(playerController.getNode().getLayoutX() + 85);
+                    img1.setY(playerController.getNode().getLayoutY() + 30);
+                    tablePane.getChildren().add(img1);
+                    playerController.setCard1(img1);
+                    if(playerController.getUserLight()==playerHands.get(0).getPlayer())
+                    {
+                        setPlayerCardAnimation(img1,getImageFromCard(playerHands.get(0).getListCardsHand().get(0)),wait);
+                    }
+                    else
+                    {
+                        setPlayerCardAnimation(img1,getBackCardImage(),wait);
+                    }
+                    wait+=200;
+                }
+            }
+            for(PlayerController playerController :controllersList)
+            {
+                if(playerController!=null)
+                {
+                    ImageView img2 = new ImageView();
+                    img2.setVisible(false);
+                    img2.setFitWidth(40);
+                    img2.setFitHeight(60);
+                    img2.setX(playerController.getNode().getLayoutX() + 130);
+                    img2.setY(playerController.getNode().getLayoutY() + 30);
+                    tablePane.getChildren().add(img2);
+                    playerController.setCard1(img2);
+                    if(playerController.getUserLight()==playerHands.get(0).getPlayer())
+                    {
+                        setPlayerCardAnimation(img2,getImageFromCard(playerHands.get(0).getListCardsHand().get(1)),wait);
+                    }
+                    else
+                    {
+                        setPlayerCardAnimation(img2,getBackCardImage(),wait);
+                    }
+                    wait+=200;
+                }
+            }
+        }
+    }
+
+    public void setPlayerCardAnimation(final ImageView img, final Image image, final int waitTime){
+        img.setImage(getBackCardImage());
+        final Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        KeyValue kv = new KeyValue(img.xProperty(), img.getX());
+        KeyValue ky = new KeyValue(img.yProperty(), img.getY());
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                img.setImage(image);
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(300), onFinished, kv, ky);
+        timeline.getKeyFrames().add(kf);
+        img.setX(commonCardPane.getLayoutX()+commonCardBack.getX());
+        img.setY(commonCardPane.getLayoutY()+commonCardBack.getY());
+        img.setVisible(true);
+
+        //Waiting timeline
+        Timeline timelineWait = new Timeline();
+        EventHandler onFinishedWait = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                timeline.play();
+            }
+        };
+        KeyFrame kfWait = new KeyFrame(Duration.millis(waitTime), onFinishedWait);
+        timelineWait.getKeyFrames().add(kfWait);
+        timelineWait.play();
+    }
+
+
+    public void setCommonCardAnimation(final ImageView img, final Image image){
+        img.setImage(getBackCardImage());
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        KeyValue kv = new KeyValue(img.xProperty(), img.getX());
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                img.setImage(image);
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished, kv);
+        timeline.getKeyFrames().add(kf);
+        img.setX(commonCardBack.getX());
+        img.setVisible(true);
+        timeline.play();
+    }
+
+    public void setFlopCards(ArrayList<Card> cards){
+        setCommonCardAnimation(commonCardFlop1, getImageFromCard(cards.get(0)));
+        setCommonCardAnimation(commonCardFlop2, getImageFromCard(cards.get(1)));
+        setCommonCardAnimation(commonCardFlop3, getImageFromCard(cards.get(2)));
+    }
+
+    public void setTurnCard(Card card){
+        setCommonCardAnimation(commonCardTurn, getImageFromCard(card));
+    }
+
+    public void setRiverCard(Card card){
+        setCommonCardAnimation(commonCardRiver, getImageFromCard(card));
+
+    }
+
+    public Image getImageFromCard(Card card){
+        return new Image(getClass().getResource("../images/cards/"+card.getSymbol().toString().toLowerCase()+"s_"+card.getValue().toString()+".png").toExternalForm());
+    }
+
+    public Image getBackCardImage(){
+        return new Image(getClass().getResource("../images/cards/back.png").toExternalForm());
     }
 }

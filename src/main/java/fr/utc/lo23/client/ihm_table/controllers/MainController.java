@@ -35,6 +35,8 @@ public class MainController {
 		ta.getListPlayers().addUser(new UserLight("pseudo4"));
 		ta.getListPlayers().addUser(new UserLight("pseudo5"));
 		ta.getListPlayers().addUser(new UserLight("pseudo6"));
+		ta.getListPlayers().addUser(new UserLight("pseudo7"));
+		ta.getListPlayers().addUser(new UserLight("pseudo8"));
 		ihmTable.getTableToMainListener().joinTable(IAmYourPaneLuke,
 				ta);
     }

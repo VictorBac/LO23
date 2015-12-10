@@ -152,7 +152,7 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher les cartes des joueurs.
      */
     public void notifyPlayersCards(ArrayList<PlayerHand> playerHands){
-        //TODO: next step
+        ihmtable.getTableController().setPlayerCards(playerHands);
     }
 
     /*
@@ -206,7 +206,7 @@ public class TableToDataListener implements ITableToDataListener {
      * permet à IHM-Table de les afficher
      */
     public void notifyCommonCards(ArrayList<Card> listCards){
-        //TODO: next step
+        ihmtable.getTableController().setCards(listCards);
     }
 
     /*

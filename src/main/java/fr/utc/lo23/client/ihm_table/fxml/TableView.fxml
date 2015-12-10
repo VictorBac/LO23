@@ -107,6 +107,20 @@
                   </AnchorPane>
               </content>
             </TitledPane>
+            <Pane fx:id="commonCardPane" layoutX="377.0" layoutY="177.0" prefHeight="60.0" prefWidth="266.0" visible="false">
+               <children>
+                  <ImageView fx:id="commonCardFlop1" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="commonCardFlop2" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="43.0" />
+                  <ImageView fx:id="commonCardFlop3" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="86.0" />
+                  <ImageView fx:id="commonCardTurn" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="129.0" />
+                  <ImageView fx:id="commonCardRiver" fitHeight="58.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" x="172.0" />
+                  <ImageView fx:id="commonCardBack" fitHeight="58.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" x="228.0">
+                     <image>
+                        <Image url="@../images/cards/back.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1020.0">

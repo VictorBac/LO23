@@ -28,6 +28,9 @@ public class PlayerController{
     private Node node;
     private Pane root;
 
+    private ImageView card1;
+    private ImageView card2;
+
     private UserLight userLight;
 
     public UserLight getUserLight() {
@@ -49,6 +52,22 @@ public class PlayerController{
     public void setNodes(Pane root,Node node) {
         this.root = root;
         this.node = node;
+    }
+
+    public ImageView getCard1() {
+        return card1;
+    }
+
+    public void setCard1(ImageView card1) {
+        this.card1 = card1;
+    }
+
+    public ImageView getCard2() {
+        return card2;
+    }
+
+    public void setCard2(ImageView card2) {
+        this.card2 = card2;
     }
 
     public Pane getRoot() {
@@ -98,6 +117,16 @@ public class PlayerController{
         else {
             playerInfos.setText("Refus");
             playerInfos.getStyleClass().add("refuse");
+        }
+    }
+
+    public void setBetMoneyAmount(Integer amount){
+        playerInfos.setVisible(true);
+        if(amount==-1)
+            playerInfos.setText("Couché");
+        else
+        {
+            playerInfos.setText(amount.toString()+" $");
         }
     }
 

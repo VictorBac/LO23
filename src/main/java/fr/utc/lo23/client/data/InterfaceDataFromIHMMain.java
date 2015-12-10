@@ -42,13 +42,6 @@ public interface InterfaceDataFromIHMMain {
     void joinTableWithMode(UUID table, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException;
 
     /**
-     * Methode to pass on when accepted to join a table
-     * @param table
-     * @param mode
-     */
-    void tableJoinAccepted(Table table, String mode);
-
-    /**
      * Method to get UserList online
      * @return User Light List
      */

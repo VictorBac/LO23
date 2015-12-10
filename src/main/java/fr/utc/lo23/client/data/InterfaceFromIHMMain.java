@@ -77,16 +77,6 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * table join accepted
-     * @param table
-     * @param mode
-     */
-    public void tableJoinAccepted(Table table, String mode) {
-        // TODO wait network interface
-        //dManagerClient.getInterToCom().tableJoinAccepted();
-    }
-
-    /**
      * Ask server to return UserLightList
      * @return
      */
@@ -103,7 +93,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * TODO
+     * Get local saved game list.
      * @return
      */
     public TableList getSavedGamesList() {

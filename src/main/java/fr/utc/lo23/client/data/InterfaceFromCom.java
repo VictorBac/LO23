@@ -134,7 +134,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
-        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser);
+        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser); //TODO maybe useless
         dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
     }
 

@@ -16,7 +16,6 @@ import java.util.UUID;
 public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     private DataManagerClient dManagerClient;
-    private User userLogin;
 
     public InterfaceFromIHMMain(DataManagerClient dManagerClient) {
         this.dManagerClient = dManagerClient;
@@ -43,7 +42,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             Console.log("loguser "+ userLocal.toString());
             //remove the psw and send userLocal to server
             dManagerClient.setUserLocal(userLocal);
-            userLogin = new User(userLocal);
+            User userLogin = new User(userLocal);
             userLogin.setPwd(null);
             dManagerClient.getInterToCom().requestLoginServer(userLogin);
         }
@@ -74,7 +73,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param mode
      */
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException {
-        dManagerClient.getInterToCom().joinTable(userLogin.getUserLight(), tableId, mode);
+        dManagerClient.getInterToCom().joinTable(dManagerClient.getUserLocal().getUserLight(), tableId, mode);
     }
 
     /**
@@ -108,6 +107,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @return
      */
     public TableList getSavedGamesList() {
+        Serialization.deserializationObject(dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
         return null;
     }
 
@@ -116,7 +116,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param tableId
      */
     public void playGame(UUID tableId) throws NetworkFailureException {
-        dManagerClient.getInterToCom().requestPlayGame(userLogin.getUserLight(), tableId);
+        dManagerClient.getInterToCom().requestPlayGame(dManagerClient.getUserLocal().getUserLight(), tableId);
     }
 
     /**

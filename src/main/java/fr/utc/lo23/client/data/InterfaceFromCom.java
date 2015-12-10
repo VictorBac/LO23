@@ -95,7 +95,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
             //TODO need to contact IHMMain not TABLE ERROR
-            dManagerClient.getInterFromIHMMain();
+            dManagerClient.getInterToIHMMain();
             //dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
         } catch (TableException e) {
             e.printStackTrace();
@@ -164,6 +164,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void notifyAction(Action action) {
 
+
     }
 
     public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
@@ -173,6 +174,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void saveLogGame(Table table) {
 
     }
+
+
+
 
     public UserLightList getPlayerList() {
         return null;

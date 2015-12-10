@@ -26,7 +26,7 @@ public class DataManagerClient {
     private Table tableLocal;
 
     private ArrayList<Server> listServers;
-    private static final String pathServers = "servers";
+
 
 
     public DataManagerClient() {
@@ -34,7 +34,10 @@ public class DataManagerClient {
         this.listUsersLightLocal = new UserLightList();
         this.listTablesLocal = new TableList();
         this.tableLocal = null;
-        //this.listServers = (ArrayList<Server>) Serialization.deserializationObject(pathServers);
+        this.listServers = (ArrayList<Server>) Serialization.deserializationObject(Serialization.pathServerList);
+        if(this.listServers==null){// we have this case if the file doesn't exist
+            this.listServers = new ArrayList<Server>();
+        }
 
         this.interToIHMTable = null;
         this.interToCom = null;
@@ -58,20 +61,12 @@ public class DataManagerClient {
         return interFromCom;
     }
 
-    public void setInterFromCom(InterfaceDataFromCom interFromCom) {this.interFromCom = interFromCom;}
-
     public InterfaceDataFromIHMTable getInterFromIHMTable() {
         return interFromIHMTable;
     }
 
-    public void setInterFromIHMTable(InterfaceDataFromIHMTable interFromIHMTable) {this.interFromIHMTable = interFromIHMTable;}
-
     public InterfaceDataFromIHMMain getInterFromIHMMain() {
         return interFromIHMMain;
-    }
-
-    public void setInterFromIHMMain(InterfaceDataFromIHMMain interFromIHMMain) {
-        this.interFromIHMMain = interFromIHMMain;
     }
 
     public ITableToDataListener getInterToIHMTable() {

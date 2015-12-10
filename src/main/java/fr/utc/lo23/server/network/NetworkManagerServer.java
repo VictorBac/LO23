@@ -8,6 +8,7 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
 import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
+import fr.utc.lo23.common.network.NotifyNewTableMessage;
 import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
@@ -96,7 +97,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     public void notifyNewTable(Table newTable) throws NetworkFailureException {
-
+        NotifyNewTableMessage notifNewTable = new NotifyNewTableMessage(newTable);
+        server.sendToAll(notifNewTable);
     }
 
     public void notifyDisconnection(User distantUser) throws NetworkFailureException {

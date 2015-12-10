@@ -47,7 +47,6 @@ public class ViewOwnProfilController extends BaseController {
     }
 
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserLight currentUser = new UserLight();
         IHMMainClientManager manager = mController.getManagerMain();

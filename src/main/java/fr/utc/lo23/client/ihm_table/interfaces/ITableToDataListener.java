@@ -105,7 +105,7 @@ public interface ITableToDataListener {
      * Fonction à appeler après que tous les joueurs aient fait leur action de ce tour
      * Permet à IHM-Table de savoir que le tour est terminé et qu'un prochain peut avoir lieu
      */
-    public void notifyEndTour();
+    public void notifyEndTour(Integer pot);
 
     /*
      * Fonction à appeler après avoir reçu des cartes du milieu

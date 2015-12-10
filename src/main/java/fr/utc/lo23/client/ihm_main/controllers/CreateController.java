@@ -90,7 +90,6 @@ public class CreateController extends BaseController {
         mController.showConnectionWindow();
     }
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }

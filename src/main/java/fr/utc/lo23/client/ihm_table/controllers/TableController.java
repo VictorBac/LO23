@@ -59,6 +59,7 @@ public class TableController {
         this.table = table;
         playerInitializer();
         chatInitializer();
+        //betMoneyBoxInitializer();
 
         // Commenter ce qu'il y a dessous pour virer les tests
         try {
@@ -75,16 +76,19 @@ public class TableController {
             players.add(player);
 
             showCommonCards();
+            cards.add(card);
+            setFlopCards(cards);
+            //setTurnCard(card);
+            //setRiverCard(card);
 
             setPlayerCards(players);
 
             Action action = new Action();
             action.setUserLightOfPlayer(controllersList.get(0).getUserLight());
-            action.setAmount(50);
-            action.setName(EnumerationAction.ALLIN);
 
+            EnumerationAction[] enumac = {EnumerationAction.ALLIN};
 
-            ihmTable.getTableToDataListener().notifyAction(action);
+            ihmTable.getTableToDataListener().askAction(action,enumac );
 
 
         } catch (CardFormatInvalidException e) {
@@ -421,8 +425,8 @@ public class TableController {
     @FXML
     public void fold(javafx.event.ActionEvent event) {
         if(actionFold.getStyleClass().contains("active")) {
-            //TODO : "quand ces **** auront mis des setters"
-            //actionToFill.setAction(EnumerationAction.fold);
+            actionToFill.setName(EnumerationAction.FOLD);
+            //TODO: envoyer à data
             System.out.println("DODO");
 
         }
@@ -431,8 +435,8 @@ public class TableController {
     @FXML
     public void check(javafx.event.ActionEvent event) {
         if (actionCheck.getStyleClass().contains("active")) {
-            //TODO : "quand ces *** auront mis des setters"
-            //actionToFill.setAction(EnumerationAction.check);
+            actionToFill.setName(EnumerationAction.CHECK);
+            //TODO: envoyer à data
             System.out.println("CHECK");
 
         }
@@ -441,8 +445,8 @@ public class TableController {
     @FXML
     public void call(javafx.event.ActionEvent event) {
         if (actionCall.getStyleClass().contains("active")) {
-            //TODO : "quand ces *** auront mis des setters"
-            //actionToFill.setAction(EnumerationAction.call);
+            actionToFill.setName(EnumerationAction.CALL);
+            //TODO: envoyer à data
             System.out.println("APPEL");
 
         }
@@ -451,8 +455,8 @@ public class TableController {
     @FXML
     public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
-            //TODO : "quand ces *** auront mis des setters"
-            //actionToFill.setAction(EnumerationAction.allIn);
+            actionToFill.setName(EnumerationAction.ALLIN);
+            //TODO: envoyer à data
             System.out.println("ALLIN");
 
         }
@@ -461,8 +465,9 @@ public class TableController {
     @FXML
     public void bet(javafx.event.ActionEvent event) {
         if(actionBet.getStyleClass().contains("active")) {
-            //TODO : "quand ces *** auront mis des setters"
-            //actionToFill.setAction(EnumerationAction.bet);
+            //TODO: afficher slider puis recliquer pour envoyer
+            actionToFill.setName(EnumerationAction.BET);
+            //TODO: envoyer à data
             //actionToFill.setAmount((int) actionBetMoneySelector.getValue());
         }
     }
@@ -769,13 +774,36 @@ public class TableController {
 
     public void setCommonCardAnimation(final ImageView img, final Image image){
         img.setImage(getBackCardImage());
+
+        double svgWidth = img.getFitWidth();
+
+        final Timeline timeline3 = new Timeline();
+        timeline3.setCycleCount(1);
+        timeline3.setAutoReverse(false);
+        KeyValue kv3 = new KeyValue(img.fitWidthProperty(), svgWidth);
+        KeyFrame kf3 = new KeyFrame(Duration.millis(200), kv3);
+        timeline3.getKeyFrames().add(kf3);
+
+        final Timeline timeline2 = new Timeline();
+        timeline2.setCycleCount(1);
+        timeline2.setAutoReverse(false);
+        KeyValue kv2 = new KeyValue(img.fitWidthProperty(), 0);
+        EventHandler onFinished2 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                img.setImage(image);
+                timeline3.play();
+            }
+        };
+        KeyFrame kf2 = new KeyFrame(Duration.millis(200), onFinished2, kv2);
+        timeline2.getKeyFrames().add(kf2);
+
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         timeline.setAutoReverse(false);
         KeyValue kv = new KeyValue(img.xProperty(), img.getX());
         EventHandler onFinished = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
-                img.setImage(image);
+                timeline2.play();
             }
         };
         KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished, kv);

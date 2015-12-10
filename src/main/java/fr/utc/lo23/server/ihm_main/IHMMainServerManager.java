@@ -56,6 +56,8 @@ public class IHMMainServerManager {
 
         //Link des interfaces
         managerCom.setInterMain(interfaceMainToCom);
+        managerCom.setDataInstance(managerData.getInterfaceFromCom());
+        managerData.setInterfaceFromCom(managerCom.getDataInstance());
 
 
         interfaceComToMain = managerCom;

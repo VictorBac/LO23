@@ -41,6 +41,6 @@ import fr.utc.lo23.server.network.threads.PokerServer;
         public void process(ServerLink threadClient) {
             Console.log("message received :" + messageSend.getText());
 
-            // threadClient.getNetworkManager().getDataInstance().remoteUserConnected(newUser);
+            threadClient.getNetworkManager().getDataInstance().transmitMessage(messageSend);
         }
     }

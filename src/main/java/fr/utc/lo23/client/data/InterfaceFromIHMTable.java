@@ -3,6 +3,7 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.TooManyTablesException;
 
 import java.util.UUID;
 
@@ -21,7 +22,13 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     //TODO handle exceptions
     public void tableToCreate(Table table){
-        //dManagerClient.getInterToCom().createTable(table);
+        try {
+            dManagerClient.getInterToCom().createTable(getUser(),table);
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        } catch (TooManyTablesException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

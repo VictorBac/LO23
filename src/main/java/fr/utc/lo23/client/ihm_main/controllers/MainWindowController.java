@@ -14,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -36,6 +38,12 @@ public class MainWindowController extends BaseController {
 
     @FXML
     private TableColumn<Table, Integer> columnTableMise;
+
+    @FXML
+    private Pane gamePane;
+
+    @FXML
+    private AnchorPane listPane;
 
     private ObservableList<Table> tablesList;
 
@@ -105,8 +113,14 @@ public class MainWindowController extends BaseController {
         mController.showViewOwnWindow();
     }
 
+    @FXML
     public void createTable(ActionEvent actionEvent) {
-        mController.getManagerMain().getInterTableToMain().showTableCreationForm(mController.showCreateTableView().getMainPane());
+        //mController.getManagerMain().getInterTableToMain().showTableCreationForm(mController.showCreateTableView().getMainPane());
+        gamePane.setVisible(true);
+        gamePane.setDisable(false);
+        gamePane.getStylesheets().clear();
+        mController.getManagerMain().getInterTableToMain().showTableCreationForm(gamePane);
+        listPane.setVisible(false);
     }
 
     public void joinTable(ActionEvent actionEvent) {
@@ -136,7 +150,11 @@ public class MainWindowController extends BaseController {
 
     @FXML
     void didClickQuitButton(ActionEvent event) {
-        mController.getManagerMain().getInterDataToMain().exitAsked();
+        try {
+            mController.getManagerMain().getInterDataToMain().exitAsked();
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
         Platform.exit();
     }
 }

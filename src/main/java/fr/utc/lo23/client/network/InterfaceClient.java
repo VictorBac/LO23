@@ -121,7 +121,7 @@ public interface InterfaceClient {
      */
     public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
 
-    public void sendMessage(MessageChat message);
+    public void sendMessage(MessageChat message,UUID tableID);
 
     public void confirmationCardReceived();
 

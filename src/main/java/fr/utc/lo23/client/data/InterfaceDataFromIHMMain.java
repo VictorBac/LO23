@@ -6,6 +6,8 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -40,13 +42,6 @@ public interface InterfaceDataFromIHMMain {
     void joinTableWithMode(UUID table, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException;
 
     /**
-     * Methode to pass on when accepted to join a table
-     * @param table
-     * @param mode
-     */
-    void tableJoinAccepted(Table table, String mode);
-
-    /**
      * Method to get UserList online
      * @return User Light List
      */
@@ -73,5 +68,25 @@ public interface InterfaceDataFromIHMMain {
     /**
      * Method to ask to exit
      */
-    void exitAsked();
+    void exitAsked() throws NetworkFailureException;
+
+    /**
+     * Methode to get servers list
+     * @return
+     */
+    List<Server> getServersList();
+
+    /**
+     * Methode to add server
+     * @param ip
+     * @param port
+     */
+    void addServer(String ip, String port);
+
+    /**
+     * Method to remove server
+     * @param server
+     */
+    void removeServer(Server server);
+
 }

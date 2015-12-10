@@ -175,7 +175,8 @@
     -fx-border:none;
     -fx-border-radius:none;
     -fx-border-color:none;
-    -fx-background-color: #4c5cff;
+    -fx-background-color: #03285C;
+    -fx-text-fill: white;
 }
 
 .popup {
@@ -183,7 +184,8 @@
     -fx-border:none;
     -fx-border-radius:none;
     -fx-border-color:none;
-    -fx-background-color: #7889ff;
+    -fx-background-color: #435E87;
+    -fx-text-fill: white;
 }
 
 .blueButton{
@@ -191,5 +193,33 @@
     -fx-border:none;
     -fx-border-radius:none;
     -fx-border-color:none;
-    -fx-background-color: #4c5cff;
+    -fx-background-color: #033272;
+    -fx-text-fill: white;
+}
+
+.greenPopup .title{
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #005A46;
+    -fx-text-fill: white;
+}
+
+.greenPopup {
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #3B8474;
+    -fx-text-fill: white;
+}
+
+.greenButton{
+    -fx-background-radius:none;
+    -fx-border:none;
+    -fx-border-radius:none;
+    -fx-border-color:none;
+    -fx-background-color: #007057;
+    -fx-text-fill: white;
 }

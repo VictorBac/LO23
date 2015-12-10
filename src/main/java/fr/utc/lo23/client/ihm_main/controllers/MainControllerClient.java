@@ -106,7 +106,7 @@ public class MainControllerClient extends Application {
             pmStage.setTitle(windowTitle);
             Scene scene = new Scene(root);
             pmStage.setScene(scene);
-            scene.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
+            //root.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
             root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
             pmStage.show();
             return (T) controller;

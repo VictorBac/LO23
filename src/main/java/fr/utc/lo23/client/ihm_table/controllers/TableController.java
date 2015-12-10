@@ -86,7 +86,7 @@ public class TableController {
             Action action = new Action();
             action.setUserLightOfPlayer(controllersList.get(0).getUserLight());
 
-            EnumerationAction[] enumac = {EnumerationAction.allIn};
+            EnumerationAction[] enumac = {EnumerationAction.ALLIN};
 
             ihmTable.getTableToDataListener().askAction(action,enumac );
 
@@ -407,11 +407,11 @@ public class TableController {
     }
 
     public void enableAction(EnumerationAction action) {
-        if(action == EnumerationAction.allIn) enableActionAllin();
-        else if(action == EnumerationAction.bet) enableActionBet();
-        else if(action == EnumerationAction.check) enableActionCheck();
-        else if(action == EnumerationAction.fold) enableActionFold();
-        else if(action == EnumerationAction.call) enableActionCall();
+        if(action == EnumerationAction.ALLIN) enableActionAllin();
+        else if(action == EnumerationAction.BET) enableActionBet();
+        else if(action == EnumerationAction.CHECK) enableActionCheck();
+        else if(action == EnumerationAction.FOLD) enableActionFold();
+        else if(action == EnumerationAction.CALL) enableActionCall();
     }
 
     public void disableAllActions() {
@@ -425,7 +425,7 @@ public class TableController {
     @FXML
     public void fold(javafx.event.ActionEvent event) {
         if(actionFold.getStyleClass().contains("active")) {
-            actionToFill.setName(EnumerationAction.fold);
+            actionToFill.setName(EnumerationAction.FOLD);
             //TODO: envoyer à data
             System.out.println("DODO");
 
@@ -435,7 +435,7 @@ public class TableController {
     @FXML
     public void check(javafx.event.ActionEvent event) {
         if (actionCheck.getStyleClass().contains("active")) {
-            actionToFill.setName(EnumerationAction.check);
+            actionToFill.setName(EnumerationAction.CHECK);
             //TODO: envoyer à data
             System.out.println("CHECK");
 
@@ -445,7 +445,7 @@ public class TableController {
     @FXML
     public void call(javafx.event.ActionEvent event) {
         if (actionCall.getStyleClass().contains("active")) {
-            actionToFill.setName(EnumerationAction.call);
+            actionToFill.setName(EnumerationAction.CALL);
             //TODO: envoyer à data
             System.out.println("APPEL");
 
@@ -455,7 +455,7 @@ public class TableController {
     @FXML
     public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
-            actionToFill.setName(EnumerationAction.allIn);
+            actionToFill.setName(EnumerationAction.ALLIN);
             //TODO: envoyer à data
             System.out.println("ALLIN");
 
@@ -466,7 +466,7 @@ public class TableController {
     public void bet(javafx.event.ActionEvent event) {
         if(actionBet.getStyleClass().contains("active")) {
             //TODO: afficher slider puis recliquer pour envoyer
-            actionToFill.setName(EnumerationAction.bet);
+            actionToFill.setName(EnumerationAction.BET);
             //TODO: envoyer à data
             //actionToFill.setAmount((int) actionBetMoneySelector.getValue());
         }

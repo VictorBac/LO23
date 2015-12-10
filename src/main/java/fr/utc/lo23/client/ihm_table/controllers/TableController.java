@@ -38,6 +38,7 @@ public class TableController {
     private Image defaultImage;
     private Action actionToFill;
     private String turnStatus = null; // null,warmup,flop,turn,river
+    private Integer potMoneyInt;
 
     private boolean isHost = true;
 
@@ -75,9 +76,16 @@ public class TableController {
 
             showCommonCards();
 
-            controllersList.get(0).setBetMoneyAmount(1000);
-
             setPlayerCards(players);
+
+            Action action = new Action();
+            action.setUserLightOfPlayer(controllersList.get(0).getUserLight());
+            action.setAmount(50);
+            action.setName(EnumerationAction.allIn);
+
+
+            ihmTable.getTableToDataListener().notifyAction(action);
+
 
         } catch (CardFormatInvalidException e) {
             e.printStackTrace();
@@ -294,6 +302,9 @@ public class TableController {
     @FXML
     private ImageView commonCardBack;
 
+    @FXML
+    private Label potMoney;
+
 	@FXML
 	private void sendMessage(javafx.event.ActionEvent event) {
         if(messageToSend.getText().isEmpty())
@@ -497,19 +508,19 @@ public class TableController {
     @FXML
     public void sendReadyAccept(javafx.event.ActionEvent event){
         //TODO: Envoyer true à data
-
+        //ihmTable.getDataInterface().
         hidePopupReady();
     }
 
     @FXML
     public void sendReadyRefuse(javafx.event.ActionEvent event){
         //TODO: Envoyer false à data
-
+        //ihmTable.getDataInterface().
         hidePopupReady();
     }
 
     @FXML
-    public void showPopupLeave(javafx.event.ActionEvent event) { popupLeave.setVisible(true); }
+    public void showPopupLeave(javafx.event.ActionEvent event) { popupLeave.setVisible(true);}
 
     @FXML
     public void sendLeaveAccept(javafx.event.ActionEvent event) {
@@ -531,10 +542,15 @@ public class TableController {
      */
     public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept) {
         if(accept) {
-            addLogEntry(player.getPseudo() + " a accepté de mettre fin au jeu.");
+            if(player==ihmTable.getDataInterface().getUser())
+                addLogEntry("Vous avez accepté de mettre fin au jeu.");
+            else
+                addLogEntry(player.getPseudo() + " a accepté de mettre fin au jeu.");
         } else {
-            addLogEntry(player.getPseudo() + " a refusé de mettre fin au jeu.");
-
+            if(player==ihmTable.getDataInterface().getUser())
+                addLogEntry("Vous avez refusé de mettre fin au jeu.");
+            else
+                addLogEntry(player.getPseudo() + " a refusé de mettre fin au jeu.");
         }
         getPlayerControllerOf(player).showVoteEndGame(accept);
     }
@@ -674,7 +690,7 @@ public class TableController {
                     img2.setX(playerController.getNode().getLayoutX() + 130);
                     img2.setY(playerController.getNode().getLayoutY() + 30);
                     tablePane.getChildren().add(img2);
-                    playerController.setCard1(img2);
+                    playerController.setCard2(img2);
                     if(playerController.getUserLight()==playerHands.get(0).getPlayer())
                     {
                         setPlayerCardAnimation(img2,getImageFromCard(playerHands.get(0).getListCardsHand().get(1)),wait);
@@ -690,6 +706,8 @@ public class TableController {
     }
 
     public void setPlayerCardAnimation(final ImageView img, final Image image, final int waitTime){
+        if(waitTime==0)
+            System.out.println("ERROR: Une animation n'a pas eut lieu, il faut mettre waitTime à plus de 0 !!");
         img.setImage(getBackCardImage());
         final Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
@@ -706,6 +724,35 @@ public class TableController {
         img.setX(commonCardPane.getLayoutX()+commonCardBack.getX());
         img.setY(commonCardPane.getLayoutY()+commonCardBack.getY());
         img.setVisible(true);
+
+        //Waiting timeline
+        Timeline timelineWait = new Timeline();
+        EventHandler onFinishedWait = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                timeline.play();
+            }
+        };
+        KeyFrame kfWait = new KeyFrame(Duration.millis(waitTime), onFinishedWait);
+        timelineWait.getKeyFrames().add(kfWait);
+        timelineWait.play();
+    }
+
+    public void setPlayerFoldCardAnimation(final ImageView img, final int waitTime){
+        if(waitTime==0)
+            System.out.println("ERROR: Une animation n'a pas eut lieu, il faut mettre waitTime à plus de 0 !!");
+        img.setImage(getBackCardImage());
+        final Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        KeyValue kv = new KeyValue(img.xProperty(), commonCardBack.getX()+commonCardPane.getLayoutX());
+        KeyValue ky = new KeyValue(img.yProperty(), commonCardBack.getY()+commonCardPane.getLayoutY());
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                tablePane.getChildren().remove(img);
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(300), onFinished, kv, ky);
+        timeline.getKeyFrames().add(kf);
 
         //Waiting timeline
         Timeline timelineWait = new Timeline();
@@ -759,5 +806,31 @@ public class TableController {
 
     public Image getBackCardImage(){
         return new Image(getClass().getResource("../images/cards/back.png").toExternalForm());
+    }
+
+    public void graphicFoldUser(UserLight user){
+        setPlayerFoldCardAnimation(playerControllerMap.get(user).getCard1(),1);
+        setPlayerFoldCardAnimation(playerControllerMap.get(user).getCard2(),100);
+        playerControllerMap.get(user).setCard1(null);
+        playerControllerMap.get(user).setCard2(null);
+        playerControllerMap.get(user).setBetMoneyAmount(-1);
+    }
+
+    public Integer getPotMoney(){
+        return potMoneyInt;
+    }
+
+    public void setPotMoney(Integer money){
+        potMoneyInt = money;
+        potMoney.setText(potMoneyInt.toString() + " $");
+    }
+
+    public void addPotMoney(Integer money){
+        potMoneyInt += money;
+        potMoney.setText(potMoneyInt.toString()+" $");
+    }
+
+    public void setThinkingForAction(UserLight user){
+        playerControllerMap.get(user).setThinkingStatus();
     }
 }

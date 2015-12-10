@@ -107,7 +107,7 @@
                   </AnchorPane>
               </content>
             </TitledPane>
-            <Pane fx:id="commonCardPane" layoutX="377.0" layoutY="177.0" prefHeight="60.0" prefWidth="266.0" visible="false">
+            <Pane fx:id="commonCardPane" layoutX="377.0" layoutY="177.0" prefHeight="95.0" prefWidth="266.0">
                <children>
                   <ImageView fx:id="commonCardFlop1" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                   <ImageView fx:id="commonCardFlop2" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="43.0" />
@@ -119,6 +119,11 @@
                         <Image url="@../images/cards/back.png" />
                      </image>
                   </ImageView>
+                  <Label fx:id="potMoney" alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="63.0" prefWidth="70.0" style="-fx-background-color: #337364;" text="0 €" textAlignment="CENTER">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
                </children>
             </Pane>
          </children>

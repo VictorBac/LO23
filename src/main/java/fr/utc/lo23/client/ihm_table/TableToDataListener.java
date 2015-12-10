@@ -160,36 +160,69 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de demander l'action au joueur
      */
     public void askAction(Action actionToFill, EnumerationAction[] listPossible) {
-        ihmtable.getTableController().saveActionToFill(actionToFill);
-        ihmtable.getTableController().disableAllActions();
-        for (EnumerationAction action: listPossible)
-            ihmtable.getTableController().enableAction(action);
+        if(actionToFill.getUserLightOfPlayer()==ihmtable.getDataInterface().getUser())
+        {
+            ihmtable.getTableController().saveActionToFill(actionToFill);
+            ihmtable.getTableController().disableAllActions();
+            for (EnumerationAction action : listPossible)
+                ihmtable.getTableController().enableAction(action);
+        }
+        else
+        {
+            ihmtable.getTableController().setThinkingForAction(actionToFill.getUserLightOfPlayer());
+        }
     }
 
     /*
      * Fonction à appeler après avoir reçu une action faite par un joueur
      * Permet à iHM-Table d'afficher cette action
      */
-    public void notifyAction(UserLight player, Action action){
-        if(action.equals(EnumerationAction.allIn)) {
-            ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
-            //TODO : animation plein de jetons vers le milieu
+    public void notifyAction(Action action){
+
+        UserLight player = action.getUserLightOfPlayer();
+        System.out.println(player);
+        System.out.println(ihmtable.getDataInterface().getUser());
+        if(action.getName().equals(EnumerationAction.allIn)) {
+            if(player==ihmtable.getDataInterface().getUser())
+                ihmtable.getTableController().addLogEntry("Vous avez fait tapis !");
+            else
+                ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
+            // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
+            ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(action.getAmount());
         }
-        else if(action.equals(EnumerationAction.bet)) {
-            ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
-            //TODO : animation quelques jetons vers le milieu
+        else if(action.getName().equals(EnumerationAction.bet)) {
+            if(player==ihmtable.getDataInterface().getUser())
+                ihmtable.getTableController().addLogEntry("Vous avez relancé de " + action.getAmount() + "$.");
+            else
+                ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
+            // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
+            ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(action.getAmount());
         }
-        else if(action.equals(EnumerationAction.call)) {
-            ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
-            //TODO : animation quelques jetons vers le milieu aussi
+        else if(action.getName().equals(EnumerationAction.call)) {
+            if(player==ihmtable.getDataInterface().getUser())
+                ihmtable.getTableController().addLogEntry("Vous avez suivi.");
+            else
+                ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
+            // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
+            ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(action.getAmount());
         }
-        else if(action.equals(EnumerationAction.check)) {
-            ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
-            //TODO : ?
+        else if(action.getName().equals(EnumerationAction.check)) {
+            if(player==ihmtable.getDataInterface().getUser())
+                ihmtable.getTableController().addLogEntry("Parole.");
+            else
+                ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
+            ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(0);
         }
-        else if(action.equals(EnumerationAction.fold)) {
-            ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
-            //TODO : cartes qui dégagent vers le milieu
+        else if(action.getName().equals(EnumerationAction.fold)) {
+            if(player==ihmtable.getDataInterface().getUser())
+                ihmtable.getTableController().addLogEntry("Vous vous couchez.");
+            else
+                ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
+            ihmtable.getTableController().graphicFoldUser(player);
+        }
+        else
+        {
+            System.out.println("ERROR: L'action renseignée ne possède pas d'action de poker.");
         }
     }
 

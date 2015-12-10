@@ -31,6 +31,8 @@ public class PlayerController{
     private ImageView card1;
     private ImageView card2;
 
+    private Integer betMoney;
+
     private UserLight userLight;
 
     public UserLight getUserLight() {
@@ -52,6 +54,14 @@ public class PlayerController{
     public void setNodes(Pane root,Node node) {
         this.root = root;
         this.node = node;
+    }
+
+    public Integer getBetMoney() {
+        return betMoney;
+    }
+
+    public void setBetMoney(Integer betMoney) {
+        this.betMoney = betMoney;
     }
 
     public ImageView getCard1() {
@@ -94,7 +104,7 @@ public class PlayerController{
         if(money==-1)
             playerMoneyLabel.setText("?????");
         else
-            playerMoneyLabel.setText(money.toString());
+            playerMoneyLabel.setText(money.toString()+" $");
     }
 
     public void setNameAndAvatar(UserLight user,Image defaultImage){
@@ -120,8 +130,18 @@ public class PlayerController{
         }
     }
 
+    public void setThinkingStatus(){
+        playerInfos.setVisible(true);
+        playerInfos.setText("Réfléchit...");
+        if(!playerInfos.getStyleClass().contains("money"))
+            playerInfos.getStyleClass().add("money");
+    }
+
     public void setBetMoneyAmount(Integer amount){
         playerInfos.setVisible(true);
+        betMoney = amount;
+        if(!playerInfos.getStyleClass().contains("money"))
+            playerInfos.getStyleClass().add("money");
         if(amount==-1)
             playerInfos.setText("Couché");
         else
@@ -134,6 +154,7 @@ public class PlayerController{
         playerInfos.setVisible(false);
         playerInfos.getStyleClass().remove("refuse");
         playerInfos.getStyleClass().remove("ready");
+        playerInfos.getStyleClass().remove("money");
         playerInfos.setText("");
     }
 

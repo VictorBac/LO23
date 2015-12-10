@@ -10,17 +10,14 @@ import fr.utc.lo23.common.data.Table;
 public class InterTable implements InterfaceMainToTable {
 
 
-    @Override
     public void notifyNewTable(Table t) {
 
     }
 
-    @Override
     public void quitGame() {
 
     }
 
-    @Override
     public void TableJoinedNotify(Table t) {
 
     }

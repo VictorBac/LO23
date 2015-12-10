@@ -163,6 +163,7 @@ public class TableToDataListener implements ITableToDataListener {
         if(actionToFill.getUserLightOfPlayer()==ihmtable.getDataInterface().getUser())
         {
             ihmtable.getTableController().saveActionToFill(actionToFill);
+            ihmtable.getTableController().showActionBox();
             ihmtable.getTableController().disableAllActions();
             for (EnumerationAction action : listPossible)
                 ihmtable.getTableController().enableAction(action);
@@ -230,8 +231,10 @@ public class TableToDataListener implements ITableToDataListener {
      * Fonction à appeler après que tous les joueurs aient fait leur action de ce tour
      * Permet à IHM-Table de savoir que le tour est terminé et qu'un prochain peut avoir lieu
      */
-    public void notifyEndTour(){
+    public void notifyEndTour(Integer pot){
         //TODO: next step
+        //remettre à zero les affichages du tour, et faire des animations d'envoi de sous au milieu
+
     }
 
     /*
@@ -248,6 +251,7 @@ public class TableToDataListener implements ITableToDataListener {
      */
     public void notifyEndHand(ArrayList<Seat> seatPlayers){
         //TODO: next step
+       //Afficher les nouvelles valeurs de money de chaque joueur, envoyer les sous aux vainqueurs
     }
 
     /*

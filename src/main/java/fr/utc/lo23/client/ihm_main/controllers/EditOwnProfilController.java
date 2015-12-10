@@ -40,7 +40,6 @@ public class EditOwnProfilController extends BaseController {
     @FXML
     private ImageView imageviewer;
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }

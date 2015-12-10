@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Created by jbmartin on 07/12/2015.
  */
 public class AddServerController extends BaseController{
-    @Override
+
     public void initialize(URL location, ResourceBundle resources) {
 
     }

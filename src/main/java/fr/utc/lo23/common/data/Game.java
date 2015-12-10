@@ -70,15 +70,11 @@ public class Game implements Serializable{
 
     /**
      * Method to know the current Hand
-     * @return
+     * @return the last Hand of the Array
      */
     public Hand getCurrentHand(){
         return this.listHand.get(this.listHand.size()-1);
     }
-    private ArrayList<UserLight> getPlayerList(){
-        return null;//TODO remove this line, method useless
-    }
-
 
     public void addPlayer(UserLight newUserLightPlayerJoinGame){
         this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
@@ -156,8 +152,21 @@ public class Game implements Serializable{
 
 
     public void stopGame(){
+        this.statusOfTheGame = EnumerationStatusGame.finished;
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 ///////////////////////GETTER and SETTER
     /**

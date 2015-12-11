@@ -130,8 +130,79 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     public void playGame(Table table){
-        Boolean play = true;
         Game game = table.getCurrentGame();
+        Hand hand;
+        Turn turn;
+
+        if(game.getListHand().size()==0)
+        {
+            //On se situe au tout début d'une game
+            hand = new Hand();
+            game.getListHand().add(hand);
+
+        }
+        else
+        {
+            //La game est déjà commencée
+            hand = game.getCurrentHand();
+        }
+
+
+        if(hand.getListTurn().size()==0)
+        {
+            //On se situe au début d'un tour
+            turn = new Turn(game);
+            hand.getListTurn().add(turn);
+        }
+        else
+        {
+            turn = hand.getCurrentTurn();
+        }
+
+        if(turn.getListAction().size()==0)
+        {
+            //Faire les actions de base
+
+        }
+        else
+        {
+            //Vérifier si le tour est finit
+            if(false)
+            {
+                //S'il est finit, résoudre ce tour
+
+
+                // puis vérifier si la manche est finie
+                if(false)
+                {
+                    //Si elle est finit résoudre la manche
+
+                    //puis vérifier si la game est finie
+                    if(false)
+                    {
+                        //Si la game est finie, résoudre la game
+
+                        //Puis clore la game
+
+                    }
+                    else
+                    {
+                        //sinon créer une nouvelle manche et faire ce qui doit etre fait
+                    }
+                }
+                else
+                {
+                    //sinon créer un nouveau tour et appeler la première action
+                }
+            }
+            else
+            {
+                //appeler les actions du joueur prochain
+
+            }
+
+        }
+
 
         //Choix du joueur initial
         //On choisit de prendre le premier joueur dans la liste (l'host s'il n'a pas quitté la table, d'ailleurs je sais pas comment on gère ce cas).
@@ -158,6 +229,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         J'informe que je finis la manche.
 
         S'il ne reste plus qu'un seul joueur avec de l'argent, je termine la game. sinon je décale le premier joueur et je relance une manche.
+
+
+        En cas de vote pour demander la fin de la partie, cette fonction n'est pas appelée, sauf s'il y a un vote négatif lorsque tous les votes ont été faits.
+
 
          */
 

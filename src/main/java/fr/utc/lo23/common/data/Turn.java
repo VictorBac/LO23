@@ -105,6 +105,31 @@ public class Turn implements Serializable {
 
     }
 
+    /*
+     * Ressort la liste des actions possibles pour un joueurs, se basant sur les actions précédentes et sur son argent restant
+     */
+    public EnumerationAction[] availableActions(UserLight user){
+        ArrayList<EnumerationAction> tempArray = new ArrayList<EnumerationAction>();
+        tempArray.add(EnumerationAction.FOLD);
+        tempArray.add(EnumerationAction.ALLIN);
+        Integer money = currentGame.getMoneyOfPlayer(user);
+
+        if(money>getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn()!=0)
+        {
+            tempArray.add(EnumerationAction.CALL);
+        }
+        if(getMaxMoneyBetInTheTurn()==0 || getTotalAmountForAUser(user)==getMaxMoneyBetInTheTurn())
+        {
+            tempArray.add(EnumerationAction.CHECK);
+        }
+        if(getCurrentGame().getMoneyOfPlayer(user)>getMaxMoneyBetInTheTurn())
+        {
+            tempArray.add(EnumerationAction.BET);
+        }
+        return (EnumerationAction[])tempArray.toArray();
+    }
+
+    //Cette fonction renvoi la quantité d'argent pariée par un joueur dans un tour.
     private int getTotalAmountForAUser ( Action newAction ){
         int amount = 0;
         for (Action a : listAction
@@ -114,6 +139,28 @@ public class Turn implements Serializable {
             }
         }
         return amount;
+    }
+
+    //Cette fonction renvoi la quantité d'argent pariée par un joueur dans un tour.
+    private int getTotalAmountForAUser ( UserLight user ){
+        int amount = 0;
+        for (Action a : listAction
+                ) {
+            if ( a.getUserLightOfPlayer() == user ){
+                amount += a.getAmount();
+            }
+        }
+        return amount;
+    }
+
+    private int getMaxMoneyBetInTheTurn(){
+        Integer max = 0;
+        for(Action ac : getListAction())
+        {
+            if(ac.getAmount()>max)
+                max=ac.getAmount();
+        }
+        return max;
     }
 
 

@@ -71,7 +71,7 @@ public class Hand implements Serializable{
      * Method returning the current turn of the Hand
      * @return current Turn, it corresponds to the last Turn of the ArrayList
      */
-    private Turn getCurrentTurn(){
+    public Turn getCurrentTurn(){
         return listTurn.get(listTurn.size()-1); //size()-1 to get the last element
     }
 

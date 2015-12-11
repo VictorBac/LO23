@@ -193,8 +193,9 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void confirmationEndTurn() {
-
+    public void confirmationEndTurn(UserLight ul) {
+        NotifyEndTurnMessage endMsg = new NotifyEndTurnMessage(ul);
+        localClient.send(endMsg);
     }
 
     public void transmitRequestServer(UserLight player) {
@@ -203,7 +204,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
-            LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
+        LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
         localClient.send(LGMess);
     }
 

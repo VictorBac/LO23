@@ -127,7 +127,7 @@ public interface InterfaceClient {
 
     public void replayAction(Action action, UserLight player);
 
-    public void confirmationEndTurn();
+    public void confirmationEndTurn(UserLight ul);
 
     public void transmitRequestServer(UserLight player);
 }

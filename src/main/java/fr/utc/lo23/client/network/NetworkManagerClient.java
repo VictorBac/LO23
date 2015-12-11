@@ -142,7 +142,8 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     public void sendAction(Action act, UserLight userLocal) throws NetworkFailureException, IncorrectActionException {
-
+        SendActionMessage actMsg = new SendActionMessage(act,userLocal);
+        localClient.send(actMsg);
     }
 
     public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by R�my on 03/11/2015.
+ * Created by R�my on 03/11/2015.
  */
 public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
@@ -105,7 +105,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
-    /**
+    /*
      * starts a game with a given ID
      *
      * @param idTable the id of the table of the game
@@ -114,16 +114,55 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public Game startGame(UUID idTable, UserLight player) {
         Table toStart = getTableFromId(idTable);
+        try {
+            toStart.startGame(toStart.getCurrentGame());
 
-                try {
-                    toStart.startGame(toStart.getCurrentGame());
-                    Console.log(TAG + "\tGame started.");
-                    return toStart.getCurrentGame();
-                }
-                catch(TableException e){
-                    Console.log(TAG + "\tGame failed to start.");
-                    return null;
-                }
+            //LANCEMENT DE L'ALGORITHME DE JEU
+            playGame(toStart);
+
+            Console.log(TAG + "\tGame started.");
+            return toStart.getCurrentGame();
+        }
+        catch(TableException e){
+            Console.log(TAG + "\tGame failed to start.");
+            return null;
+        }
+    }
+
+    public void playGame(Table table){
+        Boolean play = true;
+        Game game = table.getCurrentGame();
+
+        //Choix du joueur initial
+        //On choisit de prendre le premier joueur dans la liste (l'host s'il n'a pas quitté la table, d'ailleurs je sais pas comment on gère ce cas).
+        UserLight firstPlayer = table.getListPlayers().getListUserLights().get(0);
+
+        /*
+
+        Je démarre une manche.
+
+        Je demande les ante à tous les joueurs si elles sont definies
+        Je commence par mettre l'icone Dealer au premier joueur, et demander les blindes au joueur 2 puis au joueur 3
+
+        Je demande aux joueurs dans l'ordre de réaliser des actions, tant que tous n'ont pas joué au moins une fois, et tant qu'il reste un joueur qui ne soit pas couché ou qui n'ait pas la même somme que les autres.
+        La relance a une mise minimum, elle est du minimum de la dernière relance
+
+        Le tour est finit, je notifie les clients avec les valeurs du pot, j'envoi le flop, puis je lance un nouveau tour
+
+        nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi le turn, puis je lance un nouveau
+
+        nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi la river, puis je lance un nouveau tour
+
+        nouveau tour finit, je résoud les cartes, définit les vainqueurs, puis informe tout le monde.
+
+        J'informe que je finis la manche.
+
+        S'il ne reste plus qu'un seul joueur avec de l'argent, je termine la game. sinon je décale le premier joueur et je relance une manche.
+
+         */
+
+
+
     }
 
     public void nextStepReplay() {

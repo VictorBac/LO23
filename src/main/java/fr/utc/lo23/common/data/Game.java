@@ -82,7 +82,7 @@ public class Game implements Serializable{
 
     /**
      * Method to set a player as disconnected on the Game
-     * @param userLightPlayerToRemoveFromTheGame µUserLight of the player who is disconnected
+     * @param userLightPlayerToRemoveFromTheGame ï¿½UserLight of the player who is disconnected
      */
     public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){
         int sizeListSeat = this.listSeatPlayerWithPeculeDepart.size();
@@ -147,7 +147,6 @@ public class Game implements Serializable{
     public void startGame(){
         this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.statusOfTheGame = EnumerationStatusGame.playing;
-//TODO begin to distribute the cards
     }
 
 

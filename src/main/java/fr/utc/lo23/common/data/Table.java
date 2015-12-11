@@ -221,7 +221,6 @@ public class Table implements Serializable {
         if (this.listGames.contains(game)){
             if(game.getStatusOfTheGame() == EnumerationStatusGame.closed || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
                 game.startGame();
-                //TODO: what else??
             }
         }
         else throw new TableException("Game not in the list");

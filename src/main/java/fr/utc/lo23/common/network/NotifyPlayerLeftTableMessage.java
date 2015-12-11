@@ -9,12 +9,12 @@ import java.util.UUID;
 /**
  * Created by Jean-Côme on 11/12/2015.
  */
-public class NotifyPlayerLeftTable extends Message {
+public class NotifyPlayerLeftTableMessage extends Message {
 
     UserLight user;
     UUID tab ;
 
-    public NotifyPlayerLeftTable(UserLight userLocal, UUID idTable) {
+    public NotifyPlayerLeftTableMessage(UserLight userLocal, UUID idTable) {
         super();
         this.user = userLocal;
         this.tab = idTable;

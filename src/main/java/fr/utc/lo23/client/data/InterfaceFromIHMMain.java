@@ -86,7 +86,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Ask server to return TableList
-     * @return
+     * @throws NetworkFailureException  Network Failure
      */
     public void getTableList() throws NetworkFailureException {
         dManagerClient.getInterToCom().requestTableList();
@@ -139,6 +139,14 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void removeServer(Server server) {
 
+    }
+
+    /**
+     * get local user profile
+     * @return local user
+     */
+    public User getLocalUserProfile() {
+        return dManagerClient.getUserLocal();
     }
 
 }

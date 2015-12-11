@@ -89,4 +89,10 @@ public interface InterfaceDataFromIHMMain {
      */
     void removeServer(Server server);
 
+    /**
+     * Method to get local user
+     * @return local user
+     */
+    User getLocalUserProfile();
+
 }

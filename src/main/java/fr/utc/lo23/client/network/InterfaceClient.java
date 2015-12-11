@@ -123,7 +123,7 @@ public interface InterfaceClient {
 
     public void sendMessage(MessageChat message,UUID tableID);
 
-    public void confirmationCardReceived();
+    public void confirmationCardReceived(UserLight ul);
 
     public void replayAction(Action action, UserLight player);
 

@@ -185,8 +185,9 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void confirmationCardReceived() {
-
+    public void confirmationCardReceived(UserLight ul) {
+        NotifyCardReceivedMessage cardReceivedMessage = new NotifyCardReceivedMessage(ul);
+        localClient.send(cardReceivedMessage);
     }
 
     public void replayAction(Action action, UserLight player) {

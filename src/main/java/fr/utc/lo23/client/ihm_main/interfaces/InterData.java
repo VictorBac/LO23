@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.client.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.common.data.*;
 import javafx.collections.FXCollections;
@@ -23,7 +24,7 @@ import java.util.List;
 
     @Override
     public void remoteUserConnected(UserLight remoteUser) {
-        managerMain.getControllerMain().getMainWindowController().addUser(remoteUser);
+        managerMain.addConnectedUser(remoteUser);
     }
 
     @Override
@@ -33,7 +34,7 @@ import java.util.List;
 
     @Override
     public void remoteUserDisconnected(UserLight remoteUser) {
-        managerMain.getControllerMain().getMainWindowController().removeUser(remoteUser);
+       managerMain.removeConnectedUser(remoteUser);
     }
 
     @Override
@@ -43,18 +44,7 @@ import java.util.List;
 
     @Override
     public void onlineUsers(List<UserLight> userList) {
-        /*
-        List<String> received_list = new ArrayList<String>();
-
-        Iterator<UserLight> iterator = userList.iterator();
-        while (iterator.hasNext()) {
-            received_list.add(iterator.next().getPseudo());
-        }
-        ObservableList<String> items = FXCollections.observableArrayList(received_list);
-
-        IHMMainClientManager.getControllerMain().getMainWindowController().getListViewConnectedUsers().setItems(items);*/
-        managerMain.getControllerMain().getMainWindowController().addUsers(userList);
-
+        managerMain.setConnectedUsers(userList);
     }
 
     @Override
@@ -74,7 +64,8 @@ import java.util.List;
 
     @Override
     public void currentTables(List<Table> currentTables) {
-        managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
+        // TODO NOW
+//        managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
     }
 
     @Override
@@ -101,6 +92,4 @@ import java.util.List;
     public void profileRemoteUserFromServer(User profileReturnedByTheServer) {
         
     }
-
-
 }

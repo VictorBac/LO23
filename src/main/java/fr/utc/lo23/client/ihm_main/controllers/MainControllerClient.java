@@ -38,8 +38,6 @@ public class MainControllerClient extends Application {
 
 
     public static void main(String[] args) {
-        IHMMainClientManager manager = new IHMMainClientManager();
-        managerMain = manager;
         launch(args);
     }
 
@@ -47,6 +45,7 @@ public class MainControllerClient extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         pmStage = primaryStage;
+        managerMain = new IHMMainClientManager();
         managerMain.setControllerMain(this);
         showConnectionWindow();
     }
@@ -54,6 +53,7 @@ public class MainControllerClient extends Application {
 
     public void userLoggedIn() {
         mainWindowController = instantiateWindow("../ui/MainWindow.fxml", "Poker");
+        mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
     }
 
     public void ClickCreateProfil() {

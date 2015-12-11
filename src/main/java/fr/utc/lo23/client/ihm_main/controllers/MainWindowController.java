@@ -27,8 +27,12 @@ import java.util.ResourceBundle;
  * Created by jbmartin on 18/11/15.
  */
 public class MainWindowController extends BaseController {
+
+    private ObservableList<String> connectedUsers;
+
+
     @FXML
-    public ListView<UserLight> listViewConnectedUsers;
+    public ListView listViewConnectedUsers;
 
     @FXML
     private TableView<Table> tableViewCurrentTables;
@@ -50,18 +54,6 @@ public class MainWindowController extends BaseController {
     @FXML
     private Button buttonQuit;
 
-    public void addUsers(List<UserLight> users) {
-        for (UserLight user : users) {
-            addUser(user);
-        }
-    }
-
-    public void addUser(UserLight user){
-        listViewConnectedUsers.getItems().add(user);
-    }
-    public void removeUser(UserLight user){
-        listViewConnectedUsers.getItems().remove(user);
-    }
 
     public void change(ActionEvent actionEvent) {
     }
@@ -139,6 +131,16 @@ public class MainWindowController extends BaseController {
         List<Table> list = new ArrayList<Table>();
         list.add(table1);
         mController.getManagerMain().getInterMainToData().currentTables(list);
+    }
+
+
+    public void setConnectedUsers(List<UserLight> users)
+    {
+        connectedUsers = FXCollections.observableArrayList();
+        for (UserLight u : users) {
+            connectedUsers.add(u.getPseudo());
+        }
+        listViewConnectedUsers.setItems(connectedUsers);
     }
 
 

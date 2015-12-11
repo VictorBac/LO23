@@ -145,8 +145,8 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-    public void leaveTable(UserLight userLocal, int IdTable) throws NetworkFailureException {
-
+    public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException {
+        LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable);
     }
 
 

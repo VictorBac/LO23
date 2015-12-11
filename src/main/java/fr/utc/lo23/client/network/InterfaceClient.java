@@ -81,7 +81,7 @@ public interface InterfaceClient {
      * @param userLocal
      * @param IdTable
      */
-    public void leaveTable(UserLight userLocal, int IdTable) throws NetworkFailureException;
+    public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException;
     
     /**
      *

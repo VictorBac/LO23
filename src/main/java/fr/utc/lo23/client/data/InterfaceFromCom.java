@@ -91,20 +91,19 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
-            //TODO see if necessary to contact ihm main or ihm table
+        Console.log(TAG +"tableJoinAccepted()");
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
-            //TODO need to contact IHMMain not TABLE ERROR
+            //TODO need to contact IHMMain missing interface
             dManagerClient.getInterToIHMMain();
-            //dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
         } catch (TableException e) {
             e.printStackTrace();
         }
     }
 
     public void tableJoinRefused(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal){
-        //TODO add dManagerClient.getInterToIHMMain()
-
+        Console.log(TAG +"tableJoinRefused()");
+        dManagerClient.getInterToIHMMain().tableJoinRefused(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined));
     }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
@@ -154,26 +153,70 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void startGame(UUID idTable){
+        Console.log(TAG +"startGame()");
         dManagerClient.getInterToIHMTable().notifyStartGame(dManagerClient.getListTablesLocal().getTable(idTable));
     }
 
-
-    public void askAction(ArrayList<Action> listActionPossibleForUserLocal) {
+    public void tableCreatorRequestToStartGameRejected(){
+        Console.log(TAG +"tableCreatorRequestToStartGameRejected()");
+        //TODO fill this method
 
     }
 
-    public void notifyAction(Action action) {
+    public void askAmountMoney(){
+        Console.log(TAG +"askAmountMoney()");
+        dManagerClient.getInterToIHMTable().askMoneyAmount();
+    }
 
+    public void notifyMoneyAmountAnswerFromServer(UserLight player, Integer amount){
+        Console.log(TAG +"notifyMoneyAmountAnswerFromServer()");
+        dManagerClient.getInterToIHMTable().notifyMoneyAmountAnswer(player,amount);
+    }
+
+    public void askReadyGame(){
+        Console.log(TAG +"askReadyGame()");
+        dManagerClient.getInterToIHMTable().askReadyGame();
+    }
+
+
+    public void askAction(Action actionEmpty, EnumerationAction[] listActionPossibleForUserLocal) {
+        Console.log(TAG +"askAction()");
+        dManagerClient.getInterToIHMTable().askAction(actionEmpty, listActionPossibleForUserLocal);
+    }
+
+    public void notifyAction(Action action) {
+        Console.log(TAG +"notifyAction()");
+        dManagerClient.getInterToIHMTable().notifyAction(action);
 
     }
 
     public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
-
     }
 
     public void saveLogGame(Table table) {
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

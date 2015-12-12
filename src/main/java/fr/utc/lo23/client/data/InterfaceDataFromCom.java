@@ -112,18 +112,41 @@ public interface InterfaceDataFromCom {
     public void startGame(UUID idTable);
 
     /**
+     * Method that has to be called if the creator of a Table decide to start the Game but the server has rejected the request
+     */
+    public void tableCreatorRequestToStartGameRejected();
+
+    /**
+     * Method to ask the local Player for his money he is going to start with
+     */
+    public void askAmountMoney();
+
+    /**
+     * Method that returns the confirmation from the server that its amount was valid
+     * @param player User light of the local User (Player)
+     * @param amount Integer amount asked by IHMTable, -1 if error >0 if valid
+     */
+    public void notifyMoneyAmountAnswerFromServer(UserLight player, Integer amount);
+
+    /**
+     * Method used to ask to each player if he accept the money of each player and if he is ready to start the game
+     */
+    public void askReadyGame();
+
+    /**
      * Method to keep the local player hand locally
      *
      * @param playerHandUserLocal PlayerHand of the local User
      */
     public void stockCards(PlayerHand playerHandUserLocal);
 
+
     /**
-     * Method to propose for the local user the lis of Action that he can do
-     *
-     * @param listActionPossibleForUserLocal ArrayList of Action that are possible to do for this turn (not the object Turn)
+     * Method to propose for the local user the list of Action that he can do, and use this list to fill the Action
+     * @param actionEmpty an emptyAction that the Player has to fill
+     * @param listActionPossibleForUserLocal Array of EnumerationAction that are possible to do for this turn (not the object Turn)
      */
-    public void askAction(ArrayList<Action> listActionPossibleForUserLocal);
+    public void askAction(Action actionEmpty,EnumerationAction[] listActionPossibleForUserLocal);
 
     /**
      * Method to notify the local User of the Action of a Player

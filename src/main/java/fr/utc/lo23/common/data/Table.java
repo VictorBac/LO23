@@ -25,6 +25,7 @@ public class Table implements Serializable {
      * maxMise : maximum amount that players can give themselves at the beginning
      * listGames : list of games that were played on this table (last = actual)
      * timeForAction : time between actions
+     * vote : stores the players' votes
      */
     private UUID idTable;
     private String name;
@@ -40,6 +41,7 @@ public class Table implements Serializable {
     private ArrayList<Game> listGames;
     private int timeForAction;
     private static final long serialVersionUID = 1L;
+    private ArrayList<Boolean> vote;
 
     /**
      * Constructor
@@ -69,6 +71,7 @@ public class Table implements Serializable {
         //Add new waiting game to the list
         this.listGames.add(new Game(this));
         this.setTimeForAction(timeForAction);
+        this.vote = new ArrayList<Boolean>();
     }
 
     /**
@@ -218,7 +221,7 @@ public class Table implements Serializable {
      * @param game : game to start
      */
     public void startGame(Game game) throws TableException{
-        if (this.listGames.contains(game)){
+        if (this.listGames.contains(game) && canStartGame(game)){
             if(game.getStatusOfTheGame() == EnumerationStatusGame.closed || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
                 game.startGame();
             }
@@ -226,8 +229,29 @@ public class Table implements Serializable {
         else throw new TableException("Game not in the list");
     }
 
-    /******************* GETTERS AND SETTERS ********************************/
+    /**
+     * Return the index of the game if it's in the tables list
+     * @param game : game to check
+     * @return : index of the game if contained, -1 if not
+     */
+    public int getIDTGame(Game game){
+        return this.getListGames().indexOf(game);
+    }
 
+    /**
+     * Function that checks if the number of players in the game is between nbPlayerMin and nbPlayerMax
+     * @return : true if ok, false otherwise
+     */
+    public boolean canStartGame(Game gameToStart){
+        //size of the players' list in the gameToStart
+        if(this.listGames.get(getIDTGame(gameToStart)).getListSeatPlayerWithPeculeDepart().size() > this.nbPlayerMin && this.listGames.get(getIDTGame(gameToStart)).getListSeatPlayerWithPeculeDepart().size() < this.nbPlayerMax)
+            return true;
+        else
+            return false;
+    }
+
+
+    /******************* GETTERS AND SETTERS ********************************/
 
     public UUID getIdTable() {
         return idTable;
@@ -333,4 +357,11 @@ public class Table implements Serializable {
         this.listSpectators = listSpectators;
     }
 
+    public ArrayList<Boolean> getVote() {
+        return vote;
+    }
+
+    public void setVote(ArrayList<Boolean> vote) {
+        this.vote = vote;
+    }
 }

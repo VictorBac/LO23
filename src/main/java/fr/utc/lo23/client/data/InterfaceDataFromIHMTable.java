@@ -47,12 +47,6 @@ public interface InterfaceDataFromIHMTable {
      */
     public void playGame(UUID idTable);
 
-
-    /**
-     * confirmation of reception of a card
-     */
-    public void confirmationCardReceived();
-
     /**
      * method to reply an action
      * @param action : action to reply
@@ -60,21 +54,9 @@ public interface InterfaceDataFromIHMTable {
     public void replyAction(Action action);
 
     /**
-     * ask aconfirmation reception of an action
-     * @param action : action to send
-     */
-    public void confirmationActionReceived(Action action);
-
-    /**
-     * confirm the end of turn
-     */
-    public void confirmationEndTurn();
-
-
-    /**
      * Transmit the "leave game" request
      */
-    public void transmitRequest();
+    public void transmitRequest(UserLight player);
 
 
     /**
@@ -83,8 +65,8 @@ public interface InterfaceDataFromIHMTable {
      */
     public UserLight getUser();
 
-    /**
-     *
-     */
+
     public void quitGame();
+
+    public void setStartAmount(int amount);
 }

@@ -202,7 +202,7 @@ public class CombinationCalculator {
             cardRank.remove(5);
             cardRank.remove(5);
             // add card rank 3
-            cardRank.add(0, 3);
+            cardRank.add(0, 4);
             return cardRank;
         }  else {
             return null;
@@ -250,10 +250,10 @@ public class CombinationCalculator {
         for (int i = 0; i < cards.size(); i++) {
             EnumerationCard symbol = cards.get(i).getSymbol();
             Integer value = cards.get(i).getValue();
-            /*if (symbol == 'S') spade.add(value);
-            if (symbol == 'H') heart.add(value);
-            if (symbol == 'D') diamond.add(value);
-            if (symbol == 'C') club.add(value);*/
+            if (symbol == EnumerationCard.SPADE) spade.add(value);
+            if (symbol == EnumerationCard.HEART) heart.add(value);
+            if (symbol == EnumerationCard.DIAMOND) diamond.add(value);
+            if (symbol == EnumerationCard.CLUB) club.add(value);
         }
         if (spade.size() >= 5) {
             while (spade.size() > 5) spade.remove(5);
@@ -284,7 +284,41 @@ public class CombinationCalculator {
      * @return
      */
     protected ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) {
-        return null;
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        int i;
+        // try to three of a kind
+        for (i = 2; i < 7; i++) {
+            if (cardValues.get(i - 2) == cardValues.get(i)) {
+                break;
+            }
+        }
+        if (i < 7) {
+            // move the three of a kind to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+        }  else {
+            return null;
+        }
+        // try to find one pair
+        for (i = 4; i < 7; i++) {
+            if (cardValues.get(i - 1) == cardValues.get(i)) {
+                break;
+            }
+        }
+        if (i < 7) {
+            // move the pair to the 4th and 5th card
+            cardRank.add(3, cardRank.remove(i));
+            cardRank.add(3, cardRank.remove(i));
+            // remove the last two card values
+            cardRank.remove(5);
+            cardRank.remove(5);
+            // add card rank 2
+            cardRank.add(0, 7);
+            return cardRank;
+        }  else {
+            return null;
+        }
     }
 
     /**
@@ -334,10 +368,10 @@ public class CombinationCalculator {
         for (int i = 0; i < cards.size(); i++) {
             EnumerationCard symbol = cards.get(i).getSymbol();
             Integer value = cards.get(i).getValue();
-            /*if (symbol == 'S') spade.add(value);
-            if (symbol == 'H') heart.add(value);
-            if (symbol == 'D') diamond.add(value);
-            if (symbol == 'C') club.add(value);*/
+            if (symbol == EnumerationCard.SPADE) spade.add(value);
+            if (symbol == EnumerationCard.HEART) heart.add(value);
+            if (symbol == EnumerationCard.DIAMOND) diamond.add(value);
+            if (symbol == EnumerationCard.CLUB) club.add(value);
         }
         if (spade.size() >= 5) {
             cardRank = spade;

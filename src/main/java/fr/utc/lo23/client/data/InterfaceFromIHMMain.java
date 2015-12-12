@@ -29,7 +29,9 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
         User userLocal = (User) Serialization.deserializationObject(login);
-        //User userLocal = new User(login, password); //Create a User to test
+        if (userLocal == null) {
+            throw new LoginNotFoundException(login);
+        }
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();

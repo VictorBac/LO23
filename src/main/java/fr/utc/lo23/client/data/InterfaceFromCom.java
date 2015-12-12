@@ -159,7 +159,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void tableCreatorRequestToStartGameRejected(){
         Console.log(TAG +"tableCreatorRequestToStartGameRejected()");
-        //TODO fill this method
+        //TODO fill this method with ihmTable method
 
     }
 
@@ -187,13 +187,24 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void notifyAction(Action action) {
         Console.log(TAG +"notifyAction()");
         dManagerClient.getInterToIHMTable().notifyAction(action);
-
     }
 
     public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
+        //TODO see with IHMTable not a method corresponding
     }
 
-    public void saveLogGame(Table table) {
+    public void saveLogGame(Table tableThatContainGameToSave) {
+        Console.log(TAG +"saveLogGame()");
+        TableList listOfAllTableSaved = (TableList) Serialization.deserializationObject(dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+
+        if (listOfAllTableSaved==null){
+            listOfAllTableSaved = new TableList();
+        }
+        
+        listOfAllTableSaved.getListTable().add(tableThatContainGameToSave);
+        Serialization.serializationObject(listOfAllTableSaved,dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+
+        //TODO inform table or main for saved game?
 
     }
 

@@ -167,9 +167,9 @@ public interface InterfaceDataFromCom {
     /**
      * Method to save a game
      *
-     * @param table : table on which the game was played
+     * @param tableThatContainGameToSave : table on which the game was played
      */
-    public void saveLogGame(Table table);
+    public void saveLogGame(Table tableThatContainGameToSave);
 
 
     /**

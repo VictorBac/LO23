@@ -75,12 +75,18 @@ public class CombinationCalculator {
 
 
     public ArrayList<Integer> getHandRank(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) {
+        // Add cardsOnHand and cardsOnField (7 cards) to variable to cards.
         ArrayList<Card> cards = null;
         cards.addAll(cardsOnHand);
         cards.addAll(cardsOnField);
-
+        // take out cardValues of cards. Sort it as desc.
         ArrayList<Integer> cardValues = new ArrayList<Integer>();
-
+        for (int i = 0; i < cards.size(); i++) {
+            cardValues.add(cards.get(i).getValue());
+        }
+        Collections.sort(cardValues);
+        Collections.reverse(cardValues);
+        // Try to find the first matched card rank. Start at the highest rank.
         ArrayList<Integer> cardRank = hasRoyalFlush(cards);
         if (cardRank == null) cardRank = hasRoyalFlush(cards);
         if (cardRank == null) cardRank = hasStraightFlush(cards);

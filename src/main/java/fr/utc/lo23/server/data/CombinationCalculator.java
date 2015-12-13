@@ -5,6 +5,7 @@ import fr.utc.lo23.common.data.EnumerationCard;
 import fr.utc.lo23.common.data.PlayerHand;
 import fr.utc.lo23.server.data.exceptions.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Class of combination calculator to find the winner
@@ -216,6 +217,7 @@ public class CombinationCalculator {
      * @throws Exception
      */
     protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
+        if (cardValues.size() < 5) return null;
         ArrayList<Integer> cardRank = new ArrayList<Integer>();
         if (cardValues.get(0) == 14)  cardValues.add(1);
         for (int i = 0; i < 4; i++) {
@@ -243,6 +245,7 @@ public class CombinationCalculator {
      * @throws Exception
      */
     protected ArrayList<Integer> hasFlush (ArrayList<Card> cards) {
+        ArrayList<Integer> cardRank = new ArrayList<Integer>();
         ArrayList<Integer> spade = new ArrayList<Integer>();
         ArrayList<Integer> heart = new ArrayList<Integer>();
         ArrayList<Integer> diamond = new ArrayList<Integer>();
@@ -256,26 +259,21 @@ public class CombinationCalculator {
             if (symbol == EnumerationCard.CLUB) club.add(value);
         }
         if (spade.size() >= 5) {
-            while (spade.size() > 5) spade.remove(5);
-            spade.add(0,6);
-            return spade;
+            cardRank = spade;
+        } else if (heart.size() >= 5) {
+            cardRank = heart;
+        } else if (diamond.size() >= 5) {
+            cardRank = diamond;
+        } else if (club.size() >= 5) {
+            cardRank = club;
+        } else {
+            return null;
         }
-        if (heart.size() >= 5) {
-            while (heart.size() > 5) heart.remove(5);
-            heart.add(0,6);
-            return heart;
-        }
-        if (diamond.size() >= 5) {
-            while (diamond.size() > 5) diamond.remove(5);
-            diamond.add(0,6);
-            return diamond;
-        }
-        if (club.size() >= 5) {
-            while (club.size() > 5) club.remove(5);
-            club.add(0,6);
-            return club;
-        }
-        return null;
+        Collections.sort(cardRank);
+        Collections.reverse(cardRank);
+        while (cardRank.size() > 5) cardRank.remove(5);
+        cardRank.add(0,6);
+        return cardRank;
     }
 
     /**
@@ -375,21 +373,18 @@ public class CombinationCalculator {
         }
         if (spade.size() >= 5) {
             cardRank = spade;
-        }
-        if (heart.size() >= 5) {
+        } else if (heart.size() >= 5) {
             cardRank = heart;
-        }
-        if (diamond.size() >= 5) {
+        } else if (diamond.size() >= 5) {
             cardRank = diamond;
-        }
-        if (club.size() >= 5) {
+        } else if (club.size() >= 5) {
             cardRank = club;
-        }
-        if (cardRank.size() == 0) {
-            return null;
         } else {
-            cardRank = hasStraight(cardRank);
+            return null;
         }
+        Collections.sort(cardRank);
+        Collections.reverse(cardRank);
+        cardRank = hasStraight(cardRank);
         if (cardRank == null) {
             return null;
         } else {

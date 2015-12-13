@@ -21,7 +21,7 @@ public class SendActionMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        //threadServer.getMyServer().getNetworkManager().getDataInstance().confirmationActionReceived(userLocal);//TODO vérifier bonne interface
+        threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act,userLocal);
 
     }
 

@@ -194,13 +194,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void saveLogGame(Table tableThatContainGameToSave) {
+        //TODO need to test
         Console.log(TAG +"saveLogGame()");
         TableList listOfAllTableSaved = (TableList) Serialization.deserializationObject(dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
 
         if (listOfAllTableSaved==null){
             listOfAllTableSaved = new TableList();
         }
-        
+
         listOfAllTableSaved.getListTable().add(tableThatContainGameToSave);
         Serialization.serializationObject(listOfAllTableSaved,dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
 

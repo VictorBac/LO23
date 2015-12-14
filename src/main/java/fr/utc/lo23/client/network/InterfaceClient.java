@@ -114,12 +114,6 @@ public interface InterfaceClient {
      *
      */
     public void notifyDisconnection(User maker) throws NetworkFailureException;
-    /**
-     *
-     * @param userLocal
-     * @param tableId
-     */
-    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
 
     public void sendMessage(MessageChat message,UUID tableID);
 

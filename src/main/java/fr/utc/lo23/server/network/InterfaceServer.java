@@ -62,5 +62,11 @@ public interface InterfaceServer {
 
     public void sendChatPacket() throws NetworkFailureException;
 
+    /**
+     * Send a message to start the table
+     * @param tableToStart
+     * @throws NetworkFailureException
+     */
+    public void startGame(Table tableToStart)throws NetworkFailureException;
 
 }

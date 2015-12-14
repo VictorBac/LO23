@@ -109,4 +109,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     public void sendChatPacket() throws NetworkFailureException {
 
     }
+
+    public void startGame(Table tableToStart) throws NetworkFailureException {
+
+    }
 }

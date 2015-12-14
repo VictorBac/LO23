@@ -22,21 +22,19 @@ public class LaunchGameMessage extends Message {
     public void process(ConnectionThread threadServer) {
         PokerServer myServ = threadServer.getMyServer();
         Console.log("Launch Game message received");
-        myServ.getNetworkManager().getDataInstance().startGame(idTable,UserInit);
-
-        LaunchGameMessage LaunchGameM = new LaunchGameMessage(idTable,UserInit);
-
-        myServ.sendToAll(LaunchGameM);
-
-
+        if(myServ.getNetworkManager().getDataInstance().startGame(idTable,UserInit)){
+            LaunchGameMessage launchGameM = new LaunchGameMessage(idTable,UserInit);
+            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),launchGameM);
+        }else{
+            RefuseStartGameMessage startGameRefuse = new RefuseStartGameMessage();
+            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),startGameRefuse);
+        }
     }
 
     @Override
     public void process(ServerLink threadClient) {
         Console.log("Launch Game message received");
-
         Console.log("Game is starting");
-
-        //threadClient.getNetworkManager().getDataInstance().
+        //threadClient.getNetworkManager().getDataInstance().tableCreatorRequestToStartGameAccepted();
     }
 }

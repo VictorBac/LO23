@@ -1,12 +1,12 @@
 package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
+import fr.utc.lo23.common.data.exceptions.SeatException;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-//import java.util.ListIterator;
 
 /**
  * Created by Ying on 20/10/2015.
@@ -17,19 +17,26 @@ public class Turn implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * listAction : the list of action in this turn
+     * listPlayerInThisTurn : the list of the players still alive in this turn
+     * currentGame : the current game with witch this turn is associated
+     * timeStampOfTurn : the interval to make the next action
+     */
     private ArrayList<Action> listAction;
     private ArrayList<UserLight> listPlayerInThisTurn;
     private Game currentGame;
     private Timestamp timeStampOfTurn;
 
     /**
-     *  Constructor void
-     *  @param currentGameToAdd The current game from which we can the information to add to the new turn
+     *  Constructor with currentGame and listPlayerInThisTurn
+     *  @param currentGameToAdd the current game from which we get the information to add to the new turn
      */
     public Turn(Game currentGameToAdd){
         this.listAction = new ArrayList<Action>();
         this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.currentGame = currentGameToAdd;
+        // initializer the list of player by adding one by one the players of each seat in this game
         for (Seat item : currentGameToAdd.getListSeatPlayerWithPeculeDepart()
              ) {
             this.listPlayerInThisTurn.add(item.getPlayer());
@@ -38,7 +45,7 @@ public class Turn implements Serializable {
 
     /**
      * Method to get the current action
-     * @return the action now
+     * @return the last action
      */
     public Action getCurrentAction(){
         return listAction.get(listAction.size()-1);
@@ -49,6 +56,8 @@ public class Turn implements Serializable {
      * @return UserLight of the player that has to make an Action
      */
     public UserLight getNextPlayer(){
+        // if the current player is the last one in the list of action, we restart from the first one
+        // else, we get directly the next index of the player
         if ( listPlayerInThisTurn.get(getListAction().size()-1) == getCurrentAction().getUserLightOfPlayer() ){
             return listPlayerInThisTurn.get(0);
         }else{
@@ -57,11 +66,11 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Method to get the minimal bet that a player has to call, calculated according to previous Action
-     * If the list of action is void, use the amount of the blinde
+     * Method to get the minimal bet that a player has to call, calculated according to the previous action
      * @return an integer that a player has to pay at least
      */
     public int minimalBet(){
+        // if the list of action is void, use the amount of the blind in this game
         if ( listAction.isEmpty() ){
             return currentGame.getBlind();
         }else{
@@ -70,32 +79,54 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Method which is designed to add a new action to the turn
-     * @param newAction Action that a Player made and that needs to be added to the turn
+     * Method to add a new action to the turn, but the action needs to be tested before
+     * @param newAction action that a player made and that needs to be added to the turn
+     * @throws ActionInvalidException
      */
     public void addAction(Action newAction) throws ActionInvalidException{
+        int currentAccount = -1;
+        int index = -1;
+        for (Seat s:currentGame.getListSeatPlayerWithPeculeDepart()
+             ) {
+            if ( s.getPlayer() == newAction.getUserLightOfPlayer() ) {
+                currentAccount = s.getCurrentAccount();
+                index = currentGame.getListSeatPlayerWithPeculeDepart().indexOf(s);
+            }
+        }
+        if ( currentAccount == -1 && index == -1 ){
+            throw new ActionInvalidException("We cannot find the player in the list of seats of this game");
+        }
         if ( newAction == null )
             throw new NullPointerException("Action is null");
-        else if ( newAction.getName().name() == "ALLIN" ){
-            listAction.add(newAction);
-        }
-        else if ( newAction.getName().name() == "FOLD" ){
+        // if the action is FOLD, add directly, there is no condition, delete the current player in the list of player alive
+        else if ( newAction.getName().equals(EnumerationAction.FOLD) ){
             listAction.add(newAction);
             listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
         }
-        else if ( newAction.getName().name() == "CHECK" ){
-            if ( getTotalAmountForAUser(newAction) < minimalBet() )
+        //
+        else if ( newAction.getName().equals(EnumerationAction.CHECK )){
+            if ( getTotalAmountForAUser(newAction) != minimalBet() )
                 throw new ActionInvalidException("You cannot CHECK when your amount is less than the minimum.");
             else
                 listAction.add(newAction);
         }
-        else if ( newAction.getName().name() == "CALL" ){
-            if ( minimalBet() - getTotalAmountForAUser(newAction) != newAction.getAmount()  )
+        //
+        else if ( newAction.getName().equals(EnumerationAction.CALL) ){
+            if ( getTotalAmountForAUser(newAction) <= minimalBet() && getTotalAmountForAUser(newAction) + currentAccount >= minimalBet() )
                 throw new ActionInvalidException("You cannot CALL when your amount is different from the minimum.");
-            else
+            else{
                 listAction.add(newAction);
+                currentGame.getListSeatPlayerWithPeculeDepart().get(index).updateCurrentAccount(currentAccount + getTotalAmountForAUser(newAction) - minimalBet());
+            }
         }
-        else if ( newAction.getName().name() == "BET" ){
+        // if the action is ALLIN, add directly
+        else if ( newAction.getName().equals(EnumerationAction.ALLIN) ){
+            listAction.add(newAction);
+        }
+
+
+
+        else if ( newAction.getName().equals(EnumerationAction.BET) ){
             if ( getTotalAmountForAUser(newAction) + newAction.getAmount() <= minimalBet()){
                 throw new ActionInvalidException("You cannot BET then your total amount is less the the minimum.");
             }
@@ -105,6 +136,7 @@ public class Turn implements Serializable {
 
     }
 
+<<<<<<< Updated upstream
     /*
      * Ressort la liste des actions possibles pour un joueurs, se basant sur les actions précédentes et sur son argent restant
      */
@@ -131,6 +163,14 @@ public class Turn implements Serializable {
 
     //Cette fonction renvoi la quantité d'argent pariée par un joueur dans un tour.
     private int getTotalAmountForAUser ( Action newAction ){
+=======
+    /**
+     * Method to calculate the total amount of a user
+     * @param newAction get the user information from this new action
+     * @return the result of the total amount
+     */
+    public int getTotalAmountForAUser ( Action newAction ){
+>>>>>>> Stashed changes
         int amount = 0;
         for (Action a : listAction
              ) {
@@ -165,7 +205,7 @@ public class Turn implements Serializable {
 
 
 
-    /*********************Getters*********************/
+    /*********************Getters & Setters*********************/
 
     /**
      * Getter to return the list of action that is associated to this turn
@@ -199,4 +239,27 @@ public class Turn implements Serializable {
         return timeStampOfTurn;
     }
 
+    /**
+     * Setter to modify the value of the list of action
+     * @param listAction
+     */
+    public void setListAction(ArrayList<Action> listAction) { this.listAction = listAction; }
+
+    /**
+     * Setter to modify the value of the list of the current players
+     * @param listPlayerInThisTurn
+     */
+    public void setListPlayerInThisTurn(ArrayList<UserLight> listPlayerInThisTurn) { this.listPlayerInThisTurn = listPlayerInThisTurn; }
+
+    /**
+     * Setter to modify the value of the current game
+     * @param currentGame
+     */
+    public void setCurrentGame(Game currentGame) { this.currentGame = currentGame; }
+
+    /**
+     * Setter to modify the interval of making the next action
+     * @param timeStampOfTurn
+     */
+    public void setTimeStampOfTurn(Timestamp timeStampOfTurn) { this.timeStampOfTurn = timeStampOfTurn; }
 }

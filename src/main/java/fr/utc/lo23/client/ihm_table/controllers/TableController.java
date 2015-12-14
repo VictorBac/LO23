@@ -316,7 +316,7 @@ public class TableController {
 
         Timestamp time = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         MessageChat message = new MessageChat(ihmTable.getDataInterface().getUser(),time,messageToSend.getText());
-        ihmTable.getDataInterface().sendMessage(message);
+        ihmTable.getDataInterface().sendMessage(message, getTable().getIdTable());
 
         messageToSend.clear();
 	}

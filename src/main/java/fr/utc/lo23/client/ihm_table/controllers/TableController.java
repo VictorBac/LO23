@@ -426,7 +426,7 @@ public class TableController {
     public void fold(javafx.event.ActionEvent event) {
         if(actionFold.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.FOLD);
-            //TODO: envoyer à data
+            ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("DODO");
 
         }
@@ -436,7 +436,7 @@ public class TableController {
     public void check(javafx.event.ActionEvent event) {
         if (actionCheck.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.CHECK);
-            //TODO: envoyer à data
+            ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("CHECK");
 
         }
@@ -446,7 +446,8 @@ public class TableController {
     public void call(javafx.event.ActionEvent event) {
         if (actionCall.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.CALL);
-            //TODO: envoyer à data
+            //TODO : store previous max bet
+            //ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("APPEL");
 
         }
@@ -456,7 +457,7 @@ public class TableController {
     public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.ALLIN);
-            //TODO: envoyer à data
+            ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("ALLIN");
 
         }

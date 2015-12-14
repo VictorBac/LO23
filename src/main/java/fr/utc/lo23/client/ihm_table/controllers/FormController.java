@@ -77,6 +77,12 @@ public class FormController {
     TextField formTempsMax;
 
     @FXML
+    TextField formAnte;
+
+    @FXML
+    TextField formMoneyMax;
+
+    @FXML
     Button formSend;
 
     @FXML
@@ -105,6 +111,8 @@ public class FormController {
         clearStyle(formTempsMax);
         clearStyle(formPlayerMin);
         clearStyle(formPlayerMax);
+        clearStyle(formAnte);
+        clearStyle(formMoneyMax);
 
         if (formName.getText().isEmpty() | !texte.matcher(formName.getText()).matches()){
             errors.add("Nom de la table");
@@ -117,6 +125,16 @@ public class FormController {
         if (formTempsMax.getText().isEmpty() | formTempsMax.getText().equals("0") | !nombre.matcher(formTempsMax.getText()).matches()){
             errors.add("Temps Max");
             formTempsMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+
+        if (formAnte.getText().isEmpty() | formAnte.getText().equals("0") | !nombre.matcher(formAnte.getText()).matches()){
+            errors.add("Ante");
+            formAnte.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        }
+
+        if (formMoneyMax.getText().isEmpty() | formMoneyMax.getText().equals("0") | !nombre.matcher(formMoneyMax.getText()).matches()){
+            errors.add("Money Max");
+            formMoneyMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
 
         Integer playerMin = Integer.valueOf(formPlayerMin.getValue().toString());
@@ -136,6 +154,8 @@ public class FormController {
             boolean abandon = formAbandonYes.isSelected();
             Integer miseMax = Integer.valueOf(formMiseMax.getText());
             Integer tempsMax = Integer.valueOf(formTempsMax.getText());
+            Integer ante = Integer.valueOf(formAnte.getText());
+            Integer moneyMax = Integer.valueOf(formMoneyMax.getText());
 
             // Sending Table to Data
             ihmTable.getDataInterface().tableToCreate(new Table(tableName, null, spectator, spectatorChat, playerMax, playerMin, abandon, miseMax, tempsMax,0,0));

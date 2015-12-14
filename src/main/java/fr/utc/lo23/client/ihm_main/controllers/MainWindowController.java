@@ -30,7 +30,6 @@ public class MainWindowController extends BaseController {
 
     private ObservableList<String> connectedUsers;
 
-
     @FXML
     public ListView listViewConnectedUsers;
 
@@ -44,12 +43,17 @@ public class MainWindowController extends BaseController {
     private TableColumn<Table, Integer> columnTableMise;
 
     @FXML
+    public ListView<Table> listViewSavedTables;
+
+    @FXML
     private Pane gamePane;
 
     @FXML
     private AnchorPane listPane;
 
     private ObservableList<Table> tablesList;
+
+    private ObservableList<Table> tablesSavedList;
 
     @FXML
     private Button buttonQuit;
@@ -93,6 +97,26 @@ public class MainWindowController extends BaseController {
 
         tablesList = FXCollections.observableArrayList();
         tableViewCurrentTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
+        listViewSavedTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        listViewSavedTables.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>() {
+            @Override
+            public ListCell<Table> call(ListView<Table> param) {
+                ListCell<Table> cell = new ListCell<Table>(){
+                    @Override
+                    protected void updateItem(Table t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getName() + " de " + t.getCreator().getPseudo());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+        listViewSavedTables.setItems(tablesSavedList);
     }
 
     public void openViewOwnProfil(ActionEvent actionEvent) {
@@ -132,7 +156,6 @@ public class MainWindowController extends BaseController {
         list.add(table1);
         mController.getManagerMain().getInterMainToData().currentTables(list);
     }
-
 
     public void setConnectedUsers(List<UserLight> users)
     {

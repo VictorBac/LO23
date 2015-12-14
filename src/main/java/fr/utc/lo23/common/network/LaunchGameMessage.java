@@ -29,7 +29,7 @@ public class LaunchGameMessage extends Message {
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),launchGameM);
         }else{
             RefuseStartGameMessage startGameRefuse = new RefuseStartGameMessage();
-            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),askMoneyMess);
+            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),startGameRefuse);
         }
     }
 

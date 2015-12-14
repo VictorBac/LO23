@@ -62,7 +62,6 @@ public interface InterfaceServerDataFromCom {
      */
     Boolean startGame(UUID idTable, UserLight player);
 
-
     void nextStepReplay();
 
     /**
@@ -96,14 +95,35 @@ public interface InterfaceServerDataFromCom {
 
     ArrayList<UserLight> getPlayersByTable(UUID tableID);
 
+    public boolean canLaunchGame(UUID idGame);
+
+    public void askMoneyMax();
+
+    public int checkMoneyMax(UserLight player, int money);
+
+    public void askReady(int nbReady);
+
+    public void getAnswerReady(UserLight player, boolean ready);
+
+    public void askAction (UserLight player, Action empty);
+
+    public void getAction(UserLight player, Action attempt);
+
+    public void updateStats(Game idGame);
+
+    public ArrayList<Seat> endHand(Table idTable);
+
     /*
-    * Permet à com de transmettre les start money des utilisateurs pour validation ou refus, et sauvegarde coté server si validation
-    */
+   * Permet à com de transmettre les start money des utilisateurs pour validation ou refus, et sauvegarde coté server si validation
+   */
     boolean setMoneyPlayer(UUID idTable, UserLight user, Integer startAmount);
 
     /*
      * Permet à com de transmettre les ready answer des utilisateurs pour sauvegarde coté server
      */
     void setReadyAnswer(UUID idTable, UserLight user, Boolean answer);
+
+
+
 
 }

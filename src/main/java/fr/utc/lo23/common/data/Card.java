@@ -46,11 +46,7 @@ public class Card implements Serializable {
      */
     public Card(Integer value, EnumerationCard symbol) throws CardFormatInvalidException{
         if ( value > 14 || value < 2)
-<<<<<<< Updated upstream
             throw new CardFormatInvalidException("Number must be an integer between 2 ~ 14");
-=======
-            throw new CardFormatInvalidException("Number must be an integer between 1 ~ 13");
->>>>>>> Stashed changes
         else{
             this.value = value;
             this.symbol = symbol;

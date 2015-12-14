@@ -134,12 +134,12 @@ public class MainWindowController extends BaseController {
         tableViewCurrentTables.setItems(tablesList);
     }
 
-    public void testTablesView() {
+    /*public void testTablesView() {
         Table table1 = new Table("CCC", new UserLight("Dada"), true, false, 20, 10, false, 30, 5000);
         List<Table> list = new ArrayList<Table>();
         list.add(table1);
         mController.getManagerMain().getInterMainToData().currentTables(list);
-    }
+    }*/
 
 
     @FXML

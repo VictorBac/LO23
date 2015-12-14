@@ -26,6 +26,7 @@ public class Table implements Serializable {
      * listGames : list of games that were played on this table (last = actual)
      * timeForAction : time between actions
      * vote : stores the players' votes
+     * nbPlayerSelectedMoney : number of player who have already selected their money
      */
     private UUID idTable;
     private String name;
@@ -42,6 +43,7 @@ public class Table implements Serializable {
     private int timeForAction;
     private static final long serialVersionUID = 1L;
     private ArrayList<Boolean> vote;
+    private int nbPlayerSelectedMoney;
 
     /**
      * Constructor
@@ -69,9 +71,10 @@ public class Table implements Serializable {
         this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
         //Add new waiting game to the list
-        //TODO uncomment  this.listGames.add(new Game(this, ante, blind));
+        this.listGames.add(new Game(this, ante, blind));
         this.setTimeForAction(timeForAction);
         this.vote = new ArrayList<Boolean>();
+        nbPlayerSelectedMoney = 0;
     }
 
     /**
@@ -179,9 +182,12 @@ public class Table implements Serializable {
 
     /**
      * Create a new game and add it in the table's games list
+     * @param ante int ante used for this new Game
+     * @param blind int blind used for this new Game
+     * @throws TableException This exception is thrown if a Game is still on play then impossible to start a new game
      */
-    public void addNewGameToList() throws TableException {
-        Game gameToAdd = new Game(this);
+    public void addNewGameToList(int ante, int blind) throws TableException {
+        Game gameToAdd = new Game(this,ante, blind);
 
         Iterator<Game> iter = this.listGames.iterator();
         while (iter.hasNext())
@@ -342,5 +348,13 @@ public class Table implements Serializable {
 
     public void setVote(ArrayList<Boolean> vote) {
         this.vote = vote;
+    }
+
+    public int getNbPlayerSelectedMoney() {
+        return nbPlayerSelectedMoney;
+    }
+
+    public void setNbPlayerSelectedMoney(int nbPlayerSelectedMoney) {
+        this.nbPlayerSelectedMoney = nbPlayerSelectedMoney;
     }
 }

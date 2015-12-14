@@ -197,6 +197,16 @@ public class Hand implements Serializable{
         return playerFound;
     }
 
+    public void setCurrentPot(int value, UserLight user){
+        listPotForTheHand.get(listPotForTheHand.size()-1).addPot(value);
+        listPotForTheHand.get(listPotForTheHand.size()-1).addPlayer(user);
+    }
+
+    public void addPotOfNewTurn(){
+        Pot newPot = new Pot();
+        listPotForTheHand.add(newPot);
+    }
+
 
 ////GETTER And SETTER
 

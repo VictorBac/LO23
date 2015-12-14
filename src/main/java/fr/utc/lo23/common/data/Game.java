@@ -155,13 +155,21 @@ public class Game implements Serializable{
 
     }
 
-    public Integer getMoneyOfPlayer(UserLight user){
+    public int getMoneyOfPlayer(UserLight user){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
             if(user==seat.getPlayer())
                 return seat.getCurrentAccount();
         }
         return -1;
+    }
+
+    public void setMoneyOfPlayer(UserLight user, int value){
+        for(Seat seat: getListSeatPlayerWithPeculeDepart())
+        {
+            if(user==seat.getPlayer())
+                seat.setCurrentAccount(value);
+        }
     }
 
 

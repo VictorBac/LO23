@@ -1,7 +1,6 @@
 package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
-import fr.utc.lo23.common.data.exceptions.SeatException;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -69,6 +68,7 @@ public class Turn implements Serializable {
      * Method to get the minimal bet that a player has to call, calculated according to the previous action
      * @return an integer that a player has to pay at least
      */
+    /*
     public int minimalBet(){
         // if the list of action is void, use the amount of the blind in this game
         if ( listAction.isEmpty() ){
@@ -76,7 +76,7 @@ public class Turn implements Serializable {
         }else{
             return getCurrentAction().getAmount();
         }
-    }
+    }*/
 
     /**
      * Method to add a new action to the turn, but the action needs to be tested before
@@ -84,104 +84,81 @@ public class Turn implements Serializable {
      * @throws ActionInvalidException
      */
     public void addAction(Action newAction) throws ActionInvalidException{
-        int currentAccount = -1;
-        int index = -1;
-        for (Seat s:currentGame.getListSeatPlayerWithPeculeDepart()
-             ) {
-            if ( s.getPlayer() == newAction.getUserLightOfPlayer() ) {
-                currentAccount = s.getCurrentAccount();
-                index = currentGame.getListSeatPlayerWithPeculeDepart().indexOf(s);
-            }
-        }
-        if ( currentAccount == -1 && index == -1 ){
-            throw new ActionInvalidException("We cannot find the player in the list of seats of this game");
-        }
-        if ( newAction == null )
-            throw new NullPointerException("Action is null");
-        // if the action is FOLD, add directly, there is no condition, delete the current player in the list of player alive
-        else if ( newAction.getName().equals(EnumerationAction.FOLD) ){
-            listAction.add(newAction);
-            listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
-        }
-        //
-        else if ( newAction.getName().equals(EnumerationAction.CHECK )){
-            if ( getTotalAmountForAUser(newAction) != minimalBet() )
-                throw new ActionInvalidException("You cannot CHECK when your amount is less than the minimum.");
-            else
+
+        if ( availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName())){
+            if (newAction.getName().equals(EnumerationAction.FOLD)){
                 listAction.add(newAction);
-        }
-        //
-        else if ( newAction.getName().equals(EnumerationAction.CALL) ){
-            if ( getTotalAmountForAUser(newAction) <= minimalBet() && getTotalAmountForAUser(newAction) + currentAccount >= minimalBet() )
-                throw new ActionInvalidException("You cannot CALL when your amount is different from the minimum.");
-            else{
-                listAction.add(newAction);
-                currentGame.getListSeatPlayerWithPeculeDepart().get(index).updateCurrentAccount(currentAccount + getTotalAmountForAUser(newAction) - minimalBet());
+                listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
             }
-        }
-        // if the action is ALLIN, add directly
-        else if ( newAction.getName().equals(EnumerationAction.ALLIN) ){
-            listAction.add(newAction);
-        }
-
-
-
-        else if ( newAction.getName().equals(EnumerationAction.BET) ){
-            if ( getTotalAmountForAUser(newAction) + newAction.getAmount() <= minimalBet()){
-                throw new ActionInvalidException("You cannot BET then your total amount is less the the minimum.");
-            }
-            else
+            else if (newAction.getName().equals(EnumerationAction.CHECK)){
                 listAction.add(newAction);
+            }
+            else if (listAction == null){
+                    currentGame.getCurrentHand().addPotOfNewTurn();
+                    if (newAction.getName().equals(EnumerationAction.CALL)){
+                        currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
+                        int newCurrentMoney = currentGame.getMoneyOfPlayer(newAction.getUserLightOfPlayer()) - newAction.getAmount();
+                        currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), newCurrentMoney);
+                        listAction.add(newAction);
+                        if (newCurrentMoney == 0){
+                            newAction.setName(EnumerationAction.ALLIN);
+                        }
+                        listAction.add(newAction);
+                    }
+                    else if (newAction.getName().equals(EnumerationAction.BET)){
+                        if (newAction.getAmount() + getTotalAmountForAUser(newAction.getUserLightOfPlayer())<= getMaxMoneyBetInTheTurn() )
+                            throw new ActionInvalidException("The total amount should be greater than the minimum.");
+                        else {
+                            currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
+                            int newCurrentMoney = currentGame.getMoneyOfPlayer(newAction.getUserLightOfPlayer()) - newAction.getAmount();
+                            currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), newCurrentMoney);
+                            if (newCurrentMoney == 0){
+                                newAction.setName(EnumerationAction.ALLIN);
+                            }
+                            listAction.add(newAction);
+                        }
+                    }
+                else if (newAction.getName().equals(EnumerationAction.ALLIN)){
+                        listAction.add(newAction);
+                        currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
+                        currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), 0);
+                    }
+                }
+        }else{
+            throw new ActionInvalidException("Unavailable Action!");
         }
-
     }
 
-<<<<<<< Updated upstream
-    /*
-     * Ressort la liste des actions possibles pour un joueurs, se basant sur les actions précédentes et sur son argent restant
+    /**
+     * Method to test if the action is available for a specific user,
+     *
      */
-    public EnumerationAction[] availableActions(UserLight user){
+    public ArrayList<EnumerationAction> availableActions(UserLight user){
         ArrayList<EnumerationAction> tempArray = new ArrayList<EnumerationAction>();
         tempArray.add(EnumerationAction.FOLD);
         tempArray.add(EnumerationAction.ALLIN);
-        Integer money = currentGame.getMoneyOfPlayer(user);
+        int money = currentGame.getMoneyOfPlayer(user);
 
-        if(money>getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn()!=0)
-        {
-            tempArray.add(EnumerationAction.CALL);
-        }
-        if(getMaxMoneyBetInTheTurn()==0 || getTotalAmountForAUser(user)==getMaxMoneyBetInTheTurn())
+        if(money == 0 || getTotalAmountForAUser(user)==getMaxMoneyBetInTheTurn())
         {
             tempArray.add(EnumerationAction.CHECK);
         }
-        if(getCurrentGame().getMoneyOfPlayer(user)>getMaxMoneyBetInTheTurn())
+        if(money + getTotalAmountForAUser(user)>getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn()!=0) {
+            tempArray.add(EnumerationAction.CALL);
+        }
+        if(money + getTotalAmountForAUser(user)>getMaxMoneyBetInTheTurn())
         {
             tempArray.add(EnumerationAction.BET);
         }
-        return (EnumerationAction[])tempArray.toArray();
+        return tempArray;
     }
 
-    //Cette fonction renvoi la quantité d'argent pariée par un joueur dans un tour.
-    private int getTotalAmountForAUser ( Action newAction ){
-=======
+
     /**
-     * Method to calculate the total amount of a user
-     * @param newAction get the user information from this new action
+     * Method to calculate the total amount in this turn of a user
+     * @param user get the user information from this new action
      * @return the result of the total amount
      */
-    public int getTotalAmountForAUser ( Action newAction ){
->>>>>>> Stashed changes
-        int amount = 0;
-        for (Action a : listAction
-             ) {
-            if ( a.getUserLightOfPlayer() == newAction.getUserLightOfPlayer() ){
-                amount += a.getAmount();
-            }
-        }
-        return amount;
-    }
-
-    //Cette fonction renvoi la quantité d'argent pariée par un joueur dans un tour.
     private int getTotalAmountForAUser ( UserLight user ){
         int amount = 0;
         for (Action a : listAction
@@ -197,7 +174,7 @@ public class Turn implements Serializable {
         Integer max = 0;
         for(Action ac : getListAction())
         {
-            if(ac.getAmount()>max)
+            if(ac.getAmount()>max && !ac.getName().equals(EnumerationAction.ALLIN))
                 max=ac.getAmount();
         }
         return max;

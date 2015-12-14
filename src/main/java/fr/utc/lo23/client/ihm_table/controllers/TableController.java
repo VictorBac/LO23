@@ -777,6 +777,9 @@ public class TableController {
         img.setImage(getBackCardImage());
 
         double svgWidth = img.getFitWidth();
+        double cardPosition = img.getX() + svgWidth / 2;
+
+        img.preserveRatioProperty().set(false);
 
         final Timeline timeline3 = new Timeline();
         timeline3.setCycleCount(1);
@@ -784,6 +787,13 @@ public class TableController {
         KeyValue kv3 = new KeyValue(img.fitWidthProperty(), svgWidth);
         KeyFrame kf3 = new KeyFrame(Duration.millis(200), kv3);
         timeline3.getKeyFrames().add(kf3);
+
+        final Timeline timelineXBackward = new Timeline();
+        timelineXBackward.setCycleCount(1);
+        timelineXBackward.setAutoReverse(false);
+        KeyValue kvXB = new KeyValue(img.xProperty(), img.getX());
+        KeyFrame kfXB = new KeyFrame(Duration.millis(200), kvXB);
+        timeline3.getKeyFrames().add(kfXB);
 
         final Timeline timeline2 = new Timeline();
         timeline2.setCycleCount(1);
@@ -798,6 +808,18 @@ public class TableController {
         KeyFrame kf2 = new KeyFrame(Duration.millis(200), onFinished2, kv2);
         timeline2.getKeyFrames().add(kf2);
 
+        final Timeline timelineXForward = new Timeline();
+        timeline2.setCycleCount(1);
+        timeline2.setAutoReverse(false);
+        KeyValue kvXF = new KeyValue(img.xProperty(), cardPosition);
+        EventHandler onFinished2XF = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                timelineXBackward.play();
+            }
+        };
+        KeyFrame kfXF = new KeyFrame(Duration.millis(200), onFinished2XF, kvXF);
+        timelineXForward.getKeyFrames().add(kfXF);
+
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         timeline.setAutoReverse(false);
@@ -805,6 +827,7 @@ public class TableController {
         EventHandler onFinished = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 timeline2.play();
+                timelineXForward.play();
             }
         };
         KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished, kv);

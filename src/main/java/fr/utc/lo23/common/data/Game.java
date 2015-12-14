@@ -51,14 +51,17 @@ public class Game implements Serializable{
     }
 
     /**
-     * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
+     * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players,
+     * @param tableOfTheGame Table of Game it is refered to
+     * @param ante small amount of money that each player has to pay
+     * @param blind amount of money that the user has to pay at the beginning of each Hand
      */
-    public Game(Table tableOfTheGame) {
+    public Game(Table tableOfTheGame, int ante, int blind) {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
-        this.blind = 0;
+        this.blind = blind;
         this.listSeatPlayerWithPeculeDepart = new ArrayList<Seat>();
-        this.ante = 0;
+        this.ante = ante;
         this.listUserSpectator =  new ArrayList<UserLight>();
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();

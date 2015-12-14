@@ -117,6 +117,11 @@ public interface InterfaceDataFromCom {
     public void tableCreatorRequestToStartGameRejected();
 
     /**
+     * Method that has to be called if the creator of a Table decide to start the Game and the server has accepted the request
+     */
+    public void tableCreatorRequestToStartGameAccepted();
+
+    /**
      * Method to ask the local Player for his money he is going to start with
      */
     public void askAmountMoney();
@@ -156,13 +161,17 @@ public interface InterfaceDataFromCom {
     public void notifyAction(Action action);
 
     /**
-     * Method to inform the local user that the Turn ended with a list of winner and the list of points they earned
+     * Method to inform the local user that the Hand ended with a list of Seat, their amount of money has changed depending on how won
      *
-     * @param listWinner ArrayList of UserLight that won
-     * @param listGain   ArrayList of Integer with the point that each one earned ordered in the same order as the list of winner
+     * @param listSeat ArrayList of Seat with their latest amount of money
      */
-    public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain);
+    public void informEndHand(ArrayList<Seat> listSeat);
 
+    /**
+     * Method to inform the local user that the Turn ended with the Pot at the end of Turn
+     * @param potForThisTurn Integer containing the amount of money at the end of the Turn in the pot
+     */
+    public void informEndTurn(Integer potForThisTurn);
 
     /**
      * Method to save a game

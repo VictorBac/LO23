@@ -94,8 +94,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"tableJoinAccepted()");
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
-            //TODO need to contact IHMMain missing interface
-            dManagerClient.getInterToIHMMain();
+            //TODO need to contact IHMMain missing interface   dManagerClient.getInterToIHMMain();
         } catch (TableException e) {
             e.printStackTrace();
         }
@@ -159,9 +158,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void tableCreatorRequestToStartGameRejected(){
         Console.log(TAG +"tableCreatorRequestToStartGameRejected()");
-        //TODO fill this method with ihmTable method
-
+        //TODO fill this method with ihmTable method dManagerClient.getInterToIHMTable();
     }
+
+    public void tableCreatorRequestToStartGameAccepted(){
+        Console.log(TAG +"tableCreatorRequestToStartGameAccepted()");
+        //TODO fill this method with ihmTable method dManagerClient.getInterToIHMTable();
+    }
+
 
     public void askAmountMoney(){
         Console.log(TAG +"askAmountMoney()");
@@ -189,8 +193,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMTable().notifyAction(action);
     }
 
-    public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
-        //TODO see with IHMTable not a method corresponding
+    public void informEndTurn(Integer potForThisTurn){
+        Console.log(TAG +"informEndTurn()");
+        dManagerClient.getInterToIHMTable().notifyEndTour(potForThisTurn);
+    }
+
+    public void informEndHand(ArrayList<Seat> listSeat) {
+        Console.log(TAG +"informEndHand()");
+        dManagerClient.getInterToIHMTable().notifyEndHand(listSeat);
     }
 
     public void saveLogGame(Table tableThatContainGameToSave) {

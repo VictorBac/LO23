@@ -25,9 +25,11 @@ public class LaunchGameMessage extends Message {
         if(myServ.getNetworkManager().getDataInstance().startGame(idTable,UserInit)){
             LaunchGameMessage launchGameM = new LaunchGameMessage(idTable,UserInit);
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),launchGameM);
+            AskMoneyMessage askMoneyMess = new AskMoneyMessage();
+            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),launchGameM);
         }else{
             RefuseStartGameMessage startGameRefuse = new RefuseStartGameMessage();
-            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),startGameRefuse);
+            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable),askMoneyMess);
         }
     }
 

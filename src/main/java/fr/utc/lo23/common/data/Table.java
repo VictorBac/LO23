@@ -55,7 +55,7 @@ public class Table implements Serializable {
      * @param maxMise
      * @param timeForAction
      */
-    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeForAction){
+    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeForAction, int ante, int blind){
         this.setIdTable(UUID.randomUUID());
         this.setName(name);
         this.setCreator(creator);
@@ -69,7 +69,7 @@ public class Table implements Serializable {
         this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
         //Add new waiting game to the list
-        this.listGames.add(new Game(this));
+        //TODO uncomment  this.listGames.add(new Game(this, ante, blind));
         this.setTimeForAction(timeForAction);
         this.vote = new ArrayList<Boolean>();
     }
@@ -101,12 +101,10 @@ public class Table implements Serializable {
         if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
             this.getCurrentGame().deletePlayer(player);
-            //TODO gestion statistiques
         }
         else if (!this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
             this.getCurrentGame().deletePlayer(player);
-            //TODO gestion statistiques
         }
         else{
             throw new TableException("Player you want to delete is not on the table!");
@@ -161,25 +159,6 @@ public class Table implements Serializable {
     public boolean checkConditionSpectatorJoin(){
         return isAcceptSpectator();
     }
-
-
-    //TODO
-    /**
-     * Save the game
-     */
-    public void saveGame(){
-
-    }
-
-    //TODO
-    /**
-     * Open a game in order to replay it
-     * @param idGame
-     */
-    public void openGame(UUID idGame){
-
-    }
-
 
     /**
      * Add a new game in the table's games list

@@ -93,8 +93,13 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
-    //TODO
+    //TODO com must implement method
     public void setStartAmount(int amount){
+        //dManagerClient.getInterToCom().???
+    }
 
+    //TODO com must implement method
+    public void isReady(boolean status) {
+        //dManagerClient.getInterToCom().???
     }
 }

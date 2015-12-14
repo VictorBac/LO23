@@ -13,7 +13,7 @@ public class Pot implements Serializable {
      * valeurPot : total amount in the pot
      * players : player who have bet in the pot
      */
-    private ArrayList<Integer> valeurPot;
+    private int valeurPot;
     private UserLightList players;
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,7 @@ public class Pot implements Serializable {
      * @param valeurPot
      * @param players
      */
-    public Pot(ArrayList<Integer> valeurPot, UserLightList players) {
+    public Pot(int valeurPot, UserLightList players) {
         this.setValeurPot(valeurPot);
         this.setPlayers(players);
     }
@@ -32,7 +32,7 @@ public class Pot implements Serializable {
      */
     public Pot() {
         this.players = new UserLightList();
-        this.valeurPot = new ArrayList<Integer>();
+        this.valeurPot = 0;
     }
 
     /**
@@ -44,21 +44,16 @@ public class Pot implements Serializable {
     }
 
     public void addPot(int value){
-        valeurPot.add(value);
-    }
-
-    //TODO delete
-    public int add(int a, int b){
-        return a + b;
+        valeurPot = value;
     }
 
 /********************* Getters and Setters ***************************/
 
-    public ArrayList<Integer> getValeurPot() {
+    public int getValeurPot() {
         return valeurPot;
     }
 
-    public void setValeurPot(ArrayList<Integer> valeurPot) {
+    public void setValeurPot(int valeurPot) {
         this.valeurPot = valeurPot;
     }
 

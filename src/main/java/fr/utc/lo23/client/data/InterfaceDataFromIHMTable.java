@@ -58,15 +58,15 @@ public interface InterfaceDataFromIHMTable {
      */
     public void transmitRequest(UserLight player);
 
-
     /**
      * Return the local user
      * @return
      */
     public UserLight getUser();
 
-
     public void quitGame();
 
     public void setStartAmount(int amount);
+
+    public void isReady(boolean status);
 }

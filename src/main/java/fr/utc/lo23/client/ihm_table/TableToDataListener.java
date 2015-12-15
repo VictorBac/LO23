@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_table;
 
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.common.data.*;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,13 @@ public class TableToDataListener implements ITableToDataListener {
 	 */
     public void showTable(Table table){
         if(getIhmtable().getFormController()!=null) {
-            getIhmtable().getFormController().goToTable(table);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    getIhmtable().getFormController().goToTable(table);
+                }
+            });
+
             getIhmtable().setFormController(null);
         }
         else
@@ -55,7 +62,13 @@ public class TableToDataListener implements ITableToDataListener {
     public void notifyNewUser(UserLight user, boolean isPlayer){
         if(isPlayer) {
             if(ihmtable.getTableController() != null) {
-                ihmtable.getTableController().addPlayer(user);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ihmtable.getTableController().addPlayer(user);
+                    }
+                });
+
             }
         }
     }
@@ -68,7 +81,13 @@ public class TableToDataListener implements ITableToDataListener {
     public void notifyUserLeft(UserLight user, boolean isPlayer){
         if(isPlayer) {
             if(ihmtable.getTableController() != null) {
-                ihmtable.getTableController().removePlayer(user);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ihmtable.getTableController().removePlayer(user);
+                    }
+                });
+
             }
         }
     }
@@ -78,11 +97,17 @@ public class TableToDataListener implements ITableToDataListener {
     * permet à IHM-Table de savoir que les joueurs vont devoir mettre leurs montants de départ
     */
     public void notifyPreparationPhase(){
-        getIhmtable().getTableController().reorderPlayers();
-        for(UserLight user : getIhmtable().getTableController().getTable().getListPlayers().getListUserLights())
-        {
-            getIhmtable().getTableController().getPlayerControllerOf(user).updateMoney(-1);
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getIhmtable().getTableController().reorderPlayers();
+                for(UserLight user : getIhmtable().getTableController().getTable().getListPlayers().getListUserLights())
+                {
+                    getIhmtable().getTableController().getPlayerControllerOf(user).updateMoney(-1);
+                }
+            }
+        });
+
     }
 
     /*
@@ -90,8 +115,14 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher la demande de quantité d'argent de départ à l'utilisateur
      */
     public void askMoneyAmount(){
-        ihmtable.getTableController().showPopupAmount();
-        ihmtable.getTableController().setPopupAmountMaxMoney(ihmtable.getTableController().getTable().getCurrentGame().getMaxStartMoney());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().showPopupAmount();
+                ihmtable.getTableController().setPopupAmountMaxMoney(ihmtable.getTableController().getTable().getCurrentGame().getMaxStartMoney());
+            }
+        });
+
     }
 
     /*
@@ -99,7 +130,13 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher le montant d'un utilisateur
      */
     public void notifyMoneyAmountAnswer(UserLight player,Integer amount){
-        getIhmtable().getTableController().getPlayerControllerOf(player).updateMoney(amount);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getIhmtable().getTableController().getPlayerControllerOf(player).updateMoney(amount);
+            }
+        });
+
     }
 
     /*
@@ -107,7 +144,13 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de demander à l'utilisateur s'il est prêt et accepte les montants des autres joueurs
      */
     public void askReadyGame(){
-        getIhmtable().getTableController().showPopupReady();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getIhmtable().getTableController().showPopupReady();
+            }
+        });
     }
 
     /*
@@ -115,7 +158,13 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher la réponse d'un joueur
      */
     public void notifyReadyGameAnswer(UserLight player, boolean hasValidated){
-        getIhmtable().getTableController().getPlayerControllerOf(player).setReadyStatus(hasValidated);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getIhmtable().getTableController().getPlayerControllerOf(player).setReadyStatus(hasValidated);
+            }
+        });
+
     }
 
     /*
@@ -123,10 +172,16 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet de prévenir IHM-Table que la Game a été lancée.
      */
     public void notifyStartGame(Table table){
-        getIhmtable().getTableController().addLogEntry("La partie a été lancée ! Préparez-vous !");
-        for(UserLight player : getIhmtable().getTableController().getTable().getListPlayers().getListUserLights()) {
-            getIhmtable().getTableController().getPlayerControllerOf(player).clearReadyStatus();
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getIhmtable().getTableController().addLogEntry("La partie a été lancée ! Préparez-vous !");
+                for(UserLight player : getIhmtable().getTableController().getTable().getListPlayers().getListUserLights()) {
+                    getIhmtable().getTableController().getPlayerControllerOf(player).clearReadyStatus();
+                }
+            }
+        });
+
     }
 
     /*
@@ -152,7 +207,13 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher les cartes des joueurs.
      */
     public void notifyPlayersCards(ArrayList<PlayerHand> playerHands){
-        ihmtable.getTableController().setPlayerCards(playerHands);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().setPlayerCards(playerHands);
+            }
+        });
+
     }
 
     /*
@@ -160,18 +221,24 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de demander l'action au joueur
      */
     public void askAction(Action actionToFill, EnumerationAction[] listPossible) {
-        if(actionToFill.getUserLightOfPlayer()==ihmtable.getDataInterface().getUser())
-        {
-            ihmtable.getTableController().saveActionToFill(actionToFill);
-            ihmtable.getTableController().showActionBox();
-            ihmtable.getTableController().disableAllActions();
-            for (EnumerationAction action : listPossible)
-                ihmtable.getTableController().enableAction(action);
-        }
-        else
-        {
-            ihmtable.getTableController().setThinkingForAction(actionToFill.getUserLightOfPlayer());
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(actionToFill.getUserLightOfPlayer()==ihmtable.getDataInterface().getUser())
+                {
+                    ihmtable.getTableController().saveActionToFill(actionToFill);
+                    ihmtable.getTableController().showActionBox();
+                    ihmtable.getTableController().disableAllActions();
+                    for (EnumerationAction action : listPossible)
+                        ihmtable.getTableController().enableAction(action);
+                }
+                else
+                {
+                    ihmtable.getTableController().setThinkingForAction(actionToFill.getUserLightOfPlayer());
+                }
+            }
+        });
+
     }
 
     /*
@@ -180,51 +247,58 @@ public class TableToDataListener implements ITableToDataListener {
      */
     public void notifyAction(Action action){
 
-        UserLight player = action.getUserLightOfPlayer();
-        System.out.println(player);
-        System.out.println(ihmtable.getDataInterface().getUser());
-        if(action.getName().equals(EnumerationAction.ALLIN)) {
-            if(player==ihmtable.getDataInterface().getUser())
-                ihmtable.getTableController().addLogEntry("Vous avez fait tapis !");
-            else
-                ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
-            // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-            ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
-        }
-        else if(action.getName().equals(EnumerationAction.BET)) {
-            if(player==ihmtable.getDataInterface().getUser())
-                ihmtable.getTableController().addLogEntry("Vous avez relancé de " + action.getAmount() + "$.");
-            else
-                ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
-            // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-            ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
-        }
-        else if(action.getName().equals(EnumerationAction.CALL)) {
-            if(player==ihmtable.getDataInterface().getUser())
-                ihmtable.getTableController().addLogEntry("Vous avez suivi.");
-            else
-                ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
-            // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-            ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
-        }
-        else if(action.getName().equals(EnumerationAction.CHECK)) {
-            if(player==ihmtable.getDataInterface().getUser())
-                ihmtable.getTableController().addLogEntry("Parole.");
-            else
-                ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
-            //if zero then useless ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(0);
-        }
-        else if(action.getName().equals(EnumerationAction.FOLD)) {
-            if(player==ihmtable.getDataInterface().getUser())
-                ihmtable.getTableController().addLogEntry("Vous vous couchez.");
-            else
-                ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
-            ihmtable.getTableController().graphicFoldUser(player);
-        }
-        else
-        {
-            System.out.println("ERROR: L'action renseignée ne possède pas d'action de poker.");
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                UserLight player = action.getUserLightOfPlayer();
+                System.out.println(player);
+                System.out.println(ihmtable.getDataInterface().getUser());
+                if(action.getName().equals(EnumerationAction.ALLIN)) {
+                    if(player==ihmtable.getDataInterface().getUser())
+                        ihmtable.getTableController().addLogEntry("Vous avez fait tapis !");
+                    else
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
+                    // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                }
+                else if(action.getName().equals(EnumerationAction.BET)) {
+                    if(player==ihmtable.getDataInterface().getUser())
+                        ihmtable.getTableController().addLogEntry("Vous avez relancé de " + action.getAmount() + "$.");
+                    else
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
+                    // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                }
+                else if(action.getName().equals(EnumerationAction.CALL)) {
+                    if(player==ihmtable.getDataInterface().getUser())
+                        ihmtable.getTableController().addLogEntry("Vous avez suivi.");
+                    else
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
+                    // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                }
+                else if(action.getName().equals(EnumerationAction.CHECK)) {
+                    if(player==ihmtable.getDataInterface().getUser())
+                        ihmtable.getTableController().addLogEntry("Parole.");
+                    else
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
+                    //if zero then useless ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(0);
+                }
+                else if(action.getName().equals(EnumerationAction.FOLD)) {
+                    if(player==ihmtable.getDataInterface().getUser())
+                        ihmtable.getTableController().addLogEntry("Vous vous couchez.");
+                    else
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
+                    ihmtable.getTableController().graphicFoldUser(player);
+                }
+                else
+                {
+                    System.out.println("ERROR: L'action renseignée ne possède pas d'action de poker.");
+                }
+            }
+        });
+
+
     }
 
     /*
@@ -259,7 +333,13 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher la demande de fin de jeu auprès des utilisateurs
      */
     public void askEndGameVote(Game game){
-        ihmtable.getTableController().showPopupEndGameVote();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().showPopupEndGameVote();
+            }
+        });
+
     }
 
     /*
@@ -267,7 +347,13 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'arrêter le jeu.
      */
     public void stopGame(Game game){
-        ihmtable.getTableController().stopGame(game);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().stopGame(game);
+            }
+        });
     }
 
     /*
@@ -275,15 +361,33 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher la réponse d'un utilisateur au vote de fin de jeu
      */
     public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept){
-        ihmtable.getTableController().notifyPlayerVoteEndGameAnswer(player, accept);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().notifyPlayerVoteEndGameAnswer(player, accept);
+            }
+        });
+
     }
 
     public void notifyRefuseStartGame(){
-        ihmtable.getTableController().notifyFailStartGame();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().notifyFailStartGame();
+            }
+        });
+
     }
 
     public void notifySuccessStartGame(){
-        ihmtable.getTableController().notifySuccessStartGame();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().notifySuccessStartGame();
+            }
+        });
+
     }
 
 }

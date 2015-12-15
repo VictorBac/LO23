@@ -112,133 +112,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param player the player launching the game
      * @return the created game
      */
-    public Game startGame(UUID idTable, UserLight player) {
+    public Boolean startGame(UUID idTable, UserLight player) {
         Table toStart = getTableFromId(idTable);
-        try {
-            toStart.startGame(toStart.getCurrentGame());
-
-            //LANCEMENT DE L'ALGORITHME DE JEU
-            playGame(toStart);
-
-            Console.log(TAG + "\tGame started.");
-            return toStart.getCurrentGame();
+        if(toStart.getCurrentGame().startGame() && player==toStart.getCreator())
+        {
+            //TODO: ajouter une fonction pour envoyer les demandes de ready, depuis chez nous ou chez com ?
+            return true;
         }
-        catch(TableException e){
-            Console.log(TAG + "\tGame failed to start.");
-            return null;
+        else
+        {
+            return false;
         }
     }
 
-    public void playGame(Table table){
-        Game game = table.getCurrentGame();
-        Hand hand;
-        Turn turn;
 
-        if(game.getListHand().size()==0)
-        {
-            //On se situe au tout début d'une game
-            hand = new Hand();
-            game.getListHand().add(hand);
-
-        }
-        else
-        {
-            //La game est déjà commencée
-            hand = game.getCurrentHand();
-        }
-
-
-        if(hand.getListTurn().size()==0)
-        {
-            //On se situe au début d'un tour
-            turn = new Turn(game);
-            hand.getListTurn().add(turn);
-        }
-        else
-        {
-            turn = hand.getCurrentTurn();
-        }
-
-        if(turn.getListAction().size()==0)
-        {
-            //Faire les actions de base
-
-        }
-        else
-        {
-            //Vérifier si le tour est finit
-            if(false)
-            {
-                //S'il est finit, résoudre ce tour
-
-
-                // puis vérifier si la manche est finie
-                if(false)
-                {
-                    //Si elle est finit résoudre la manche
-
-                    //puis vérifier si la game est finie
-                    if(false)
-                    {
-                        //Si la game est finie, résoudre la game
-
-                        //Puis clore la game
-
-                    }
-                    else
-                    {
-                        //sinon créer une nouvelle manche et faire ce qui doit etre fait
-                    }
-                }
-                else
-                {
-                    //sinon créer un nouveau tour et appeler la première action
-                }
-            }
-            else
-            {
-                //appeler les actions du joueur prochain
-
-            }
-
-        }
-
-
-        //Choix du joueur initial
-        //On choisit de prendre le premier joueur dans la liste (l'host s'il n'a pas quitté la table, d'ailleurs je sais pas comment on gère ce cas).
-        UserLight firstPlayer = table.getListPlayers().getListUserLights().get(0);
-
-        /*
-
-        Je démarre une manche.
-
-        Je demande les ante à tous les joueurs si elles sont definies
-        Je commence par mettre l'icone Dealer au premier joueur, et demander les blindes au joueur 2 puis au joueur 3
-
-        Je demande aux joueurs dans l'ordre de réaliser des actions, tant que tous n'ont pas joué au moins une fois, et tant qu'il reste un joueur qui ne soit pas couché ou qui n'ait pas la même somme que les autres.
-        La relance a une mise minimum, elle est du minimum de la dernière relance
-
-        Le tour est finit, je notifie les clients avec les valeurs du pot, j'envoi le flop, puis je lance un nouveau tour
-
-        nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi le turn, puis je lance un nouveau
-
-        nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi la river, puis je lance un nouveau tour
-
-        nouveau tour finit, je résoud les cartes, définit les vainqueurs, puis informe tout le monde.
-
-        J'informe que je finis la manche.
-
-        S'il ne reste plus qu'un seul joueur avec de l'argent, je termine la game. sinon je décale le premier joueur et je relance une manche.
-
-
-        En cas de vote pour demander la fin de la partie, cette fonction n'est pas appelée, sauf s'il y a un vote négatif lorsque tous les votes ont été faits.
-
-
-         */
-
-
-
-    }
 
     public void nextStepReplay() {
 
@@ -328,7 +215,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return the table if found, else null
      */
     private Table getTableFromId(UUID idTable){
-        Table wantedTable = null;
         ArrayList<Table> tableList = getTableList();
         for (Table cur : tableList){
             if (cur.getIdTable().equals(idTable))
@@ -336,4 +222,36 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
         return null;
     }
+
+    /*
+     * Permet à com de transmettre les start money des utilisateurs pour validation ou refus, et sauvegarde coté server si validation
+     */
+    public boolean setMoneyPlayer(UUID idTable, UserLight user, Integer startAmount){
+        if(myManager.getTables().getTable(idTable).getCurrentGame().getMaxStartMoney()<startAmount && startAmount<myManager.getTables().getTable(idTable).getCurrentGame().getBlind()*2) {
+            return false;
+        }
+        else {
+            myManager.getTables().getTable(idTable).getCurrentGame().createPlayerSeat(user, startAmount);
+            //Si cet utilisateur est le dernier à répondre, lancer les demandes de ready
+            if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getListPlayers().getListUserLights().size())
+            {
+                //TODO: Appeler la fonction d'envoi des demandes de ready, depuis com ou depuis chez nous ?
+            }
+            return true;
+        }
+    }
+
+    /*
+     * Permet à com de transmettre les ready answer des utilisateurs pour sauvegarde coté server
+     */
+    public void setReadyAnswer(UUID idTable, UserLight user, Boolean answer){
+        myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().put(user,answer);
+        //Si cet utilisateur est le dernier à répondre, lancer la partie
+        if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().size())
+        {
+            myManager.getTables().getTable(idTable).getCurrentGame().startGame();
+            myManager.getTables().getTable(idTable).playGame();
+        }
+    }
+
 }

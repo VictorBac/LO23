@@ -71,7 +71,7 @@ public class FormController {
     RadioButton formAbandonNo;
 
     @FXML
-    TextField formMiseMax;
+    TextField formBlinde;
 
     @FXML
     TextField formTempsMax;
@@ -107,7 +107,7 @@ public class FormController {
         errors.clear();
         // Réinitialisation des borders des champs
         clearStyle(formName);
-        clearStyle(formMiseMax);
+        clearStyle(formBlinde);
         clearStyle(formTempsMax);
         clearStyle(formPlayerMin);
         clearStyle(formPlayerMax);
@@ -118,9 +118,9 @@ public class FormController {
             errors.add("Nom de la table");
             formName.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
-        if (formMiseMax.getText().isEmpty() | formMiseMax.getText().equals("0") | !nombre.matcher(formMiseMax.getText()).matches()){
+        if (formBlinde.getText().isEmpty() | formBlinde.getText().equals("0") | !nombre.matcher(formBlinde.getText()).matches()){
             errors.add("Mise Max");
-            formMiseMax.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            formBlinde.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
         if (formTempsMax.getText().isEmpty() | formTempsMax.getText().equals("0") | !nombre.matcher(formTempsMax.getText()).matches()){
             errors.add("Temps Max");
@@ -152,13 +152,13 @@ public class FormController {
             boolean spectator = formSpectatorYes.isSelected();
             boolean spectatorChat = formSpectatorChatYes.isSelected();
             boolean abandon = formAbandonYes.isSelected();
-            Integer miseMax = Integer.valueOf(formMiseMax.getText());
+            Integer blinde = Integer.valueOf(formBlinde.getText());
             Integer tempsMax = Integer.valueOf(formTempsMax.getText());
             Integer ante = Integer.valueOf(formAnte.getText());
             Integer moneyMax = Integer.valueOf(formMoneyMax.getText());
 
             // Sending Table to Data
-            ihmTable.getDataInterface().tableToCreate(new Table(tableName, null, spectator, spectatorChat, playerMax, playerMin, abandon, miseMax, tempsMax,ante,moneyMax));
+            ihmTable.getDataInterface().tableToCreate(new Table(tableName, null, spectator, spectatorChat, playerMax, playerMin, abandon, blinde, tempsMax, ante, moneyMax));
         }
     }
 

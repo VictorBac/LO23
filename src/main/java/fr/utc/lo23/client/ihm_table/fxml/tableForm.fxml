@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" style="-fx-background-color: #D6DBDA;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.FormController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" style="-fx-background-color: #D6DBDA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.FormController">
     <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="400.0" />
@@ -36,7 +36,7 @@
         <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="413.0" text="Spectateurs acceptés :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="402.0" text="Les spectateurs peuvent participer au chat :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="411.0" text="Abandon à l'amiable autorisé :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="406.0" text="Mise maximum autorisée :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="406.0" text="Petite Blinde :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="8" />
         <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="402.0" text="Temps pour réaliser une action max :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="9" />
         <TextField fx:id="formName" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         <ComboBox fx:id="formPlayerMin" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
@@ -141,7 +141,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField fx:id="formMiseMax" />
+                <TextField fx:id="formBlinde" />
                 <Label text=" $" textFill="#3b8474" GridPane.columnIndex="1" />
             </children>
         </GridPane>
@@ -165,7 +165,7 @@
          </font>
       </Label>
       <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="403.0" text="Ante :    " textAlignment="RIGHT" textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="404.0" text="Argent maximum :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="404.0" text="Argent de départ maximum :    " textFill="#007057" GridPane.columnIndex="1" GridPane.rowIndex="11" />
       <GridPane GridPane.columnIndex="2" GridPane.rowIndex="10">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.61785888671875" minWidth="10.0" prefWidth="241.2445068359375" />

@@ -91,7 +91,7 @@ public class TableToDataListener implements ITableToDataListener {
      */
     public void askMoneyAmount(){
         ihmtable.getTableController().showPopupAmount();
-        ihmtable.getTableController().setPopupAmountMaxMoney(ihmtable.getTableController().getTable().getMaxMise());
+        ihmtable.getTableController().setPopupAmountMaxMoney(ihmtable.getTableController().getTable().getCurrentGame().getMaxStartMoney());
     }
 
     /*

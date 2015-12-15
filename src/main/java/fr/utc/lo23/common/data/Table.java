@@ -38,7 +38,6 @@ public class Table implements Serializable {
     private UserLightList listPlayers;
     private UserLightList listSpectators;
     private boolean abandonAmiable;
-    private int maxMise;
     private ArrayList<Game> listGames;
     private int timeForAction;
     private static final long serialVersionUID = 1L;
@@ -54,10 +53,12 @@ public class Table implements Serializable {
      * @param nbPlayerMax
      * @param nbPlayerMin
      * @param abandonAmiable
-     * @param maxMise
+     * @param petiteBlinde
      * @param timeForAction
+     * @param ante
+     * @param startMoneyMax
      */
-    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int maxMise, int timeForAction, int ante, int blind){
+    public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int petiteBlinde, int timeForAction, int ante, int startMoneyMax){
         this.setIdTable(UUID.randomUUID());
         this.setName(name);
         this.setCreator(creator);
@@ -68,10 +69,9 @@ public class Table implements Serializable {
         this.setNbPlayerMax(nbPlayerMax);
         this.setNbPlayerMin(nbPlayerMin);
         this.setAbandonAmiable(abandonAmiable);
-        this.setMaxMise(maxMise);
         this.listGames = new ArrayList<Game>();
         //Add new waiting game to the list
-        this.listGames.add(new Game(this, ante, blind));
+        this.listGames.add(new Game(this, ante, petiteBlinde, startMoneyMax));
         this.setTimeForAction(timeForAction);
         this.vote = new ArrayList<Boolean>();
         nbPlayerSelectedMoney = 0;
@@ -172,7 +172,7 @@ public class Table implements Serializable {
         while (iter.hasNext())
         {
             //if a game in the list is already started, impossible to start a new game
-            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.finished){
+            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.Playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.Finished){
                 throw new TableException("Impossible to start a new game");
             }
         }
@@ -184,34 +184,21 @@ public class Table implements Serializable {
      * Create a new game and add it in the table's games list
      * @param ante int ante used for this new Game
      * @param blind int blind used for this new Game
+     * @param maxStartMoney int moneyMax a user can choose at the beginning
      * @throws TableException This exception is thrown if a Game is still on play then impossible to start a new game
      */
-    public void addNewGameToList(int ante, int blind) throws TableException {
-        Game gameToAdd = new Game(this,ante, blind);
+    public void addNewGameToList(int ante, int blind, int maxStartMoney) throws TableException {
+        Game gameToAdd = new Game(this,ante, blind, maxStartMoney);
 
         Iterator<Game> iter = this.listGames.iterator();
         while (iter.hasNext())
         {
             //if a game in the list is already started, impossible to start a new game
-            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.finished){
+            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.Playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.Finished){
                 throw new TableException("Impossible to start a new game");
             }
         }
         this.listGames.add(gameToAdd);
-    }
-
-
-    /**
-     * Start a waiting game
-     * @param game : game to start
-     */
-    public void startGame(Game game) throws TableException{
-        if (this.listGames.contains(game) && canStartGame(game)){
-            if(game.getStatusOfTheGame() == EnumerationStatusGame.closed || game.getStatusOfTheGame() == EnumerationStatusGame.waitingForPlayer){
-                game.startGame();
-            }
-        }
-        else throw new TableException("Game not in the list");
     }
 
     /**
@@ -223,16 +210,117 @@ public class Table implements Serializable {
         return this.getListGames().indexOf(game);
     }
 
-    /**
-     * Function that checks if the number of players in the game is between nbPlayerMin and nbPlayerMax
-     * @return : true if ok, false otherwise
-     */
-    public boolean canStartGame(Game gameToStart){
-        //size of the players' list in the gameToStart
-        if(this.listGames.get(getIDTGame(gameToStart)).getListSeatPlayerWithPeculeDepart().size() > this.nbPlayerMin && this.listGames.get(getIDTGame(gameToStart)).getListSeatPlayerWithPeculeDepart().size() < this.nbPlayerMax)
-            return true;
+
+    public void playGame(){
+        Game game = this.getCurrentGame();
+        Hand hand;
+        Turn turn;
+
+        if(game.getListHand().size()==0)
+        {
+            //On se situe au tout début d'une game
+            hand = new Hand();
+            game.getListHand().add(hand);
+
+            //Choix du joueur initial
+            //On choisit de prendre le premier joueur dans la liste (l'host s'il n'a pas quitté la table, d'ailleurs je sais pas comment on gère ce cas).
+            UserLight firstPlayer = this.getListPlayers().getListUserLights().get(0);
+            hand.setFirstPlayer(firstPlayer);
+
+        }
         else
-            return false;
+        {
+            //La game est déjà commencée
+            hand = game.getCurrentHand();
+        }
+
+
+        if(hand.getListTurn().size()==0)
+        {
+            //On se situe au début d'un tour
+            turn = new Turn(game);
+            hand.getListTurn().add(turn);
+        }
+        else
+        {
+            turn = hand.getCurrentTurn();
+        }
+
+        if(turn.getListAction().size()==0)
+        {
+            //Faire les actions de base
+
+        }
+        else
+        {
+            //Vérifier si le tour est finit
+            if(false)
+            {
+                //S'il est finit, résoudre ce tour
+
+
+                // puis vérifier si la manche est finie
+                if(false)
+                {
+                    //Si elle est finit résoudre la manche
+
+                    //puis vérifier si la game est finie
+                    if(false)
+                    {
+                        //Si la game est finie, résoudre la game
+
+                        //Puis clore la game
+
+                    }
+                    else
+                    {
+                        //sinon créer une nouvelle manche et faire ce qui doit etre fait
+                    }
+                }
+                else
+                {
+                    //sinon créer un nouveau tour et appeler la première action
+                }
+            }
+            else
+            {
+                //appeler les actions du joueur prochain
+
+            }
+
+        }
+
+
+
+
+        /*
+
+        Je démarre une manche.
+
+        Je demande les ante à tous les joueurs si elles sont definies
+        Je commence par mettre l'icone Dealer au premier joueur, et demander les blindes au joueur 2 puis au joueur 3
+
+        Je demande aux joueurs dans l'ordre de réaliser des actions, tant que tous n'ont pas joué au moins une fois, et tant qu'il reste un joueur qui ne soit pas couché ou qui n'ait pas la même somme que les autres.
+        La relance a une mise minimum, elle est du minimum de la dernière relance
+
+        Le tour est finit, je notifie les clients avec les valeurs du pot, j'envoi le flop, puis je lance un nouveau tour
+
+        nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi le turn, puis je lance un nouveau
+
+        nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi la river, puis je lance un nouveau tour
+
+        nouveau tour finit, je résoud les cartes, définit les vainqueurs, puis informe tout le monde.
+
+        J'informe que je finis la manche.
+
+        S'il ne reste plus qu'un seul joueur avec de l'argent, je termine la game. sinon je décale le premier joueur et je relance une manche.
+
+
+        En cas de vote pour demander la fin de la partie, cette fonction n'est pas appelée, sauf s'il y a un vote négatif lorsque tous les votes ont été faits.
+
+
+         */
+
     }
 
 
@@ -300,14 +388,6 @@ public class Table implements Serializable {
 
     public void setAbandonAmiable(boolean abandonAmiable) {
         this.abandonAmiable = abandonAmiable;
-    }
-
-    public int getMaxMise() {
-        return maxMise;
-    }
-
-    public void setMaxMise(int maxMise) {
-        this.maxMise = maxMise;
     }
 
     public ArrayList<Game> getListGames() {

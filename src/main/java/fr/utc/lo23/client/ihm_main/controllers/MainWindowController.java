@@ -83,7 +83,7 @@ public class MainWindowController extends BaseController {
 
         columnTableMise.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, Integer>, ObservableValue<Integer>>() {
             public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Table, Integer> param) {
-                return new SimpleIntegerProperty(param.getValue().getMaxMise()).asObject();
+                return new SimpleIntegerProperty(param.getValue().getCurrentGame().getMaxStartMoney()).asObject();
             }
         });
 

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -25,6 +26,8 @@ public class Game implements Serializable{
     private EnumerationStatusGame statusOfTheGame;
     private ArrayList<UserLight> listUserSpectator;
     private Table tableOfTheGame;
+    private HashMap<UserLight,Boolean> readyUserAnswers;
+    private Integer maxStartMoney;
 
     /**
      * Constructor with all parameter
@@ -48,15 +51,17 @@ public class Game implements Serializable{
         this.ante = ante;
         this.statusOfTheGame = statusOfTheGame;
         this.listUserSpectator = listUserSpectator;
+        this.readyUserAnswers = new HashMap<UserLight,Boolean>();
     }
 
     /**
      * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players,
      * @param tableOfTheGame Table of Game it is refered to
-     * @param ante small amount of money that each player has to pay
-     * @param blind amount of money that the user has to pay at the beginning of each Hand
+     * @param ante small amount of money that each player has to pay at each Hand
+     * @param blind amount of money that the small blind user has to pay at the beginning of the Hand
+     * @param maxStartMoney max Money to start with
      */
-    public Game(Table tableOfTheGame, int ante, int blind) {
+    public Game(Table tableOfTheGame, int ante, int blind, int maxStartMoney) {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
         this.blind = blind;
@@ -65,8 +70,10 @@ public class Game implements Serializable{
         this.listUserSpectator =  new ArrayList<UserLight>();
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
-        this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
+        this.statusOfTheGame = EnumerationStatusGame.Waiting;
         this.tableOfTheGame = tableOfTheGame;
+        this.readyUserAnswers = new HashMap<UserLight,Boolean>();
+        this.maxStartMoney = maxStartMoney;
     }
 
     //TODO comment those method
@@ -97,7 +104,6 @@ public class Game implements Serializable{
             }
 
         }
-
     }
 
 
@@ -147,14 +153,19 @@ public class Game implements Serializable{
     /**
      * Method to start the Game
       */
-    public void startGame(){
-        this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
-        this.statusOfTheGame = EnumerationStatusGame.playing;
+    public Boolean startGame(){
+        if(tableOfTheGame.getListPlayers().getListUserLights().size()>=tableOfTheGame.getNbPlayerMin() && tableOfTheGame.getListPlayers().getListUserLights().size()<=tableOfTheGame.getNbPlayerMax()) {
+            this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
+            this.statusOfTheGame = EnumerationStatusGame.Playing;
+            return true;
+        }
+        else
+            return false;
     }
 
 
     public void stopGame(){
-        this.statusOfTheGame = EnumerationStatusGame.finished;
+        this.statusOfTheGame = EnumerationStatusGame.Finished;
 
     }
 
@@ -175,12 +186,13 @@ public class Game implements Serializable{
         }
     }
 
-
-
-
-
-
-
+    public void createPlayerSeat(UserLight user,Integer startMoney){
+        Seat seat =new Seat();
+        seat.setPlayer(user);
+        seat.setStartAmount(startMoney);
+        seat.setCurrentAccount(startMoney);
+        this.getListSeatPlayerWithPeculeDepart().add(seat);
+    }
 
 
 
@@ -243,5 +255,21 @@ public class Game implements Serializable{
     public void setBlind(int blind) {this.blind = blind;}
     public void setAnte(int ante) {this.ante = ante;}
     public void setStatusOfTheGame(EnumerationStatusGame statusOfTheGame) {this.statusOfTheGame = statusOfTheGame;}
+
+    public Integer getMaxStartMoney() {
+        return maxStartMoney;
+    }
+
+    public void setMaxStartMoney(Integer maxStartMoney) {
+        this.maxStartMoney = maxStartMoney;
+    }
+
+    public HashMap<UserLight, Boolean> getReadyUserAnswers() {
+        return readyUserAnswers;
+    }
+
+    public void setReadyUserAnswers(HashMap<UserLight, Boolean> readyUserAnswers) {
+        this.readyUserAnswers = readyUserAnswers;
+    }
 }
 

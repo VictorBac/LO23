@@ -593,7 +593,7 @@ public class TableController {
         if(popupAmountInput.getText().isEmpty())
             return;
         amount = Integer.parseInt(popupAmountInput.getText());
-        if(amount <= 0 || amount > table.getMaxMise())
+        if(amount <= 0 || amount > table.getCurrentGame().getMaxStartMoney())
             return;
         ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));
         hidePopupAmount();

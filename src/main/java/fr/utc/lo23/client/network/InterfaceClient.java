@@ -94,7 +94,9 @@ public interface InterfaceClient {
     public void requestLoginServer(User u);
 
     public void sendPacket() throws NetworkFailureException;
-    
+
+    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
+
     /**
      *
      * @param userLocal

@@ -18,16 +18,17 @@ public class SetMoneyAmountMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        if(threadServer.getMyServer().getNetworkManager().getDataInstance().checkMoneyMax(user, amount, UUID idTable)){
+      //  if(threadServer.getMyServer().getNetworkManager().getDataInstance().checkMoneyMax(user, amount, UUID idTable)){
             //TODO: Envoyer aux autres clients la somme choisie
-        }
-        if( threadServer.getMyServer().getNetworkManager().getDataInstance().isEveryoneAmountMoneySelected()){
+      //  }
+      //  if( threadServer.getMyServer().getNetworkManager().getDataInstance().isEveryoneAmountMoneySelected()){
             //TODO : Si tous les clients sont prêts, on envoi un askReady
-        }
+      //  }
     }
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().notifyMoneyAmountAnswer(user, amount);
+      //TODO : decommenter quand la fonction existe
+        //  threadClient.getNetworkManager().getDataInstance().notifyMoneyAmountAnswer(user, amount);
     }
 }

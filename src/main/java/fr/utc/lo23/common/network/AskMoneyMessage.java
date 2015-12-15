@@ -14,6 +14,7 @@ public class AskMoneyMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().askAmountMoney();
+        //TODO : decommenter quand la fonction existe
+        //threadClient.getNetworkManager().getDataInstance().askAmountMoney();
     }
 }

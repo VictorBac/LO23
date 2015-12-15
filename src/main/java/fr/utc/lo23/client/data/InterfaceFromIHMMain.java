@@ -6,6 +6,9 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -119,28 +122,36 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * getServersList TODO
+     * get servers list
      * @return server list
      */
     public List<Server> getServersList() {
-        return null;
+        return dManagerClient.getListServers();
     }
 
     /**
-     * Add server TODO
+     * Add server
      * @param ip
      * @param port
      */
-    public void addServer(String ip, String port) {
-
+    public void addServer(InetAddress ip, String port) {
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        listServers.add(new Server(ip, port));
+        Serialization.serializationObject(listServers,
+                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        dManagerClient.setListServers(listServers);
     }
 
     /**
-     * remove server TODO
+     * remove server from server list
      * @param server server to remove
      */
     public void removeServer(Server server) {
-
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        listServers.remove(server);
+        Serialization.serializationObject(listServers,
+                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        dManagerClient.setListServers(listServers);
     }
 
     /**

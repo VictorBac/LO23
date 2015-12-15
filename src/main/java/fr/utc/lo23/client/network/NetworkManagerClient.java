@@ -153,6 +153,10 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
 
+        RequestLogGameMessage logM = new RequestLogGameMessage(userLocal);
+        localClient.send(logM);
+
+
     }
 
     public void launchSavedGame() throws NetworkFailureException, IncorrectFileException {

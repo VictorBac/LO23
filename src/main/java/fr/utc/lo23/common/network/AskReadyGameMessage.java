@@ -5,19 +5,26 @@ import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Created by Jean-Côme on 14/12/2015.
+ * Created by raphael on 15/12/15.
  */
-public class AskMoneyMessage extends Message {
+public class AskReadyGameMessage extends Message {
+
+    private boolean Answer;
+
+    public AskReadyGameMessage(boolean answer) {
+        this.Answer = answer;
+    }
+
     @Override
     public void process(ConnectionThread threadServer) {
+
+
 
     }
 
     @Override
     public void process(ServerLink threadClient) {
-        Console.log("AskReadyMoney reçu");
-
-        //TODO : decommenter quand la fonction existe
-        //threadClient.getNetworkManager().getDataInstance().askAmountMoney();
+        Console.log("AskReadyMessage reçu");
+       // threadClient.getNetworkManager().getDataInstance().askReadyGame();
     }
 }

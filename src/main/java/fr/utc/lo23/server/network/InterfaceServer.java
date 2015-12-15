@@ -5,10 +5,7 @@
  */
 package fr.utc.lo23.server.network;
 
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ public interface InterfaceServer {
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException;
 
 
-    public void sendLogGame() throws NetworkFailureException;
+    public void sendLogGame(Game LogGame) throws NetworkFailureException;
 
     /**
      * DEPRECATED, envoyé au passage dans NotifyNewPlayerMessage
@@ -68,5 +65,7 @@ public interface InterfaceServer {
      * @throws NetworkFailureException
      */
     public void startGame(Table tableToStart)throws NetworkFailureException;
+
+
 
 }

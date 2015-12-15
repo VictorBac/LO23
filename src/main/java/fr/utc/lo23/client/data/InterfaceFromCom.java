@@ -33,8 +33,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             Console.log(TAG +"remoteUserConnected");
             //TODO: gérer spectateur et player
             dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
-            //dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
-            dManagerClient.getInterToIHMTable().notifyNewUser(userLightDistant,true);
+            dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
+            //NON: dManagerClient.getInterToIHMTable().notifyNewUser(userLightDistant,true);
         } catch (ExistingUserException e) {
             e.printStackTrace();
         }
@@ -45,8 +45,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             Console.log(TAG +"remoteUserDisonnected");
             //TODO: gérer spectateur et player
             dManagerClient.getListUsersLightLocal().remove(userLightDistant);
-            //dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
-            dManagerClient.getInterToIHMTable().notifyUserLeft(userLightDistant,true);
+            dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
+            //NON: dManagerClient.getInterToIHMTable().notifyUserLeft(userLightDistant,true);
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
         }

@@ -54,6 +54,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
     }
 
+
     public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         Console.log(TAG +"userJoinedTable()");
         try {
@@ -220,7 +221,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
 
-
+    public void stopGame(Game gameOfTheUserLocal){
+        dManagerClient.getInterToIHMTable().stopGame(gameOfTheUserLocal);
+    }
 
 
 

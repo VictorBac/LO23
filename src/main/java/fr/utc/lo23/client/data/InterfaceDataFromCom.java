@@ -23,14 +23,14 @@ public interface InterfaceDataFromCom {
     /**
      * Method to update the list of UserLight connected with a new Remote userLight
      *
-     * @param userLightDistant new Userlight that need to be add
+     * @param userLightDistant new UserLight that need to be add
      */
     public void remoteUserConnected(UserLight userLightDistant);
 
     /**
      * Method to update the list of UserLight disconnected  removing a userLight
      *
-     * @param userLightDistant UserLight that need to be reomved
+     * @param userLightDistant UserLight that need to be removed
      */
     public void remoteUserDisonnected(UserLight userLightDistant);
 
@@ -40,6 +40,7 @@ public interface InterfaceDataFromCom {
      * @param tableCreatedOnServer new Table that was created on the server
      */
     public void notifyNewTable(Table tableCreatedOnServer);
+
 
     /**
      * Method to call when a remote user is connected on a specific Table,
@@ -194,4 +195,11 @@ public interface InterfaceDataFromCom {
      * @param profileReturnedByTheServer User of a remote User which contain the profile of the user
      */
     public void remoteUserProfile(User profileReturnedByTheServer);
+
+
+    /**
+     * Method to call when the Game the user is playing on is stopped
+     * @param gameOfTheUserLocal Game that was stopped
+     */
+    public void stopGame(Game gameOfTheUserLocal);
 }

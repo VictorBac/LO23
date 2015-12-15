@@ -441,7 +441,7 @@
 .progress-indicator:indeterminate .segment7 {-fx-shape:null;} */
 
 #bgimage {
-    -fx-background-image: url('http://img07.deviantart.net/15e4/i/2007/138/7/c/poker_by_mimiss.jpg');
+    -fx-background-image: url('poker.png');
 }
 
 .button{

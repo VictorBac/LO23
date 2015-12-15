@@ -8,6 +8,8 @@ import fr.utc.lo23.exceptions.network.IncorrectMessageOrRightsException;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
+import java.util.UUID;
+
 /**
  * Created by raphael on 24/11/15.
  */
@@ -16,9 +18,11 @@ import fr.utc.lo23.server.network.threads.PokerServer;
 
         private UserLight sender;
         private MessageChat messageSend;
-        public SendChatMessageMessage(UserLight u,MessageChat message) {
-            sender = u;
-            messageSend = message;
+        private UUID tableConcerned;
+        public SendChatMessageMessage(UserLight u,MessageChat message,UUID table) {
+            this.sender = u;
+            this.messageSend = message;
+            this.tableConcerned = table;
         }
 
         @Override
@@ -28,8 +32,8 @@ import fr.utc.lo23.server.network.threads.PokerServer;
             Console.log("SendChatMessage message received");
             try {
                 myServ.getNetworkManager().getDataInstance().validateMessage(sender,messageSend);
-                SendChatMessageMessage chatMessage = new SendChatMessageMessage(sender,messageSend);
-                myServ.sendToAll(chatMessage);
+                SendChatMessageMessage chatMessage = new SendChatMessageMessage(sender,messageSend,tableConcerned);
+                myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(tableConcerned),chatMessage);
             } catch (Exception e) {
                 e.printStackTrace();
             }

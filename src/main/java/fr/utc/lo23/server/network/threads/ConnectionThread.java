@@ -25,8 +25,8 @@ public class ConnectionThread extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
-    private int HEARTBEAT_PERIODE = 100; // en ms
-    private int HEARTBEAT_TIMEOUT = 3000; // en ms
+    private int HEARTBEAT_PERIODE = 1000; // en ms
+    private int HEARTBEAT_TIMEOUT = 10000; // en ms
 
     public ObjectOutputStream getOutputStream() {
         return outputStream;
@@ -68,15 +68,14 @@ public class ConnectionThread extends Thread {
         );*/
 
         running = true;
+        last_message_timestamp = System.currentTimeMillis();
         try {
             while (running) {
                 try {
-                    // Call suitable processing method
-
-                    // todo : this.socketClient.setSoTimeout(HEARTBEAT_PERIODE);// en ms
-                    this.socketClient.setSoTimeout(1000);// en ms
+                    this.socketClient.setSoTimeout(HEARTBEAT_PERIODE);// en ms
 
                     Message msg = (Message) inputStream.readObject();
+                    this.updateHeartbeat();
                     msg.process(this);
                 } catch (SocketTimeoutException e) {
                     this.checkHeartbeat();
@@ -85,7 +84,7 @@ public class ConnectionThread extends Thread {
                     this.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    //this.shutdown();
+                    this.shutdown();
                 }
             }
         } catch (Exception e) {
@@ -138,9 +137,8 @@ public class ConnectionThread extends Thread {
     private void checkHeartbeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
         if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            //todo à tester
-            //Console.log("Heartbeat: on a pas recu de message depuis plus de " +HEARTBEAT_TIMEOUT+ " ms donc deconnection du client.");
-            //this.shutdown();
+            Console.log("Heartbeat: on a pas recu de message depuis plus de " +HEARTBEAT_TIMEOUT+ " ms donc deconnection du client.");
+            this.shutdown();
         }
     }
 

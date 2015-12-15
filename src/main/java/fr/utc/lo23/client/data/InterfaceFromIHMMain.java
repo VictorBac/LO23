@@ -8,6 +8,7 @@ import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
 import java.net.InetAddress;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -165,6 +166,16 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void sendLocalUser() throws NetworkFailureException {
         dManagerClient.getInterToCom().sendProfile(dManagerClient.getUserLocal());
+    }
+
+    @Override
+    public void importProfileFile(URI file) {
+
+    }
+
+    @Override
+    public void exportProfileFile(URI file) {
+
     }
 
 

@@ -66,6 +66,11 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
+            <Button fx:id="importprofil" layoutX="86.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ImportProfilClick" prefHeight="40.0" prefWidth="141.0" text="Importer Profil">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>

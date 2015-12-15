@@ -20,9 +20,9 @@ import java.util.UUID;
         private MessageChat messageSend;
         private UUID tableConcerned;
         public SendChatMessageMessage(UserLight u,MessageChat message,UUID table) {
-            sender = u;
-            messageSend = message;
-            tableConcerned = table;
+            this.sender = u;
+            this.messageSend = message;
+            this.tableConcerned = table;
         }
 
         @Override

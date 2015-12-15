@@ -2,13 +2,8 @@ package fr.utc.lo23.server.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
-import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.UserLight;
-import fr.utc.lo23.common.network.NotifyDisconnectionMessage;
-import fr.utc.lo23.common.network.NotifyNewPlayerMessage;
-import fr.utc.lo23.common.network.NotifyNewTableMessage;
+import fr.utc.lo23.common.data.*;
+import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
@@ -83,7 +78,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     }
 
-    public void sendLogGame() throws NetworkFailureException {
+    public void sendLogGame(Game LogGame) throws NetworkFailureException {
+        SendLogGameMessage logM = new SendLogGameMessage(LogGame);
 
     }
 

@@ -23,7 +23,8 @@ public class Turn implements Serializable {
      * timeStampOfTurn : the interval to make the next action
      */
     private ArrayList<Action> listAction;
-    private ArrayList<UserLight> listPlayerInThisTurn;
+    private ArrayList<UserLight> listPlayerNoAllinNoFold;
+    private ArrayList<UserLight> listPlayerAllin;
     private Game currentGame;
     private Timestamp timeStampOfTurn;
 
@@ -35,11 +36,28 @@ public class Turn implements Serializable {
         this.listAction = new ArrayList<Action>();
         this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.currentGame = currentGameToAdd;
-        // initializer the list of player by adding one by one the players of each seat in this game
-        for (Seat item : currentGameToAdd.getListSeatPlayerWithPeculeDepart()
+
+        // initializer listPlayerNoAllinNoFold
+        if (currentGameToAdd.getCurrentHand().getListTurn().size() == 1){
+            // initializer the list of player by adding one by one the players of each seat in this game
+            for (Seat item : currentGameToAdd.getListSeatPlayerWithPeculeDepart()
              ) {
-            this.listPlayerInThisTurn.add(item.getPlayer());
+                this.listPlayerNoAllinNoFold.add(item.getPlayer());
+            }
+        }else{
+            // get the information from the last turn
+            for (UserLight item : currentGameToAdd.getCurrentHand().getListTurn().get(currentGameToAdd.getCurrentHand().getListTurn().size()-2).getListPlayerNoAllinNoFold()
+                 ) {
+                this.listPlayerNoAllinNoFold.add(item);
+            }
         }
+
+        // initializer listPlayerAllin from the last turn
+        for (UserLight item : currentGameToAdd.getCurrentHand().getListTurn().get(currentGameToAdd.getCurrentHand().getListTurn().size()-2).getListPlayerAllin()
+             ) {
+                this.getListPlayerAllin().add(item);
+        }
+
     }
 
     /**
@@ -54,6 +72,7 @@ public class Turn implements Serializable {
      * Method the player that needs to play
      * @return UserLight of the player that has to make an Action
      */
+    /*
     public UserLight getNextPlayer(){
         // if the current player is the last one in the list of action, we restart from the first one
         // else, we get directly the next index of the player
@@ -62,7 +81,7 @@ public class Turn implements Serializable {
         }else{
             return listPlayerInThisTurn.get( listPlayerInThisTurn.indexOf(getCurrentAction().getUserLightOfPlayer()) + 1 );
         }
-    }
+    }*/
 
     /**
      * Method to get the minimal bet that a player has to call, calculated according to the previous action
@@ -88,7 +107,7 @@ public class Turn implements Serializable {
         if ( availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName())){
             if (newAction.getName().equals(EnumerationAction.FOLD)){
                 listAction.add(newAction);
-                listPlayerInThisTurn.remove(getCurrentAction().getUserLightOfPlayer());
+                listPlayerNoAllinNoFold.remove(getCurrentAction().getUserLightOfPlayer());
             }
             else if (newAction.getName().equals(EnumerationAction.CHECK)){
                 listAction.add(newAction);
@@ -106,7 +125,7 @@ public class Turn implements Serializable {
                         listAction.add(newAction);
                     }
                     else if (newAction.getName().equals(EnumerationAction.BET)){
-                        if (newAction.getAmount() + getTotalAmountForAUser(newAction.getUserLightOfPlayer())<= getMaxMoneyBetInTheTurn() )
+                        if (newAction.getAmount() + getTotalAmountForAUser(newAction.getUserLightOfPlayer())<= getMaxMoneyBetInTheHand() )
                             throw new ActionInvalidException("The total amount should be greater than the minimum.");
                         else {
                             currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
@@ -125,57 +144,108 @@ public class Turn implements Serializable {
                     }
                 }
         }else{
-            throw new ActionInvalidException("Unavailable Action!");
+            throw new ActionInvalidException("Invalid Action!");
         }
     }
 
     /**
-     * Method to test if the action is available for a specific user,
+     * Method to test if the action is available for a specific user
      *
      */
-    public ArrayList<EnumerationAction> availableActions(UserLight user){
-        ArrayList<EnumerationAction> tempArray = new ArrayList<EnumerationAction>();
-        tempArray.add(EnumerationAction.FOLD);
-        tempArray.add(EnumerationAction.ALLIN);
-        int money = currentGame.getMoneyOfPlayer(user);
+    public ArrayList<EnumerationAction> availableActions(UserLight user) throws ActionInvalidException{
 
-        if(money == 0 || getTotalAmountForAUser(user)==getMaxMoneyBetInTheTurn())
-        {
-            tempArray.add(EnumerationAction.CHECK);
+        if ( !isAllIn(user) ) {
+            ArrayList<EnumerationAction> tempArray = new ArrayList<EnumerationAction>();
+            tempArray.add(EnumerationAction.FOLD);
+            tempArray.add(EnumerationAction.ALLIN);
+            int money = currentGame.getMoneyOfPlayer(user);
+
+            // when a new turn starts, the first one can check
+            //    because only when all the amounts are the same, we can display a new card
+            // when the money bet by me is equal to the max amount bet by another one, we can check
+            if (listAction.size() == 0 || getTotalAmountForAUser(user) == getMaxMoneyBetInTheHand()) {
+                tempArray.add(EnumerationAction.CHECK);
+            }
+            if (money + getTotalAmountForAUser(user) > getMaxMoneyBetInTheHand() && getMaxMoneyBetInTheHand() != 0) {
+                tempArray.add(EnumerationAction.CALL);
+            }
+            if (money + getTotalAmountForAUser(user) > getMaxMoneyBetInTheHand()) {
+                tempArray.add(EnumerationAction.BET);
+            }
+            return tempArray;
         }
-        if(money + getTotalAmountForAUser(user)>getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn()!=0) {
-            tempArray.add(EnumerationAction.CALL);
+        else{
+            throw new ActionInvalidException("This player cannot make any action now!");
         }
-        if(money + getTotalAmountForAUser(user)>getMaxMoneyBetInTheTurn())
-        {
-            tempArray.add(EnumerationAction.BET);
-        }
-        return tempArray;
+
     }
 
+    /**
+     * Method to test if the player have made the action AllIn
+     * If this case, we pass this player automatically
+     * @param user
+     * @return
+     */
+    public boolean isAllIn( UserLight user ){
+        for (UserLight item : listPlayerAllin
+             ) {
+            if ( item == user ){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
-     * Method to calculate the total amount in this turn of a user
+     * Method to test if all players of listPlayerNoAllinNoFold bet the same amount
+     * It this case, we display a new card
+     * @return
+     */
+    public boolean isSame(){
+        int temp = getTotalAmountForAUser(listPlayerNoAllinNoFold.get(0));
+        for (UserLight user : listPlayerNoAllinNoFold
+                ) {
+            if (getTotalAmountForAUser(user) != temp){
+                        return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Method to calculate the total amount in this hand of a user
      * @param user get the user information from this new action
      * @return the result of the total amount
      */
     private int getTotalAmountForAUser ( UserLight user ){
         int amount = 0;
-        for (Action a : listAction
-                ) {
-            if ( a.getUserLightOfPlayer() == user ){
-                amount += a.getAmount();
+        for (Turn eachTurn : currentGame.getCurrentHand().getListTurn()
+             ) {
+            for (Action a : eachTurn.getListAction()
+                    ) {
+                if ( a.getUserLightOfPlayer() == user ){
+                    amount += a.getAmount();
+                }
             }
         }
         return amount;
     }
 
-    private int getMaxMoneyBetInTheTurn(){
-        Integer max = 0;
-        for(Action ac : getListAction())
-        {
-            if(ac.getAmount()>max && !ac.getName().equals(EnumerationAction.ALLIN))
-                max=ac.getAmount();
+    /**
+     * Method to return the max amount bet by someone
+     * @return the max amount for an specific player in these two lists
+     */
+    private int getMaxMoneyBetInTheHand(){
+        int max = 0;
+        for (UserLight total : listPlayerNoAllinNoFold
+                ) {
+            if( getTotalAmountForAUser(total) > max )
+                max = getTotalAmountForAUser(total);
+        }
+        for (UserLight total : listPlayerAllin
+             ) {
+            if ( getTotalAmountForAUser(total) > max)
+                max = getTotalAmountForAUser(total);
         }
         return max;
     }
@@ -190,14 +260,6 @@ public class Turn implements Serializable {
      */
     public ArrayList<Action> getListAction() {
         return listAction;
-    }
-
-    /**
-     * Getter to return the list of player who can still make an action in this turn
-     * @return an ArrayList of UserLight
-     */
-    public ArrayList<UserLight> getListPlayerInThisTurn() {
-        return listPlayerInThisTurn;
     }
 
     /**
@@ -216,17 +278,19 @@ public class Turn implements Serializable {
         return timeStampOfTurn;
     }
 
+    public ArrayList<UserLight> getListPlayerNoAllinNoFold() {
+        return listPlayerNoAllinNoFold;
+    }
+
+    public ArrayList<UserLight> getListPlayerAllin() {
+        return listPlayerAllin;
+    }
+
     /**
      * Setter to modify the value of the list of action
      * @param listAction
      */
     public void setListAction(ArrayList<Action> listAction) { this.listAction = listAction; }
-
-    /**
-     * Setter to modify the value of the list of the current players
-     * @param listPlayerInThisTurn
-     */
-    public void setListPlayerInThisTurn(ArrayList<UserLight> listPlayerInThisTurn) { this.listPlayerInThisTurn = listPlayerInThisTurn; }
 
     /**
      * Setter to modify the value of the current game

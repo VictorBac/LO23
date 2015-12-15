@@ -25,6 +25,6 @@ public class AskReadyGameMessage extends Message {
     @Override
     public void process(ServerLink threadClient) {
         Console.log("AskReadyMessage reçu");
-       // threadClient.getNetworkManager().getDataInstance().askReadyGame();
+       //threadClient.getNetworkManager().getDataInstance().askReadyGame();
     }
 }

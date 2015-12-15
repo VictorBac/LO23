@@ -78,8 +78,7 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     }
 
-    public void sendLogGame(Game LogGame) throws NetworkFailureException {
-        SendLogGameMessage logM = new SendLogGameMessage(LogGame);
+    public void sendLogGame() throws NetworkFailureException {
 
     }
 

@@ -101,6 +101,8 @@ public class PokerServer extends Thread {
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
                 threadsClientList.remove(threadClient);
+                this.networkManager.notifyDisconnection(this.networkManager.getDataInstance().getUserById(userId));
+                //Console.log("broadcast user disconnect");
                 return true;
             }
         }

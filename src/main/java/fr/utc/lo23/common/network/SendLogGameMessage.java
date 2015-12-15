@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Game;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
@@ -9,10 +10,10 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
  */
 public class SendLogGameMessage extends Message {
 
-    private Game LogGame;
+    private Table LogGame;
 
-    public SendLogGameMessage(Game logGame) {
-        LogGame = logGame;
+    public SendLogGameMessage(Table logGame) {
+        this.LogGame = logGame;
     }
 
     @Override
@@ -22,8 +23,8 @@ public class SendLogGameMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        // Probleme dans la fonction de data ?
-      //  threadClient.getNetworkManager().getDataInstance().saveLogGame();
+        // Probleme dans la fonction de data , argument table mais devrait etre game ?
+        threadClient.getNetworkManager().getDataInstance().saveLogGame(LogGame);
 
     }
 }

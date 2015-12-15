@@ -83,10 +83,7 @@ public class UserLight implements Serializable {
      * @return
      */
     public boolean equals(UserLight toCompare){
-        boolean result = false;
-        if (this.idUser.equals(toCompare.getIdUser()) && this.pseudo.equals(toCompare.getPseudo()))
-            result = true;
-        return result;
+        return this.idUser.equals(toCompare.getIdUser());
     }
 
     @Override

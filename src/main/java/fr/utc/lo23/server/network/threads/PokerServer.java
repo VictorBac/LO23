@@ -2,6 +2,7 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
+import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.PlayerNotConnectedException;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
 public class PokerServer extends Thread {
@@ -98,8 +100,9 @@ public class PokerServer extends Thread {
     public boolean userDisconnect(UUID userId) throws Exception{
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
-                //threadClient.shutdown();
-                //threadsClientList.remove(threadClient);
+                threadsClientList.remove(threadClient);
+                this.networkManager.notifyDisconnection(this.networkManager.getDataInstance().getUserById(userId));
+                //Console.log("broadcast user disconnect");
                 return true;
             }
         }
@@ -117,6 +120,18 @@ public class PokerServer extends Thread {
         for (ConnectionThread threadClient : threadsClientList) {
             threadClient.send(message);
             Console.log("a : " + message);
+        }
+    }
+
+    public void sendToListOfUsers(ArrayList<UserLight> list, Message message){
+        int compt=list.size();
+        int i = 0;
+
+       for(ConnectionThread thread : threadsClientList ){
+           UserLight user = getNetworkManager().getDataInstance().getUserById(thread.getUserId()).getUserLight();
+           if(list.contains(user)){
+               thread.send(message);
+           }
         }
     }
 

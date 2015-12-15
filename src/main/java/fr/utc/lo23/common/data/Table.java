@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
+
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.exceptions.TableException;
 
 /**
@@ -65,6 +67,11 @@ public class Table implements Serializable {
         this.setAcceptSpectator(acceptSpectator);
         this.setAcceptChatSpectator(acceptChatSpectator);
         this.listPlayers = new UserLightList();
+        try {
+            listPlayers.addUser(creator);
+        } catch (ExistingUserException e) {
+            e.printStackTrace();
+        }
         this.listSpectators = new UserLightList();
         this.setNbPlayerMax(nbPlayerMax);
         this.setNbPlayerMin(nbPlayerMin);

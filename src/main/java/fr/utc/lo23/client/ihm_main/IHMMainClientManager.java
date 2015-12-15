@@ -3,6 +3,7 @@ package fr.utc.lo23.client.ihm_main;
 import fr.utc.lo23.client.data.*;
 import fr.utc.lo23.client.ihm_main.controllers.ConnectionController;
 import fr.utc.lo23.client.ihm_main.controllers.MainControllerClient;
+import fr.utc.lo23.client.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.client.ihm_main.interfaces.InterData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
@@ -11,6 +12,13 @@ import fr.utc.lo23.client.ihm_table.*;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToMainListener;
 import fr.utc.lo23.client.network.NetworkManagerClient;
 import fr.utc.lo23.client.network.main.Main;
+import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
+import javafx.application.Platform;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by leclercvictor on 24/11/2015.
@@ -43,6 +51,53 @@ public class IHMMainClientManager {
     private MainControllerClient controllerMain;
     // TODO ajouter profileController
 
+    private List<UserLight> connectedUsers;
+    private List<Table> tables;
+
+    public List<UserLight> getConnectedUsers() {
+        if (connectedUsers == null)
+            connectedUsers = new ArrayList<UserLight>();
+        return connectedUsers;
+    }
+
+    public void setConnectedUsers(List<UserLight> connectedUser) {
+        this.connectedUsers = connectedUser;
+        updateMainWindowConnectedUsersList();
+    }
+
+    public void addConnectedUser(UserLight u)
+    {
+        if (!this.connectedUsers.contains(u)) {
+            this.connectedUsers.add(u);
+        }
+        updateMainWindowConnectedUsersList();
+    }
+
+
+    public void removeConnectedUser(UserLight u)
+    {
+        this.connectedUsers.remove(u);
+        updateMainWindowConnectedUsersList();
+    }
+
+    public List<Table> getTables() {
+        if (tables == null)
+            tables = new ArrayList<>();
+        return tables;
+    }
+
+    public void setTables(List<Table> listTables)
+    {
+        this.tables = listTables;
+        updateMainWindowTableList();
+    }
+
+    public void addTable(Table table)
+    {
+        if (!tables.contains(table))
+            tables.add(table);
+        updateMainWindowTableList();
+    }
 
     //Getters et setters de nos interfaces
 
@@ -79,6 +134,8 @@ public class IHMMainClientManager {
     public DataManagerClient getManagerData() {
         return managerData;
     }
+
+
 
 
 
@@ -135,6 +192,28 @@ public class IHMMainClientManager {
     }
 
 
-
-
+    private void updateMainWindowConnectedUsersList ()
+    {
+        MainWindowController mainWinController = getControllerMain().getMainWindowController();
+        if (mainWinController != null) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    mainWinController.setConnectedUsers(getConnectedUsers());
+                }
+            });
+        }
+    }
+    private void updateMainWindowTableList()
+    {
+        MainWindowController mainWinController = getControllerMain().getMainWindowController();
+        if (mainWinController != null) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    mainWinController.setTables(getTables());
+                }
+            });
+        }
+    }
 }

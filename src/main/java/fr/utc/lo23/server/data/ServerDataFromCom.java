@@ -1,6 +1,5 @@
 package fr.utc.lo23.server.data;
 
-import com.sun.xml.internal.ws.developer.*;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.*;
@@ -95,6 +94,22 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             ok = true;
         Console.log(TAG + "\tPlayer can join : " + Boolean.toString(ok));
         return ok;
+    }
+
+    public void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode) {
+        Table toAdd = getTableFromId(idTable);
+        try {
+            if(mode == EnumerationTypeOfUser.PLAYER) {
+                toAdd.playerJoinTable(player);
+            } else {
+                toAdd.spectatorJoinTable(player);
+            }
+            Console.log(TAG + "\tPlayer joined table");
+        }
+        catch(Exception e)
+        {
+            Console.log(TAG + "\tPlayer could't join table");
+        }
     }
 
     public void validateMessage(UserLight sender, MessageChat msgSent) {

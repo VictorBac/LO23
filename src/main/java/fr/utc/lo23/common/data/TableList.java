@@ -90,11 +90,9 @@ public class TableList implements Serializable {
      */
     private int getIDTable(UUID idTable) {
         int index = 0;
-        Iterator<Table> iter = this.listTable.iterator();
-        while (iter.hasNext())
-        {
-            if(iter.next().getIdTable() == idTable){
-                return index;
+        for(Table table : listTable) {
+            if (table.getIdTable().equals(idTable)) {
+               return index;
             }
             index++;
         }

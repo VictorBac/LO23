@@ -195,9 +195,11 @@ public class MainWindowController extends BaseController {
         listViewConnectedUsers.setItems(connectedUsers);
     }
 
+    public void ExportProfil(ActionEvent actionEvent) {
 
-    @FXML
-    void didClickQuitButton(ActionEvent event) {
+    }
+
+    public void ClickQuit(ActionEvent actionEvent) {
         try {
             mController.getManagerMain().getInterDataToMain().exitAsked();
         } catch (NetworkFailureException e) {

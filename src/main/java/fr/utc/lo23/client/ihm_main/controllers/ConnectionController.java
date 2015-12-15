@@ -95,7 +95,7 @@ public class ConnectionController extends BaseController {
         // test
         try
         {
-            serverList.add(new Server(InetAddress.getByName("000.000.000.000"),"0000"));
+            serverList.add(new Server(InetAddress.getByName("000.000.000.000"), "0000"));
         } catch (UnknownHostException e)
         {
 
@@ -107,7 +107,6 @@ public class ConnectionController extends BaseController {
 
     public void createnewuser(ActionEvent actionEvent) {
         User createUser = new User();
-        //createUser.
     }
 
     public void CreateProfilClick(ActionEvent actionEvent) {
@@ -131,5 +130,9 @@ public class ConnectionController extends BaseController {
         } else {
             mController.showErrorPopup("Erreur", "Vous devez sélectionner un serveur pour le supprimer.");
         }
+    }
+
+    public void ImportProfilClick(ActionEvent actionEvent) {
+
     }
 }

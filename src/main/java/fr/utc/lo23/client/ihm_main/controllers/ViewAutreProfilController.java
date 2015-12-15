@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -43,5 +44,13 @@ public class ViewAutreProfilController extends BaseController {
         //labelAge.setText(profilautre.get);
         // TODO quelque chose ici
 //        imageviewer.setImage(user.getAvatar().getImg());
+    }
+    public void setProfile(UserLight user) {
+        //TODO: username.setText(user.getPseudo());
+        try {
+            imageviewer.setImage(user.getAvatar().getImageAvatar());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -20,6 +20,7 @@ public interface InterfaceMainToData {
     void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type);
     void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type);
     void userStatsUpdated(UserLight user, Stats st);
+    void tableJoinAccepted(Table t, EnumerationTypeOfUser type);
     void tableJoinRefused(Table t);
     void profileRemoteUserFromServer(User profileReturnedByTheServer);
 }

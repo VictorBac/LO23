@@ -18,7 +18,8 @@ public class CreateTableMessage extends Message {
     @Override
     public void process(ConnectionThread threadServer) {
         threadServer.getMyServer().getNetworkManager().getDataInstance().createTable(maker,newTable);
-
+        NotifyNewTableMessage notifNewTable = new NotifyNewTableMessage(newTable);
+        threadServer.getMyServer().sendToAll(notifNewTable);
     }
 
     @Override

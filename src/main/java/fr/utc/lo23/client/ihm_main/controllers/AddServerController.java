@@ -47,8 +47,6 @@ public class AddServerController extends BaseController{
             mController.showErrorPopup("Erreur", "Le port doit être entier!");
             return;
         }
-
-
         try {
             mController.getManagerMain().getInterDataToMain().addServer(InetAddress.getByName(fieldIPAddress.getText()), fieldPort.getText());
         } catch (UnknownHostException e) {

@@ -81,7 +81,7 @@ public interface InterfaceClient {
      * @param userLocal
      * @param IdTable
      */
-    public void leaveTable(UserLight userLocal, int IdTable) throws NetworkFailureException;
+    public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException;
     
     /**
      *
@@ -94,7 +94,9 @@ public interface InterfaceClient {
     public void requestLoginServer(User u);
 
     public void sendPacket() throws NetworkFailureException;
-    
+
+    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
+
     /**
      *
      * @param userLocal
@@ -114,20 +116,14 @@ public interface InterfaceClient {
      *
      */
     public void notifyDisconnection(User maker) throws NetworkFailureException;
-    /**
-     *
-     * @param userLocal
-     * @param tableId
-     */
-    public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
 
     public void sendMessage(MessageChat message,UUID tableID);
 
-    public void confirmationCardReceived();
+    public void confirmationCardReceived(UserLight ul);
 
     public void replayAction(Action action, UserLight player);
 
-    public void confirmationEndTurn();
+    public void confirmationEndTurn(UserLight ul);
 
     public void transmitRequestServer(UserLight player);
 }

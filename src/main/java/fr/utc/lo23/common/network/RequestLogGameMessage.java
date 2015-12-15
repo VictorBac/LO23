@@ -24,7 +24,8 @@ public class RequestLogGameMessage extends Message {
 
         Console.log("SendChatMessage message received");
         try {
-            myServ.getNetworkManager().getDataInstance().sendLogGame(u);
+          //Table LogGame =  myServ.getNetworkManager().getDataInstance().sendLogGame(u);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

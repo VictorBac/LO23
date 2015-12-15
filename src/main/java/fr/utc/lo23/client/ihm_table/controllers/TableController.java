@@ -958,7 +958,7 @@ public class TableController {
         final Timeline timeline2 = new Timeline();
         timeline2.setCycleCount(1);
         timeline2.setAutoReverse(false);
-        KeyValue kv2 = new KeyValue(img.fitWidthProperty(), 0);
+        KeyValue kv2 = new KeyValue(img.fitWidthProperty(), 1);
         EventHandler onFinished2 = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
                 img.setImage(image);

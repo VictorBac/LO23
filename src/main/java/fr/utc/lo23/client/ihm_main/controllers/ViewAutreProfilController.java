@@ -32,7 +32,7 @@ public class ViewAutreProfilController extends BaseController {
     }
 
     public void didClickBackButton(ActionEvent actionEvent) {
-        //TODO retour au controlleur précedent. A voir une fois qu'on connaitra quand on appelle ce controlleur.
+        mController.showMainWindow();
     }
 
     public void setProfile(UserLight user) {

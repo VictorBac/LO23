@@ -142,6 +142,7 @@ public class MainWindowController extends BaseController {
                 return cell;
             }
         });
+        listViewConnectedUsers.setItems(connectedUsers);
     }
 
     public void openViewOwnProfil(ActionEvent actionEvent) {
@@ -159,14 +160,20 @@ public class MainWindowController extends BaseController {
     }
 
     public void joinTable(ActionEvent actionEvent) {
-        try {
-            mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
-                    EnumerationTypeOfUser.PLAYER);
-        } catch (FullTableException e) {
-            mController.showErrorPopup("Erreur", "Table pleine !");
-        } catch (NetworkFailureException e) {
-            mController.showErrorPopup("Erreur", "Erreur réseau !");
-            e.printStackTrace();
+        if (tableViewCurrentTables.getSelectionModel().getSelectedItem() != null) {
+            try {
+                mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
+                        EnumerationTypeOfUser.PLAYER);
+            } catch (FullTableException e) {
+                mController.showErrorPopup("Erreur", "Table pleine !");
+            } catch (NetworkFailureException e) {
+                mController.showErrorPopup("Erreur", "Erreur réseau !");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            mController.showErrorPopup("Erreur", "Vous devez sélectionner une table avant de pouvoir en rejoindre une");
         }
     }
 

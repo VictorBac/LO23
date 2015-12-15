@@ -15,6 +15,7 @@ import fr.utc.lo23.client.network.main.Main;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +52,8 @@ public class IHMMainClientManager {
     private List<UserLight> connectedUsers;
 
     public List<UserLight> getConnectedUsers() {
+        if (connectedUsers == null)
+            connectedUsers = new ArrayList<UserLight>();
         return connectedUsers;
     }
 

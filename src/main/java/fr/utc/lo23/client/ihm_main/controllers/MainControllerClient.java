@@ -74,6 +74,7 @@ public class MainControllerClient extends Application {
 
     public void showMainWindow(){
         mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml","Poker");
+        mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
     }
 
     public void showViewOwnWindow(){

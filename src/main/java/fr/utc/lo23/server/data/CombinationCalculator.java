@@ -19,7 +19,7 @@ public class CombinationCalculator {
      */
     public ArrayList<PlayerHand> getWinner(ArrayList<PlayerHand> listOfPlayer, ArrayList<Card> cardsOnField) {
         try {
-            if (cardsOnField.size() != 2) {
+            if (cardsOnField.size() != 5) {
                 throw new CardsNumberException(cardsOnField);
             }
         } catch (CardsNumberException e) {
@@ -38,7 +38,7 @@ public class CombinationCalculator {
         for (int i = 0; i < listOfPlayer.size(); i++) {
             currentHand = listOfPlayer.get(i).getListCardsHand();
             try {
-                if (cardsOnField.size() != 5) {
+                if (currentHand.size() != 5) {
                     throw new CardsNumberException(currentHand);
                 }
             } catch (CardsNumberException e) {

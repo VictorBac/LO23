@@ -47,13 +47,13 @@ public class ViewOwnProfilController extends BaseController {
         mController.showEditProfilWindow();
     }
 
-
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initData(){
         User currentUser = mController.getManagerMain().getManagerData().getUserLocal();
         UserLight currentLight = currentUser.getUserLight();
         labelPlayer.setText(currentLight.getPseudo());
+    }
 
-
+    public void initialize(URL location, ResourceBundle resources) {
     }
 
 }

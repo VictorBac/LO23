@@ -43,10 +43,12 @@ public class EditOwnProfilController extends BaseController {
     private ImageView imageviewer;
 
     public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    public void initdata(){
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
         fillUserform(edituser);
     }
-
     public void didClickCancelButton(ActionEvent actionEvent) {
         mController.showViewOwnWindow();
     }

@@ -82,10 +82,12 @@ public class MainControllerClient extends Application {
 
     public void showViewOwnWindow(){
         viewOwnProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewOwnProfil.fxml", "Your Profile");
+        viewOwnProfilWindowController.initData();
     }
 
     public void showEditProfilWindow(){
         editProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/EditProfil.fxml", "Edit your profile");
+        editProfilWindowController.initdata();
     }
 
     public void showAutreProfilWindow(UserLight user){

@@ -17,8 +17,8 @@
       <Button fx:id="cancel" layoutX="321.0" layoutY="517.0" mnemonicParsing="false" onAction="#didClickCancelButton" text="Cancel" />
       <Button fx:id="update" layoutX="511.0" layoutY="517.0" mnemonicParsing="false" onAction="#UpdateProfil" text="Update" />
       <TextField fx:id="username" layoutX="321.0" layoutY="49.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
-      <PasswordField fx:id="password" layoutX="321.0" layoutY="145.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
-      <PasswordField fx:id="repassword" layoutX="321.0" layoutY="231.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
+      <PasswordField fx:id="oldpassword" layoutX="321.0" layoutY="145.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
+      <PasswordField fx:id="newpassword" layoutX="321.0" layoutY="231.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
       <TextField fx:id="age" layoutX="321.0" layoutY="327.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
       <TextField fx:id="email" layoutX="321.0" layoutY="415.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
       <ImageView fx:id="imageviewer" fitHeight="304.0" fitWidth="349.0" layoutX="801.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">

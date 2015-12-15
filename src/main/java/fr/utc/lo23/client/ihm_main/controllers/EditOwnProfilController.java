@@ -28,10 +28,10 @@ public class EditOwnProfilController extends BaseController {
     private TextField username;
 
     @FXML
-    private PasswordField password;
+    private PasswordField oldpassword;
 
     @FXML
-    private PasswordField repassword;
+    private PasswordField newpassword;
 
     @FXML
     private TextField age;
@@ -58,6 +58,19 @@ public class EditOwnProfilController extends BaseController {
         edituser.setAge(Integer.parseInt(age.getText()));
         edituser.setEmail(email.getText());
         mController.showViewOwnWindow();
+        edituser.getUserLight().setPseudo(username.getText());
+
+        if (!oldpassword.getText().equals("")){
+            if (edituser.getPwd().equals(oldpassword.getText())){
+                edituser.setPwd(newpassword.getText());
+            }
+            else {
+                mController.showErrorPopup("Erreur", "Le champ ancien mot de passe ne corespond pas au mot de passe actuel.");
+            }
+        }
+        
+        mController.getManagerMain().getInterDataToMain().saveNewProfile(edituser);
+
     }
 
     public void fillUserform(User UserLocal) {

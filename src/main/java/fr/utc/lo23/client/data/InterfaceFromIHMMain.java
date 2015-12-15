@@ -137,8 +137,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     public void addServer(InetAddress ip, String port) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
         listServers.add(new Server(ip, port));
-        Serialization.serializationObject(listServers,
-                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        Serialization.serializationObject(listServers, Serialization.pathServerList);
         dManagerClient.setListServers(listServers);
     }
 
@@ -149,8 +148,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     public void removeServer(Server server) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
         listServers.remove(server);
-        Serialization.serializationObject(listServers,
-                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        Serialization.serializationObject(listServers, Serialization.pathServerList);
         dManagerClient.setListServers(listServers);
     }
 

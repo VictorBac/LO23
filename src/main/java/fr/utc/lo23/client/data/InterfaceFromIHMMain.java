@@ -6,6 +6,9 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -119,28 +122,53 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * getServersList TODO
+     * get servers list
      * @return server list
      */
+    @SuppressWarnings("unchecked")
     public List<Server> getServersList() {
-        return null;
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        if (listServers != null) {
+            return listServers;
+        }
+        else {
+
+            listServers = (ArrayList<Server>) Serialization.deserializationObject(
+                    dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+            dManagerClient.setListServers(listServers);
+            return listServers;
+        }
     }
 
     /**
-     * Add server TODO
+     * Add server
      * @param ip
      * @param port
      */
-    public void addServer(String ip, String port) {
-
+    @SuppressWarnings("unchecked")
+    public void addServer(InetAddress ip, String port) {
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        if (listServers == null) {
+            listServers = (ArrayList<Server>) Serialization.deserializationObject(
+                    dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        }
+        listServers.add(new Server(ip, port));
+        dManagerClient.setListServers(listServers);
     }
 
     /**
-     * remove server TODO
+     * remove server from server list
      * @param server server to remove
      */
+    @SuppressWarnings("unchecked")
     public void removeServer(Server server) {
-
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        if (listServers == null) {
+            listServers = (ArrayList<Server>) Serialization.deserializationObject(
+                    dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        }
+        listServers.remove(server);
+        dManagerClient.setListServers(listServers);
     }
 
     /**

@@ -182,6 +182,9 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void sendMessage(MessageChat message, UUID tableId) {
 
+        SendChatMessageMessage messageToSend = new SendChatMessageMessage(this.getDataInstance().getUserLightLocal(),message,tableId);
+        localClient.send(messageToSend);
+
     }
 
     public void confirmationCardReceived(UserLight ul) {

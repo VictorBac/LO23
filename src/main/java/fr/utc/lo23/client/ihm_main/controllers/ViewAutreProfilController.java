@@ -3,11 +3,14 @@ package fr.utc.lo23.client.ihm_main.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
+import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 /**
@@ -19,24 +22,25 @@ public class ViewAutreProfilController extends BaseController {
     private Button back;
 
     @FXML
-    private TextField username;
+    private Label labelPlayer;
 
     @FXML
-    private TextField age;
+    private Label labelAge;
 
     @FXML
     private ImageView imageviewer;
 
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     public void didClickBackButton(ActionEvent actionEvent) {
         mController.showMainWindow();
     }
 
-    public void setProfile(UserLight user) {
-        username.setText(user.getPseudo());
+    public void initdata(UserLight profilautre) {
+        labelPlayer.setText(profilautre.getPseudo());
+        //User userautre = mController.getManagerMain().getManagerData().
+        //labelAge.setText(profilautre.get);
         // TODO quelque chose ici
 //        imageviewer.setImage(user.getAvatar().getImg());
     }

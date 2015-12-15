@@ -92,7 +92,7 @@ public class MainControllerClient extends Application {
 
     public void showAutreProfilWindow(UserLight user){
         viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
-        viewAutreProfilWindowController.setProfile(user);
+        viewAutreProfilWindowController.initdata(user);
     }
 
     public CreateTableController showCreateTableView() {

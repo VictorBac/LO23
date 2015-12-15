@@ -12,6 +12,7 @@ import fr.utc.lo23.client.ihm_table.*;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToMainListener;
 import fr.utc.lo23.client.network.NetworkManagerClient;
 import fr.utc.lo23.client.network.main.Main;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Platform;
@@ -51,6 +52,7 @@ public class IHMMainClientManager {
     // TODO ajouter profileController
 
     private List<UserLight> connectedUsers;
+    private List<Table> tables;
 
     public List<UserLight> getConnectedUsers() {
         if (connectedUsers == null)
@@ -78,6 +80,24 @@ public class IHMMainClientManager {
         updateMainWindowConnectedUsersList();
     }
 
+    public List<Table> getTables() {
+        if (tables == null)
+            tables = new ArrayList<>();
+        return tables;
+    }
+
+    public void setTables(List<Table> listTables)
+    {
+        this.tables = listTables;
+        updateMainWindowTableList();
+    }
+
+    public void addTable(Table table)
+    {
+        if (!tables.contains(table))
+            tables.add(table);
+        updateMainWindowTableList();
+    }
 
     //Getters et setters de nos interfaces
 
@@ -180,6 +200,18 @@ public class IHMMainClientManager {
                 @Override
                 public void run() {
                     mainWinController.setConnectedUsers(getConnectedUsers());
+                }
+            });
+        }
+    }
+    private void updateMainWindowTableList()
+    {
+        MainWindowController mainWinController = getControllerMain().getMainWindowController();
+        if (mainWinController != null) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    mainWinController.setTables(getTables());
                 }
             });
         }

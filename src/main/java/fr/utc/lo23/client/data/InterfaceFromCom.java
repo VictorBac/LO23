@@ -111,6 +111,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
             //TODO need to contact IHMMain missing interface   dManagerClient.getInterToIHMMain();
+            dManagerClient.getInterToIHMMain().tableJoinAccepted(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined), modeUserLocal);
         } catch (TableException e) {
             e.printStackTrace();
         }

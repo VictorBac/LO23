@@ -177,6 +177,18 @@ public class MainWindowController extends BaseController {
         }
     }
 
+    public void joinAcceptedTable(Table t, EnumerationTypeOfUser e) {
+        gamePane.setVisible(true);
+        gamePane.setDisable(false);
+        gamePane.getStylesheets().clear();
+        mController.getManagerMain().getInterTableToMain().joinTable(gamePane, t);
+        listPane.setVisible(false);
+    }
+
+    public void joinRefusedTable(Table t) {
+        mController.showErrorPopup("Erreur", "Impossible de rejoindre la table");
+    }
+
     public void addTables(List<Table> currentTables) {
         tablesList = FXCollections.observableArrayList(currentTables);
         tableViewCurrentTables.setItems(tablesList);
@@ -195,6 +207,10 @@ public class MainWindowController extends BaseController {
         listViewConnectedUsers.setItems(connectedUsers);
     }
 
+    public void setTables(List<Table> tables) {
+        tablesList = FXCollections.observableArrayList(tables);
+        tableViewCurrentTables.setItems(tablesList);
+    }
 
     @FXML
     void didClickQuitButton(ActionEvent event) {
@@ -204,9 +220,5 @@ public class MainWindowController extends BaseController {
             e.printStackTrace();
         }
         Platform.exit();
-    }
-
-    public void addTable(Table t) {
-        tablesList.add(t);
     }
 }

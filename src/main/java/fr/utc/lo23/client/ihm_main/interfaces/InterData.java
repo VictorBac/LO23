@@ -55,7 +55,7 @@ import java.util.List;
 
     @Override
     public void notifyNewTable(Table t) {
-        managerMain.getControllerMain().getMainWindowController().addTable(t);
+        managerMain.addTable(t);
     }
 
     @Override
@@ -65,12 +65,7 @@ import java.util.List;
 
     @Override
     public void currentTables(List<Table> currentTables) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
-            }
-        });
+        managerMain.setTables(currentTables);
     }
 
     @Override
@@ -89,8 +84,23 @@ import java.util.List;
     }
 
     @Override
-    public void tableJoinRefused(Table t) {
+    public void tableJoinAccepted(Table t, EnumerationTypeOfUser e) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                managerMain.getControllerMain().getMainWindowController().joinAcceptedTable(t, e);
+            }
+        });
+    }
 
+    @Override
+    public void tableJoinRefused(Table t) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                managerMain.getControllerMain().getMainWindowController().joinRefusedTable(t);
+            }
+        });
     }
 
     @Override

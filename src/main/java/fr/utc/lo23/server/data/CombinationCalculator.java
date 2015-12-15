@@ -5,6 +5,7 @@ import fr.utc.lo23.common.data.EnumerationCard;
 import fr.utc.lo23.common.data.PlayerHand;
 import fr.utc.lo23.server.data.exceptions.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Class of combination calculator to find the winner
@@ -74,12 +75,18 @@ public class CombinationCalculator {
 
 
     public ArrayList<Integer> getHandRank(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) {
+        // Add cardsOnHand and cardsOnField (7 cards) to variable to cards.
         ArrayList<Card> cards = null;
         cards.addAll(cardsOnHand);
         cards.addAll(cardsOnField);
-
+        // take out cardValues of cards. Sort it as desc.
         ArrayList<Integer> cardValues = new ArrayList<Integer>();
-
+        for (int i = 0; i < cards.size(); i++) {
+            cardValues.add(cards.get(i).getValue());
+        }
+        Collections.sort(cardValues);
+        Collections.reverse(cardValues);
+        // Try to find the first matched card rank. Start at the highest rank.
         ArrayList<Integer> cardRank = hasRoyalFlush(cards);
         if (cardRank == null) cardRank = hasRoyalFlush(cards);
         if (cardRank == null) cardRank = hasStraightFlush(cards);
@@ -202,7 +209,7 @@ public class CombinationCalculator {
             cardRank.remove(5);
             cardRank.remove(5);
             // add card rank 3
-            cardRank.add(0, 3);
+            cardRank.add(0, 4);
             return cardRank;
         }  else {
             return null;
@@ -216,6 +223,7 @@ public class CombinationCalculator {
      * @throws Exception
      */
     protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
+        if (cardValues.size() < 5) return null;
         ArrayList<Integer> cardRank = new ArrayList<Integer>();
         if (cardValues.get(0) == 14)  cardValues.add(1);
         for (int i = 0; i < 4; i++) {
@@ -243,6 +251,7 @@ public class CombinationCalculator {
      * @throws Exception
      */
     protected ArrayList<Integer> hasFlush (ArrayList<Card> cards) {
+        ArrayList<Integer> cardRank = new ArrayList<Integer>();
         ArrayList<Integer> spade = new ArrayList<Integer>();
         ArrayList<Integer> heart = new ArrayList<Integer>();
         ArrayList<Integer> diamond = new ArrayList<Integer>();
@@ -250,32 +259,27 @@ public class CombinationCalculator {
         for (int i = 0; i < cards.size(); i++) {
             EnumerationCard symbol = cards.get(i).getSymbol();
             Integer value = cards.get(i).getValue();
-            /*if (symbol == 'S') spade.add(value);
-            if (symbol == 'H') heart.add(value);
-            if (symbol == 'D') diamond.add(value);
-            if (symbol == 'C') club.add(value);*/
+            if (symbol == EnumerationCard.SPADE) spade.add(value);
+            if (symbol == EnumerationCard.HEART) heart.add(value);
+            if (symbol == EnumerationCard.DIAMOND) diamond.add(value);
+            if (symbol == EnumerationCard.CLUB) club.add(value);
         }
         if (spade.size() >= 5) {
-            while (spade.size() > 5) spade.remove(5);
-            spade.add(0,6);
-            return spade;
+            cardRank = spade;
+        } else if (heart.size() >= 5) {
+            cardRank = heart;
+        } else if (diamond.size() >= 5) {
+            cardRank = diamond;
+        } else if (club.size() >= 5) {
+            cardRank = club;
+        } else {
+            return null;
         }
-        if (heart.size() >= 5) {
-            while (heart.size() > 5) heart.remove(5);
-            heart.add(0,6);
-            return heart;
-        }
-        if (diamond.size() >= 5) {
-            while (diamond.size() > 5) diamond.remove(5);
-            diamond.add(0,6);
-            return diamond;
-        }
-        if (club.size() >= 5) {
-            while (club.size() > 5) club.remove(5);
-            club.add(0,6);
-            return club;
-        }
-        return null;
+        Collections.sort(cardRank);
+        Collections.reverse(cardRank);
+        while (cardRank.size() > 5) cardRank.remove(5);
+        cardRank.add(0,6);
+        return cardRank;
     }
 
     /**
@@ -284,7 +288,41 @@ public class CombinationCalculator {
      * @return
      */
     protected ArrayList<Integer> hasFullHouse (ArrayList<Integer> cardValues) {
-        return null;
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        int i;
+        // try to three of a kind
+        for (i = 2; i < 7; i++) {
+            if (cardValues.get(i - 2) == cardValues.get(i)) {
+                break;
+            }
+        }
+        if (i < 7) {
+            // move the three of a kind to the start
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+            cardRank.add(0, cardRank.remove(i));
+        }  else {
+            return null;
+        }
+        // try to find one pair
+        for (i = 4; i < 7; i++) {
+            if (cardValues.get(i - 1) == cardValues.get(i)) {
+                break;
+            }
+        }
+        if (i < 7) {
+            // move the pair to the 4th and 5th card
+            cardRank.add(3, cardRank.remove(i));
+            cardRank.add(3, cardRank.remove(i));
+            // remove the last two card values
+            cardRank.remove(5);
+            cardRank.remove(5);
+            // add card rank 2
+            cardRank.add(0, 7);
+            return cardRank;
+        }  else {
+            return null;
+        }
     }
 
     /**
@@ -334,28 +372,25 @@ public class CombinationCalculator {
         for (int i = 0; i < cards.size(); i++) {
             EnumerationCard symbol = cards.get(i).getSymbol();
             Integer value = cards.get(i).getValue();
-            /*if (symbol == 'S') spade.add(value);
-            if (symbol == 'H') heart.add(value);
-            if (symbol == 'D') diamond.add(value);
-            if (symbol == 'C') club.add(value);*/
+            if (symbol == EnumerationCard.SPADE) spade.add(value);
+            if (symbol == EnumerationCard.HEART) heart.add(value);
+            if (symbol == EnumerationCard.DIAMOND) diamond.add(value);
+            if (symbol == EnumerationCard.CLUB) club.add(value);
         }
         if (spade.size() >= 5) {
             cardRank = spade;
-        }
-        if (heart.size() >= 5) {
+        } else if (heart.size() >= 5) {
             cardRank = heart;
-        }
-        if (diamond.size() >= 5) {
+        } else if (diamond.size() >= 5) {
             cardRank = diamond;
-        }
-        if (club.size() >= 5) {
+        } else if (club.size() >= 5) {
             cardRank = club;
-        }
-        if (cardRank.size() == 0) {
-            return null;
         } else {
-            cardRank = hasStraight(cardRank);
+            return null;
         }
+        Collections.sort(cardRank);
+        Collections.reverse(cardRank);
+        cardRank = hasStraight(cardRank);
         if (cardRank == null) {
             return null;
         } else {

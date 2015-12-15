@@ -7,7 +7,8 @@ import java.io.*;
  * http://www.codingeek.com/java/io/object-streams-serialization-deserialization-java-example-serializable-interface/
  */
 public class Serialization {
-    private static final String dirUserLocalSavedProfile ="./tmp/";
+    private final String TAG ="Serialization";
+    private static final String dirLocalSavedFiles ="./tmp/";
     public static final String pathSavedGame ="SavedGame";
     public static final String pathServerList ="ServerList";
 
@@ -20,7 +21,7 @@ public class Serialization {
 
         try
         {
-            FileOutputStream fileOut = new FileOutputStream(dirUserLocalSavedProfile+nameFile);
+            FileOutputStream fileOut = new FileOutputStream(dirLocalSavedFiles +nameFile);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(objectToSerialize);
             out.close();
@@ -36,25 +37,32 @@ public class Serialization {
     /**
      * Method to deserialize an Object that was Serialized in the file at the path that is specified
      * @param nameFile name of the file where the object has to be deserialize
-     * @return an Object from a Class that implements Serializable
+     * @return an Object from a Class that implements Serializable, Warning it returns null if the file doesn't exist
      */
     public static Object deserializationObject( String nameFile){
         Object objectDeserialized = null;
-        try
-        {
-            FileInputStream fileIn = new FileInputStream(dirUserLocalSavedProfile+nameFile);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            objectDeserialized = in.readObject();
-            in.close();
-            fileIn.close();
-        }catch(IOException i)
-        {
-            i.printStackTrace();
-        }catch(ClassNotFoundException c)
-        {
-            System.out.println("class not found");
-            c.printStackTrace();
+        if(!new File(dirLocalSavedFiles +nameFile).isFile()){
+            System.out.println("file not found it returns null");
         }
+        else {
+            try
+            {
+                FileInputStream fileIn = new FileInputStream(dirLocalSavedFiles +nameFile);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                objectDeserialized = in.readObject();
+                in.close();
+                fileIn.close();
+            }catch(IOException i)
+            {
+                i.printStackTrace();
+            }catch(ClassNotFoundException c)
+            {
+                System.out.println("class not found");
+                c.printStackTrace();
+            }
+        }
+
+
         return objectDeserialized;
     }
 

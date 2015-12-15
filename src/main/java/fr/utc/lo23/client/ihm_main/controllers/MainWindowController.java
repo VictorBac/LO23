@@ -81,7 +81,7 @@ public class MainWindowController extends BaseController {
 
         columnTableMise.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, Integer>, ObservableValue<Integer>>() {
             public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Table, Integer> param) {
-                return new SimpleIntegerProperty(param.getValue().getMaxMise()).asObject();
+                return new SimpleIntegerProperty(param.getValue().getCurrentGame().getMaxStartMoney()).asObject();
             }
         });
 
@@ -182,12 +182,12 @@ public class MainWindowController extends BaseController {
         tableViewCurrentTables.setItems(tablesList);
     }
 
-    public void testTablesView() {
+    /*public void testTablesView() {
         Table table1 = new Table("CCC", new UserLight("Dada"), true, false, 20, 10, false, 30, 5000);
         List<Table> list = new ArrayList<Table>();
         list.add(table1);
         mController.getManagerMain().getInterMainToData().currentTables(list);
-    }
+    }*/
 
     public void setConnectedUsers(List<UserLight> users)
     {

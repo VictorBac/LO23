@@ -9,5 +9,5 @@ public enum EnumerationStatusGame {
     finished : game finished but players still on table
     closed : game finished and players are gone
     */
-    waitingForPlayer, playing, finished, closed
+    Waiting, Playing, Finished, Replay
 }

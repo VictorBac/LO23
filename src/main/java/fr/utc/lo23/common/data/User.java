@@ -2,6 +2,7 @@ package fr.utc.lo23.common.data;
 
 import javafx.scene.image.Image;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -115,7 +116,7 @@ public class User implements Serializable{
     }
 
     /**
-     * @param beginMse : la mise de d�part du joueur
+     * @param beginMse : la mise de depart du joueur
      * @param points : son score par partie
      */
     public void updateStats(int beginMse, int points){
@@ -148,8 +149,8 @@ public class User implements Serializable{
      *
      * @return the Image in the ImageAvatar in the UserLight in the User
      */
-    public Image getImg(){
-        return core.getAvatar().getImg();
+    public Image getImg() throws IOException {
+        return core.getAvatar().getImageAvatar();
     }
 
     /**

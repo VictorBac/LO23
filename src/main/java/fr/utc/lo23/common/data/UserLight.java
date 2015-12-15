@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -37,6 +38,21 @@ public class UserLight implements Serializable {
         this.avatar = null;
     }
 
+    /**
+     * @deprecated
+     * @param pseudo
+     * @param avatar
+     * @throws IOException
+     */
+    public UserLight(String pseudo, ImageAvatar avatar) throws IOException {
+        this.pseudo = pseudo;
+        this.avatar = new ImageAvatar(avatar.getPath());
+    }
+
+    public UserLight(String pseudo, String pathImageAvatar) throws IOException {
+        this.pseudo = pseudo;
+        this.avatar = new ImageAvatar(pathImageAvatar);
+    }
 
     public UUID getIdUser(){
         return idUser;

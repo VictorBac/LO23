@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by R�my on 03/11/2015.
+ * Created by R�my on 03/11/2015.
  */
 public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
@@ -105,26 +105,27 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
-    /**
+    /*
      * starts a game with a given ID
      *
      * @param idTable the id of the table of the game
      * @param player the player launching the game
      * @return the created game
      */
-    public Game startGame(UUID idTable, UserLight player) {
+    public Boolean startGame(UUID idTable, UserLight player) {
         Table toStart = getTableFromId(idTable);
-
-                try {
-                    toStart.startGame(toStart.getCurrentGame());
-                    Console.log(TAG + "\tGame started.");
-                    return toStart.getCurrentGame();
-                }
-                catch(TableException e){
-                    Console.log(TAG + "\tGame failed to start.");
-                    return null;
-                }
+        if(toStart.getCurrentGame().startGame() && player==toStart.getCreator())
+        {
+            //TODO: ajouter une fonction pour envoyer les demandes de ready, depuis chez nous ou chez com ?
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+
+
 
     public void nextStepReplay() {
 
@@ -214,7 +215,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return the table if found, else null
      */
     private Table getTableFromId(UUID idTable){
-        Table wantedTable = null;
         ArrayList<Table> tableList = getTableList();
         for (Table cur : tableList){
             if (cur.getIdTable().equals(idTable))
@@ -222,4 +222,36 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
         return null;
     }
+
+    /*
+     * Permet à com de transmettre les start money des utilisateurs pour validation ou refus, et sauvegarde coté server si validation
+     */
+    public boolean setMoneyPlayer(UUID idTable, UserLight user, Integer startAmount){
+        if(myManager.getTables().getTable(idTable).getCurrentGame().getMaxStartMoney()<startAmount && startAmount<myManager.getTables().getTable(idTable).getCurrentGame().getBlind()*2) {
+            return false;
+        }
+        else {
+            myManager.getTables().getTable(idTable).getCurrentGame().createPlayerSeat(user, startAmount);
+            //Si cet utilisateur est le dernier à répondre, lancer les demandes de ready
+            if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getListPlayers().getListUserLights().size())
+            {
+                //TODO: Appeler la fonction d'envoi des demandes de ready, depuis com ou depuis chez nous ?
+            }
+            return true;
+        }
+    }
+
+    /*
+     * Permet à com de transmettre les ready answer des utilisateurs pour sauvegarde coté server
+     */
+    public void setReadyAnswer(UUID idTable, UserLight user, Boolean answer){
+        myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().put(user,answer);
+        //Si cet utilisateur est le dernier à répondre, lancer la partie
+        if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().size())
+        {
+            myManager.getTables().getTable(idTable).getCurrentGame().startGame();
+            myManager.getTables().getTable(idTable).playGame();
+        }
+    }
+
 }

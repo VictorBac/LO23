@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.data;
 
 import fr.utc.lo23.common.data.exceptions.ContactException;
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.exceptions.GroupeNotFoundException;
 
 import java.io.Serializable;
@@ -13,76 +14,76 @@ import java.util.Arrays;
 public class Contact implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
-     * listGroups : liste des groupes de contacts
+     * group list
      */
-    private ArrayList<Group> listGroups;
+    private ArrayList<Group> groupList;
 
     /**
-     * Method to add a contact to a group
+     * Method to add a UserLight to a group
      * @param groupName : the name of group to add the contact
      * @param newContact : the name of contact to add
      */
-    public void updateContacts(String groupName, UserLight newContact) throws ContactException {
+    public void addToGroup(String groupName, UserLight newContact) throws ContactException, ExistingUserException {
         Group toAddTo = new Group();
-        for (Group cur : listGroups)
+        for (Group cur : groupList)
         {
             if (cur.getGroupName().equals(groupName))
                 toAddTo = cur;
         }
         if (toAddTo != null) {
-            toAddTo.addContact(newContact);
+            toAddTo.addUser(newContact);
         } else {
             throw new ContactException("group to add does not exist");
         }
     }
 
     /**
-     * Method to delete a contact
+     * Method to delete a UserLight from a group
      * @param toDelete
      */
-    public void deleteContact(UserLight toDelete, String fromGroup) throws GroupeNotFoundException, UserLightNotFoundException {
-        Group toDelFrom = new Group();
-        for (Group cur : listGroups)
+    public void removeFromGroup(UserLight toDelete, String fromGroup) throws GroupeNotFoundException, UserLightNotFoundException {
+        Group toRemoveFrom = new Group();
+        for (Group cur : groupList)
         {
             if (cur.getGroupName().equals(fromGroup))
-                toDelFrom = cur;
+                toRemoveFrom = cur;
         }
-        if (toDelFrom != null) {
-            toDelFrom.delContact(toDelete);
+        if (toRemoveFrom != null) {
+            toRemoveFrom.removeUser(toDelete);
         }
         else
             throw new GroupeNotFoundException(fromGroup);
-    };
+    }
 
 
     /**
-     * Method to add a new group to the list listGroups
+     * Method to add a new group to the group list
      * @param groupName name of group to add
      */
-    public void createContactList(String groupName) throws ContactException {
-        if (Arrays.asList(listGroups).contains(groupName)) {
+    public void addGroup(String groupName) throws ContactException {
+        if (Arrays.asList(groupList).contains(groupName)) {
             throw new ContactException("group to create already exist ");
         } else {
             Group newGroup = new Group(groupName);
-            listGroups.add(newGroup);
+            groupList.add(newGroup);
         }
     }
 
     /** 
-     * Method to delete a group with its name
-     * @param groupName name of the group to delete
+     * Method to remove a group with its name
+     * @param groupName name of the group to remove
      */
-    public void deleteContactList(String groupName) throws ContactException {
-        Group toDelete = new Group();
-        for (Group cur : listGroups)
+    public void removeGroup(String groupName) throws ContactException {
+        Group toRemove = new Group();
+        for (Group cur : groupList)
         {
             if (cur.getGroupName().equals(groupName))
-                toDelete = cur;
+                toRemove = cur;
         }
-        if (toDelete != null) {
-            listGroups.remove(toDelete);
+        if (toRemove != null) {
+            groupList.remove(toRemove);
         } else {
-            throw new ContactException("group to delete does not exist");
+            throw new ContactException("group to remove does not exist");
         }
     }
 }

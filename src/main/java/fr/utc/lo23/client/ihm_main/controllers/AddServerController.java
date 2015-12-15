@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -31,9 +32,18 @@ public class AddServerController extends BaseController{
 
     @FXML
     void didClickAddButton(ActionEvent event) {
-        // TODO appeler une méthode de managerData pour stocker nouveau server
-        // puis retourner sur fenetre principale
+        if (fieldIPAddress.getText().isEmpty() || fieldPort.getText().isEmpty()) {
+            mController.showErrorPopup("Erreur", "Toutes les informations doivent être insérées");
+            return;
+        }
+        try {
+            Integer.parseInt(fieldPort.getText());
+        } catch (Exception e) {
+            mController.showErrorPopup("Erreur", "Le port doit être entier!");
+            return;
+        }
 
+        mController.getManagerMain().getInterDataToMain().addServer(fieldIPAddress.getText(), fieldPort.getText());
         mController.showConnectionWindow();
     }
 

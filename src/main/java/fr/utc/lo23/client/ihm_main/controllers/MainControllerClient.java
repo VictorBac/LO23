@@ -4,6 +4,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
  */
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -52,12 +53,12 @@ public class MainControllerClient extends Application {
 
 
     public void userLoggedIn() {
-        mainWindowController = instantiateWindow("../ui/MainWindow.fxml", "Poker");
-        mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
+        mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml", "Poker");
+        //mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
     }
 
     public void ClickCreateProfil() {
-        createProfileController = instantiateWindow("../ui/CreateProfil.fxml", "Création de profile");
+        createProfileController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml", "Création de profile");
     }
 
 
@@ -73,6 +74,7 @@ public class MainControllerClient extends Application {
 
     public void showMainWindow(){
         mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml","Poker");
+        mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
     }
 
     public void showViewOwnWindow(){
@@ -83,8 +85,9 @@ public class MainControllerClient extends Application {
         editProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/EditProfil.fxml", "Edit your profile");
     }
 
-    public void showAutreProfilWindow(){
+    public void showAutreProfilWindow(UserLight user){
         viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
+        viewAutreProfilWindowController.setProfile(user);
     }
 
     public CreateTableController showCreateTableView() {

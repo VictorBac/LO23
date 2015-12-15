@@ -65,7 +65,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     public void playGame(UUID idTable) {
         try {
-            dManagerClient.getInterToCom().requestPlayGame(dManagerClient.getUserLocal().getUserLight(), idTable);
+            dManagerClient.getInterToCom().LaunchGame(idTable,dManagerClient.getUserLocal().getUserLight());
         } catch (NetworkFailureException e) {
             e.printStackTrace();
         }

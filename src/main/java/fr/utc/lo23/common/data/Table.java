@@ -210,7 +210,6 @@ public class Table implements Serializable {
         return this.getListGames().indexOf(game);
     }
 
-
     public void playGame(){
         Game game = this.getCurrentGame();
         Hand hand;

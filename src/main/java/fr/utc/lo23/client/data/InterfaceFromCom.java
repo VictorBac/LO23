@@ -52,12 +52,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void notifyNewTable(Table tableCreatedOnServer) {
         Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                dManagerClient.getInterToIHMTable().showTable(tableCreatedOnServer);
-            }
-        });
+        if(tableCreatedOnServer.getCreator().equals(dManagerClient.getUserLocal().getUserLight())) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    dManagerClient.getInterToIHMTable().showTable(tableCreatedOnServer);
+                }
+            });
+        }
     }
 
 

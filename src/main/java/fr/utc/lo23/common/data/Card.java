@@ -34,12 +34,8 @@ public class Card implements Serializable {
 
     /**
      * Constructor with value and symbol.
-<<<<<<< Updated upstream
      * 2 ~ 14 represent 2 ~ 10 J Q K A. DONT CHANGE IT ANYMORE PLS.
      * For example Card card = new Card(14,'C');
-=======
-     * For example Card card = new Card(13,"SPADE");
->>>>>>> Stashed changes
      * @param value
      * @param symbol spade & heart & diamond & club
      * @throws CardFormatInvalidException

@@ -583,7 +583,7 @@ public class TableController {
         popupAmount.setText("Montant Initial (Max: " + maxAmount + "€)");
     }
 
-    /**
+    /*
      * Should send popAmound value to data (with actionToFill) TODO: Please verify
      * @param event
      */
@@ -595,8 +595,7 @@ public class TableController {
         amount = Integer.parseInt(popupAmountInput.getText());
         if(amount <= 0 || amount > table.getMaxMise())
             return;
-        //TODO: Envoyer Integer.parseInt(popupAmountInput.getText()); à data
-
+        ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));
         hidePopupAmount();
     }
 
@@ -614,8 +613,7 @@ public class TableController {
      */
     @FXML
     public void sendReadyAccept(javafx.event.ActionEvent event){
-        //TODO: Envoyer true à data
-        // ? ihmTable.getDataInterface().vote(true);
+        ihmTable.getDataInterface().isReady(true);
         hidePopupReady();
     }
 
@@ -625,8 +623,7 @@ public class TableController {
      */
     @FXML
     public void sendReadyRefuse(javafx.event.ActionEvent event){
-        //TODO: Envoyer false à data
-        //ihmTable.getDataInterface().
+        ihmTable.getDataInterface().isReady(false);
         hidePopupReady();
     }
 
@@ -1088,5 +1085,14 @@ public class TableController {
      */
     public void setThinkingForAction(UserLight user){
         playerControllerMap.get(user).setThinkingStatus();
+    }
+
+    public void notifyFailStartGame(){
+        btnLaunchGame.setVisible(true);
+        addLogEntry("ERREUR LANCEMENT PARTIE: IL N'Y A PAS ASSEZ DE JOUEURS DANS LA TABLE.");
+    }
+
+    public void notifySuccessStartGame(){
+        addLogEntry("La partie va se lancer d'ici quelques instants.");
     }
 }

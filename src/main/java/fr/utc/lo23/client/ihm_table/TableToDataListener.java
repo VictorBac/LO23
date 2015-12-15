@@ -278,4 +278,12 @@ public class TableToDataListener implements ITableToDataListener {
         ihmtable.getTableController().notifyPlayerVoteEndGameAnswer(player, accept);
     }
 
+    public void notifyRefuseStartGame(){
+        ihmtable.getTableController().notifyFailStartGame();
+    }
+
+    public void notifySuccessStartGame(){
+        ihmtable.getTableController().notifySuccessStartGame();
+    }
+
 }

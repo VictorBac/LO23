@@ -158,12 +158,12 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void tableCreatorRequestToStartGameRejected(){
         Console.log(TAG +"tableCreatorRequestToStartGameRejected()");
-        //TODO fill this method with ihmTable method dManagerClient.getInterToIHMTable();
+        dManagerClient.getInterToIHMTable().notifyRefuseStartGame();
     }
 
     public void tableCreatorRequestToStartGameAccepted(){
         Console.log(TAG +"tableCreatorRequestToStartGameAccepted()");
-        //TODO fill this method with ihmTable method dManagerClient.getInterToIHMTable();
+        dManagerClient.getInterToIHMTable().notifySuccessStartGame();
     }
 
 

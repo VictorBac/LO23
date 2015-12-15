@@ -68,7 +68,7 @@ public class EditOwnProfilController extends BaseController {
                 mController.showErrorPopup("Erreur", "Le champ ancien mot de passe ne corespond pas au mot de passe actuel.");
             }
         }
-        
+
         mController.getManagerMain().getInterDataToMain().saveNewProfile(edituser);
 
     }

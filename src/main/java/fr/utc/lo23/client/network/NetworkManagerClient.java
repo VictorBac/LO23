@@ -127,7 +127,8 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
         Console.log("Tentative de rejoingnement de table");
-        RequestJoinTableMessage RequestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoin,mode);
+        RequestJoinTableMessage requestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoin,mode);
+        localClient.send(requestJoinTableMes);
     }
 
     /**
@@ -141,11 +142,12 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     public void sendAction(Action act, UserLight userLocal) throws NetworkFailureException, IncorrectActionException {
-
+        SendActionMessage actMsg = new SendActionMessage(act,userLocal);
+        localClient.send(actMsg);
     }
 
-    public void leaveTable(UserLight userLocal, int IdTable) throws NetworkFailureException {
-
+    public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException {
+        LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable);
     }
 
 
@@ -178,21 +180,22 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
-
     public void sendMessage(MessageChat message, UUID tableId) {
 
     }
 
-    public void confirmationCardReceived() {
-
+    public void confirmationCardReceived(UserLight ul) {
+        NotifyCardReceivedMessage cardReceivedMessage = new NotifyCardReceivedMessage(ul);
+        localClient.send(cardReceivedMessage);
     }
 
     public void replayAction(Action action, UserLight player) {
 
     }
 
-    public void confirmationEndTurn() {
-
+    public void confirmationEndTurn(UserLight ul) {
+        NotifyEndTurnMessage endMsg = new NotifyEndTurnMessage(ul);
+        localClient.send(endMsg);
     }
 
     public void transmitRequestServer(UserLight player) {
@@ -201,7 +204,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
-            LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
+        LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
         localClient.send(LGMess);
     }
 

@@ -29,21 +29,23 @@ public class TableToDataListener implements ITableToDataListener {
 	 * Permet à IHM-Table d'afficher la table.
 	 */
     public void showTable(Table table){
-        if(getIhmtable().getFormController()!=null) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    getIhmtable().getFormController().goToTable(table);
-                }
-            });
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(getIhmtable().getFormController()!=null) {
 
-            getIhmtable().setFormController(null);
-        }
-        else
-        {
-            System.out.println("Error: Il ne faut pas appeler cette fonction en dehors de ses cas d'utilisation.");
-            System.exit(0);
-        }
+                            getIhmtable().getFormController().goToTable(table);
+
+
+                    getIhmtable().setFormController(null);
+                }
+                else
+                {
+                    System.out.println("Error: Il ne faut pas appeler cette fonction en dehors de ses cas d'utilisation.");
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     /*

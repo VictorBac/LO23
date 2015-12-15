@@ -53,6 +53,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
         dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
+        System.out.println(tableCreatedOnServer.getCreator());
+        System.out.println(dManagerClient.getUserLocal());
         if(tableCreatedOnServer.getCreator().equals(dManagerClient.getUserLocal().getUserLight())) {
             Platform.runLater(new Runnable() {
                 @Override

@@ -4,6 +4,7 @@ import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.common.data.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -64,8 +65,12 @@ import java.util.List;
 
     @Override
     public void currentTables(List<Table> currentTables) {
-        // TODO NOW
-//        managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                managerMain.getControllerMain().getMainWindowController().addTables(currentTables);
+            }
+        });
     }
 
     @Override

@@ -75,8 +75,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {
             dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
             //search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
-             dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable),userWhoJoinTheTable,typeOfUserWhoJoinTable);
-
+            //TODO : dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable),userWhoJoinTheTable,typeOfUserWhoJoinTable);
+            dManagerClient.getInterToIHMTable().notifyNewUser(userWhoJoinTheTable, typeOfUserWhoJoinTable == EnumerationTypeOfUser.PLAYER);
         } catch (TableException e) {
             Console.log(TAG +"User already on the table");
             e.printStackTrace();

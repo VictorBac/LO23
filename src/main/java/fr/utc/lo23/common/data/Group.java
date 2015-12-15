@@ -1,15 +1,18 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Jianghan on 20/10/2015.
  */
 public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
+
+
+
     private String groupName;
-    private ArrayList<UserLight> contactList;
+    private UserLightList contactList;
 
     /**
      * group default constructor
@@ -25,34 +28,40 @@ public class Group implements Serializable {
      */
     public Group(String name) {
         this.groupName = name;
-        this.contactList = new ArrayList<UserLight>();
+        this.contactList = new UserLightList();
     }
 
     /**
      * getter of groupName
-     *
-     * @return l'attribute groupName
+     * @return getter of groupName
      */
     public String getGroupName() {
         return groupName;
     }
 
     /**
-     * getter of contactList
-     *
-     * @return l'attribute contactList
+     * setter of groupName
+     * @param groupName groupName
      */
-    public ArrayList<UserLight> getContacts() {
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    /**
+     * getter of contactList
+     * @return contactList
+     */
+    public UserLightList getContacts() {
         return contactList;
     }
 
     /**
-     * method to add a contact to the list contactList
+     * method to add a Userlight to the list
      *
-     * @param newUser : the Userlight to add
+     * @param toAdd : the Userlight to add
      */
-    public void addContact(UserLight newUser) {
-        contactList.add(newUser);
+    public void addUser(UserLight toAdd) throws ExistingUserException {
+        contactList.addUser(toAdd);
     }
 
     /**
@@ -60,12 +69,8 @@ public class Group implements Serializable {
      *
      * @param toDelete : Userlight to delete
      */
-    public void delContact(UserLight toDelete) throws UserLightNotFoundException {
-        if (contactList.contains(toDelete)) {
-            contactList.remove(toDelete);
-        } else {
-            throw new UserLightNotFoundException(toDelete.getIdUser());
-        }
+    public void removeUser(UserLight toDelete) throws UserLightNotFoundException {
+        contactList.remove(toDelete);
     }
 
 }

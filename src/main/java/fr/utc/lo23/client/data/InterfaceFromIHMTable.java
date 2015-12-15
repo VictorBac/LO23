@@ -20,7 +20,12 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         this.dManagerClient = dManagerClient;
     }
 
-    //TODO handle exceptions
+
+    /**
+     * Table is created by IHM Table, which transmit it as parameter
+     * This function transmit the table to COM to create it on the server.
+     * @param table : Table to transmit
+     */
     public void tableToCreate(Table table){
         try {
             dManagerClient.getInterToCom().createTable(getUser(),table);
@@ -47,24 +52,25 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         //dManagerClient.getInterToCom().vote(answer);
     }
 
+    //TODO
+    //params : idGame, idTable?
     public void saveGame() {
-
+        //TODO pour com cloner table sans liste games, insérer juste le bon game, retourner
     }
 
-    //TODO Com must implement sendMessage(MessageChat message)
-    public void sendMessage(MessageChat message){
-        //dManagerClient.getInterToCom().sendMessage(message);
+
+    public void sendMessage(MessageChat message, UUID idTableLocale){
+        dManagerClient.getInterToCom().sendMessage(message, idTableLocale);
     }
 
-    //TODO Com must implement sendMessage(MessageChat message)
     public void playGame(UUID idTable) {
-        //dManagerClient.getInterToCom().requestPlayGame();
+        try {
+            dManagerClient.getInterToCom().requestPlayGame(dManagerClient.getUserLocal().getUserLight(), idTable);
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
     }
 
-    //TODO Com must implement confirmationCardReceived()
-    public void confirmationCardReceived() {
-        //dManagerClient.getInterToCom().confirmationCardReceived();
-    }
 
     //TODO Com must implement replyAction(Action action)
     public void replyAction(Action action) {
@@ -72,21 +78,8 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
 
-    //TODO check if action is valid on server side or here??
-    //TODO Com must implement confirmationActionReceived(Action action)
-    public void confirmationActionReceived(Action action) {
-        //dManagerClient.getInterToCom().confirmationActionReceived(action);
-    }
-
-    //TODO Com must implement confirmationEndTurn()
-    public void confirmationEndTurn() {
-        //dManagerClient.getInterToCom().confirmationEndTurn();
-    }
-
-    //TODO Com must implement transmitRequestServer(UserLight)
-    //TODO Add UserLight in param? transmitRequest(UserLight player)
-    public void transmitRequest(){
-        //dManagerClient.getInterToCom().transmitRequestServer(player);
+    public void transmitRequest(UserLight player){
+        dManagerClient.getInterToCom().transmitRequestServer(player);
     }
 
     public UserLight getUser(){
@@ -95,7 +88,18 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
 
     //TODO
+    //save stats, return to table page?
     public void quitGame(){
 
+    }
+
+    //TODO com must implement method
+    public void setStartAmount(int amount){
+        //dManagerClient.getInterToCom().???
+    }
+
+    //TODO com must implement method
+    public void isReady(boolean status) {
+        //dManagerClient.getInterToCom().???
     }
 }

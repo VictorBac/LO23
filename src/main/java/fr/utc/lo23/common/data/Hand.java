@@ -71,7 +71,7 @@ public class Hand implements Serializable{
      * Method returning the current turn of the Hand
      * @return current Turn, it corresponds to the last Turn of the ArrayList
      */
-    private Turn getCurrentTurn(){
+    public Turn getCurrentTurn(){
         return listTurn.get(listTurn.size()-1); //size()-1 to get the last element
     }
 
@@ -80,7 +80,7 @@ public class Hand implements Serializable{
      * Method used to give to the each player (PlayerHand) of the Hand its card and to put cards on the Fields
      */
     public void distributeCard(){
-       /* int[] deckCards = new int[NUMBER_OF_CARD_IN_DECK];
+        int[] deckCards = new int[NUMBER_OF_CARD_IN_DECK];
 
         int cardDrawn = 0;
         boolean nextDraw = true;
@@ -102,18 +102,20 @@ public class Hand implements Serializable{
                     newCardValue = (cardDrawn+1)%13;
                     if(newCardValue==0)
                         newCardValue = 13;
+                    if(newCardValue==1) //because the as is no more the first card, it is the last one (14)
+                        newCardValue = 14;
                     try {
                         if(0 <= cardDrawn && cardDrawn < 13  ){ // spade card
-                            //TODO add this cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'S');
+                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,EnumerationCard.SPADE);
                         }
                         else if(13 <= cardDrawn && cardDrawn < 26 ) {// heart card
-                            //TODO add this cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'H');
+                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,EnumerationCard.HEART);
                         }
                         else if (26 <= cardDrawn && cardDrawn < 39 ){// diamond card
-                            //TODO add this cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'D');
+                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,EnumerationCard.DIAMOND);
                         }
                         else if(39 <= cardDrawn && cardDrawn < 52 ){// club card
-                           //TODO add thiscardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,'C');
+                            cardsDistributed[indexOfCardToChooseInTheAmountOfTotalCardToDistribute] = new Card(newCardValue,EnumerationCard.CLUB);
                         }
                         else{
                             Console.log("Hand class- error when distribute cards");
@@ -141,7 +143,7 @@ public class Hand implements Serializable{
                 indexPlus = index+1;
                 this.getListPlayerHand().get(((indexPlus/2)+(indexPlus%2))-1).addNewCard(cardsDistributed[index]);
             }
-        }*/
+        }
 
 
     }
@@ -193,6 +195,16 @@ public class Hand implements Serializable{
             }
         }
         return playerFound;
+    }
+
+    public void setCurrentPot(int value, UserLight user){
+        listPotForTheHand.get(listPotForTheHand.size()-1).addPot(value);
+        listPotForTheHand.get(listPotForTheHand.size()-1).addPlayer(user);
+    }
+
+    public void addPotOfNewTurn(){
+        Pot newPot = new Pot();
+        listPotForTheHand.add(newPot);
     }
 
 

@@ -22,9 +22,10 @@ public interface InterfaceDataFromIHMTable {
     public void vote(boolean answer);
 
 
-    /**
-     * method to create a new table
-     * @param table
+     /**
+     * Table is created by IHM Table, which transmit it as parameter
+     * This function transmit the table to COM to create it on the server.
+     * @param table : Table to transmit
      */
     public void tableToCreate(Table table);
 
@@ -38,19 +39,13 @@ public interface InterfaceDataFromIHMTable {
     /**
      * method to send a chat message
      */
-    public void sendMessage(MessageChat message);
+    public void sendMessage(MessageChat message, UUID idTableLocale);
 
     /**
      * method to play a game
      * @param idTable : table on which starting the game
      */
     public void playGame(UUID idTable);
-
-
-    /**
-     * confirmation of reception of a card
-     */
-    public void confirmationCardReceived();
 
     /**
      * method to reply an action
@@ -59,22 +54,9 @@ public interface InterfaceDataFromIHMTable {
     public void replyAction(Action action);
 
     /**
-     * ask aconfirmation reception of an action
-     * @param action : action to send
-     */
-    public void confirmationActionReceived(Action action);
-
-    /**
-     * confirm the end of turn
-     */
-    public void confirmationEndTurn();
-
-
-    /**
      * Transmit the "leave game" request
      */
-    public void transmitRequest();
-
+    public void transmitRequest(UserLight player);
 
     /**
      * Return the local user
@@ -82,6 +64,9 @@ public interface InterfaceDataFromIHMTable {
      */
     public UserLight getUser();
 
-
     public void quitGame();
+
+    public void setStartAmount(int amount);
+
+    public void isReady(boolean status);
 }

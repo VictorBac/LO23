@@ -137,4 +137,16 @@ public interface ITableToDataListener {
      */
     public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept);
 
+    /*
+     * Fonction à appeler après avoir reçu une réponse négative pour lancer une game
+     * Permet à IHM-Table d'afficher le refus de lancer la table
+     */
+    public void notifyRefuseStartGame();
+
+    /*
+     * Fonction à appeler après avoir reçu une réponse positive pour lancer une game
+     * Permet à IHM-Table d'afficher la réussite de lancer la table
+     */
+    public void notifySuccessStartGame();
+
 }

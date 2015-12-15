@@ -54,6 +54,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
     }
 
+
     public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         Console.log(TAG +"userJoinedTable()");
         try {
@@ -91,15 +92,19 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
-            //TODO see if necessary to contact ihm main or ihm table
+        Console.log(TAG +"tableJoinAccepted()");
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
-            dManagerClient.getInterToIHMTable().showTable(dManagerClient.getTableLocal());
+            //TODO need to contact IHMMain missing interface   dManagerClient.getInterToIHMMain();
         } catch (TableException e) {
             e.printStackTrace();
         }
     }
 
+    public void tableJoinRefused(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal){
+        Console.log(TAG +"tableJoinRefused()");
+        dManagerClient.getInterToIHMMain().tableJoinRefused(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined));
+    }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
         //TODO test
@@ -125,11 +130,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"stockCards()");
         dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand().add(playerHandUserLocal);
         dManagerClient.getInterToIHMTable().notifyPlayersCards(dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand());
-        //we send first cards at the beginning of the hand from the local user and
+        //we send first cards at the beginning of the hand from the local user and at the end of the hand we show other cards
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
-        dManagerClient.getTableLocal().getCurrentGame().getChatGame().newMessage(messageSendByRemoteUser);
+        Console.log(TAG +"transmitMessage()");
         dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
     }
 
@@ -143,24 +148,103 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
         //TODO if this the correct way to change the stats or add the latest stats
         dManagerClient.getUserLocal().setStatsUser(statsLocalUser);
-        //TODO ask IHM Main to implement an interface to for notifying the player that its Stats has changed
+        //for notifying the player that its Stats has changed
+        dManagerClient.getInterToIHMMain().userStatsUpdated(dManagerClient.getUserLocal().getUserLight(),statsLocalUser );
     }
 
-    public void askAction(ArrayList<Action> listActionPossibleForUserLocal) {
+    public void startGame(UUID idTable){
+        Console.log(TAG +"startGame()");
+        dManagerClient.getInterToIHMTable().notifyStartGame(dManagerClient.getListTablesLocal().getTable(idTable));
+    }
 
+    public void tableCreatorRequestToStartGameRejected(){
+        Console.log(TAG +"tableCreatorRequestToStartGameRejected()");
+        dManagerClient.getInterToIHMTable().notifyRefuseStartGame();
+    }
+
+    public void tableCreatorRequestToStartGameAccepted(){
+        Console.log(TAG +"tableCreatorRequestToStartGameAccepted()");
+        dManagerClient.getInterToIHMTable().notifySuccessStartGame();
+    }
+
+
+    public void askAmountMoney(){
+        Console.log(TAG +"askAmountMoney()");
+        dManagerClient.getInterToIHMTable().askMoneyAmount();
+    }
+
+    public void notifyMoneyAmountAnswerFromServer(UserLight player, Integer amount){
+        Console.log(TAG +"notifyMoneyAmountAnswerFromServer()");
+        dManagerClient.getInterToIHMTable().notifyMoneyAmountAnswer(player,amount);
+    }
+
+    public void askReadyGame(){
+        Console.log(TAG +"askReadyGame()");
+        dManagerClient.getInterToIHMTable().askReadyGame();
+    }
+
+
+    public void askAction(Action actionEmpty, EnumerationAction[] listActionPossibleForUserLocal) {
+        Console.log(TAG +"askAction()");
+        dManagerClient.getInterToIHMTable().askAction(actionEmpty, listActionPossibleForUserLocal);
     }
 
     public void notifyAction(Action action) {
+        Console.log(TAG +"notifyAction()");
+        dManagerClient.getInterToIHMTable().notifyAction(action);
+    }
+
+    public void informEndTurn(Integer potForThisTurn){
+        Console.log(TAG +"informEndTurn()");
+        dManagerClient.getInterToIHMTable().notifyEndTour(potForThisTurn);
+    }
+
+    public void informEndHand(ArrayList<Seat> listSeat) {
+        Console.log(TAG +"informEndHand()");
+        dManagerClient.getInterToIHMTable().notifyEndHand(listSeat);
+    }
+
+    public void saveLogGame(Table tableThatContainGameToSave) {
+        //TODO need to test
+        Console.log(TAG +"saveLogGame()");
+        TableList listOfAllTableSaved = (TableList) Serialization.deserializationObject(dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+
+        if (listOfAllTableSaved==null){
+            listOfAllTableSaved = new TableList();
+        }
+
+        listOfAllTableSaved.getListTable().add(tableThatContainGameToSave);
+        Serialization.serializationObject(listOfAllTableSaved,dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+
+        //TODO inform table or main for saved game?
 
     }
 
-    public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain) {
 
+    public void stopGame(Game gameOfTheUserLocal){
+        dManagerClient.getInterToIHMTable().stopGame(gameOfTheUserLocal);
     }
 
-    public void saveLogGame(Table table) {
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public UserLightList getPlayerList() {
         return null;

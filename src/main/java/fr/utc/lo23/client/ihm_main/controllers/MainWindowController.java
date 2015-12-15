@@ -12,8 +12,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -27,6 +29,9 @@ import java.util.ResourceBundle;
  * Created by jbmartin on 18/11/15.
  */
 public class MainWindowController extends BaseController {
+
+    private ObservableList<UserLight> connectedUsers;
+
     @FXML
     public ListView<UserLight> listViewConnectedUsers;
 
@@ -40,6 +45,9 @@ public class MainWindowController extends BaseController {
     private TableColumn<Table, Integer> columnTableMise;
 
     @FXML
+    public ListView<Table> listViewSavedTables;
+
+    @FXML
     private Pane gamePane;
 
     @FXML
@@ -47,21 +55,11 @@ public class MainWindowController extends BaseController {
 
     private ObservableList<Table> tablesList;
 
+    private ObservableList<Table> tablesSavedList;
+
     @FXML
     private Button buttonQuit;
 
-    public void addUsers(List<UserLight> users) {
-        for (UserLight user : users) {
-            addUser(user);
-        }
-    }
-
-    public void addUser(UserLight user){
-        listViewConnectedUsers.getItems().add(user);
-    }
-    public void removeUser(UserLight user){
-        listViewConnectedUsers.getItems().remove(user);
-    }
 
     public void change(ActionEvent actionEvent) {
     }
@@ -101,6 +99,50 @@ public class MainWindowController extends BaseController {
 
         tablesList = FXCollections.observableArrayList();
         tableViewCurrentTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        tablesSavedList = FXCollections.observableArrayList();
+        //tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
+        listViewSavedTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listViewConnectedUsers.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (listViewConnectedUsers.getSelectionModel().getSelectedItem() != null)
+                    mController.showAutreProfilWindow(listViewConnectedUsers.getSelectionModel().getSelectedItem());
+            }
+        });
+        listViewSavedTables.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>() {
+            @Override
+            public ListCell<Table> call(ListView<Table> param) {
+                ListCell<Table> cell = new ListCell<Table>(){
+                    @Override
+                    protected void updateItem(Table t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getName() + " de " + t.getCreator().getPseudo());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+        listViewSavedTables.setItems(tablesSavedList);
+
+        listViewConnectedUsers.setCellFactory(new Callback<ListView<UserLight>, ListCell<UserLight>>() {
+            @Override
+            public ListCell<UserLight> call(ListView<UserLight> param) {
+                ListCell<UserLight> cell = new ListCell<UserLight>(){
+                    @Override
+                    protected void updateItem(UserLight t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getPseudo());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+        listViewConnectedUsers.setItems(connectedUsers);
     }
 
     public void openViewOwnProfil(ActionEvent actionEvent) {
@@ -118,14 +160,20 @@ public class MainWindowController extends BaseController {
     }
 
     public void joinTable(ActionEvent actionEvent) {
-        try {
-            mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
-                    EnumerationTypeOfUser.PLAYER);
-        } catch (FullTableException e) {
-            mController.showErrorPopup("Erreur", "Table pleine !");
-        } catch (NetworkFailureException e) {
-            mController.showErrorPopup("Erreur", "Erreur réseau !");
-            e.printStackTrace();
+        if (tableViewCurrentTables.getSelectionModel().getSelectedItem() != null) {
+            try {
+                mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
+                        EnumerationTypeOfUser.PLAYER);
+            } catch (FullTableException e) {
+                mController.showErrorPopup("Erreur", "Table pleine !");
+            } catch (NetworkFailureException e) {
+                mController.showErrorPopup("Erreur", "Erreur réseau !");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            mController.showErrorPopup("Erreur", "Vous devez sélectionner une table avant de pouvoir en rejoindre une");
         }
     }
 
@@ -140,6 +188,12 @@ public class MainWindowController extends BaseController {
         list.add(table1);
         mController.getManagerMain().getInterMainToData().currentTables(list);
     }*/
+
+    public void setConnectedUsers(List<UserLight> users)
+    {
+        connectedUsers = FXCollections.observableArrayList(users);
+        listViewConnectedUsers.setItems(connectedUsers);
+    }
 
 
     @FXML

@@ -37,6 +37,7 @@ public class ViewAutreProfilController extends BaseController {
 
     public void setProfile(UserLight user) {
         username.setText(user.getPseudo());
-        imageviewer.setImage(user.getAvatar().getImg());
+        // TODO quelque chose ici
+//        imageviewer.setImage(user.getAvatar().getImg());
     }
 }

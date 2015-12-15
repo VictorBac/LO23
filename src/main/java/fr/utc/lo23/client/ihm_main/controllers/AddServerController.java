@@ -6,7 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 /**
@@ -43,7 +45,12 @@ public class AddServerController extends BaseController{
             return;
         }
 
-        mController.getManagerMain().getInterDataToMain().addServer(fieldIPAddress.getText(), fieldPort.getText());
+
+        try {
+            mController.getManagerMain().getInterDataToMain().addServer(InetAddress.getByName(fieldIPAddress.getText()), fieldPort.getText());
+        } catch (UnknownHostException e) {
+           mController.showErrorPopup("Erreur", "Hôte inconnu!");
+        }
         mController.showConnectionWindow();
     }
 

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
@@ -48,16 +49,9 @@ public class ViewOwnProfilController extends BaseController {
 
 
     public void initialize(URL location, ResourceBundle resources) {
-        UserLight currentUser = new UserLight();
-        IHMMainClientManager manager = mController.getManagerMain();
-        try {
-            manager.getInterDataToMain().getUser(currentUser);
-        } catch (ProfileNotFoundOnServerException e) {
-            e.printStackTrace();
-        } catch (NetworkFailureException e) {
-            e.printStackTrace();
-        }
-        labelPlayer.setText(currentUser.getPseudo());
+        User currentUser = mController.getManagerMain().getManagerData().getUserLocal();
+        UserLight currentLight = currentUser.getUserLight();
+        labelPlayer.setText(currentLight.getPseudo());
 
 
     }

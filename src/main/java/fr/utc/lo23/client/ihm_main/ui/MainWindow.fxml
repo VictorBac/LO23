@@ -76,6 +76,11 @@
                   <TableColumn fx:id="columnTableSpectators" prefWidth="121.0" text="spectators" />
               </columns>
             </TableView>
+            <Button fx:id="exportProfil" layoutX="814.0" layoutY="361.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ExportProfil" prefHeight="40.0" prefWidth="120.0" text="Export profil">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
       <Button fx:id="buttonQuit" layoutX="1073.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Quitter">

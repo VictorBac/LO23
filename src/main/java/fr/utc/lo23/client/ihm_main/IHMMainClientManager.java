@@ -14,6 +14,7 @@ import fr.utc.lo23.client.network.NetworkManagerClient;
 import fr.utc.lo23.client.network.main.Main;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,11 +176,12 @@ public class IHMMainClientManager {
     {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
-            mainWinController.setConnectedUsers(getConnectedUsers());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    mainWinController.setConnectedUsers(getConnectedUsers());
+                }
+            });
         }
     }
-
-
-
-
 }

@@ -32,6 +32,9 @@ public class AddServerController extends BaseController{
     @FXML
     private TextField fieldPort;
 
+    /**
+     * ajouter un serveur
+     */
     @FXML
     void didClickAddButton(ActionEvent event) {
         if (fieldIPAddress.getText().isEmpty() || fieldPort.getText().isEmpty()) {

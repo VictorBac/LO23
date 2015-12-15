@@ -48,7 +48,9 @@ public class CreateController extends BaseController {
     @FXML
     private javafx.scene.image.ImageView imageviewer;
 
-
+    /**
+     * créer un nouveul utilisateur
+     */
     public void createNewUser(ActionEvent actionEvent) {
         String testpass;
         String verifpass;

@@ -47,6 +47,10 @@ public class ConnectionController extends BaseController {
     @FXML
     public ListView<Server> listViewServers;
 
+    /**
+     * lance la connexion avec le serveur
+     * @throws IOException
+     */
     @FXML
     void didButtonConnectClick(ActionEvent event) throws IOException {
         String login = fieldUsername.getText();
@@ -72,6 +76,9 @@ public class ConnectionController extends BaseController {
 
     }
 
+    /**
+     * surcharge les méthodes d'affichage pour la listeview serveur
+     */
     //@Override
     public void initialize(URL location, ResourceBundle resources) {
         //serverList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getServersList());
@@ -95,6 +102,9 @@ public class ConnectionController extends BaseController {
         });
     }
 
+    /**
+     * initialise la liste des serveurs
+     */
     public void initServerlist()
     {
         serverList.setAll(mController.getManagerMain().getInterDataToMain().getServersList());
@@ -103,21 +113,34 @@ public class ConnectionController extends BaseController {
     public void change(ActionEvent actionEvent) {
     }
 
+    /**
+     * créer un nouvel utilisateur
+     */
     public void createnewuser(ActionEvent actionEvent) {
         User createUser = new User();
     }
 
+
+    /**
+     * créer un nouveau profil
+     */
     public void CreateProfilClick(ActionEvent actionEvent) {
         System.out.println("CreateProfilButton");
         mController.ClickCreateProfil();
 
     }
 
+    /**
+     * ajouter un serveur
+     */
     @FXML
     void didClickAddServerButton(ActionEvent event) {
         mController.showAddServerWindow();
     }
 
+    /**
+     * supprimer un serveur
+     */
     @FXML
     void didClickRemoveServerButton(ActionEvent event)
     {
@@ -130,6 +153,9 @@ public class ConnectionController extends BaseController {
         }
     }
 
+    /**
+     * supprimer un serveur
+     */
     public void ImportProfilClick(ActionEvent actionEvent) {
 
     }

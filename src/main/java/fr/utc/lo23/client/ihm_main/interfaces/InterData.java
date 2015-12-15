@@ -22,6 +22,10 @@ import java.util.List;
         managerMain = mngMain;
     }
 
+    /**
+     * ajoute un nouveau joueur dans la liste des joueurs connectés
+     * @param remoteUser
+     */
     @Override
     public void remoteUserConnected(UserLight remoteUser) {
         managerMain.addConnectedUser(remoteUser);
@@ -42,6 +46,11 @@ import java.util.List;
 
     }
 
+
+    /**
+     * affiche la liste des joueurs connectés
+     * @param userList
+     */
     @Override
     public void onlineUsers(List<UserLight> userList) {
         managerMain.setConnectedUsers(userList);
@@ -62,6 +71,10 @@ import java.util.List;
 
     }
 
+    /**
+     * affiche la liste des tables
+     * @param currentTables
+     */
     @Override
     public void currentTables(List<Table> currentTables) {
         // TODO NOW

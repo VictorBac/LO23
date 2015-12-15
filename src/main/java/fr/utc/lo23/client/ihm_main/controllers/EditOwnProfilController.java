@@ -53,6 +53,10 @@ public class EditOwnProfilController extends BaseController {
         mController.showViewOwnWindow();
     }
 
+
+    /**
+     * mettre un profil à jour
+     */
     public void UpdateProfil(ActionEvent actionEvent) {
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
         edituser.setAge(Integer.parseInt(age.getText()));
@@ -73,6 +77,9 @@ public class EditOwnProfilController extends BaseController {
 
     }
 
+    /**
+     * rempli le controller avec les informations actuelles
+     */
     public void fillUserform(User UserLocal) {
         UserLight lightuser = UserLocal.getUserLight();
         username.setText(lightuser.getPseudo());

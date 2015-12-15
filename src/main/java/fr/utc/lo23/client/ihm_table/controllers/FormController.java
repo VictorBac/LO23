@@ -159,7 +159,7 @@ public class FormController {
             Integer moneyMax = Integer.valueOf(formMoneyMax.getText());
 
             // Sending Table to Data
-            ihmTable.getDataInterface().tableToCreate(new Table(tableName, null, spectator, spectatorChat, playerMax, playerMin, abandon, blinde, tempsMax, ante, moneyMax));
+            ihmTable.getDataInterface().tableToCreate(new Table(tableName, ihmTable.getDataInterface().getUser(), spectator, spectatorChat, playerMax, playerMin, abandon, blinde, tempsMax, ante, moneyMax));
         }
     }
 

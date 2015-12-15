@@ -7,6 +7,7 @@ import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
+import java.net.InetAddress;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public interface InterfaceDataFromIHMMain {
      * @param ip
      * @param port
      */
-    void addServer(String ip, String port);
+    void addServer(InetAddress ip, String port);
 
     /**
      * Method to remove server

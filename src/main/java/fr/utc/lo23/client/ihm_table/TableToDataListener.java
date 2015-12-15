@@ -53,7 +53,12 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table d'afficher le message
      */
     public void notifyNewChatMessage(MessageChat message){
-        getIhmtable().getTableController().addChatMessage(message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getIhmtable().getTableController().addChatMessage(message);
+            }
+        });
     }
 
     /*

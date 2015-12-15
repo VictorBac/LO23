@@ -6,6 +6,7 @@ import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,7 +24,7 @@ public class ServerLink extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
-    private int HEARTBEAT_PERIODE = 100; // en ms
+    private int HEARTBEAT_PERIODE = 1000; // en ms
 
     /* ============================ METHODS ============================ */
     public ServerLink(NetworkManagerClient networkManagerClient) {
@@ -55,6 +56,7 @@ public class ServerLink extends Thread {
      * @throws IOException
      */
     public void disconnect() throws IOException {
+        Console.log("Disconnected"); //TODO: reconnect ?
         running = false;
         connected = false;
         socket.close();
@@ -69,12 +71,15 @@ public class ServerLink extends Thread {
             while(connected) {
                 try {
                     try {
-                        this.socket.setSoTimeout(1000);
+                        this.socket.setSoTimeout(HEARTBEAT_PERIODE);
                         //Console.log("Waiting for message...");
                         Message msg = (Message) inputStream.readObject();
                         msg.process(this);
                     } catch (SocketTimeoutException e) {
                         this.networkManager.sendHeartbeat();
+                    }
+                    catch (EOFException e) {
+                        this.disconnect();
                     }
                 } catch (Exception e) {
                     Console.err("Erreur de traitement de message: ");
@@ -83,14 +88,6 @@ public class ServerLink extends Thread {
             }
             if(!connected) {
                 try {
-            // TODO vérifier quelle est la solution (fix de conflit, je ne suis pas sur)
-          /*        this.socket.setSoTimeout(HEARTBEAT_PERIODE);
-                    Message msg = (Message) inputStream.readObject();
-                    msg.process(this);
-                } catch (SocketTimeoutException e) {
-                    this.networkManager.sendHeartbeat();
-            */
-
                     this.sleep(100);
                 } catch (InterruptedException e) {
                     Console.log("Thread exception");

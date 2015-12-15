@@ -13,12 +13,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Jianghan on 26/11/2015.
  */
-public class CombinationCalculatorTest {
+public class RankCalculatorTest {
     public CombinationCalculator calculator;
     ArrayList<Card> cards;
     ArrayList<Integer> cardValues;
 
-    public CombinationCalculatorTest() {
+    public RankCalculatorTest() {
         calculator = new CombinationCalculator();
 
         cards = new ArrayList<Card>();

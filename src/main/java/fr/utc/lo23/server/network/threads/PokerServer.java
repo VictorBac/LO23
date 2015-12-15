@@ -100,8 +100,7 @@ public class PokerServer extends Thread {
     public boolean userDisconnect(UUID userId) throws Exception{
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
-                //threadClient.shutdown();
-                //threadsClientList.remove(threadClient);
+                threadsClientList.remove(threadClient);
                 return true;
             }
         }

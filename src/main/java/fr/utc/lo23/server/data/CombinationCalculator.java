@@ -1,10 +1,12 @@
 package fr.utc.lo23.server.data;
 
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.Card;
 import fr.utc.lo23.common.data.EnumerationCard;
 import fr.utc.lo23.common.data.PlayerHand;
 import fr.utc.lo23.server.data.exceptions.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -27,10 +29,8 @@ public class CombinationCalculator {
         }
 
         ArrayList<PlayerHand> winnerList = new ArrayList<PlayerHand>();
-        ArrayList<Integer> biggestCardRank = new ArrayList<Integer>(7);
-        for (int i = 0; i < 7; i++) {
-            biggestCardRank.add(0);
-        }
+        ArrayList<Integer> biggestCardRank = new ArrayList<Integer>(6);
+        biggestCardRank.addAll(Arrays.asList(0, 0, 0, 0, 0, 0));
         ArrayList<Card> currentHand;
         ArrayList<Integer> currentRank;
 
@@ -38,7 +38,7 @@ public class CombinationCalculator {
         for (int i = 0; i < listOfPlayer.size(); i++) {
             currentHand = listOfPlayer.get(i).getListCardsHand();
             try {
-                if (currentHand.size() != 5) {
+                if (currentHand.size() != 2) {
                     throw new CardsNumberException(currentHand);
                 }
             } catch (CardsNumberException e) {
@@ -57,7 +57,7 @@ public class CombinationCalculator {
         return winnerList;
     }
 
-    private boolean greaterThan(ArrayList<Integer> left, ArrayList<Integer> right) {
+    public boolean greaterThan(ArrayList<Integer> left, ArrayList<Integer> right) {
         try {
             if (left.size() != right.size()) {
                 throw new CardValueNumberInvalidException(right);
@@ -75,8 +75,9 @@ public class CombinationCalculator {
 
 
     public ArrayList<Integer> getHandRank(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) {
+        System.out.println("start get hand rank");
         // Add cardsOnHand and cardsOnField (7 cards) to variable to cards.
-        ArrayList<Card> cards = null;
+        ArrayList<Card> cards = new ArrayList<Card>();
         cards.addAll(cardsOnHand);
         cards.addAll(cardsOnField);
         // take out cardValues of cards. Sort it as desc.
@@ -84,6 +85,8 @@ public class CombinationCalculator {
         for (int i = 0; i < cards.size(); i++) {
             cardValues.add(cards.get(i).getValue());
         }
+        System.out.println("get hand rank of" + cardValues);
+
         Collections.sort(cardValues);
         Collections.reverse(cardValues);
         // Try to find the first matched card rank. Start at the highest rank.
@@ -98,6 +101,7 @@ public class CombinationCalculator {
         if (cardRank == null) cardRank = hasTwoPair(cardValues);
         if (cardRank == null) cardRank = hasOnePair(cardValues);
         if (cardRank == null) cardRank = hasHighCard(cardValues);
+        System.out.println("get hand rank:" + cardRank);
         return cardRank;
     }
 

@@ -250,6 +250,24 @@ public class Turn implements Serializable {
         return max;
     }
 
+    /**
+     * Method to test if a turn is over
+     * @return
+     */
+    public boolean isOver(){
+        if (listPlayerNoAllinNoFold.size() != 0 ){
+            if ( isSame() )
+                return true;
+            else
+                return false;
+        }else if (listPlayerNoAllinNoFold.size() == 0) {
+            if (listPlayerAllin.size() != 0)
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
 
 
     /*********************Getters & Setters*********************/

@@ -95,15 +95,15 @@ public interface InterfaceServerDataFromCom {
 
     ArrayList<UserLight> getPlayersByTable(UUID tableID);
 
-    public boolean canLaunchGame(UUID idGame);
+//    public boolean canLaunchGame(UUID idGame);
 
-    public void askMoneyMax();
+    public void askMoneyMax(UUID idTable);
 
-    public int checkMoneyMax(UserLight player, int money);
+    public boolean checkMoneyMax(UserLight player, int money, UUID idTable);
 
-    public void askReady(int nbReady);
+    public void askReady(Table playingTable);
 
-    public void getAnswerReady(UserLight player, boolean ready);
+    public void getAnswerReady(UUID idTable, UserLight player, boolean ready);
 
     public void askAction (UserLight player, Action empty);
 

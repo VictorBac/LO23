@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by R�my on 03/11/2015.
+ * Created by Remy on 03/11/2015.
  */
 public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
@@ -115,7 +115,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public Game startGame(UUID idTable, UserLight player) {
         Table toStart = getTableFromId(idTable);
         try {
-            toStart.startGame(toStart.getCurrentGame());
+            toStart.getCurrentGame().startGame();
 
             //LANCEMENT DE L'ALGORITHME DE JEU
             playGame(toStart);
@@ -123,7 +123,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             Console.log(TAG + "\tGame started.");
             return toStart.getCurrentGame();
         }
-        catch(TableException e){
+        catch(Exception e){
             Console.log(TAG + "\tGame failed to start.");
             return null;
         }
@@ -345,13 +345,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param host the creator of the game
      * @return true if it can be launched, else false
      */
-    public void startGame(UUID idTable, UserLight host) {
+    public void canStartGame(UUID idTable, UserLight host) {
         boolean canLaunch;
         Table curTable =this.getTableFromId(idTable);
-        if (curTable.canStartGame(curTable.getCurrentGame())) {
+        if (curTable.getCurrentGame().startGame()) {
             canLaunch = true;
             myManager.getInterfaceToCom().tableCreatorRequestToStartGameAccepted(idTable);
-            askMoneyMax(curTable);
+            askMoneyMax(idTable);
         }
         else {
             canLaunch = false;
@@ -362,7 +362,8 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     /**
      * asks all the players to give their max amount of money through server com
      */
-    private void askMoneyMax(Table toAsk) {
+    public void askMoneyMax(UUID idTable) {
+        Table toAsk = getTableFromId(idTable);
        myManager.getInterfaceToCom().askPlayersMoney(toAsk.getListPlayers().getListUserLights());
     }
 
@@ -377,9 +378,9 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         boolean valid = false;
 
         Table playingTable = getTableFromId(idTable);
-        if (money > 0 && money < playingTable.getMaxMise()) {
+        if (money > 0 && money < playingTable.getCurrentGame().getMaxStartMoney()) {
             playingTable.getCurrentGame().setMoneyOfPlayer(player,money);   //sets the money of the player in his seat
-            playingTable.setNbPlayerSelectedMoney
+            playingTable.setNbPlayerSelectedMoney(playingTable.getNbPlayerSelectedMoney()+1);
 
             myManager.getInterfaceToCom().moneyPlayers(player, money);
             if (moneyPlayers.get(playingTable).equals(playingTable.getListPlayers().getListUserLights().size())){ // if all players confirmed their money
@@ -412,7 +413,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public boolean isEveryoneAmountMoneySelected(UUID idTable){
         Table playingTable = getTableFromId(idTable);
-        return (playingTable.getNbVotes == playingTable.getListPlayers().getListUserLights().size());
+        return (playingTable.getNbPlayerSelectedMoney() == playingTable.getListPlayers().getListUserLights().size());
     }
 
     /**
@@ -431,15 +432,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 playingTable.getVote().clear();
                 myManager.getInterfaceToCom().notifyVoteFailed(playingTable);
                 playingTable.setNbPlayerelectedMoney(0);
-                askMoneyMax(playingTable);
+                askMoneyMax(idTable);
             }
             else{
                 playingTable.getCurrentGame().startGame();
-                myManager.getInterfaceToCom().notifyGameStart(table);
+                myManager.getInterfaceToCom().notifyGameStart(playingTable);
             }
         }
-
-
     }
 
     /**
@@ -498,5 +497,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             myManager.getTables().getTable(idTable).playGame();
         }
     }
+
+
 
 }

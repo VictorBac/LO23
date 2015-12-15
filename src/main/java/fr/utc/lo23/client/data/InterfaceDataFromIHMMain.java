@@ -96,4 +96,5 @@ public interface InterfaceDataFromIHMMain {
      */
     User getLocalUserProfile();
 
+    void sendLocalUser() throws NetworkFailureException;
 }

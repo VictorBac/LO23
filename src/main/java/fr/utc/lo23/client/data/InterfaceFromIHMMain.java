@@ -160,4 +160,12 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         return dManagerClient.getUserLocal();
     }
 
+    /**
+     * send local user
+     */
+    public void sendLocalUser() throws NetworkFailureException {
+        dManagerClient.getInterToCom().sendProfile(dManagerClient.getUserLocal());
+    }
+
+
 }

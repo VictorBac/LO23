@@ -7,6 +7,7 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.exceptions.TableException;
+import javafx.application.Platform;
 import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
@@ -51,7 +52,12 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void notifyNewTable(Table tableCreatedOnServer) {
         Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
-        dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dManagerClient.getInterToIHMTable().showTable(tableCreatedOnServer);
+            }
+        });
     }
 
 
@@ -134,13 +140,13 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
-        Console.log(TAG +"transmitMessage()");
+        Console.log(TAG + "transmitMessage()");
         dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
     }
 
 
     public void remoteUserProfile(User profileReturnedByTheServer){
-        Console.log(TAG +"remoteUserProfile()");
+        Console.log(TAG + "remoteUserProfile()");
         //TODO add this line after integration dManagerClient.getInterToIHMMain().profileRemoteUserFromServer(profileReturnedByTheServer);
     }
 
@@ -153,7 +159,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void startGame(UUID idTable){
-        Console.log(TAG +"startGame()");
+        Console.log(TAG + "startGame()");
         dManagerClient.getInterToIHMTable().notifyStartGame(dManagerClient.getListTablesLocal().getTable(idTable));
     }
 
@@ -175,7 +181,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void notifyMoneyAmountAnswerFromServer(UserLight player, Integer amount){
         Console.log(TAG +"notifyMoneyAmountAnswerFromServer()");
-        dManagerClient.getInterToIHMTable().notifyMoneyAmountAnswer(player,amount);
+        dManagerClient.getInterToIHMTable().notifyMoneyAmountAnswer(player, amount);
     }
 
     public void askReadyGame(){
@@ -214,7 +220,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         }
 
         listOfAllTableSaved.getListTable().add(tableThatContainGameToSave);
-        Serialization.serializationObject(listOfAllTableSaved,dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+        Serialization.serializationObject(listOfAllTableSaved, dManagerClient.getUserLocal().getLogin() + Serialization.pathSavedGame);
 
         //TODO inform table or main for saved game?
 

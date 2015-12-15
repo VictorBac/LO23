@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.Game;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
@@ -24,7 +25,8 @@ public class RequestLogGameMessage extends Message {
 
         Console.log("SendChatMessage message received");
         try {
-            // Attente de modif de data
+            myServ.getNetworkManager().getDataInstance().sendLogGame(u);
+            // ?? Attente de modif de data
           //Table LogGame =  myServ.getNetworkManager().getDataInstance().sendLogGame(u);
            // SendLogGameMessage LogM = new SendLogGameMessage(LogGame);
            // threadServer.send(LogM);

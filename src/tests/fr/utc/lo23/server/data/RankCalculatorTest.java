@@ -13,21 +13,21 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Jianghan on 26/11/2015.
  */
-public class CombinationCalculatorTest {
+public class RankCalculatorTest {
     public CombinationCalculator calculator;
     ArrayList<Card> cards;
     ArrayList<Integer> cardValues;
 
-    public CombinationCalculatorTest() {
+    public RankCalculatorTest() {
         calculator = new CombinationCalculator();
 
         cards = new ArrayList<Card>();
         try {
             cards.add(new Card(14, EnumerationCard.CLUB));
-            cards.add(new Card(13,EnumerationCard.CLUB));
-            cards.add(new Card(5,EnumerationCard.SPADE));
+            cards.add(new Card(13,EnumerationCard.DIAMOND));
+            cards.add(new Card(5,EnumerationCard.CLUB));
             cards.add(new Card(4,EnumerationCard.CLUB));
-            cards.add(new Card(3,EnumerationCard.CLUB));
+            cards.add(new Card(3,EnumerationCard.HEART));
             cards.add(new Card(3,EnumerationCard.CLUB));
             cards.add(new Card(2,EnumerationCard.CLUB));
         } catch (CardFormatInvalidException e) {
@@ -54,7 +54,7 @@ public class CombinationCalculatorTest {
         test = calculator.hasHighCard(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.addAll(Arrays.asList(new Integer[]{1, 12, 10, 9, 9, 8}));
-        assertEquals(test, expected);
+        assertEquals(expected, test);
     }
 
     /**
@@ -68,7 +68,7 @@ public class CombinationCalculatorTest {
         test = calculator.hasOnePair(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.addAll(Arrays.asList(new Integer[]{2, 9, 9, 12, 10, 8}));
-        assertEquals(test, expected);
+        assertEquals(expected, test);
     }
 
     /**
@@ -79,10 +79,10 @@ public class CombinationCalculatorTest {
         System.out.println("Rank 3: Two Pairs");
         ArrayList<Integer> test = new ArrayList<Integer>();
         test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 5, 5}));
-        test = calculator.hasOnePair(test);
+        test = calculator.hasTwoPair(test);
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.addAll(Arrays.asList(new Integer[]{3, 9, 9, 5, 5, 12}));
-        assertEquals(test, expected);
+        assertEquals(expected, test);
     }
 
     /**
@@ -114,8 +114,10 @@ public class CombinationCalculatorTest {
         expected.addAll(Arrays.asList(new Integer[]{5, 10, 9, 8, 7, 6}));
         assertEquals(expected, test);
         // test 2
+        test.clear();
         test.addAll(Arrays.asList(new Integer[]{14, 5, 4, 4, 4, 3, 2}));
         test = calculator.hasStraight(test);
+        expected.clear();
         expected.addAll(Arrays.asList(new Integer[]{5, 5, 4, 3, 2, 1}));
         assertEquals(expected, test);
 
@@ -129,16 +131,31 @@ public class CombinationCalculatorTest {
         System.out.println("Rank 6: Flush");
         ArrayList<Integer> test = calculator.hasFlush(cards);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{6, 13, 10, 9, 7, 2}));
+        expected.addAll(Arrays.asList(new Integer[]{6, 14, 5, 4, 3, 2}));
         assertEquals(expected, test);
 
     }
 
     /**
-     * Rank 7: FullHouse TODO
+     * Rank 7: FullHouse
      */
     @Test
     public void testFullHouse() {
+        System.out.println("Rank 5: Straight");
+        ArrayList<Integer> test = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<Integer>();
+        // test 1
+        test.addAll(Arrays.asList(new Integer[]{12, 9, 9, 8, 3, 3, 3}));
+        test = calculator.hasFullHouse(test);
+        expected.addAll(Arrays.asList(new Integer[]{7, 3, 3, 3, 9, 9}));
+        assertEquals(expected, test);
+        // test 2
+        test.clear();
+        test.addAll(Arrays.asList(new Integer[]{10, 10, 10, 7, 3, 3, 2}));
+        test = calculator.hasFullHouse(test);
+        expected.clear();
+        expected.addAll(Arrays.asList(new Integer[]{7, 10, 10, 10, 3, 3}));
+        assertEquals(expected, test);
 
     }
 
@@ -162,7 +179,7 @@ public class CombinationCalculatorTest {
     @Test
     public void testStraightFlush() {
         System.out.println("Rank 9: Straight Flush");
-        ArrayList<Integer> test = calculator.hasFlush(cards);
+        ArrayList<Integer> test = calculator.hasStraightFlush(cards);
         ArrayList<Integer> expected = new ArrayList<Integer>();
         expected.addAll(Arrays.asList(new Integer[]{9, 5, 4, 3, 2, 1}));
         assertEquals(expected, test);
@@ -174,9 +191,9 @@ public class CombinationCalculatorTest {
     @Test
     public void testRoyalFlush() {
         System.out.println("Rank 10: Royal Flush");
-        ArrayList<Integer> test = calculator.hasFlush(cards);
+        ArrayList<Integer> test = calculator.hasStraightFlush(cards);
         ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(new Integer[]{10, 14, 13, 12, 11, 10}));
+        expected.addAll(Arrays.asList(new Integer[]{9, 5, 4, 3, 2, 1}));
         assertEquals(expected, test);
     }
 }

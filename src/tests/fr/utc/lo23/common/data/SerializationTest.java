@@ -2,7 +2,9 @@ package fr.utc.lo23.common.data;
 
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static org.junit.Assert.*;
@@ -29,6 +31,5 @@ public class SerializationTest {
 
     @Test
     public void testDeserializationObject() throws Exception {
-
     }
 }

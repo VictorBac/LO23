@@ -78,8 +78,7 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     }
 
-    public void sendLogGame(Game LogGame) throws NetworkFailureException {
-
+    public void sendLogGame() throws NetworkFailureException {
 
     }
 
@@ -107,6 +106,11 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     public void startGame(Table tableToStart) throws NetworkFailureException {
+
+    }
+
+    @Override
+    public void sendLogGame(Game LogGame) throws NetworkFailureException {
 
     }
 }

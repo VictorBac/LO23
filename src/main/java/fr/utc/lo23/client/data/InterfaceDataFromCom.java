@@ -23,14 +23,14 @@ public interface InterfaceDataFromCom {
     /**
      * Method to update the list of UserLight connected with a new Remote userLight
      *
-     * @param userLightDistant new Userlight that need to be add
+     * @param userLightDistant new UserLight that need to be add
      */
     public void remoteUserConnected(UserLight userLightDistant);
 
     /**
      * Method to update the list of UserLight disconnected  removing a userLight
      *
-     * @param userLightDistant UserLight that need to be reomved
+     * @param userLightDistant UserLight that need to be removed
      */
     public void remoteUserDisonnected(UserLight userLightDistant);
 
@@ -40,6 +40,7 @@ public interface InterfaceDataFromCom {
      * @param tableCreatedOnServer new Table that was created on the server
      */
     public void notifyNewTable(Table tableCreatedOnServer);
+
 
     /**
      * Method to call when a remote user is connected on a specific Table,
@@ -77,6 +78,14 @@ public interface InterfaceDataFromCom {
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
 
     /**
+     * Method to notify that the local user is not able to join the table
+     *
+     * @param idTableLocalUserJoined the id of the Table the User has not joined
+     * @param modeUserLocal          an EnumerationTypeOfUser the mode which he has chosen to adopt spectator or player
+     */
+    public void tableJoinRefused(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
+
+    /**
      * Method to keep locally the list of UserLight connected to the server
      *
      * @param listUserLightConnectedOnServer ArrayList of  UserLight connected on the server
@@ -98,18 +107,52 @@ public interface InterfaceDataFromCom {
     public UserLight getUserLightLocal();
 
     /**
+     * Method to notify the player that the Game starts
+     * @param idTable UUID of the Table the user is connected to
+     */
+    public void startGame(UUID idTable);
+
+    /**
+     * Method that has to be called if the creator of a Table decide to start the Game but the server has rejected the request
+     */
+    public void tableCreatorRequestToStartGameRejected();
+
+    /**
+     * Method that has to be called if the creator of a Table decide to start the Game and the server has accepted the request
+     */
+    public void tableCreatorRequestToStartGameAccepted();
+
+    /**
+     * Method to ask the local Player for his money he is going to start with
+     */
+    public void askAmountMoney();
+
+    /**
+     * Method that returns the confirmation from the server that its amount was valid
+     * @param player User light of the local User (Player)
+     * @param amount Integer amount asked by IHMTable, -1 if error >0 if valid
+     */
+    public void notifyMoneyAmountAnswerFromServer(UserLight player, Integer amount);
+
+    /**
+     * Method used to ask to each player if he accept the money of each player and if he is ready to start the game
+     */
+    public void askReadyGame();
+
+    /**
      * Method to keep the local player hand locally
      *
      * @param playerHandUserLocal PlayerHand of the local User
      */
     public void stockCards(PlayerHand playerHandUserLocal);
 
+
     /**
-     * Method to propose for the local user the lis of Action that he can do
-     *
-     * @param listActionPossibleForUserLocal ArrayList of Action that are possible to do for this turn (not the object Turn)
+     * Method to propose for the local user the list of Action that he can do, and use this list to fill the Action
+     * @param actionEmpty an emptyAction that the Player has to fill
+     * @param listActionPossibleForUserLocal Array of EnumerationAction that are possible to do for this turn (not the object Turn)
      */
-    public void askAction(ArrayList<Action> listActionPossibleForUserLocal);
+    public void askAction(Action actionEmpty,EnumerationAction[] listActionPossibleForUserLocal);
 
     /**
      * Method to notify the local User of the Action of a Player
@@ -119,20 +162,24 @@ public interface InterfaceDataFromCom {
     public void notifyAction(Action action);
 
     /**
-     * Method to inform the local user that the Turn ended with a list of winner and the list of points they earned
+     * Method to inform the local user that the Hand ended with a list of Seat, their amount of money has changed depending on how won
      *
-     * @param listWinner ArrayList of UserLight that won
-     * @param listGain   ArrayList of Integer with the point that each one earned ordered in the same order as the list of winner
+     * @param listSeat ArrayList of Seat with their latest amount of money
      */
-    public void informEndTurn(ArrayList<UserLight> listWinner, ArrayList<Integer> listGain);
+    public void informEndHand(ArrayList<Seat> listSeat);
 
+    /**
+     * Method to inform the local user that the Turn ended with the Pot at the end of Turn
+     * @param potForThisTurn Integer containing the amount of money at the end of the Turn in the pot
+     */
+    public void informEndTurn(Integer potForThisTurn);
 
     /**
      * Method to save a game
      *
-     * @param table : table on which the game was played
+     * @param tableThatContainGameToSave : table on which the game was played
      */
-    public void saveLogGame(Table table);
+    public void saveLogGame(Table tableThatContainGameToSave);
 
 
     /**
@@ -148,4 +195,11 @@ public interface InterfaceDataFromCom {
      * @param profileReturnedByTheServer User of a remote User which contain the profile of the user
      */
     public void remoteUserProfile(User profileReturnedByTheServer);
+
+
+    /**
+     * Method to call when the Game the user is playing on is stopped
+     * @param gameOfTheUserLocal Game that was stopped
+     */
+    public void stopGame(Game gameOfTheUserLocal);
 }

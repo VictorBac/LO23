@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -25,6 +26,8 @@ public class Game implements Serializable{
     private EnumerationStatusGame statusOfTheGame;
     private ArrayList<UserLight> listUserSpectator;
     private Table tableOfTheGame;
+    private HashMap<UserLight,Boolean> readyUserAnswers;
+    private Integer maxStartMoney;
 
     /**
      * Constructor with all parameter
@@ -48,37 +51,40 @@ public class Game implements Serializable{
         this.ante = ante;
         this.statusOfTheGame = statusOfTheGame;
         this.listUserSpectator = listUserSpectator;
+        this.readyUserAnswers = new HashMap<UserLight,Boolean>();
     }
 
     /**
-     * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players
+     * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players,
+     * @param tableOfTheGame Table of Game it is refered to
+     * @param ante small amount of money that each player has to pay at each Hand
+     * @param blind amount of money that the small blind user has to pay at the beginning of the Hand
+     * @param maxStartMoney max Money to start with
      */
-    public Game(Table tableOfTheGame) {
+    public Game(Table tableOfTheGame, int ante, int blind, int maxStartMoney) {
         this.idGame = UUID.randomUUID();
         this.timeStampStartOfTheGame = null;
-        this.blind = 0;
+        this.blind = blind;
         this.listSeatPlayerWithPeculeDepart = new ArrayList<Seat>();
-        this.ante = 0;
+        this.ante = ante;
         this.listUserSpectator =  new ArrayList<UserLight>();
         this.listHand = new ArrayList<Hand>();
         this.chatGame = new Chat();
-        this.statusOfTheGame = EnumerationStatusGame.waitingForPlayer;
+        this.statusOfTheGame = EnumerationStatusGame.Waiting;
         this.tableOfTheGame = tableOfTheGame;
+        this.readyUserAnswers = new HashMap<UserLight,Boolean>();
+        this.maxStartMoney = maxStartMoney;
     }
 
     //TODO comment those method
 
     /**
      * Method to know the current Hand
-     * @return
+     * @return the last Hand of the Array
      */
     public Hand getCurrentHand(){
         return this.listHand.get(this.listHand.size()-1);
     }
-    private ArrayList<UserLight> getPlayerList(){
-        return null;//TODO remove this line, method useless
-    }
-
 
     public void addPlayer(UserLight newUserLightPlayerJoinGame){
         this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
@@ -86,7 +92,7 @@ public class Game implements Serializable{
 
     /**
      * Method to set a player as disconnected on the Game
-     * @param userLightPlayerToRemoveFromTheGame µUserLight of the player who is disconnected
+     * @param userLightPlayerToRemoveFromTheGame ï¿½UserLight of the player who is disconnected
      */
     public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){
         int sizeListSeat = this.listSeatPlayerWithPeculeDepart.size();
@@ -98,7 +104,6 @@ public class Game implements Serializable{
             }
 
         }
-
     }
 
 
@@ -148,16 +153,49 @@ public class Game implements Serializable{
     /**
      * Method to start the Game
       */
-    public void startGame(){
-        this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
-        this.statusOfTheGame = EnumerationStatusGame.playing;
-//TODO begin to distribute the cards
+    public Boolean startGame(){
+        if(tableOfTheGame.getListPlayers().getListUserLights().size()>=tableOfTheGame.getNbPlayerMin() && tableOfTheGame.getListPlayers().getListUserLights().size()<=tableOfTheGame.getNbPlayerMax()) {
+            this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
+            this.statusOfTheGame = EnumerationStatusGame.Playing;
+            return true;
+        }
+        else
+            return false;
     }
 
 
     public void stopGame(){
+        this.statusOfTheGame = EnumerationStatusGame.Finished;
 
     }
+
+    public int getMoneyOfPlayer(UserLight user){
+        for(Seat seat: getListSeatPlayerWithPeculeDepart())
+        {
+            if(user==seat.getPlayer())
+                return seat.getCurrentAccount();
+        }
+        return -1;
+    }
+
+    public void setMoneyOfPlayer(UserLight user, int value){
+        for(Seat seat: getListSeatPlayerWithPeculeDepart())
+        {
+            if(user==seat.getPlayer())
+                seat.setCurrentAccount(value);
+        }
+    }
+
+    public void createPlayerSeat(UserLight user,Integer startMoney){
+        Seat seat =new Seat();
+        seat.setPlayer(user);
+        seat.setStartAmount(startMoney);
+        seat.setCurrentAccount(startMoney);
+        this.getListSeatPlayerWithPeculeDepart().add(seat);
+    }
+
+
+
 
 ///////////////////////GETTER and SETTER
     /**
@@ -214,9 +252,24 @@ public class Game implements Serializable{
      */
     public ArrayList<UserLight> getListUserSpectator() {return listUserSpectator;}
 
-
     public void setBlind(int blind) {this.blind = blind;}
     public void setAnte(int ante) {this.ante = ante;}
     public void setStatusOfTheGame(EnumerationStatusGame statusOfTheGame) {this.statusOfTheGame = statusOfTheGame;}
+
+    public Integer getMaxStartMoney() {
+        return maxStartMoney;
+    }
+
+    public void setMaxStartMoney(Integer maxStartMoney) {
+        this.maxStartMoney = maxStartMoney;
+    }
+
+    public HashMap<UserLight, Boolean> getReadyUserAnswers() {
+        return readyUserAnswers;
+    }
+
+    public void setReadyUserAnswers(HashMap<UserLight, Boolean> readyUserAnswers) {
+        this.readyUserAnswers = readyUserAnswers;
+    }
 }
 

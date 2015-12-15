@@ -97,7 +97,7 @@ public class PlayerController{
     }
 
     public void initialize() {
-
+        betMoney = 0;
     }
 
     public void updateMoney(Integer money){
@@ -150,6 +150,19 @@ public class PlayerController{
         }
     }
 
+    public void addBetMoneyAmount(int amount) {
+        playerInfos.setVisible(true);
+        betMoney += amount;
+        if(!playerInfos.getStyleClass().contains("money"))
+            playerInfos.getStyleClass().add("money");
+        if(amount==-1)
+            playerInfos.setText("Couché");
+        else
+        {
+            playerInfos.setText(amount +" $");
+        }
+    }
+
     public void clearReadyStatus(){
         playerInfos.setVisible(false);
         playerInfos.getStyleClass().remove("refuse");
@@ -178,4 +191,6 @@ public class PlayerController{
     public void cleanPlayerBox(){
         playerBox.setStyle("-fx-border-color: black ; -fx-border-width: 1px ;");
     }
+
+
 }

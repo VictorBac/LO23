@@ -20,6 +20,7 @@ public class LaunchGameMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
+        //TODO: en fonction du retour de startGame, envoyer une erreur ou une confirmation du lancement de la game
         PokerServer myServ = threadServer.getMyServer();
         Console.log("Launch Game message received");
         //TODO : décommenter quand la fonction startGame renverra bien un boolean

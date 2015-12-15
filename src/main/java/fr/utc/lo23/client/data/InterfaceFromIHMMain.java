@@ -6,6 +6,9 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
+
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +32,9 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
         User userLocal = (User) Serialization.deserializationObject(login);
-        //User userLocal = new User(login, password); //Create a User to test
+        if (userLocal == null) {
+            throw new LoginNotFoundException(login);
+        }
         // Get the login and password local.
         String loginLocal = userLocal.getUserLight().getPseudo();
         String passwordLocal = userLocal.getPwd();
@@ -86,7 +91,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Ask server to return TableList
-     * @return
+     * @throws NetworkFailureException  Network Failure
      */
     public void getTableList() throws NetworkFailureException {
         dManagerClient.getInterToCom().requestTableList();
@@ -97,8 +102,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @return
      */
     public TableList getSavedGamesList() {
-        Serialization.deserializationObject(dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
-        return null;
+        return (TableList)Serialization.deserializationObject(
+                dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
     }
 
     /**
@@ -117,28 +122,44 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     * getServersList TODO
+     * get servers list
      * @return server list
      */
     public List<Server> getServersList() {
-        return null;
+        return dManagerClient.getListServers();
     }
 
     /**
-     * Add server TODO
+     * Add server
      * @param ip
      * @param port
      */
-    public void addServer(String ip, String port) {
-
+    public void addServer(InetAddress ip, String port) {
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        listServers.add(new Server(ip, port));
+        Serialization.serializationObject(listServers,
+                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        dManagerClient.setListServers(listServers);
     }
 
     /**
-     * remove server TODO
+     * remove server from server list
      * @param server server to remove
      */
     public void removeServer(Server server) {
+        ArrayList<Server> listServers = dManagerClient.getListServers();
+        listServers.remove(server);
+        Serialization.serializationObject(listServers,
+                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
+        dManagerClient.setListServers(listServers);
+    }
 
+    /**
+     * get local user profile
+     * @return local user
+     */
+    public User getLocalUserProfile() {
+        return dManagerClient.getUserLocal();
     }
 
 }

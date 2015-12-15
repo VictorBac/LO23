@@ -125,19 +125,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * get servers list
      * @return server list
      */
-    @SuppressWarnings("unchecked")
     public List<Server> getServersList() {
-        ArrayList<Server> listServers = dManagerClient.getListServers();
-        if (listServers != null) {
-            return listServers;
-        }
-        else {
-
-            listServers = (ArrayList<Server>) Serialization.deserializationObject(
-                    dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
-            dManagerClient.setListServers(listServers);
-            return listServers;
-        }
+        return dManagerClient.getListServers();
     }
 
     /**
@@ -145,14 +134,11 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param ip
      * @param port
      */
-    @SuppressWarnings("unchecked")
     public void addServer(InetAddress ip, String port) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
-        if (listServers == null) {
-            listServers = (ArrayList<Server>) Serialization.deserializationObject(
-                    dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
-        }
         listServers.add(new Server(ip, port));
+        Serialization.serializationObject(listServers,
+                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
         dManagerClient.setListServers(listServers);
     }
 
@@ -160,14 +146,11 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * remove server from server list
      * @param server server to remove
      */
-    @SuppressWarnings("unchecked")
     public void removeServer(Server server) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
-        if (listServers == null) {
-            listServers = (ArrayList<Server>) Serialization.deserializationObject(
-                    dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
-        }
         listServers.remove(server);
+        Serialization.serializationObject(listServers,
+                dManagerClient.getUserLocal().getLogin() + Serialization.pathServerList);
         dManagerClient.setListServers(listServers);
     }
 

@@ -205,4 +205,8 @@ public class MainWindowController extends BaseController {
         }
         Platform.exit();
     }
+
+    public void addTable(Table t) {
+        tablesList.add(t);
+    }
 }

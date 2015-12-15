@@ -54,7 +54,7 @@ import java.util.List;
 
     @Override
     public void notifyNewTable(Table t) {
-
+        managerMain.getControllerMain().getMainWindowController().addTable(t);
     }
 
     @Override

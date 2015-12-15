@@ -4,6 +4,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
  */
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainControllerClient extends Application {
 
@@ -70,6 +72,7 @@ public class MainControllerClient extends Application {
     public void showConnectionWindow()
     {
         connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
+        connectionWindowController.initServerlist();
     }
 
     public void showMainWindow(){

@@ -1,11 +1,13 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -91,15 +93,11 @@ public class ConnectionController extends BaseController {
                 return cell;
             }
         });
+    }
 
-        // test
-        try
-        {
-            serverList.add(new Server(InetAddress.getByName("000.000.000.000"),"0000"));
-        } catch (UnknownHostException e)
-        {
-
-        }
+    public void initServerlist()
+    {
+        serverList.setAll(mController.getManagerMain().getInterDataToMain().getServersList());
     }
 
     public void change(ActionEvent actionEvent) {

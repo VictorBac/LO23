@@ -5,6 +5,7 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,45 +27,15 @@ public class CalculatorTest {
     public CalculatorTest() {
         calculator = new CombinationCalculator();
         Hand oneHand = new Hand();
-        oneHand.getListPlayerHand().add(new PlayerHand());
-        oneHand.getListPlayerHand().add(new PlayerHand());
-        //oneHand.getListPlayerHand().add(new PlayerHand());
-        //oneHand.getListPlayerHand().add(new PlayerHand());
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player1")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player2")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player3")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player4")));
 
         oneHand.distributeCard();
-        Console.log("after distrib cards \n");
-        for(Card c : oneHand.getListCardField()){
-            Console.log("field cards :" + c.getId());
-        }
-        Console.log("");
-        for(PlayerHand p : oneHand.getListPlayerHand()){
-            for(Card c : p.getListCardsHand()){
-                Console.log("player " + p.toString() + " cards :" + c.getId());
-            }
-            Console.log("");
-        }
-
         listOfPlayer = oneHand.getListPlayerHand();
         cardsOnField = oneHand.getListCardField();
-/*        cards = new ArrayList<Card>();
-        try {
-            cards.add(new Card(14, EnumerationCard.CLUB));
-            cards.add(new Card(13,EnumerationCard.DIAMOND));
-            cards.add(new Card(5,EnumerationCard.CLUB));
-            cards.add(new Card(4,EnumerationCard.CLUB));
-            cards.add(new Card(3,EnumerationCard.HEART));
-            cards.add(new Card(3,EnumerationCard.CLUB));
-            cards.add(new Card(2,EnumerationCard.CLUB));
-        } catch (CardFormatInvalidException e) {
-            e.printStackTrace();
-        }
-        listOfPlayer.add(new PlayerHand(cards, new UserLight()));
-        cardValues = new ArrayList<Integer>();
-        for (int i = 0; i < cards.size(); i++) {
-            cardValues.add(cards.get(i).getValue());
-        }
-        Collections.sort(cardValues);
-        Collections.reverse(cardValues);*/
+
 
     }
 
@@ -74,17 +45,11 @@ public class CalculatorTest {
      */
     @Test
     public void getWinnerTest() {
-
-
-
         listWinner = calculator.getWinner(listOfPlayer, cardsOnField);
-//        for(PlayerHand p : listWinner){
-//            for(Card c : p.getListCardsHand()){
-//                Console.log("win player " + p.toString() + " cards :" + c.getId());
-//            }
-//            Console.log("");
-//        }
+
     }
+
+
 
     /**
      * get Winner Test

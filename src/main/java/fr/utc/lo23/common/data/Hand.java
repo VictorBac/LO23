@@ -197,11 +197,6 @@ public class Hand implements Serializable{
         return playerFound;
     }
 
-
-    public void setFirstPot(int value){
-        listPotForTheHand.get(0).addValue(value);
-    }
-
     public void addNewPot(){
         Pot newPot = new Pot();
         listPotForTheHand.add(newPot);

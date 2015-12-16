@@ -35,16 +35,16 @@ public class Pot implements Serializable {
         this.valeurPot = 0;
     }
 
+    public void addValue(int value){
+        valeurPot += value;
+    }
+
     /**
      * add player to the end of the pot
      * @param player : player to add
      */
     public void addPlayer(UserLight player){
         this.players.getListUserLights().add(player);
-    }
-
-    public void addValue(int value){
-        valeurPot += value;
     }
 
 /********************* Getters and Setters ***************************/

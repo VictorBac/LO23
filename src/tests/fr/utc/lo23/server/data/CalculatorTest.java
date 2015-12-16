@@ -1,11 +1,9 @@
 package fr.utc.lo23.server.data;
 
-import fr.utc.lo23.client.network.main.Console;
+
 import fr.utc.lo23.common.data.*;
-import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,9 +15,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class CalculatorTest {
     public CombinationCalculator calculator;
-    ArrayList<Card> cards;
-    ArrayList<Integer> cardValues;
-
     ArrayList<PlayerHand> listOfPlayer;
     ArrayList<PlayerHand> listWinner;
     ArrayList<Card> cardsOnField;
@@ -46,10 +41,7 @@ public class CalculatorTest {
     @Test
     public void getWinnerTest() {
         listWinner = calculator.getWinner(listOfPlayer, cardsOnField);
-
     }
-
-
 
     /**
      * get Winner Test

@@ -11,15 +11,16 @@ public class Chat implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
-     * listMessages : table of messages sended
+     * listMessages : table of messages sent
      * @see  fr.utc.lo23.common.data.MessageChat
      */
     private ArrayList<MessageChat> listMessages;
 
     /**
-     * Constructor Default
+     * Constructor by default
      */
-    public Chat() { this.listMessages = new ArrayList<MessageChat>();
+    public Chat() {
+        this.listMessages = new ArrayList<MessageChat>();
     }
 
     /**
@@ -30,25 +31,31 @@ public class Chat implements Serializable {
         this.listMessages = listMessages;
     }
 
-    //getter
-    public ArrayList<MessageChat> getListMessages() {
-        return listMessages;
-    }
-
-    //setter
-    public void setListMessages(ArrayList<MessageChat> listMessages) {
-        this.listMessages = listMessages;
-    }
-
     /**
      * method to add a new message in the chat
      * @param message : message to send
      * @see  fr.utc.lo23.common.data.MessageChat
      */
     public void newMessage(MessageChat message){
-
         this.listMessages.add(message);
+    }
 
+    /*********************Getters & Setters*********************/
+
+    /**
+     * Getter to return a list messages
+     * @return
+     */
+    public ArrayList<MessageChat> getListMessages() {
+        return listMessages;
+    }
+
+    /**
+     * Setter to modify a list messages
+     * @param listMessages
+     */
+    public void setListMessages(ArrayList<MessageChat> listMessages) {
+        this.listMessages = listMessages;
     }
 
 }

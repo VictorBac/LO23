@@ -83,7 +83,7 @@
             </Button>
             </children>
         </AnchorPane>
-      <Button fx:id="buttonQuit" layoutX="1073.0" onAction="#didClickQuitButton" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Quitter">
+      <Button fx:id="buttonQuit" layoutX="1073.0" onAction="#ClickQuit" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Quitter">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

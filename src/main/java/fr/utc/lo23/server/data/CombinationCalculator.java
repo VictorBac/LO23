@@ -1,6 +1,5 @@
 package fr.utc.lo23.server.data;
 
-import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.Card;
 import fr.utc.lo23.common.data.EnumerationCard;
 import fr.utc.lo23.common.data.PlayerHand;
@@ -228,15 +227,16 @@ public class CombinationCalculator {
      */
     protected ArrayList<Integer> hasStraight(ArrayList<Integer> cardValues) {
         if (cardValues.size() < 5) return null;
-        ArrayList<Integer> cardRank = new ArrayList<Integer>();
-        if (cardValues.get(0) == 14)  cardValues.add(1);
+        ArrayList<Integer> cardRank = (ArrayList<Integer>) cardValues.clone();
+        if (cardRank.get(0) == 14)  cardRank.add(1);
         for (int i = 0; i < 4; i++) {
-            Integer highcard = cardValues.get(i);
-            if (cardValues.contains(highcard - 1) &&
-                    cardValues.contains(highcard - 2) &&
-                    cardValues.contains(highcard - 3) &&
-                    cardValues.contains(highcard - 4))
+            Integer highcard = cardRank.get(i);
+            if (cardRank.contains(highcard - 1) &&
+                    cardRank.contains(highcard - 2) &&
+                    cardRank.contains(highcard - 3) &&
+                    cardRank.contains(highcard - 4))
             {
+                cardRank.clear();
                 cardRank.add(5);
                 for (int j = highcard; j > highcard - 5 ; j--) {
                     cardRank.add(j);

@@ -19,6 +19,7 @@ public class CombinationCalculator {
      * @param cardsOnField : cards on the table
      */
     public ArrayList<PlayerHand> getWinner(ArrayList<PlayerHand> listOfPlayer, ArrayList<Card> cardsOnField) {
+        this.showHand(listOfPlayer, cardsOnField);
         try {
             if (cardsOnField.size() != 5) {
                 throw new CardsNumberException(cardsOnField);
@@ -53,7 +54,32 @@ public class CombinationCalculator {
                 winnerList.add(listOfPlayer.get(i));
             }
         }
+        this.showWinnerList(winnerList, biggestCardRank);
         return winnerList;
+    }
+
+    public void showHand(ArrayList<PlayerHand> listOfPlayer, ArrayList<Card> cardsOnField) {
+        System.out.print("Cards on field: ");
+        for(Card c : cardsOnField){
+            c.printCard();
+        }
+        System.out.println("");
+        System.out.print("Cards in hands: ");
+        for(PlayerHand p : listOfPlayer) {
+            System.out.print(p.getPlayer().getPseudo() + " ");
+            p.getListCardsHand().get(0).printCard();
+            p.getListCardsHand().get(1).printCard();
+            System.out.print("   ");
+        }
+        System.out.println("   ");
+    }
+
+    public void showWinnerList(ArrayList<PlayerHand> listOfPlayer, ArrayList<Integer> biggestCardRank) {
+        System.out.println("Winner list with rank " + biggestCardRank);
+        for(PlayerHand p : listOfPlayer) {
+            System.out.print(p.getPlayer().getPseudo() + " ");
+        }
+        System.out.println();
     }
 
     public boolean greaterThan(ArrayList<Integer> left, ArrayList<Integer> right) {
@@ -74,7 +100,6 @@ public class CombinationCalculator {
 
 
     public ArrayList<Integer> getHandRank(ArrayList<Card> cardsOnHand, ArrayList<Card> cardsOnField) {
-        System.out.println("start get hand rank");
         // Add cardsOnHand and cardsOnField (7 cards) to variable to cards.
         ArrayList<Card> cards = new ArrayList<Card>();
         cards.addAll(cardsOnHand);
@@ -84,7 +109,6 @@ public class CombinationCalculator {
         for (int i = 0; i < cards.size(); i++) {
             cardValues.add(cards.get(i).getValue());
         }
-        System.out.println("get hand rank of" + cardValues);
 
         Collections.sort(cardValues);
         Collections.reverse(cardValues);
@@ -100,7 +124,6 @@ public class CombinationCalculator {
         if (cardRank == null) cardRank = hasTwoPair(cardValues);
         if (cardRank == null) cardRank = hasOnePair(cardValues);
         if (cardRank == null) cardRank = hasHighCard(cardValues);
-        System.out.println("get hand rank:" + cardRank);
         return cardRank;
     }
 

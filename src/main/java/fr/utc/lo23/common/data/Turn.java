@@ -18,7 +18,8 @@ public class Turn implements Serializable {
 
     /**
      * listAction : the list of action in this turn
-     * listPlayerInThisTurn : the list of the players still alive in this turn
+     * listPlayerNoAllinNoFold : the list of the players still alive in this turn
+     * listPlayerAllin :
      * currentGame : the current game with witch this turn is associated
      * timeStampOfTurn : the interval to make the next action
      */
@@ -61,91 +62,136 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Method to get the current action
-     * @return the last action
-     */
-    public Action getCurrentAction(){
-        return listAction.get(listAction.size()-1);
-    }
-
-    /**
-     * Method the player that needs to play
-     * @return UserLight of the player that has to make an Action
-     */
-    /*
-    public UserLight getNextPlayer(){
-        // if the current player is the last one in the list of action, we restart from the first one
-        // else, we get directly the next index of the player
-        if ( listPlayerInThisTurn.get(getListAction().size()-1) == getCurrentAction().getUserLightOfPlayer() ){
-            return listPlayerInThisTurn.get(0);
-        }else{
-            return listPlayerInThisTurn.get( listPlayerInThisTurn.indexOf(getCurrentAction().getUserLightOfPlayer()) + 1 );
-        }
-    }*/
-
-    /**
-     * Method to get the minimal bet that a player has to call, calculated according to the previous action
-     * @return an integer that a player has to pay at least
-     */
-    /*
-    public int minimalBet(){
-        // if the list of action is void, use the amount of the blind in this game
-        if ( listAction.isEmpty() ){
-            return currentGame.getBlind();
-        }else{
-            return getCurrentAction().getAmount();
-        }
-    }*/
-
-    /**
-     * Method to add a new action to the turn, but the action needs to be tested before
+     * Method to add a new action to the turn, update the current amount and the amount in the pot
      * @param newAction action that a player made and that needs to be added to the turn
      * @throws ActionInvalidException
      */
     public void addAction(Action newAction) throws ActionInvalidException{
 
+        Hand currentHand = currentGame.getCurrentHand();
+        ArrayList<Pot> pot = currentHand.getListPotForTheHand();
+
         if ( availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName())){
+            // Fold
             if (newAction.getName().equals(EnumerationAction.FOLD)){
                 listAction.add(newAction);
-                listPlayerNoAllinNoFold.remove(getCurrentAction().getUserLightOfPlayer());
+                listPlayerNoAllinNoFold.remove(newAction.getUserLightOfPlayer());
+                // if the player fold, add the amount to the first pot
+                if ( pot.size() == 0){
+                    currentHand.addNewPot();
+                    currentHand.setFirstPot(getTotalAmountForAUser(newAction.getUserLightOfPlayer()));
+                }
+                else
+                    currentHand.setFirstPot(getTotalAmountForAUser(newAction.getUserLightOfPlayer()));
             }
+            // Check
             else if (newAction.getName().equals(EnumerationAction.CHECK)){
                 listAction.add(newAction);
             }
-            else if (listAction == null){
-                    currentGame.getCurrentHand().addPotOfNewTurn();
-                    if (newAction.getName().equals(EnumerationAction.CALL)){
-                        currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
-                        int newCurrentMoney = currentGame.getMoneyOfPlayer(newAction.getUserLightOfPlayer()) - newAction.getAmount();
-                        currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), newCurrentMoney);
-                        listAction.add(newAction);
-                        if (newCurrentMoney == 0){
-                            newAction.setName(EnumerationAction.ALLIN);
-                        }
-                        listAction.add(newAction);
-                    }
-                    else if (newAction.getName().equals(EnumerationAction.BET)){
-                        if (newAction.getAmount() + getTotalAmountForAUser(newAction.getUserLightOfPlayer())<= getMaxMoneyBetInTheHand() )
-                            throw new ActionInvalidException("The total amount should be greater than the minimum.");
-                        else {
-                            currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
-                            int newCurrentMoney = currentGame.getMoneyOfPlayer(newAction.getUserLightOfPlayer()) - newAction.getAmount();
-                            currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), newCurrentMoney);
-                            if (newCurrentMoney == 0){
-                                newAction.setName(EnumerationAction.ALLIN);
-                            }
-                            listAction.add(newAction);
-                        }
-                    }
-                else if (newAction.getName().equals(EnumerationAction.ALLIN)){
-                        listAction.add(newAction);
-                        currentGame.getCurrentHand().setCurrentPot(newAction.getAmount(), newAction.getUserLightOfPlayer());
-                        currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), 0);
-                    }
+            // Call
+            else if (newAction.getName().equals(EnumerationAction.CALL)){
+                if (newAction.getAmount() != getMaxMoneyBetInTheHand() - getTotalAmountForAUser(newAction.getUserLightOfPlayer())){
+                    throw new ActionInvalidException("Invalid amount");
+                }else{
+                    int newCurrentMoney = currentGame.getMoneyOfPlayer(newAction.getUserLightOfPlayer()) - newAction.getAmount();
+                    currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), newCurrentMoney);
+                    listAction.add(newAction);
                 }
+            }
+            // Bet
+            else if (newAction.getName().equals(EnumerationAction.BET)){
+                if (newAction.getAmount() + getTotalAmountForAUser(newAction.getUserLightOfPlayer()) < getMaxMoneyBetInTheHand() )
+                    throw new ActionInvalidException("The total amount must be greater than the minimum.");
+                else {
+                    int newCurrentMoney = currentGame.getMoneyOfPlayer(newAction.getUserLightOfPlayer()) - newAction.getAmount();
+                    currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), newCurrentMoney);
+                    if (newCurrentMoney == 0){
+                        newAction.setName(EnumerationAction.ALLIN);
+                        listPlayerAllin.add(newAction.getUserLightOfPlayer());
+                        listPlayerNoAllinNoFold.remove(newAction.getUserLightOfPlayer());
+                    }
+                    listAction.add(newAction);
+                }
+            }
+            // AllIn
+            else if (newAction.getName().equals(EnumerationAction.ALLIN)){
+                listAction.add(newAction);
+                currentGame.setMoneyOfPlayer(newAction.getUserLightOfPlayer(), 0);
+                listPlayerAllin.add(newAction.getUserLightOfPlayer());
+                listPlayerNoAllinNoFold.remove(newAction.getUserLightOfPlayer());
+            }
+
+            // if a turn is over, should distribute pots
+            if ( isOver() ){
+                ArrayList<UserLight> listPlayer = new ArrayList<UserLight>();
+                for (UserLight user : listPlayerNoAllinNoFold
+                        ) {
+                    listPlayer.add(user);
+                }
+                for (UserLight user : listPlayerAllin
+                        ) {
+                    listPlayer.add(user);
+                }
+                distributePot(listPlayer, 0, 0);
+            }
         }else{
             throw new ActionInvalidException("Invalid Action!");
         }
+    }
+
+
+    public void distributePot(ArrayList<UserLight> listAllIn, int index, int min){
+        ArrayList<UserLight> list = listAllIn;
+        int sizeOrigin = list.size();
+
+        if (currentGame.getCurrentHand().getListPotForTheHand().size() < index +1 )
+            currentGame.getCurrentHand().addNewPot();
+
+        for (UserLight user : list
+                ) {
+            currentGame.getCurrentHand().getListPotForTheHand().get(index).addPlayer(user);
+        }
+
+        if (isSameAmount(list)) {
+            if (index==0){
+                for (UserLight user : list
+                        ) {
+                    currentGame.getCurrentHand().getListPotForTheHand().get(index).addValue(getTotalAmountForAUser(user));
+                }
+            }else if (index!=0){
+                int addValue = sizeOrigin * ( getTotalAmountForAUser(list.get(0)) - min );
+                currentGame.getCurrentHand().getListPotForTheHand().get(index).addValue(addValue);
+            }
+        }else if (!isSameAmount(list)){
+            int minAmount = getTotalAmountForAUser(list.get(0));
+            UserLight minUser = list.get(0);
+            ArrayList<UserLight> minUserList = new ArrayList<UserLight>();
+            for (UserLight user : list
+                 ) {
+                if (getTotalAmountForAUser(user) < minAmount){
+                    minAmount = getTotalAmountForAUser(user);
+                    minUser = user;
+                }
+            }
+            minUserList.add(minUser);
+            list.remove(minUser);
+            for (UserLight user : list
+                    ) {
+                if (getTotalAmountForAUser(user) == minAmount){
+                    minUserList.add(user);
+                    list.remove(user);
+                }
+            }
+
+            int addValue = ( sizeOrigin - minUserList.size() ) * ( minAmount - min );
+            currentGame.getCurrentHand().getListPotForTheHand().get(index).addValue(addValue);
+
+            if (list.size() != 0)
+                distributePot(list, index+1, minAmount);
+
+        }
+
+
     }
 
     /**
@@ -201,12 +247,12 @@ public class Turn implements Serializable {
      * It this case, we display a new card
      * @return
      */
-    public boolean isSame(){
-        int temp = getTotalAmountForAUser(listPlayerNoAllinNoFold.get(0));
-        for (UserLight user : listPlayerNoAllinNoFold
+    public boolean isSameAmount(ArrayList<UserLight> userList){
+        int temp = getTotalAmountForAUser(userList.get(0));
+        for (UserLight user : userList
                 ) {
             if (getTotalAmountForAUser(user) != temp){
-                        return false;
+                return false;
             }
         }
         return true;
@@ -256,7 +302,7 @@ public class Turn implements Serializable {
      */
     public boolean isOver(){
         if (listPlayerNoAllinNoFold.size() != 0 ){
-            if ( isSame() )
+            if ( isSameAmount(listPlayerNoAllinNoFold) )
                 return true;
             else
                 return false;
@@ -267,6 +313,14 @@ public class Turn implements Serializable {
                 return false;
         }
         return false;
+    }
+
+    /**
+     * Method to get the current action
+     * @return the last action
+     */
+    public Action getCurrentAction(){
+        return listAction.get(listAction.size()-1);
     }
 
 

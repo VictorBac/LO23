@@ -43,8 +43,8 @@ public class Pot implements Serializable {
         this.players.getListUserLights().add(player);
     }
 
-    public void addPot(int value){
-        valeurPot = value;
+    public void addValue(int value){
+        valeurPot += value;
     }
 
 /********************* Getters and Setters ***************************/

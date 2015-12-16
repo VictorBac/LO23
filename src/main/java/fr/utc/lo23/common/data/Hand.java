@@ -134,7 +134,7 @@ public class Hand implements Serializable{
         // Second Step assign each card to either a player or the field
         int indexPlus = 0;
         for(int index = 0; index < numberCardToDistribute; index++){
-            Console.log("card index :"+index +" chosen"+cardsDistributed[index].getId());
+            //Console.log("card index :"+index +" chosen"+cardsDistributed[index].getId());
             // last cards for the flop
             if(index >= numberCardToDistribute - NUMBER_OF_CARD_ON_FIELD){
                 this.listCardField.add(cardsDistributed[index]);

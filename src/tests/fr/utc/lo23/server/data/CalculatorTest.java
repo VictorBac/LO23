@@ -3,12 +3,8 @@ package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.*;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Jianghan on 26/11/2015.
@@ -44,7 +40,7 @@ public class CalculatorTest {
     }
 
     /**
-     * get Winner Test
+     * get winner list test
      */
     @Test
     public void greterThanTest() {
@@ -56,10 +52,12 @@ public class CalculatorTest {
     }
 
     /**
-     * get Winner Test
+     * get handRank test
      */
     @Test
     public void getHandRankTest() {
-        System.out.println(calculator.getHandRank(listOfPlayer.get(0).getListCardsHand(),cardsOnField));
+        calculator.showHand(listOfPlayer, cardsOnField);
+        System.out.println("Get rank of the first player " +
+                calculator.getHandRank(listOfPlayer.get(0).getListCardsHand(), cardsOnField));
     }
 }

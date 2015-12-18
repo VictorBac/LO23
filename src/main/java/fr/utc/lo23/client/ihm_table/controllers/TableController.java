@@ -62,7 +62,7 @@ public class TableController {
         //betMoneyBoxInitializer();
 
         // Commenter ce qu'il y a dessous pour virer les tests
-        try {
+        /*try {
             Card card = new Card(5,EnumerationCard.CLUB);
             ArrayList<Card> cards = new ArrayList<Card>();
             cards.add(card);
@@ -93,7 +93,7 @@ public class TableController {
 
         } catch (CardFormatInvalidException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @FXML

@@ -4,7 +4,6 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
-import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
@@ -107,6 +106,12 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     public void startGame(Table tableToStart) throws NetworkFailureException {
 
+    }
+
+    @Override
+    public void newTurn(ArrayList<UserLight> aPlayers) {
+        NotifyNewTurnMessage newT = new NotifyNewTurnMessage();
+        server.sendToListOfUsers(aPlayers, newT);
     }
 
     @Override

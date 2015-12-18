@@ -31,7 +31,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserConnected");
-            //TODO: gérer spectateur et player
+            //TODO: handle spectateur et player
             dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
             //NON: dManagerClient.getInterToIHMTable().notifyNewUser(userLightDistant,true);
@@ -43,7 +43,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void remoteUserDisonnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserDisonnected");
-            //TODO: gérer spectateur et player
+            //TODO: handle spectateur et player
             dManagerClient.getListUsersLightLocal().remove(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
             //NON: dManagerClient.getInterToIHMTable().notifyUserLeft(userLightDistant,true);
@@ -110,7 +110,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"tableJoinAccepted()");
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
-            //TODO need to contact IHMMain missing interface   dManagerClient.getInterToIHMMain();
             dManagerClient.getInterToIHMMain().tableJoinAccepted(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined), modeUserLocal);
         } catch (TableException e) {
             e.printStackTrace();
@@ -157,11 +156,10 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void remoteUserProfile(User profileReturnedByTheServer){
         Console.log(TAG + "remoteUserProfile()");
-        //TODO add this line after integration dManagerClient.getInterToIHMMain().profileRemoteUserFromServer(profileReturnedByTheServer);
+        dManagerClient.getInterToIHMMain().profileRemoteUserFromServer(profileReturnedByTheServer);
     }
 
     public void updateStats(Stats statsLocalUser) {
-
         //TODO if this the correct way to change the stats or add the latest stats
         dManagerClient.getUserLocal().setStatsUser(statsLocalUser);
         //for notifying the player that its Stats has changed
@@ -209,6 +207,18 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"notifyAction()");
         dManagerClient.getInterToIHMTable().notifyAction(action);
     }
+
+
+    public void informNewHand(){
+        Console.log(TAG +"informNewHand()");
+        dManagerClient.getInterToIHMTable().notifyStartHand();
+    }
+
+    public void informNewTurn(){
+        Console.log(TAG +"informNewTurn()");
+        dManagerClient.getInterToIHMTable().notifyStartTour();
+    }
+
 
     public void informEndTurn(Integer potForThisTurn){
         Console.log(TAG +"informEndTurn()");

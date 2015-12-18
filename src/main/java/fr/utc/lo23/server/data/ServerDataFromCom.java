@@ -333,7 +333,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return an arrayList of Userlight with all the players
      */
     public ArrayList<UserLight> getPlayersByTable(UUID tableID){
-        ArrayList<UserLight> players = new ArrayList<UserLight>();
+        // Inutile ?    ArrayList<UserLight> players = new ArrayList<UserLight>();
         Table current = getTableFromId(tableID);
         return current.getListPlayers().getListUserLights();
     }
@@ -344,7 +344,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @return the table if found, else null
      */
     private Table getTableFromId(UUID idTable){
-        Table wantedTable = null;
+        // Inutile ?  Table wantedTable = null;
         ArrayList<Table> tableList = getTableList();
         for (Table cur : tableList){
             if (cur.getIdTable().equals(idTable))

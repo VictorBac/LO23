@@ -202,7 +202,7 @@ public class Game implements Serializable{
         boolean finished;
         int numberOfPlayerAlive =0;
         for(Seat seatPlayer : listSeatPlayerWithPeculeDepart){
-            if(seatPlayer.getCurrentAccount()>0){
+            if(seatPlayer.getCurrentAccount()>0 && seatPlayer.getStatusPlayer().equals(EnumerationStatusPlayer.CONNECTED)){
                 numberOfPlayerAlive++;
             }
         }

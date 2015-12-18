@@ -109,7 +109,7 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     @Override
-    public void newTurn(ArrayList<UserLight> aPlayers) {
+    public void newRound(ArrayList<UserLight> aPlayers) {
         NotifyNewRoundMessage newT = new NotifyNewRoundMessage();
         server.sendToListOfUsers(aPlayers, newT);
     }

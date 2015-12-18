@@ -72,6 +72,6 @@ public interface InterfaceServer {
      * le début d'une nouvelle manche
      * @param ArrayList<UserLight> aPlayers
      */
-    public void newTurn(ArrayList<UserLight> aPlayers);
+    public void newRound(ArrayList<UserLight> aPlayers);
 
 }

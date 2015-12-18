@@ -121,6 +121,19 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     @Override
+    public void endRound(ArrayList<UserLight> aPlayers) {
+        NotifyEndRoundMessage endR = new NotifyEndRoundMessage();
+        server.sendToListOfUsers(aPlayers, endR);
+    }
+
+    @Override
+    public void endTurn(ArrayList<UserLight> aPlayers) {
+        NotifyEndTurnMessage endT = new NotifyEndTurnMessage();
+        server.sendToListOfUsers(aPlayers, endT);
+    }
+
+
+    @Override
     public void sendLogGame(Game LogGame) throws NetworkFailureException {
 
     }

@@ -76,4 +76,8 @@ public interface InterfaceServer {
 
     public void newTurn(ArrayList<UserLight> aPlayers);
 
+    public void endRound(ArrayList<UserLight> aPlayers);
+
+    public void endTurn(ArrayList<UserLight> aPlayers);
+
 }

@@ -5,18 +5,16 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Message permettant de prévenir les joueurs
- * qu'une nouvelle manche va commencer
+ * qu'un nouveau tour va commencer
  * Created by rbonneau on 18/12/2015.
  */
-public class NotifyNewRoundMessage extends Message {
-
+public class NotifyNewTurnMessage extends Message {
     @Override
     public void process(ConnectionThread threadServer) {
-
     }
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().informNewRound(); TODO mettre le bon nom de méthode
+        //threadClient.getNetworkManager().getDataInstance().informNewTurn(); TODO mettre le bon nom de méthode
     }
 }

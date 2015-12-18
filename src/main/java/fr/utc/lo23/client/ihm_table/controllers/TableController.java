@@ -39,6 +39,7 @@ public class TableController {
     private Action actionToFill;
     private String turnStatus = null; // null,warmup,flop,turn,river
     private Integer potMoneyInt;
+    private ArrayList<Seat> refSeats = new ArrayList<Seat>();
 
     private boolean isHost = true;
 
@@ -59,41 +60,6 @@ public class TableController {
         this.table = table;
         playerInitializer();
         chatInitializer();
-        //betMoneyBoxInitializer();
-
-        // Commenter ce qu'il y a dessous pour virer les tests
-        /*try {
-            Card card = new Card(5,EnumerationCard.CLUB);
-            ArrayList<Card> cards = new ArrayList<Card>();
-            cards.add(card);
-            cards.add(card);
-
-            PlayerHand player = new PlayerHand();
-            player.setPlayer(controllersList.get(0).getUserLight());
-
-            player.setListCardsHand(cards);
-            ArrayList<PlayerHand> players = new ArrayList<PlayerHand>();
-            players.add(player);
-
-            showCommonCards();
-            cards.add(card);
-            setFlopCards(cards);
-            //setTurnCard(card);
-            //setRiverCard(card);
-
-            setPlayerCards(players);
-
-            Action action = new Action();
-            action.setUserLightOfPlayer(controllersList.get(0).getUserLight());
-
-            EnumerationAction[] enumac = {EnumerationAction.ALLIN};
-
-            ihmTable.getTableToDataListener().askAction(action,enumac );
-
-
-        } catch (CardFormatInvalidException e) {
-            e.printStackTrace();
-        }*/
     }
 
     @FXML
@@ -553,6 +519,18 @@ public class TableController {
         }
     }
 
+    public ArrayList<Seat> getRefSeats() {
+        return refSeats;
+    }
+
+    public void setRefSeats(ArrayList<Seat> refSeats) {
+        this.refSeats = refSeats;
+    }
+
+    public void addRefSeats(Seat seat) {
+        this.refSeats.add(seat);
+    }
+
     /**
      * Add log in log view
      * @param msg
@@ -632,7 +610,9 @@ public class TableController {
      * @param event
      */
     @FXML
-    public void showPopupLeave(javafx.event.ActionEvent event) { popupLeave.setVisible(true);}
+    public void showPopupLeave(javafx.event.ActionEvent event) {
+        popupLeave.setVisible(true);
+    }
 
     /**
      * Accept leaving
@@ -742,16 +722,11 @@ public class TableController {
      * Reset views associated to cards (on table)
      */
     public void resetCommonCards(){
-        commonCardFlop1.setImage(null);
-        commonCardFlop1.setVisible(false);
-        commonCardFlop2.setImage(null);
-        commonCardFlop2.setVisible(false);
-        commonCardFlop3.setImage(null);
-        commonCardFlop3.setVisible(false);
-        commonCardTurn.setImage(null);
-        commonCardTurn.setVisible(false);
-        commonCardRiver.setImage(null);
-        commonCardRiver.setVisible(false);
+        setCommonCardDropAnimation(commonCardFlop1,1);
+        setCommonCardDropAnimation(commonCardFlop2,50);
+        setCommonCardDropAnimation(commonCardFlop3,100);
+        setCommonCardDropAnimation(commonCardTurn,150);
+        setCommonCardDropAnimation(commonCardRiver,200);
     }
 
     /**
@@ -998,6 +973,41 @@ public class TableController {
     }
 
     /**
+     * Animation of cards on the table
+     * @param img
+     * @param waitTime
+     */
+    public void setCommonCardDropAnimation(final ImageView img, Integer waitTime){
+        img.setImage(getBackCardImage());
+        double svgX = img.getX();
+        final Timeline timeline2 = new Timeline();
+        timeline2.setCycleCount(1);
+        timeline2.setAutoReverse(false);
+        KeyValue kv2 = new KeyValue(img.xProperty(),commonCardBack.getX() );
+        EventHandler onFinished2 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                img.setVisible(false);
+                img.setImage(null);
+                img.setX(svgX);
+            }
+        };
+        KeyFrame kf2 = new KeyFrame(Duration.millis(200), onFinished2, kv2);
+        timeline2.getKeyFrames().add(kf2);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                timeline2.play();
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(waitTime), onFinished);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+    }
+
+    /**
      * Cards in flop
      * @param cards
      */
@@ -1011,7 +1021,7 @@ public class TableController {
      * Turn card show
      * @param card
      */
-    public void setTurnCard(Card card){
+    public void setTurnCard(Card card) {
         setCommonCardAnimation(commonCardTurn, getImageFromCard(card));
     }
 
@@ -1019,9 +1029,8 @@ public class TableController {
      * River card show
      * @param card
      */
-    public void setRiverCard(Card card){
+    public void setRiverCard(Card card) {
         setCommonCardAnimation(commonCardRiver, getImageFromCard(card));
-
     }
 
     /**
@@ -1092,7 +1101,33 @@ public class TableController {
         addLogEntry("ERREUR LANCEMENT PARTIE: IL N'Y A PAS ASSEZ DE JOUEURS DANS LA TABLE.");
     }
 
-    public void notifySuccessStartGame(){
+    public void notifySuccessStartGame() {
         addLogEntry("La partie va se lancer d'ici quelques instants.");
+    }
+
+
+    public void beginHand(){
+        addLogEntry("Nouvelle manche.");
+    }
+
+    public void beginTurn(){
+        addLogEntry("Nouveau tour.");
+    }
+
+    public void endTurn(Integer pot){
+        addLogEntry("Fin du tour, il y a "+String.valueOf(Integer.parseInt(potMoney.getText()) + pot)+" dans le pot.");
+        potMoney.setText(String.valueOf(Integer.parseInt(potMoney.getText())+pot));
+    }
+
+    public void endHand(ArrayList<Seat> seatPlayers){
+
+
+
+
+        setRefSeats(seatPlayers);
+    }
+
+    public void notifyEndGame(UserLight winner){
+        addLogEntry("Le grand vainqueur de la partie est "+winner.getPseudo()+".");
     }
 }

@@ -33,15 +33,12 @@ public class TableToDataListener implements ITableToDataListener {
             @Override
             public void run() {
                 if(getIhmtable().getFormController()!=null) {
-
-                            getIhmtable().getFormController().goToTable(table);
-
-
+                    getIhmtable().getFormController().goToTable(table);
                     getIhmtable().setFormController(null);
                 }
                 else
                 {
-                    System.out.println("Error: Il ne faut pas appeler cette fonction en dehors de ses cas d'utilisation.");
+                    System.out.println("Error showTable: Il ne faut pas appeler cette fonction en dehors de ses cas d'utilisation.");
                     System.exit(0);
                 }
             }
@@ -75,7 +72,6 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addPlayer(user);
                     }
                 });
-
             }
         }
     }
@@ -151,7 +147,6 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de demander à l'utilisateur s'il est prêt et accepte les montants des autres joueurs
      */
     public void askReadyGame(){
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -188,7 +183,6 @@ public class TableToDataListener implements ITableToDataListener {
                 }
             }
         });
-
     }
 
     /*
@@ -196,7 +190,12 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de savoir que la manche est lancée.
      */
     public void notifyStartHand(){
-        //TODO: next step
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().beginHand();
+            }
+        });
     }
 
     /*
@@ -204,7 +203,12 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de savoir que le tour a été lancé.
      */
     public void notifyStartTour(){
-        //TODO: next step
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().beginTurn();
+            }
+        });
     }
 
     /*
@@ -220,7 +224,6 @@ public class TableToDataListener implements ITableToDataListener {
                 ihmtable.getTableController().setPlayerCards(playerHands);
             }
         });
-
     }
 
     /*
@@ -245,7 +248,6 @@ public class TableToDataListener implements ITableToDataListener {
                 }
             }
         });
-
     }
 
     /*
@@ -253,7 +255,6 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à iHM-Table d'afficher cette action
      */
     public void notifyAction(Action action){
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -304,8 +305,6 @@ public class TableToDataListener implements ITableToDataListener {
                 }
             }
         });
-
-
     }
 
     /*
@@ -313,9 +312,12 @@ public class TableToDataListener implements ITableToDataListener {
      * Permet à IHM-Table de savoir que le tour est terminé et qu'un prochain peut avoir lieu
      */
     public void notifyEndTour(Integer pot){
-        //TODO: next step
-        //remettre à zero les affichages du tour, et faire des animations d'envoi de sous au milieu
-
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().endTurn(pot);
+            }
+        });
     }
 
     /*
@@ -323,7 +325,12 @@ public class TableToDataListener implements ITableToDataListener {
      * permet à IHM-Table de les afficher
      */
     public void notifyCommonCards(ArrayList<Card> listCards){
-        ihmtable.getTableController().setCards(listCards);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().setCards(listCards);
+            }
+        });
     }
 
     /*
@@ -331,8 +338,12 @@ public class TableToDataListener implements ITableToDataListener {
      * permet à IHM-Table d'afficher les nouvelles informations
      */
     public void notifyEndHand(ArrayList<Seat> seatPlayers){
-        //TODO: next step
-       //Afficher les nouvelles valeurs de money de chaque joueur, envoyer les sous aux vainqueurs
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().endHand(seatPlayers);
+            }
+        });
     }
 
     /*
@@ -346,7 +357,6 @@ public class TableToDataListener implements ITableToDataListener {
                 ihmtable.getTableController().showPopupEndGameVote();
             }
         });
-
     }
 
     /*
@@ -374,7 +384,6 @@ public class TableToDataListener implements ITableToDataListener {
                 ihmtable.getTableController().notifyPlayerVoteEndGameAnswer(player, accept);
             }
         });
-
     }
 
     public void notifyRefuseStartGame(){
@@ -384,7 +393,6 @@ public class TableToDataListener implements ITableToDataListener {
                 ihmtable.getTableController().notifyFailStartGame();
             }
         });
-
     }
 
     public void notifySuccessStartGame(){
@@ -394,7 +402,19 @@ public class TableToDataListener implements ITableToDataListener {
                 ihmtable.getTableController().notifySuccessStartGame();
             }
         });
+    }
 
+    /*
+     * Fonction à appeler après la fin normale d'un jeu
+     * Permet à ihm-table d'afficher le gagnant et de clore la game
+     */
+    public  void notifyEndGame(UserLight winner){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().notifyEndGame(winner);
+            }
+        });
     }
 
 }

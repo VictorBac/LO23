@@ -8,7 +8,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
  * qu'une nouvelle manche va commencer
  * Created by rbonneau on 18/12/2015.
  */
-public class NotifyNewTurnMessage extends Message {
+public class NotifyNewRoundMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {

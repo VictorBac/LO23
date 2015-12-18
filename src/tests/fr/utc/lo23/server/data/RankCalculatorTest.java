@@ -7,10 +7,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
 /**
+ * The test for every rank checking function.
  * Created by Jianghan on 26/11/2015.
  */
 public class RankCalculatorTest {
@@ -21,7 +23,7 @@ public class RankCalculatorTest {
     public RankCalculatorTest() {
         calculator = new CombinationCalculator();
 
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         try {
             cards.add(new Card(14, EnumerationCard.CLUB));
             cards.add(new Card(13,EnumerationCard.DIAMOND));
@@ -34,10 +36,8 @@ public class RankCalculatorTest {
             e.printStackTrace();
         }
         
-        cardValues = new ArrayList<Integer>();
-        for (int i = 0; i < cards.size(); i++) {
-            cardValues.add(cards.get(i).getValue());
-        }
+        cardValues = new ArrayList<>();
+        cardValues.addAll(cards.stream().map(Card::getValue).collect(Collectors.toList()));
         Collections.sort(cardValues);
         Collections.reverse(cardValues);
     }
@@ -49,10 +49,10 @@ public class RankCalculatorTest {
     @Test
     public void testHighCard() {
         System.out.println("Rank 1: High Card");
-        ArrayList<Integer> test = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
         test.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
         test = calculator.hasHighCard(test);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(1, 12, 10, 9, 9, 8));
         assertEquals(expected, test);
     }
@@ -63,10 +63,10 @@ public class RankCalculatorTest {
     @Test
     public void testOnePair() {
         System.out.println("Rank 2: One Pair");
-        ArrayList<Integer> test = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
         test.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
         test = calculator.hasOnePair(test);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(2, 9, 9, 12, 10, 8));
         assertEquals(expected, test);
     }
@@ -77,10 +77,10 @@ public class RankCalculatorTest {
     @Test
     public void testTwoPair() {
         System.out.println("Rank 3: Two Pairs");
-        ArrayList<Integer> test = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
         test.addAll(Arrays.asList(12, 10, 9, 9, 8, 5, 5));
         test = calculator.hasTwoPair(test);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(3, 9, 9, 5, 5, 12));
         assertEquals(expected, test);
     }
@@ -91,23 +91,22 @@ public class RankCalculatorTest {
     @Test
     public void testThree() {
         System.out.println("Rank 4: Three of a kind");
-        ArrayList<Integer> test = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
         test.addAll(Arrays.asList(12, 10, 9, 9, 9, 8, 5));
         test = calculator.hasThree(test);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(4, 9, 9, 9, 12, 10));
         assertEquals(expected, test);
     }
 
     /**
      * Rank 5: Straight
-     * @throws Exception
      */
     @Test
     public void testStraight() {
         System.out.println("Rank 5: Straight");
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
+        ArrayList<Integer> expected = new ArrayList<>();
         // test 1
         test.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 6));
         test = calculator.hasStraight(test);
@@ -130,7 +129,7 @@ public class RankCalculatorTest {
     public void testFlush() {
         System.out.println("Rank 6: Flush");
         ArrayList<Integer> test = calculator.hasFlush(cards);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(6, 14, 5, 4, 3, 2));
         assertEquals(expected, test);
 
@@ -142,10 +141,10 @@ public class RankCalculatorTest {
     @Test
     public void testFullHouse() {
         System.out.println("Rank 5: Straight");
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
+        ArrayList<Integer> expected = new ArrayList<>();
         // test 1
-        test.addAll(Arrays.asList(new Integer[]{12, 9, 9, 8, 3, 3, 3}));
+        test.addAll(Arrays.asList(12, 9, 9, 8, 3, 3, 3));
         test = calculator.hasFullHouse(test);
         expected.addAll(Arrays.asList(7, 3, 3, 3, 9, 9));
         assertEquals(expected, test);
@@ -165,10 +164,10 @@ public class RankCalculatorTest {
     @Test
     public void testFour() {
         System.out.println("Rank 8: Four of a kind");
-        ArrayList<Integer> test = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
         test.addAll(Arrays.asList(12, 10, 9, 9, 9, 9, 5));
         test = calculator.hasFour(test);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(8, 9, 9, 9, 9, 12));
         assertEquals(expected, test);
     }
@@ -180,7 +179,7 @@ public class RankCalculatorTest {
     public void testStraightFlush() {
         System.out.println("Rank 9: Straight Flush");
         ArrayList<Integer> test = calculator.hasStraightFlush(cards);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(9, 5, 4, 3, 2, 1));
         assertEquals(expected, test);
     }
@@ -192,7 +191,7 @@ public class RankCalculatorTest {
     public void testRoyalFlush() {
         System.out.println("Rank 10: Royal Flush");
         ArrayList<Integer> test = calculator.hasStraightFlush(cards);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.addAll(Arrays.asList(9, 5, 4, 3, 2, 1));
         assertEquals(expected, test);
     }

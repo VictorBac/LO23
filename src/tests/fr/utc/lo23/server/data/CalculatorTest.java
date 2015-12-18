@@ -1,16 +1,17 @@
 package fr.utc.lo23.server.data;
 
-
 import fr.utc.lo23.common.data.*;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * The test for some main function in Calculator.
+ * You can take the test as an example of function usage.
  * Created by Jianghan on 26/11/2015.
  */
 public class CalculatorTest {
-    public CombinationCalculator calculator;
+    CombinationCalculator calculator;
     ArrayList<PlayerHand> listOfPlayer;
     ArrayList<PlayerHand> listWinner;
     ArrayList<Card> cardsOnField;
@@ -18,16 +19,15 @@ public class CalculatorTest {
     public CalculatorTest() {
         calculator = new CombinationCalculator();
         Hand oneHand = new Hand();
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player1")));
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player2")));
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player3")));
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<Card>(), new UserLight("player4")));
+        // Add 4 player in this test.
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player1")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player2")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player3")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player4")));
 
         oneHand.distributeCard();
         listOfPlayer = oneHand.getListPlayerHand();
         cardsOnField = oneHand.getListCardField();
-
-
     }
 
 
@@ -44,9 +44,9 @@ public class CalculatorTest {
      */
     @Test
     public void greterThanTest() {
-        ArrayList<Integer> left = new ArrayList<Integer>();
+        ArrayList<Integer> left = new ArrayList<>();
         left.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
-        ArrayList<Integer> right = new ArrayList<Integer>();
+        ArrayList<Integer> right = new ArrayList<>();
         right.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
         System.out.println(calculator.greaterThan(left, right));
     }
@@ -57,7 +57,10 @@ public class CalculatorTest {
     @Test
     public void getHandRankTest() {
         calculator.showHand(listOfPlayer, cardsOnField);
-        System.out.println("Get rank of the first player " +
-                calculator.getHandRank(listOfPlayer.get(0).getListCardsHand(), cardsOnField));
+        for (PlayerHand p : listOfPlayer) {
+            System.out.println("Get rank of " + p.getPlayer().getPseudo() + " : " +
+                    calculator.getHandRank(p.getListCardsHand(), cardsOnField));
+        }
+
     }
 }

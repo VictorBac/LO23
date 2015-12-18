@@ -8,6 +8,7 @@ import fr.utc.lo23.server.data.exceptions.CardValueNumberInvalidException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * Class of combination calculator to find the winner list.
@@ -76,9 +77,7 @@ public class CombinationCalculator {
      */
     public void showHand(ArrayList<PlayerHand> listOfPlayer, ArrayList<Card> cardsOnField) {
         System.out.print("Cards on field: ");
-        for(Card c : cardsOnField){
-            c.printCard();
-        }
+        cardsOnField.forEach(Card::printCard);
         System.out.println("");
         System.out.print("Cards in hands: ");
         for(PlayerHand p : listOfPlayer) {
@@ -138,9 +137,7 @@ public class CombinationCalculator {
         cards.addAll(cardsOnField);
         // take out cardValues of cards. Sort it as desc.
         ArrayList<Integer> cardValues = new ArrayList<>();
-        for (Card c : cards) {
-            cardValues.add(c.getValue());
-        }
+        cardValues.addAll(cards.stream().map(Card::getValue).collect(Collectors.toList()));
 
         Collections.sort(cardValues);
         Collections.reverse(cardValues);

@@ -49,7 +49,11 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             dManagerClient.setUserLocal(userLocal);
             User userLogin = new User(userLocal);
             userLogin.setPwd(null);
-            dManagerClient.getInterToCom().requestLoginServer(userLogin);
+
+            //TODO: set socketIp and socketPort with IHM data
+            String socketIp = null;
+            int socketPort = -1;
+            dManagerClient.getInterToCom().requestLoginServer(userLogin, socketIp, socketPort);
         }
     }
 

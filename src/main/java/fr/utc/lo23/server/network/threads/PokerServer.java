@@ -84,9 +84,9 @@ public class PokerServer extends Thread {
                 ConnectionThread thread = new ConnectionThread(soClient, this);
                 thread.start();
                 threadsClientList.add(thread);
-                for(ConnectionThread thr : threadsClientList) {
+                /*for(ConnectionThread thr : threadsClientList) {
                     Console.log("=============" + thr.getName());
-                }
+                }*/
             } catch (IOException e) {
                 e.printStackTrace();
             }

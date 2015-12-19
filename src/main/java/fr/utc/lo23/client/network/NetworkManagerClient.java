@@ -43,17 +43,17 @@ public class NetworkManagerClient implements InterfaceClient  {
      * @param u
      * @throws NetworkFailureException
      */
-    public void requestLoginServer(User u){
-        //Send the login request over the server
-        Console.log("Creation d'un Request Login message\n");
-        RequestLoginMessage reqLog = new RequestLoginMessage(u);
-        Console.log("requestelog"+reqLog.getUser().toString());
+    public void requestLoginServer(User u, String socketIp, int socketPort){
         try {
-            localClient.connect();
+            localClient.connect(socketIp, socketPort);
         } catch (Exception e) {
             Console.err("La connection a echoué\n");
             e.printStackTrace();
         }
+        //Send the login request to the server
+        Console.log("Creation d'un Request Login message\n");
+        RequestLoginMessage reqLog = new RequestLoginMessage(u);
+        Console.log("requestelog"+reqLog.getUser().toString());
         localClient.send(reqLog);
     }
 
@@ -133,7 +133,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     /**
-     * Envoyer le heartbeat pour ne pas se faire déco
+     * Envoi un heartbeat pour maintenir la connection
      * @throws NetworkFailureException
      */
     public void sendHeartbeat() throws NetworkFailureException {

@@ -91,7 +91,7 @@ public interface InterfaceClient {
 
     public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
 
-    public void requestLoginServer(User u);
+    public void requestLoginServer(User u, String socketIp, int socketPort);
 
     public void sendPacket() throws NetworkFailureException;
 

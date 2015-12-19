@@ -81,12 +81,15 @@ public class ServerLink extends Thread {
                         msg.process(this);
                     } catch (SocketTimeoutException e) {
                         this.networkManager.sendHeartbeat();
-                    }
-                    catch (EOFException e) {
+                    } catch (EOFException e) {
+                        Console.err("EOF\n");
+                        this.disconnect();
+                    }catch(java.net.SocketException e) {
+                        Console.err("Connection reset\n");
                         this.disconnect();
                     }
                 } catch (Exception e) {
-                    Console.err("Erreur de traitement de message: ");
+                    Console.err("Erreur de traitement de message:\n");
                     e.printStackTrace();
                 }
             }

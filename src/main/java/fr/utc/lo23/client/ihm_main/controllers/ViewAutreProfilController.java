@@ -10,6 +10,7 @@ import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -35,22 +36,30 @@ public class ViewAutreProfilController extends BaseController {
     }
 
     public void didClickBackButton(ActionEvent actionEvent) {
-        mController.showMainWindow();
+        mController.getMainWindowController().backFromViewProfile();
     }
 
     public void initdata(UserLight profilautre) {
         labelPlayer.setText(profilautre.getPseudo());
-        //User userautre = mController.getManagerMain().getManagerData().
-        //labelAge.setText(profilautre.get);
-        // TODO quelque chose ici
-//        imageviewer.setImage(user.getAvatar().getImg());
-    }
-    public void setProfile(UserLight user) {
-        //TODO: username.setText(user.getPseudo());
+        /*
         try {
-            imageviewer.setImage(user.getAvatar().getImageAvatar());
+            imageviewer.setImage(profilautre.getAvatar().getImageAvatar());
         } catch (IOException e) {
-            e.printStackTrace();
+            mController.showErrorPopup("Erreur", "Avatar introuvable !");
+        }
+        */
+        try {
+            mController.getManagerMain().getInterDataToMain().getUser(profilautre);
+        } catch (ProfileNotFoundOnServerException e) {
+            mController.showErrorPopup("Erreur", "Profil inconnu du côté serveur ??");
+        } catch (NetworkFailureException e) {
+            mController.showErrorPopup("Erreur réseau", "Vérifier votre connexion internet");
+        }
+    }
+
+    public void setFullData(User profileReturnedByTheServer) {
+        if (profileReturnedByTheServer != null) {
+            labelAge.setText(Integer.toString(profileReturnedByTheServer.getAge()));
         }
     }
 }

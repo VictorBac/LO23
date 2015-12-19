@@ -127,8 +127,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     @Override
-    public void endTurn(ArrayList<UserLight> aPlayers) {
-        NotifyEndTurnMessage endT = new NotifyEndTurnMessage();
+    public void endTurn(ArrayList<UserLight> aPlayers, Integer pot) {
+        NotifyEndTurnMessage endT = new NotifyEndTurnMessage(pot);
         server.sendToListOfUsers(aPlayers, endT);
     }
 

@@ -11,6 +11,12 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
  */
 public class NotifyEndTurnMessage extends Message {
 
+    Integer pot;
+
+    public NotifyEndTurnMessage(Integer turnPot) {
+        pot = turnPot;
+    }
+
     @Override
     public void process(ConnectionThread threadServer) {
         //threadServer.getMyServer().getNetworkManager().getDataInstance().endTurnConfirmation();//TODO éclaircir s'il y a usage côté serveur
@@ -18,6 +24,6 @@ public class NotifyEndTurnMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().informEndTurn();//TODO mettre le port?
+        threadClient.getNetworkManager().getDataInstance().informEndTurn(pot);
     }
 }

@@ -78,6 +78,6 @@ public interface InterfaceServer {
 
     public void endRound(ArrayList<UserLight> aPlayers);
 
-    public void endTurn(ArrayList<UserLight> aPlayers);
+    public void endTurn(ArrayList<UserLight> aPlayers, Integer pot);
 
 }

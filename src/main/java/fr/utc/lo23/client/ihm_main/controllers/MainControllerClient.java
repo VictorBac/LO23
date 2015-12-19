@@ -9,9 +9,11 @@ import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class MainControllerClient extends Application {
     public MainWindowController getMainWindowController() {
         return mainWindowController;
     }
+    public ViewAutreProfilController getViewAutreProfilWindowController() { return viewAutreProfilWindowController; }
 
     private MainWindowController mainWindowController;
     private ConnectionController connectionWindowController;
@@ -100,13 +103,6 @@ public class MainControllerClient extends Application {
         }
     }
 
-    public void showAutreProfilWindow(UserLight user){
-        viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
-        if (viewAutreProfilWindowController != null) {
-            viewAutreProfilWindowController.initdata(user);
-        }
-    }
-
     public CreateTableController showCreateTableView() {
         createTableController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateTableWindow.fxml", "Création de table");
         return createTableController;
@@ -148,5 +144,19 @@ public class MainControllerClient extends Application {
         alert.showAndWait();
     }
 
+    public void showOtherProfile(UserLight user, Pane profilePane) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml"));
+            profilePane.getChildren().setAll((Node) loader.load());
+            ViewAutreProfilController controller = loader.getController();
+            controller.setMainController(this);
+            viewAutreProfilWindowController = controller;
+            if (viewAutreProfilWindowController != null)
+                viewAutreProfilWindowController.initdata(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

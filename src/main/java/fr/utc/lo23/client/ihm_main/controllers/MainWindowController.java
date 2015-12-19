@@ -55,6 +55,9 @@ public class MainWindowController extends BaseController {
     @FXML
     private AnchorPane listPane;
 
+    @FXML
+    private Pane profilePane;
+
     private ObservableList<Table> tablesList;
 
     private ObservableList<Table> tablesSavedList;
@@ -63,6 +66,9 @@ public class MainWindowController extends BaseController {
     private Button buttonQuit;
 
     private FileChooser profileChooser;
+
+    // Boolean pour savoir si le joueur est en partie ou pas
+    private boolean inGame = false;
 
     public void change(ActionEvent actionEvent) {
     }
@@ -88,7 +94,7 @@ public class MainWindowController extends BaseController {
         listViewSavedTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listViewConnectedUsers.setOnMouseClicked(event -> {
             if (listViewConnectedUsers.getSelectionModel().getSelectedItem() != null)
-                mController.showAutreProfilWindow(listViewConnectedUsers.getSelectionModel().getSelectedItem());
+                showOtherProfile(listViewConnectedUsers.getSelectionModel().getSelectedItem());
         });
         listViewSavedTables.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>() {
             @Override
@@ -132,6 +138,14 @@ public class MainWindowController extends BaseController {
         mController.showViewOwnWindow();
     }
 
+    public void showOtherProfile(UserLight user) {
+        profilePane.setVisible(true);
+        profilePane.setDisable(false);
+        mController.showOtherProfile(user, profilePane);
+        gamePane.setVisible(false);
+        listPane.setVisible(false);
+    }
+
     @FXML
     public void createTable(ActionEvent actionEvent) {
         //mController.getManagerMain().getInterTableToMain().showTableCreationForm(mController.showCreateTableView().getMainPane());
@@ -140,6 +154,9 @@ public class MainWindowController extends BaseController {
         gamePane.getStylesheets().clear();
         mController.getManagerMain().getInterTableToMain().showTableCreationForm(gamePane);
         listPane.setVisible(false);
+        profilePane.setVisible(false);
+
+        inGame = true;
     }
 
     public void joinTable(ActionEvent actionEvent) {
@@ -166,6 +183,9 @@ public class MainWindowController extends BaseController {
         gamePane.getStylesheets().clear();
         mController.getManagerMain().getInterTableToMain().joinTable(gamePane, t);
         listPane.setVisible(false);
+        profilePane.setVisible(false);
+
+        inGame = true;
     }
 
     public void joinRefusedTable(Table t) {
@@ -210,5 +230,24 @@ public class MainWindowController extends BaseController {
             e.printStackTrace();
         }
         Platform.exit();
+    }
+
+    public void backFromViewProfile() {
+        profilePane.setVisible(false);
+        if (inGame)
+        {
+            // On est en jeu, on doit réafficher la table de jeu
+            gamePane.setVisible(true);
+            gamePane.setDisable(false);
+        }
+        // Sinon on affiche le menu principal
+        else listPane.setVisible(true);
+    }
+
+    public void backFromGame() {
+        gamePane.setVisible(false);
+        gamePane.setDisable(true);
+        listPane.setVisible(true);
+        inGame = false;
     }
 }

@@ -7,18 +7,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1220.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ViewAutreProfilController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="1006.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ViewAutreProfilController">
    <children>
-      <Label layoutX="132.0" layoutY="62.0" text="Player" textAlignment="RIGHT" />
-      <Label layoutX="142.0" layoutY="133.0" text="Age" textAlignment="RIGHT" />
-      <Button fx:id="back" layoutX="321.0" layoutY="675.0" mnemonicParsing="false" onAction="#didClickBackButton" text="Back" />
-      <ImageView fx:id="imageviewer" fitHeight="304.0" fitWidth="349.0" layoutX="801.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="235.0" layoutY="44.0" text="Player" textAlignment="RIGHT" />
+      <Label layoutX="229.0" layoutY="106.0" text="Age" textAlignment="RIGHT" />
+      <Button fx:id="back" layoutX="477.0" layoutY="216.0" mnemonicParsing="false" onAction="#didClickBackButton" text="Back" />
+      <ImageView fx:id="imageviewer" fitHeight="176.0" fitWidth="106.0" layoutX="595.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@avatar.jpg" />
          </image></ImageView>
-      <Label layoutX="82.0" layoutY="226.0" text="Player Statistics" />
-      <Label fx:id="labelPlayer" layoutX="382.0" layoutY="62.0" text="Label" />
-      <Label fx:id="labelAge" layoutX="382.0" layoutY="133.0" text="Label" />
+      <Label layoutX="169.0" layoutY="199.0" text="Player Statistics" />
+      <Label fx:id="labelPlayer" layoutX="469.0" layoutY="35.0" text="Label" />
+      <Label fx:id="labelAge" layoutX="469.0" layoutY="106.0" text="Label" />
 
    </children>
 </AnchorPane>

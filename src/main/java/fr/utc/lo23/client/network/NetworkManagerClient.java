@@ -210,6 +210,12 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     }
 
+    @Override
+    public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer) {
+        AnswerIfReadyGameMessage answerM = new AnswerIfReadyGameMessage(table, player, answer);
+        localClient.send(answerM);
+    }
+
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
         LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);

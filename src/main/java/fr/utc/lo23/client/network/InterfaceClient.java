@@ -126,6 +126,13 @@ public interface InterfaceClient {
     public void confirmationEndTurn(UserLight ul);
 
     public void transmitRequestServer(UserLight player);
+
+    /**
+     * Répond à la demande de askReadyGame
+     * @param UserLigh player
+     * @param boolean answer
+     */
+    public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer);
 }
     
 

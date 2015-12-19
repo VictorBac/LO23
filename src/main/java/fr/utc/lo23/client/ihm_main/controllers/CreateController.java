@@ -1,15 +1,24 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.*;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 
 import javax.swing.text.html.ImageView;
 import java.awt.*;
 import java.awt.Button;
 import java.awt.TextField;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -48,6 +57,9 @@ public class CreateController extends BaseController {
     @FXML
     private javafx.scene.image.ImageView imageviewer;
 
+    private FileChooser avatarChooser;
+
+    private String imagePath;
     /**
      * créer un nouveul utilisateur
      */
@@ -57,7 +69,14 @@ public class CreateController extends BaseController {
 
         testpass = password.getText();
         verifpass = repassword.getText();
-        int createAge = Integer.parseInt(age.getText());
+        int createAge = 0;
+        try {
+            createAge = Integer.parseInt(age.getText());
+        } catch (NumberFormatException e)
+        {
+            mController.showErrorPopup("Erreur", "L'âge doit être numérique !");
+            return;
+        }
 
         UserLight createUserLight = new UserLight(username.getText());
 
@@ -74,6 +93,12 @@ public class CreateController extends BaseController {
         createUser.setLastName(lastname.getText());
         createUser.setEmail(email.getText());
         createUser.setAge(createAge);
+        try {
+            createUserLight.setAvatar(new ImageAvatar(imagePath));
+        } catch (IOException e) {
+            mController.showErrorPopup("Erreur", "Avatar introuvable, le chemin est-il correct ?");
+        }
+
         createUser.setCore(createUserLight);
         createUser.setPwd(password.getText());
 
@@ -93,8 +118,26 @@ public class CreateController extends BaseController {
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-
+        avatarChooser = new FileChooser();
+        avatarChooser.setTitle("Choix de l'avatar");
+        imagePath = "../ui/avatar.jpg";
     }
+
+    @FXML
+    void didClickAvatar(ActionEvent event) {
+        File file = avatarChooser.showOpenDialog(username.getScene().getWindow());
+        if (file != null)
+        {
+            imagePath = file.getAbsolutePath();
+            try {
+                imageviewer.setImage(new Image(file.toURI().toURL().toString(),
+                        imageviewer.getFitWidth(), imageviewer.getFitHeight(), true, true));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
 

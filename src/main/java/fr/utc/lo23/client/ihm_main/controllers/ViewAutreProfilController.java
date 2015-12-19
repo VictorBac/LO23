@@ -41,13 +41,12 @@ public class ViewAutreProfilController extends BaseController {
 
     public void initdata(UserLight profilautre) {
         labelPlayer.setText(profilautre.getPseudo());
-        /*
         try {
-            imageviewer.setImage(profilautre.getAvatar().getImageAvatar());
+            if (profilautre.getAvatar() != null)
+                imageviewer.setImage(profilautre.getAvatar().getImageAvatar());
         } catch (IOException e) {
             mController.showErrorPopup("Erreur", "Avatar introuvable !");
         }
-        */
         try {
             mController.getManagerMain().getInterDataToMain().getUser(profilautre);
         } catch (ProfileNotFoundOnServerException e) {

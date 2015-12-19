@@ -69,36 +69,16 @@ public class MainWindowController extends BaseController {
 
     public void initialize(URL location, ResourceBundle resources) {
 
-        columnTableCreator.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
-                return new SimpleStringProperty(param.getValue().getCreator().getPseudo());
-            }
-        });
+        columnTableCreator.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getCreator().getPseudo()));
 
 
-        columnTableName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
-                return new SimpleStringProperty(param.getValue().getName());
-            }
-        });
+        columnTableName.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getName()));
 
-        columnTableMise.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, Integer>, ObservableValue<Integer>>() {
-            public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Table, Integer> param) {
-                return new SimpleIntegerProperty(param.getValue().getCurrentGame().getMaxStartMoney()).asObject();
-            }
-        });
+        columnTableMise.setCellValueFactory(param -> new SimpleIntegerProperty(param.getValue().getCurrentGame().getMaxStartMoney()).asObject());
 
-        columnTablePlayers.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
-                return new SimpleStringProperty(param.getValue().getNbPlayerMin() + " / " + param.getValue().getListPlayers().getListUserLights().size() + " / " + param.getValue().getNbPlayerMax());
-            }
-        });
+        columnTablePlayers.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getNbPlayerMin() + " / " + param.getValue().getListPlayers().getListUserLights().size() + " / " + param.getValue().getNbPlayerMax()));
 
-        columnTableSpectators.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Table, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Table, String> param) {
-                return new SimpleStringProperty(param.getValue().isAcceptSpectator() ? "Oui" : "Non");
-            }
-        });
+        columnTableSpectators.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().isAcceptSpectator() ? "Oui" : "Non"));
 
         tablesList = FXCollections.observableArrayList();
         tableViewCurrentTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -106,12 +86,9 @@ public class MainWindowController extends BaseController {
         tablesSavedList = FXCollections.observableArrayList();
         //tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
         listViewSavedTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        listViewConnectedUsers.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (listViewConnectedUsers.getSelectionModel().getSelectedItem() != null)
-                    mController.showAutreProfilWindow(listViewConnectedUsers.getSelectionModel().getSelectedItem());
-            }
+        listViewConnectedUsers.setOnMouseClicked(event -> {
+            if (listViewConnectedUsers.getSelectionModel().getSelectedItem() != null)
+                mController.showAutreProfilWindow(listViewConnectedUsers.getSelectionModel().getSelectedItem());
         });
         listViewSavedTables.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>() {
             @Override

@@ -29,7 +29,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public UserLight userConnection(User connectingUser) throws ExistingUserException {
         myManager.getUsers().addUser(connectingUser);
-        Console.log(TAG + "\tUser connected.");
+        //Console.log(TAG + "\tUser connected.");
         return connectingUser.getUserLight();
     }
 
@@ -43,7 +43,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         for (User current : myManager.getUsers().getList()) {
             created.add(current.getUserLight());
         }
-        Console.log(TAG + "\tListe des joueurs.");
+        //Console.log(TAG + "\tListe des joueurs.");
         return created;
     }
 

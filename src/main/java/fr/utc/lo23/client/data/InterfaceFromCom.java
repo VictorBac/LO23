@@ -30,7 +30,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
-            Console.log(TAG +"remoteUserConnected");
+            //Console.log(TAG +"remoteUserConnected");
             //TODO: gérer spectateur et player
             dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
@@ -137,8 +137,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public UserLight getUserLightLocal() {
-        Console.log("dManagerClient : " + dManagerClient);
-        Console.log("dManagerClient.getUserLocal() : " + dManagerClient.getUserLocal());
+        //Console.log("dManagerClient : " + dManagerClient);
+        //Console.log("dManagerClient.getUserLocal() : " + dManagerClient.getUserLocal());
         return dManagerClient.getUserLocal().getUserLight();
     }
 

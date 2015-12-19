@@ -39,41 +39,35 @@ public class RequestLoginMessage extends Message {
      */
     @Override
     public void process (ConnectionThread threadServer){
-        PokerServer myServ = threadServer.getMyServer();
+        PokerServer pokerServer = threadServer.getMyServer();
+        InterfaceServerDataFromCom dataInterface = pokerServer.getNetworkManager().getDataInstance();
 
-        Console.log("Request login message received");
+        Console.log("RequestLoginMessage, reçu du login: "+user.getLogin());
 
-        Console.log("Checking if there is room for one more user");
-        if (myServ.getNbUsers() < Params.NB_MAX_USER) {
-            Console.log("There is room for one more user.\n"+ myServ.getNbUsers() + " users are connected.");
-
-            //Giving the user to data
-            try {
-                NetworkManagerServer netMan = myServ.getNetworkManager();
-                InterfaceServerDataFromCom interF = netMan.getDataInstance();
-                Console.log("aaaaaaaaa"+interF);
-                Console.log("blka"+user);
-                UserLight ul = interF.userConnection(user);
-                threadServer.setUserId(user.getUserLight().getIdUser());
-                ArrayList<UserLight> aUsers = myServ.getNetworkManager().getDataInstance().getConnectedUsers();
-                ArrayList<Table> aTables = myServ.getNetworkManager().getDataInstance().getTableList();
-
-                for(UserLight use : aUsers){
-                    Console.log(""+use.getIdUser());
-                }
-
-                //On envoie un message au client pour accepter sa connexion
-                sendConnectionConfirmation(aUsers, aTables, threadServer);
-
-                //On envoie à tous les autres clients un notify new client.
-                notifyNewUserToCurrentPlayers(ul, myServ);
-            } catch (ExistingUserException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            Console.log("Connection impossible ! ");
+        if (pokerServer.getNbUsers() >= Params.NB_MAX_USER) {
+            Console.err("There is no room for new user ! " + pokerServer.getNbUsers() + " users are already connected.");
             sendConnectionRejection(threadServer);
+            return;
+        }
+        //Give new user to data
+        try {
+            UserLight ul = dataInterface.userConnection(user);
+            threadServer.setUserId(user.getUserLight().getIdUser());
+            ArrayList<UserLight> userList = dataInterface.getConnectedUsers();
+            ArrayList<Table> tableList = dataInterface.getTableList();
+
+            //On envoie un message au client pour accepter sa connexion
+            sendConnectionConfirmation(userList, tableList, threadServer);
+            //On envoie à tous les autres clients un notify new client.
+            notifyNewUserToCurrentPlayers(ul, pokerServer);
+
+            Console.log("Connection reussi avec le login: "+user.getLogin());
+            Console.log("Nouvelle liste des utilisateurs connectés: ");
+            for(UserLight oneUser : dataInterface.getConnectedUsers()){
+                Console.log("- " +oneUser.getPseudo());
+        }
+        } catch (ExistingUserException e) {
+            e.printStackTrace();
         }
     }
 

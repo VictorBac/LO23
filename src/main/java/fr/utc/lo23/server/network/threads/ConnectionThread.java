@@ -43,7 +43,7 @@ public class ConnectionThread extends Thread {
             e.printStackTrace();
         }
 
-        Console.log("Nouveau Client: " + socket.getInetAddress());
+        Console.log("Un nouveau client s'est connecté avec l'ip: " + socket.getInetAddress());
     }
 
     /**
@@ -51,7 +51,6 @@ public class ConnectionThread extends Thread {
      */
     @Override
     public synchronized void run() {
-        Console.log("Client: Démarré");
         running = true;
         last_message_timestamp = System.currentTimeMillis();
         try {
@@ -65,7 +64,7 @@ public class ConnectionThread extends Thread {
                 } catch (SocketTimeoutException e) {
                     this.checkHeartbeat();
                 } catch (java.io.EOFException e) {
-                    Console.log("Le client s'est déconnecté sans prévenir !");
+                    Console.log("Le client avec le login: "+ this.getLogin() +" s'est déconnecté sans prévenir !");
                     this.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -126,7 +125,7 @@ public class ConnectionThread extends Thread {
                     "Heartbeat: on a pas recu de message depuis plus de "+
                     heartbeat_timeout+
                     " ms donc on deconnect le client avec le login: "+
-                    this.myServer.getNetworkManager().getDataInstance().getUserById(userId).getLogin()
+                    this.getLogin()
             );
             this.shutdown();
         }
@@ -138,5 +137,13 @@ public class ConnectionThread extends Thread {
     public void updateHeartbeat() {
         //Console.log("Update HB" + last_message_timestamp);
         last_message_timestamp = System.currentTimeMillis();
+    }
+
+    /**
+     *  Return login associated with this thread
+     */
+    public String getLogin()
+    {
+        return this.myServer.getNetworkManager().getDataInstance().getUserById(userId).getLogin();
     }
 }

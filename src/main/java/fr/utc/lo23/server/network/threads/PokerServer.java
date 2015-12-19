@@ -38,7 +38,7 @@ public class PokerServer extends Thread {
         initSocket(portToListen);
         Console.log("ok");
         Console.log("Le serveur écoute sur " + listeningSocket.getInetAddress() + ":" + listeningSocket.getLocalPort());
-        Console.log("Nombre d'utilisateurs maximum fixé à " + Params.NB_MAX_USER);
+        //Console.log("Nombre d'utilisateurs maximum fixé à " + Params.NB_MAX_USER);
     }
 
     /**
@@ -117,9 +117,9 @@ public class PokerServer extends Thread {
     }
 
     public void sendToAll(Message message){
+        //Console.log("Send to all: " + message);
         for (ConnectionThread threadClient : threadsClientList) {
             threadClient.send(message);
-            Console.log("a : " + message);
         }
     }
 

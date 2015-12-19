@@ -152,8 +152,9 @@ public class ConnectionController extends BaseController {
     {
         Server selectedServer = listViewServers.getSelectionModel().getSelectedItem();
         if (selectedServer != null) {
-            serverList.remove(selectedServer);
             mController.getManagerMain().getInterDataToMain().removeServer(selectedServer);
+            serverList.remove(selectedServer);
+            listViewServers.refresh();
         } else {
             mController.showErrorPopup("Erreur", "Vous devez sélectionner un serveur pour le supprimer.");
         }

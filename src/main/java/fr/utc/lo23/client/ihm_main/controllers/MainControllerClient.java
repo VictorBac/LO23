@@ -79,7 +79,7 @@ public class MainControllerClient extends Application {
     {
         connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
         if (connectionWindowController != null) {
-            //connectionWindowController.initServerlist();
+            connectionWindowController.initServerlist();
         }
     }
 

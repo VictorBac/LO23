@@ -151,15 +151,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param deletedUsr the user to delete
      */
     public void deletePlayer(UserLight deletedUsr) throws UserNotFoundException {
-        boolean found = false;
+        User userToDelete = null;
         for (User current : myManager.getUsers().getList()) {
             if (current.getUserLight().equals(deletedUsr))
-                found = true;
-            myManager.getUsers().getList().remove(current);
-            Console.log(TAG + "\tPlayer deleted.");
+                userToDelete = current;
+            break;
         }
-        if (found == false)
+
+        if (userToDelete == null) {
             throw new fr.utc.lo23.common.data.exceptions.UserNotFoundException(deletedUsr.getIdUser());
+        }
+        else {
+            myManager.getUsers().getList().remove(userToDelete);
+            //Console.log(TAG + "\tPlayer deleted.");
+        }
     }
 
     public void confirmationCardReceived(UserLight player) {

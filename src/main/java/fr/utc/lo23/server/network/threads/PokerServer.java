@@ -2,6 +2,7 @@ package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
@@ -101,7 +102,9 @@ public class PokerServer extends Thread {
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
                 threadsClientList.remove(threadClient);
-                this.networkManager.notifyDisconnection(this.networkManager.getDataInstance().getUserById(userId));
+                User userToDelete = this.networkManager.getDataInstance().getUserById(userId);
+                this.networkManager.getDataInstance().deletePlayer(userToDelete.getUserLight());
+                this.networkManager.notifyDisconnection(userToDelete);
                 //Console.log("broadcast user disconnect");
                 return true;
             }

@@ -15,8 +15,8 @@ import java.util.concurrent.Exchanger;
 
 public class ConnectionThread extends Thread {
     private boolean running;
-    private PokerServer myServer;
-    private Socket socketClient;
+    private PokerServer pokerServer;
+    private Socket socket;
 
     //Heartbeat
     private long last_message_timestamp;
@@ -32,18 +32,18 @@ public class ConnectionThread extends Thread {
 
 
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
-        myServer = pokerServer;
-        socketClient = socket;
+        this.pokerServer = pokerServer;
+        this.socket = socket;
         last_message_timestamp = System.currentTimeMillis();
 
         try {
-            inputStream = new ObjectInputStream(socketClient.getInputStream());
-            outputStream = new ObjectOutputStream(socketClient.getOutputStream());
+            inputStream = new ObjectInputStream(this.socket.getInputStream());
+            outputStream = new ObjectOutputStream(this.socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Console.log("Un nouveau client s'est connecté avec l'ip: " + socket.getInetAddress());
+        Console.log("Un nouveau client s'est connecté avec l'ip: " + this.socket.getInetAddress());
     }
 
     /**
@@ -56,7 +56,7 @@ public class ConnectionThread extends Thread {
         try {
             while (running) {
                 try {
-                    this.socketClient.setSoTimeout(Params.HEARTBEAT_PERIODE);// en ms
+                    this.socket.setSoTimeout(Params.HEARTBEAT_PERIODE);// en ms
 
                     Message msg = (Message) inputStream.readObject();
                     this.updateHeartbeat();
@@ -75,10 +75,11 @@ public class ConnectionThread extends Thread {
             e.printStackTrace();
         }
         try {
-            myServer.userDisconnect(userId);
+            this.pokerServer.userDisconnect(userId);
         }
         catch(Exception e){
-            Console.err("Impossible d'enlever le thread du l'user de la liste des threads");
+            Console.err("Impossible d'enlever le thread du l'user de la liste des threads\n");
+            e.printStackTrace();
         }
     }
 
@@ -94,7 +95,7 @@ public class ConnectionThread extends Thread {
     public void shutdown() throws NetworkFailureException {
         try {
             running = false;
-            socketClient.close();
+            this.socket.close();
         }
         catch (Exception e){
             throw new NetworkFailureException("Impossible de fermer la socket proprement");
@@ -109,10 +110,7 @@ public class ConnectionThread extends Thread {
         this.userId = userId;
     }
 
-    public PokerServer getMyServer() {
-        return myServer;
-    }
-
+    public PokerServer getMyServer() { return this.pokerServer; }
 
     /**
      * La méthode est appelé regulierement pour verifier que le dernier message reçu n'est pas trop vieux,
@@ -144,6 +142,6 @@ public class ConnectionThread extends Thread {
      */
     public String getLogin()
     {
-        return this.myServer.getNetworkManager().getDataInstance().getUserById(userId).getLogin();
+        return this.pokerServer.getNetworkManager().getDataInstance().getUserById(userId).getLogin();
     }
 }

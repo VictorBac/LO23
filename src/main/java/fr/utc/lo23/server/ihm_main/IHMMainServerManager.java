@@ -5,6 +5,7 @@ import fr.utc.lo23.server.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
 import fr.utc.lo23.server.network.InterfaceComToMain;
 import fr.utc.lo23.server.network.NetworkManagerServer;
+import javafx.application.Platform;
 
 /**
  * Created by jbmartin on 01/12/2015.
@@ -66,6 +67,11 @@ public class IHMMainServerManager {
 
     public void addLogLine(String msg)
     {
-        windowController.addTextLog(msg);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                windowController.addTextLog(msg);
+            }
+        });
     }
 }

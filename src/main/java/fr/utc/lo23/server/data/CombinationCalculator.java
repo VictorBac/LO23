@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Class of combination calculator to find the winner list.
- * The algo getWinner chacks from the highest rank royal flush until the rank high card.
+ * The algo getWinner checks from the highest rank royal flush until the rank high card.
  * Some other useful function in this class:
  * showHand : print a hand.
  * getHandRank: get the rank with 7 Cards as input.

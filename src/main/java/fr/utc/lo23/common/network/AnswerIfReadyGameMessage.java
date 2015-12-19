@@ -4,6 +4,7 @@ import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -13,19 +14,29 @@ import java.util.UUID;
  */
 public class AnswerIfReadyGameMessage extends Message {
 
-    UUID table;
+    UUID tableId;
     private UserLight player;
     private boolean answer;
 
     public AnswerIfReadyGameMessage(UUID t, UserLight p, boolean a) {
-        this.table = t;
+        this.tableId = t;
         this.player = p;
         this.answer = a;
     }
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().setReadyAnswer(table, player, answer);
+        threadServer.getMyServer().getNetworkManager().getDataInstance().setReadyAnswer(tableId, player, answer);
+
+        //Informe les autres joueurs de la table de la réponse du joueur
+        ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(tableId);
+        NotifyAnswerReadyGameMessage notifyAnswerToOthers = new NotifyAnswerReadyGameMessage(player, answer);
+        
+        for (UserLight u : aPlayers) {
+            if (u.getIdUser() != player.getIdUser()) {
+                threadServer.send(notifyAnswerToOthers);
+            }
+        }
     }
 
     @Override

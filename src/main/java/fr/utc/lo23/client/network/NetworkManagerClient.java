@@ -51,6 +51,7 @@ public class NetworkManagerClient implements InterfaceClient  {
         try {
             localClient.connect();
         } catch (Exception e) {
+            Console.err("La connection a echoué\n");
             e.printStackTrace();
         }
         localClient.send(reqLog);

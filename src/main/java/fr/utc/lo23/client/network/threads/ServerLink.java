@@ -41,11 +41,10 @@ public class ServerLink extends Thread {
         if (null != socket) throw new NetworkFailureException("La socket client existe déjà");
 
         socket = new Socket();
-        Console.logn("Le client tente de se connecter...");
+        Console.log("Le client tente de se connecter sur: " + Params.DEFAULT_SERVER_ADDRESS + ":" + Params.DEFAULT_SERVER_PORT);
         socket.connect(new InetSocketAddress(Params.DEFAULT_SERVER_ADDRESS, Params.DEFAULT_SERVER_PORT));
         connected = true;
-        Console.log("Done");
-        Console.log("Client connecté sur: " + Params.DEFAULT_SERVER_ADDRESS + ":" + Params.DEFAULT_SERVER_PORT + "\n");
+        Console.log("Le client est connecté");
 
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         inputStream = new ObjectInputStream(socket.getInputStream());

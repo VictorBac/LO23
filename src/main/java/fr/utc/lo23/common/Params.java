@@ -8,4 +8,6 @@ public class Params {
     public static final int DEFAULT_SERVER_PORT = 1904;
 
     public static final int NB_MAX_USER = 100;
+
+    public static final int HEARTBEAT_PERIODE = 1000; //période d'envoi des heartbeat (en ms)
 }

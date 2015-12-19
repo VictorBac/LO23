@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
@@ -24,9 +25,6 @@ public class ConnectionThread extends Thread {
     private UUID userId;
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
-
-    private int HEARTBEAT_PERIODE = 1000; // en ms
-    private int HEARTBEAT_TIMEOUT = 10000; // en ms
 
     public ObjectOutputStream getOutputStream() {
         return outputStream;
@@ -54,25 +52,12 @@ public class ConnectionThread extends Thread {
     @Override
     public synchronized void run() {
         Console.log("Client: Démarré");
-
-        /* Heartbeat a tester
-        Console.log("Timer pour le heartbeat démarré");
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        checkHeatBeat();
-                    }
-                },
-                10000
-        );*/
-
         running = true;
         last_message_timestamp = System.currentTimeMillis();
         try {
             while (running) {
                 try {
-                    this.socketClient.setSoTimeout(HEARTBEAT_PERIODE);// en ms
+                    this.socketClient.setSoTimeout(Params.HEARTBEAT_PERIODE);// en ms
 
                     Message msg = (Message) inputStream.readObject();
                     this.updateHeartbeat();
@@ -131,20 +116,24 @@ public class ConnectionThread extends Thread {
 
 
     /**
-     * Décrémente le heartbeat et regarde s'il en a reçu depuis
-     * Si ce n'est pas le cas, déconnecte
+     * La méthode est appelé regulierement pour verifier que le dernier message reçu n'est pas trop vieux,
      */
     private void checkHeartbeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
-        if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            Console.log("Heartbeat: on a pas recu de message depuis plus de " +HEARTBEAT_TIMEOUT+ " ms donc deconnection du client.");
+        int heartbeat_timeout = Params.HEARTBEAT_PERIODE*10;
+        if (System.currentTimeMillis() - last_message_timestamp > heartbeat_timeout) {
+            Console.log(
+                    "Heartbeat: on a pas recu de message depuis plus de "+
+                    heartbeat_timeout+
+                    " ms donc on deconnect le client avec le login: "+
+                    this.myServer.getNetworkManager().getDataInstance().getUserById(userId).getLogin()
+            );
             this.shutdown();
         }
     }
 
     /**
-     * Met à jour le compteur de heartbeat
-     * Suite à la réception d'un message de ce type
+     * A chaque reception de message, heartbeat ou autre, on met à jour la date du dernier message.
      */
     public void updateHeartbeat() {
         //Console.log("Update HB" + last_message_timestamp);

@@ -103,8 +103,6 @@ public class ServerLink extends Thread {
         }
     }
 
-
-
     /**
      * Send a Message Object to the server
      * @param message Message to send

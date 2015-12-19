@@ -28,15 +28,14 @@ public class NotifyNewPlayerMessage extends Message {
     @Override
     public void process(ServerLink threadClient) {
         InterfaceDataFromCom dataInterface = threadClient.getNetworkManager().getDataInstance();
-        Console.log("NotifyNewPlayerMessage");
 
         if( newUser.getIdUser().equals(dataInterface.getUserLightLocal().getIdUser()) ) {
-            Console.log("Message abbandoné : newUser = moi");
+            Console.log("NotifyNewPlayerMessage abbandoné : newUser = moi");
             return;
         }
 
         dataInterface.remoteUserConnected(newUser);
-        Console.log("Login du nouvel utilisteur : " + newUser.getPseudo());
+        Console.log("NotifyNewPlayerMessage, lLogin du nouvel utilisteur : " + newUser.getPseudo());
 
     }
 }

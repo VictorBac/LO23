@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.network;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Table;
@@ -35,19 +36,22 @@ public class AcceptLoginMessage extends Message{
      */
     @Override
     public void process(ServerLink threadClient) {
+        InterfaceDataFromCom dataInterface = threadClient.getNetworkManager().getDataInstance();
+
         UserLight luser = null;
         for(UserLight us : usersArray) {
-            if(threadClient.getNetworkManager().getDataInstance().getUserLightLocal().getIdUser().equals(us.getIdUser())){
+            if(dataInterface.getUserLightLocal().getIdUser().equals(us.getIdUser())){
                 luser = us;
             }
         }
         usersArray.remove(luser);
-        threadClient.getNetworkManager().getDataInstance().currentConnectedUser(usersArray);
-        threadClient.getNetworkManager().getDataInstance().currentTables(tablesArray);
-        Console.log("liste User reçu");
+
+        dataInterface.currentConnectedUser(usersArray);
+        dataInterface.currentTables(tablesArray);
+        /*Console.log("liste User reçu");
         for(UserLight u:usersArray){
             Console.log(u.toString());
-        }
+        }*/
     }
 
 }

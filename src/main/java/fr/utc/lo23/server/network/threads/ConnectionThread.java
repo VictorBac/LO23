@@ -83,7 +83,10 @@ public class ConnectionThread extends Thread {
         }
     }
 
-
+    /**
+     * Send a Message Object to the server
+     * @param message Message to send
+     */
     public void send(Message message){
         try {
             outputStream.writeObject(message);
@@ -92,6 +95,9 @@ public class ConnectionThread extends Thread {
         }
     }
 
+    /**
+     * Send a Message Object to the server
+     */
     public void shutdown() throws NetworkFailureException {
         try {
             running = false;
@@ -118,7 +124,7 @@ public class ConnectionThread extends Thread {
     private void checkHeartbeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
         int heartbeat_timeout = Params.HEARTBEAT_PERIODE*10;
-        if (System.currentTimeMillis() - last_message_timestamp > heartbeat_timeout) {
+        if (System.currentTimeMillis() - this.last_message_timestamp > heartbeat_timeout) {
             Console.log(
                     "Heartbeat: on a pas recu de message depuis plus de "+
                     heartbeat_timeout+
@@ -134,11 +140,12 @@ public class ConnectionThread extends Thread {
      */
     public void updateHeartbeat() {
         //Console.log("Update HB" + last_message_timestamp);
-        last_message_timestamp = System.currentTimeMillis();
+        this.last_message_timestamp = System.currentTimeMillis();
     }
 
     /**
      *  Return login associated with this thread
+     *  @return Login
      */
     public String getLogin()
     {

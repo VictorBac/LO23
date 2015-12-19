@@ -1,5 +1,6 @@
 package fr.utc.lo23.server.network.threads;
 
+import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.User;
@@ -7,6 +8,7 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.PlayerNotConnectedException;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.network.NetworkManagerServer;
 
 import java.io.IOException;
@@ -95,18 +97,20 @@ public class PokerServer extends Thread {
 
     /**
      * Enleve le thread de la liste des threads, retourne true si réussi sinon retourne false
-     * @return boolean
+     * @return void
      * @param userId
      */
-    public boolean userDisconnect(UUID userId) throws Exception{
+    public void userDisconnect(UUID userId) throws Exception{
+        InterfaceServerDataFromCom dataInterface = this.networkManager.getDataInstance();
+
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId() == userId) {
                 threadsClientList.remove(threadClient);
-                User userToDelete = this.networkManager.getDataInstance().getUserById(userId);
-                this.networkManager.getDataInstance().deletePlayer(userToDelete.getUserLight());
+                User userToDelete = dataInterface.getUserById(userId);
+                dataInterface.deletePlayer(userToDelete.getUserLight());
                 this.networkManager.notifyDisconnection(userToDelete);
                 //Console.log("broadcast user disconnect");
-                return true;
+                return;
             }
         }
         throw new PlayerNotConnectedException("L'utilisateur n'est pas inscrit sur le serveur");

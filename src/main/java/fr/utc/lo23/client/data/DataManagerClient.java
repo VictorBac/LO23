@@ -34,7 +34,7 @@ public class DataManagerClient {
         this.listUsersLightLocal = new UserLightList();
         this.listTablesLocal = new TableList();
         this.tableLocal = null;
-        this.listServers = (ArrayList<Server>) Serialization.deserializationObject(Serialization.pathServerList);
+        this.listServers = (ArrayList<Server>) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + Serialization.pathServerList);
         if(this.listServers==null){// we have this case if the file doesn't exist
             this.listServers = new ArrayList<Server>();
         }

@@ -201,8 +201,9 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     public void confirmationEndTurn(UserLight ul) {
-        NotifyEndTurnMessage endMsg = new NotifyEndTurnMessage(ul);
-        localClient.send(endMsg);
+        //TODO vu que l'interface est côté serveur, voir si on en a toujours besoin ici
+        //NotifyEndTurnMessage endMsg = new NotifyEndTurnMessage(ul);
+        //localClient.send(endMsg);
     }
 
     public void transmitRequestServer(UserLight player) {

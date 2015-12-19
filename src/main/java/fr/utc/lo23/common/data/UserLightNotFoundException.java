@@ -8,7 +8,7 @@ import java.util.UUID;
 public class UserLightNotFoundException extends Exception {
 
     public UserLightNotFoundException(UUID id){
-        System.out.println("La recherche n'a pas trouvé de UserLight pour l'ID : "+id.toString());
+        System.out.println("La recherche n'a pas trouvÃ© de UserLight pour l'ID : "+id.toString());
     }
 
 }

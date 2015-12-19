@@ -153,9 +153,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public void deletePlayer(UserLight deletedUsr) throws UserNotFoundException {
         User userToDelete = null;
         for (User current : myManager.getUsers().getList()) {
-            if (current.getUserLight().equals(deletedUsr))
+            if (current.getUserLight().equals(deletedUsr)) {
                 userToDelete = current;
-            break;
+                break;
+            }
         }
 
         if (userToDelete == null) {

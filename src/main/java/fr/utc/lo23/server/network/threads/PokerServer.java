@@ -107,8 +107,8 @@ public class PokerServer extends Thread {
             if(threadClient.getUserId() == userId) {
                 threadsClientList.remove(threadClient);
                 User userToDelete = dataInterface.getUserById(userId);
-                dataInterface.deletePlayer(userToDelete.getUserLight());
                 this.networkManager.notifyDisconnection(userToDelete);
+                dataInterface.deletePlayer(userToDelete.getUserLight());
                 //Console.log("broadcast user disconnect");
                 return;
             }

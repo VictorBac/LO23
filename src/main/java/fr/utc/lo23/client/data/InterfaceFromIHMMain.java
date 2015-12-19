@@ -104,7 +104,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public TableList getSavedGamesList() {
         return (TableList)Serialization.deserializationObject(
-                Serialization.dirLocalSavedFiles + Serialization.pathSavedGame);
+                Serialization.dirLocalSavedFiles + dManagerClient.getUserLocal().getLogin() + Serialization.pathSavedGame);
     }
 
     /**

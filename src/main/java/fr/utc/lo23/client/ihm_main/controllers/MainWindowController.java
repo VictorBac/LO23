@@ -18,8 +18,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,7 @@ public class MainWindowController extends BaseController {
     @FXML
     private Button buttonQuit;
 
+    private FileChooser profileChooser;
 
     public void change(ActionEvent actionEvent) {
     }
@@ -143,6 +146,9 @@ public class MainWindowController extends BaseController {
             }
         });
         listViewConnectedUsers.setItems(connectedUsers);
+
+        profileChooser = new FileChooser();
+        profileChooser.setTitle("Exporter un profil");
     }
 
     public void openViewOwnProfil(ActionEvent actionEvent) {
@@ -208,6 +214,11 @@ public class MainWindowController extends BaseController {
     }
 
     public void ExportProfil(ActionEvent actionEvent) {
+        File file = profileChooser.showSaveDialog(tableViewCurrentTables.getScene().getWindow());
+        if (file != null) {
+            // TODO: Remove comment when integrated
+            //mController.getManagerMain().getInterDataToMain().exportProfileFile(file.toURI());
+        }
     }
 
     public void setTables(List<Table> tables) {

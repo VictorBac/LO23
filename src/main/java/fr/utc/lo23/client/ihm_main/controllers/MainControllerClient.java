@@ -56,8 +56,10 @@ public class MainControllerClient extends Application {
 
     public void userLoggedIn() {
         mainWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/MainWindow.fxml", "Poker");
-        mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
-        mainWindowController.setTables(managerMain.getTables());
+        if (mainWindowController != null) {
+            mainWindowController.setConnectedUsers(managerMain.getConnectedUsers());
+            mainWindowController.setTables(managerMain.getTables());
+        }
     }
 
     public void ClickCreateProfil() {
@@ -73,7 +75,9 @@ public class MainControllerClient extends Application {
     public void showConnectionWindow()
     {
         connectionWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/Connection.fxml", "Connexion");
-        connectionWindowController.initServerlist();
+        if (connectionWindowController != null) {
+            //connectionWindowController.initServerlist();
+        }
     }
 
     public void showMainWindow(){
@@ -84,17 +88,23 @@ public class MainControllerClient extends Application {
 
     public void showViewOwnWindow(){
         viewOwnProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewOwnProfil.fxml", "Your Profile");
-        viewOwnProfilWindowController.initData();
+        if (viewOwnProfilWindowController != null) {
+            viewOwnProfilWindowController.initData();
+        }
     }
 
     public void showEditProfilWindow(){
         editProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/EditProfil.fxml", "Edit your profile");
-        editProfilWindowController.initdata();
+        if (editProfilWindowController != null) {
+            editProfilWindowController.initdata();
+        }
     }
 
     public void showAutreProfilWindow(UserLight user){
         viewAutreProfilWindowController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/ViewProfil.fxml", "His/Her Profile");
-        viewAutreProfilWindowController.initdata(user);
+        if (viewAutreProfilWindowController != null) {
+            viewAutreProfilWindowController.initdata(user);
+        }
     }
 
     public CreateTableController showCreateTableView() {

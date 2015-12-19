@@ -13,8 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
@@ -46,6 +48,8 @@ public class ConnectionController extends BaseController {
 
     @FXML
     public ListView<Server> listViewServers;
+
+    private FileChooser profileChooser;
 
     /**
      * lance la connexion avec le serveur
@@ -100,6 +104,8 @@ public class ConnectionController extends BaseController {
                 return cell;
             }
         });
+        profileChooser = new FileChooser();
+        profileChooser.setTitle("Importer un profil");
     }
 
     /**
@@ -157,6 +163,10 @@ public class ConnectionController extends BaseController {
      * supprimer un serveur
      */
     public void ImportProfilClick(ActionEvent actionEvent) {
-
+        File file = profileChooser.showOpenDialog(buttonConnect.getScene().getWindow());
+        if (file != null) {
+            // TODO: Remove comment when integrated
+            //mController.getManagerMain().getInterDataToMain().importProfileFile(file.toURI());
+        }
     }
 }

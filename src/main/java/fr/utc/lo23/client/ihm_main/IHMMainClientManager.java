@@ -56,7 +56,7 @@ public class IHMMainClientManager {
 
     public List<UserLight> getConnectedUsers() {
         if (connectedUsers == null)
-            connectedUsers = new ArrayList<UserLight>();
+            connectedUsers = new ArrayList<>();
         return connectedUsers;
     }
 

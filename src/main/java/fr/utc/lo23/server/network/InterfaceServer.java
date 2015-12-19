@@ -74,10 +74,25 @@ public interface InterfaceServer {
      */
     public void newRound(ArrayList<UserLight> aPlayers);
 
+    /**
+     * Envoie un message à tous les joueurs pour notifier
+     * le début d'un nouveau tour
+     * @param ArrayList<UserLight> aPlayers
+     */
     public void newTurn(ArrayList<UserLight> aPlayers);
 
+    /**
+     * Envoie un message à tous les joueurs pour notifier
+     * la d'une manche
+     * @param ArrayList<UserLight> aPlayers
+     */
     public void endRound(ArrayList<UserLight> aPlayers);
 
+    /**
+     * Envoie un message à tous les joueurs pour notifier
+     * la fin d'un tour
+     * @param ArrayList<UserLight> aPlayers
+     */
     public void endTurn(ArrayList<UserLight> aPlayers, Integer pot);
 
 }

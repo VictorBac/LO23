@@ -88,6 +88,13 @@ public class MainWindowController extends BaseController {
 
         tablesList = FXCollections.observableArrayList();
         tableViewCurrentTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableViewCurrentTables.setOnMouseClicked(event -> {
+            // Double-click, l'utilisateur veut entrer en jeu
+            if (event.getClickCount() == 2)
+            {
+                joinTableAction(EnumerationTypeOfUser.PLAYER);
+            }
+        });
 
         tablesSavedList = FXCollections.observableArrayList();
         //tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
@@ -158,12 +165,11 @@ public class MainWindowController extends BaseController {
 
         inGame = true;
     }
-
-    public void joinTable(ActionEvent actionEvent) {
+    public void joinTableAction(EnumerationTypeOfUser mode) {
         if (tableViewCurrentTables.getSelectionModel().getSelectedItem() != null) {
             try {
                 mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
-                        EnumerationTypeOfUser.PLAYER);
+                        mode);
             } catch (FullTableException e) {
                 mController.showErrorPopup("Erreur", "Table pleine !");
             } catch (NetworkFailureException e) {
@@ -176,6 +182,17 @@ public class MainWindowController extends BaseController {
             mController.showErrorPopup("Erreur", "Vous devez sélectionner une table avant de pouvoir en rejoindre une");
         }
     }
+
+    @FXML
+    public void joinTableAsPlayer(ActionEvent actionEvent) {
+        joinTableAction(EnumerationTypeOfUser.PLAYER);
+    }
+
+    @FXML
+    public void joinTableAsSpectator(ActionEvent event) {
+        joinTableAction(EnumerationTypeOfUser.SPECTATOR);
+    }
+
 
     public void joinAcceptedTable(Table t, EnumerationTypeOfUser e) {
         gamePane.setVisible(true);
@@ -250,4 +267,5 @@ public class MainWindowController extends BaseController {
         listPane.setVisible(true);
         inGame = false;
     }
+
 }

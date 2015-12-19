@@ -132,6 +132,12 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         server.sendToListOfUsers(aPlayers, endT);
     }
 
+    @Override
+    public void askIfReady(ArrayList<UserLight> aPlayers) {
+        AskReadyGameMessage askReadyM = new AskReadyGameMessage();
+        server.sendToListOfUsers(aPlayers, askReadyM);
+    }
+
 
     @Override
     public void sendLogGame(Game LogGame) throws NetworkFailureException {

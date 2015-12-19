@@ -95,4 +95,11 @@ public interface InterfaceServer {
      */
     public void endTurn(ArrayList<UserLight> aPlayers, Integer pot);
 
+    /**
+     * Envoi un message à tous les joueurs d'une table
+     * pour demander s'ils sont prêts
+     * @param ArrayList<UserLight> aPlayers
+     */
+    public void askIfReady(ArrayList<UserLight> aPlayers);
+
 }

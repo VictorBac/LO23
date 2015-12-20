@@ -27,6 +27,6 @@ public class RefuseJoinTableMessage extends Message {
     @Override
     public void process(ServerLink threadClient) {
         Console.log("Impossible de se connecter");
-        //threadClient.getNetworkManager().getDataInstance().tableJoinRefused(idTab,  mode);
+        threadClient.getNetworkManager().getDataInstance().tableJoinRefused(idTab,  mode);
     }
 }

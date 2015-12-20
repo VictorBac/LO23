@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.ihm_main.controllers.MainWindowController;
+import fr.utc.lo23.client.ihm_main.controllers.ViewAutreProfilController;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.common.data.*;
 import javafx.application.Platform;
@@ -23,6 +24,10 @@ import java.util.List;
         managerMain = mngMain;
     }
 
+    /**
+     * ajoute un nouveau joueur dans la liste des joueurs connectés
+     * @param remoteUser
+     */
     @Override
     public void remoteUserConnected(UserLight remoteUser) {
         managerMain.addConnectedUser(remoteUser);
@@ -43,6 +48,11 @@ import java.util.List;
 
     }
 
+
+    /**
+     * affiche la liste des joueurs connectés
+     * @param userList
+     */
     @Override
     public void onlineUsers(List<UserLight> userList) {
         managerMain.setConnectedUsers(userList);
@@ -60,9 +70,13 @@ import java.util.List;
 
     @Override
     public void returnHome() {
-
+        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().backFromGame());
     }
 
+    /**
+     * affiche la liste des tables
+     * @param currentTables
+     */
     @Override
     public void currentTables(List<Table> currentTables) {
         managerMain.setTables(currentTables);
@@ -85,26 +99,21 @@ import java.util.List;
 
     @Override
     public void tableJoinAccepted(Table t, EnumerationTypeOfUser e) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                managerMain.getControllerMain().getMainWindowController().joinAcceptedTable(t, e);
-            }
-        });
+        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().joinAcceptedTable(t, e));
     }
 
     @Override
     public void tableJoinRefused(Table t) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                managerMain.getControllerMain().getMainWindowController().joinRefusedTable(t);
-            }
-        });
+        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().joinRefusedTable(t));
     }
 
     @Override
     public void profileRemoteUserFromServer(User profileReturnedByTheServer) {
-        
+        Platform.runLater(() -> {
+            ViewAutreProfilController controller = managerMain.getControllerMain().getViewAutreProfilWindowController();
+            if (controller != null) {
+                controller.setFullData(profileReturnedByTheServer);
+            }
+        });
     }
 }

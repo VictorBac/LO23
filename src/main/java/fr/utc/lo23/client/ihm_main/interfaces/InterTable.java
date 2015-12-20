@@ -15,7 +15,7 @@ public class InterTable implements InterfaceMainToTable {
     }
 
     public void quitGame() {
-
+        managerMain.getControllerMain().getMainWindowController().backFromGame();
     }
 
     public void TableJoinedNotify(Table t) {

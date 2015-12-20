@@ -14,7 +14,7 @@
          </font>
       </Label>
       <ImageView fx:id="avatarImageView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="playerMoneyLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" style="-fx-border-color: black; -fx-background-color: #005a46;" text="10000 $" textFill="WHITE">
+      <Label fx:id="playerMoneyLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" style="-fx-border-color: black; -fx-background-color: #005a46;" textFill="WHITE">
          <font>
             <Font size="10.0" />
          </font>

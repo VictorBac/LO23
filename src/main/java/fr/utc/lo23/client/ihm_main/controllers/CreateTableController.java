@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by leclercvictor on 08/12/2015.
+ * lance la controller table
  */
 
 public class CreateTableController extends BaseController{

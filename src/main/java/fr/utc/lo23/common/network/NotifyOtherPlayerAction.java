@@ -5,21 +5,21 @@ import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message permettant d'envoyer au serveur l'action d'un joueur
- * Created by rbonneau on 11/12/2015.
+ * Message permettant de notifier les autres joueurs
+ * de l'action d'un joueur de la table
+ * Created by rbonneau on 20/12/2015.
  */
-public class SendActionMessage extends Message {
+public class NotifyOtherPlayerAction extends Message {
 
     Action act;
 
-    public SendActionMessage(Action a) {
-        act = a;
+    public NotifyOtherPlayerAction(Action a) {
+        this.act = a;
     }
-
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act, act.getUserLightOfPlayer());
+        //TODO : When created : threadServer.getMyServer().getNetworkManager().getDataInstance().notifyAction(act);
     }
 
     @Override

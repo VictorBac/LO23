@@ -7,21 +7,23 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
 /**
+ * The test for every rank checking function.
  * Created by Jianghan on 26/11/2015.
  */
-public class RankCalculatorTest {
+public class CombinationCalculatorTest {
     public CombinationCalculator calculator;
     ArrayList<Card> cards;
     ArrayList<Integer> cardValues;
 
-    public RankCalculatorTest() {
+    public CombinationCalculatorTest() {
         calculator = new CombinationCalculator();
 
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         try {
             cards.add(new Card(14, EnumerationCard.CLUB));
             cards.add(new Card(13,EnumerationCard.DIAMOND));
@@ -34,10 +36,8 @@ public class RankCalculatorTest {
             e.printStackTrace();
         }
         
-        cardValues = new ArrayList<Integer>();
-        for (int i = 0; i < cards.size(); i++) {
-            cardValues.add(cards.get(i).getValue());
-        }
+        cardValues = new ArrayList<>();
+        cardValues.addAll(cards.stream().map(Card::getValue).collect(Collectors.toList()));
         Collections.sort(cardValues);
         Collections.reverse(cardValues);
     }
@@ -101,13 +101,12 @@ public class RankCalculatorTest {
 
     /**
      * Rank 5: Straight
-     * @throws Exception
      */
     @Test
     public void testStraight() {
         System.out.println("Rank 5: Straight");
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
+        ArrayList<Integer> expected = new ArrayList<>();
         // test 1
         test.addAll(Arrays.asList(new Integer[]{12, 10, 9, 9, 8, 7, 6}));
         test = calculator.hasStraight(test);
@@ -142,10 +141,10 @@ public class RankCalculatorTest {
     @Test
     public void testFullHouse() {
         System.out.println("Rank 5: Straight");
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> test = new ArrayList<>();
+        ArrayList<Integer> expected = new ArrayList<>();
         // test 1
-        test.addAll(Arrays.asList(new Integer[]{12, 9, 9, 8, 3, 3, 3}));
+        test.addAll(Arrays.asList(12, 9, 9, 8, 3, 3, 3));
         test = calculator.hasFullHouse(test);
         expected.addAll(Arrays.asList(new Integer[]{7, 3, 3, 3, 9, 9}));
         assertEquals(expected, test);

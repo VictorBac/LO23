@@ -14,6 +14,6 @@ public class RefuseStartGameMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().tableCreatorRequestToStartGameRejected();
+        threadClient.getNetworkManager().getDataInstance().tableCreatorRequestToStartGameRejected();
     }
 }

@@ -31,21 +31,54 @@ public class MessageChat implements Serializable {
         this.text = text;
     }
 
-    //getters
+    /*********************Getters & Setters*********************/
 
-    public UserLight getSender() { return sender; }
+    /**
+     * Getter to return the sender of the message
+     * @return
+     */
+    public UserLight getSender() {
+        return sender;
+    }
 
-    public Timestamp getTime() { return time; }
+    /**
+     * Getter to return the time of the message
+     * @return
+     */
+    public Timestamp getTime() {
+        return time;
+    }
 
-    public String getText() { return text; }
+    /**
+     * Getter to return the content of the message
+     * @return
+     */
+    public String getText() {
+        return text;
+    }
 
-    //setters
+    /**
+     * Setter to modify the sender of the message
+     * @param sender
+     */
+    public void setSender(UserLight sender) {
+        this.sender = sender;
+    }
 
-    public void setSender(UserLight sender) { this.sender = sender; }
+    /**
+     * Setter to modify the time of the message
+     * @param time
+     */
+    public void setTime(Timestamp time) {
+        this.time = time;
+    }
 
-    public void setTime(Timestamp time) { this.time = time; }
-
-    public void setText(String text) { this.text = text; }
-
+    /**
+     * Setter to modify the content of the message
+     * @param text
+     */
+    public void setText(String text) {
+        this.text = text;
+    }
 
 }

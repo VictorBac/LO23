@@ -11,7 +11,6 @@ import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
 import fr.utc.lo23.client.ihm_table.*;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToMainListener;
 import fr.utc.lo23.client.network.NetworkManagerClient;
-import fr.utc.lo23.client.network.main.Main;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
@@ -56,7 +55,7 @@ public class IHMMainClientManager {
 
     public List<UserLight> getConnectedUsers() {
         if (connectedUsers == null)
-            connectedUsers = new ArrayList<UserLight>();
+            connectedUsers = new ArrayList<>();
         return connectedUsers;
     }
 

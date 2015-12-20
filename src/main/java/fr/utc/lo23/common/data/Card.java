@@ -70,6 +70,30 @@ public class Card implements Serializable {
         return symbolChar;
     }
 
+    public void printCard () {
+//        String ANSI_RESET = (char)27 + "[0m ";
+//        String ANSI_RED = (char)27 + "[31m ";
+//        String ANSI_CYAN = (char)27 + "[36m ";
+        String goodSymbol;
+        switch (this.symbol) {
+            case SPADE: goodSymbol = "♠"; break;
+            case HEART: goodSymbol = "♥"; break;
+            case CLUB: goodSymbol = "♣"; break;
+            case DIAMOND: goodSymbol = "♦"; break;
+            default: goodSymbol = "?";
+        }
+        switch (this.value) {
+            case 14: goodSymbol = goodSymbol + "A"; break;
+            case 13: goodSymbol = goodSymbol + "K"; break;
+            case 12: goodSymbol = goodSymbol + "Q"; break;
+            case 11: goodSymbol = goodSymbol + "J"; break;
+            case 10: goodSymbol = goodSymbol + "T"; break;
+            default: goodSymbol = goodSymbol+ value.toString();
+        }
+//        System.out.print(ANSI_CYAN + goodSymbol + ANSI_RESET);
+        System.out.print(goodSymbol);
+    }
+
 
 
     /*********************Getters & Setters*********************/

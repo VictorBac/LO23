@@ -1,6 +1,7 @@
 package fr.utc.lo23.server.network.threads;
 
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.network.Message;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
@@ -14,8 +15,8 @@ import java.util.concurrent.Exchanger;
 
 public class ConnectionThread extends Thread {
     private boolean running;
-    private PokerServer myServer;
-    private Socket socketClient;
+    private PokerServer pokerServer;
+    private Socket socket;
 
     //Heartbeat
     private long last_message_timestamp;
@@ -25,27 +26,24 @@ public class ConnectionThread extends Thread {
     private ObjectInputStream inputStream = null;
     private ObjectOutputStream outputStream = null;
 
-    private int HEARTBEAT_PERIODE = 1000; // en ms
-    private int HEARTBEAT_TIMEOUT = 10000; // en ms
-
     public ObjectOutputStream getOutputStream() {
         return outputStream;
     }
 
 
     public ConnectionThread(Socket socket, PokerServer pokerServer) {
-        myServer = pokerServer;
-        socketClient = socket;
+        this.pokerServer = pokerServer;
+        this.socket = socket;
         last_message_timestamp = System.currentTimeMillis();
 
         try {
-            inputStream = new ObjectInputStream(socketClient.getInputStream());
-            outputStream = new ObjectOutputStream(socketClient.getOutputStream());
+            inputStream = new ObjectInputStream(this.socket.getInputStream());
+            outputStream = new ObjectOutputStream(this.socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Console.log("Nouveau Client: " + socket.getInetAddress());
+        Console.log("Un nouveau client s'est connecté avec l'ip: " + this.socket.getInetAddress());
     }
 
     /**
@@ -53,26 +51,12 @@ public class ConnectionThread extends Thread {
      */
     @Override
     public synchronized void run() {
-        Console.log("Client: Démarré");
-
-        /* Heartbeat a tester
-        Console.log("Timer pour le heartbeat démarré");
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        checkHeatBeat();
-                    }
-                },
-                10000
-        );*/
-
         running = true;
         last_message_timestamp = System.currentTimeMillis();
         try {
             while (running) {
                 try {
-                    this.socketClient.setSoTimeout(HEARTBEAT_PERIODE);// en ms
+                    this.socket.setSoTimeout(Params.HEARTBEAT_PERIODE);// en ms
 
                     Message msg = (Message) inputStream.readObject();
                     this.updateHeartbeat();
@@ -80,7 +64,7 @@ public class ConnectionThread extends Thread {
                 } catch (SocketTimeoutException e) {
                     this.checkHeartbeat();
                 } catch (java.io.EOFException e) {
-                    Console.log("Le client s'est déconnecté sans prévenir !");
+                    Console.log("Le client avec le login: "+ this.getLogin() +" s'est déconnecté sans prévenir !");
                     this.shutdown();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -91,14 +75,18 @@ public class ConnectionThread extends Thread {
             e.printStackTrace();
         }
         try {
-            myServer.userDisconnect(userId);
+            this.pokerServer.userDisconnect(userId);
         }
         catch(Exception e){
-            Console.err("Impossible d'enlever le thread du l'user de la liste des threads");
+            Console.err("Impossible d'enlever le thread de la liste des threads\n");
+            e.printStackTrace();
         }
     }
 
-
+    /**
+     * Send a Message Object to the server
+     * @param message Message to send
+     */
     public void send(Message message){
         try {
             outputStream.writeObject(message);
@@ -107,10 +95,13 @@ public class ConnectionThread extends Thread {
         }
     }
 
+    /**
+     * Send a Message Object to the server
+     */
     public void shutdown() throws NetworkFailureException {
         try {
             running = false;
-            socketClient.close();
+            this.socket.close();
         }
         catch (Exception e){
             throw new NetworkFailureException("Impossible de fermer la socket proprement");
@@ -125,29 +116,39 @@ public class ConnectionThread extends Thread {
         this.userId = userId;
     }
 
-    public PokerServer getMyServer() {
-        return myServer;
-    }
-
+    public PokerServer getMyServer() { return this.pokerServer; }
 
     /**
-     * Décrémente le heartbeat et regarde s'il en a reçu depuis
-     * Si ce n'est pas le cas, déconnecte
+     * La méthode est appelé regulierement pour verifier que le dernier message reçu n'est pas trop vieux,
      */
     private void checkHeartbeat() throws NetworkFailureException {
         //Console.log("Valeur HB : " + last_message_timestamp);
-        if (System.currentTimeMillis() - last_message_timestamp > HEARTBEAT_TIMEOUT) {
-            Console.log("Heartbeat: on a pas recu de message depuis plus de " +HEARTBEAT_TIMEOUT+ " ms donc deconnection du client.");
+        int heartbeat_timeout = Params.HEARTBEAT_PERIODE*10;
+        if (System.currentTimeMillis() - this.last_message_timestamp > heartbeat_timeout) {
+            Console.log(
+                    "Heartbeat: on a pas recu de message depuis plus de "+
+                    heartbeat_timeout+
+                    " ms donc on deconnect le client avec le login: "+
+                    this.getLogin()
+            );
             this.shutdown();
         }
     }
 
     /**
-     * Met à jour le compteur de heartbeat
-     * Suite à la réception d'un message de ce type
+     * A chaque reception de message, heartbeat ou autre, on met à jour la date du dernier message.
      */
     public void updateHeartbeat() {
         //Console.log("Update HB" + last_message_timestamp);
-        last_message_timestamp = System.currentTimeMillis();
+        this.last_message_timestamp = System.currentTimeMillis();
+    }
+
+    /**
+     *  Return login associated with this thread
+     *  @return Login
+     */
+    public String getLogin()
+    {
+        return this.pokerServer.getNetworkManager().getDataInstance().getUserById(userId).getLogin();
     }
 }

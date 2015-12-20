@@ -17,7 +17,7 @@ public class InterfaceFromIHMMainTest {
         // Create an test localUser with username and password
         User localUser = new User("testLocalUser", "testpsw");
         // Write test localUser into the local data file
-        Serialization.serializationObject(localUser, "testUserLocal");
+        Serialization.serializationObject(localUser, Serialization.dirLocalSavedFiles + "testUserLocal");
         // Call logUser in interfaceDataFromIHMMain
         interfaceDataFromIHMMain.logUser("testLocalUser", "testpsw");
     }

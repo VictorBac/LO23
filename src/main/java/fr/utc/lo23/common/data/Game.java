@@ -194,7 +194,24 @@ public class Game implements Serializable{
         this.getListSeatPlayerWithPeculeDepart().add(seat);
     }
 
-
+    /**
+     * Method that determine if the Game is finished, it determines if there are only one player with money
+     * @return true if there is only one player with money, false if there is more than one player that has money
+     */
+    public boolean isFinished(){
+        boolean finished;
+        int numberOfPlayerAlive =0;
+        for(Seat seatPlayer : listSeatPlayerWithPeculeDepart){
+            if(seatPlayer.getCurrentAccount()>0 && seatPlayer.getStatusPlayer().equals(EnumerationStatusPlayer.CONNECTED)){
+                numberOfPlayerAlive++;
+            }
+        }
+        if(numberOfPlayerAlive==1)
+            finished = true;
+        else
+            finished = false;
+        return finished;
+    }
 
 
 ///////////////////////GETTER and SETTER

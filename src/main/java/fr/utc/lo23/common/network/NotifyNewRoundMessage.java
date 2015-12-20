@@ -1,13 +1,15 @@
 package fr.utc.lo23.common.network;
 
-import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Created by Jean-Côme on 14/12/2015.
+ * Message permettant de pr�venir les joueurs
+ * qu'une nouvelle manche va commencer
+ * Created by rbonneau on 18/12/2015.
  */
-public class AskMoneyMessage extends Message {
+public class NotifyNewRoundMessage extends Message {
+
     @Override
     public void process(ConnectionThread threadServer) {
 
@@ -15,7 +17,6 @@ public class AskMoneyMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        Console.log("AskReadyMoney reçu");
-        threadClient.getNetworkManager().getDataInstance().askAmountMoney();
+        threadClient.getNetworkManager().getDataInstance().informNewHand();
     }
 }

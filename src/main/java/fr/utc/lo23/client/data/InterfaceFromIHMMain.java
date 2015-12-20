@@ -169,13 +169,21 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     @Override
-    public void importProfileFile(URI file) {
-
+    public void importFiles(String folderPath) {
+        try {
+            Serialization.moveFiles(folderPath, Serialization.dirLocalSavedFiles);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void exportProfileFile(URI file) {
-
+    public void exportFiles(String folderPath) {
+        try {
+            Serialization.moveFiles(Serialization.dirLocalSavedFiles, folderPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

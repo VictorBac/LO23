@@ -99,7 +99,7 @@ public interface InterfaceDataFromIHMMain {
 
     void sendLocalUser() throws NetworkFailureException;
 
-    void importProfileFile(URI file);
+    void importFiles(String folderPath);
 
-    void exportProfileFile(URI file);
+    void exportFiles(String folderPath);
 }

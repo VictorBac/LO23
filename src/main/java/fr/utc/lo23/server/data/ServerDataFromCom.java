@@ -127,20 +127,15 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param player the player launching the game
      * @return the created game
      */
-    public Game startGame(UUID idTable, UserLight player) {
+    public Boolean startGame(UUID idTable, UserLight player) {
         Table toStart = getTableFromId(idTable);
-        try {
-            toStart.getCurrentGame().startGame();
-
-            //LANCEMENT DE L'ALGORITHME DE JEU
-            playGame(toStart);
-
-            Console.log(TAG + "\tGame started.");
-            return toStart.getCurrentGame();
+        if(toStart.getCurrentGame().startGame() && player.equals(toStart.getCreator()))
+        {
+            return true;
         }
-        catch(Exception e){
-            Console.log(TAG + "\tGame failed to start.");
-            return null;
+        else
+        {
+            return false;
         }
     }
 

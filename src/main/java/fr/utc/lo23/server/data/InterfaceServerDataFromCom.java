@@ -60,7 +60,7 @@ public interface InterfaceServerDataFromCom {
      * @param player the player launching the game
      * @return the created game
      */
-    Game startGame(UUID idTable, UserLight player);
+    Boolean startGame(UUID idTable, UserLight player);
 
     void nextStepReplay();
 

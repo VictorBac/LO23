@@ -2,6 +2,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
@@ -34,8 +35,18 @@ public class MainWindowController extends BaseController {
 
     private ObservableList<UserLight> connectedUsers;
 
+    private ObservableList<UserLight> playersInGame;
+
+    private ObservableList<UserLight> spectatorsInGame;
+
     @FXML
     public ListView<UserLight> listViewConnectedUsers;
+
+    @FXML
+    private ListView<UserLight> listViewPlayersInGame;
+
+    @FXML
+    private ListView<UserLight> listViewSpectatorsInGame;
 
     @FXML
     private TableView<Table> tableViewCurrentTables;
@@ -64,6 +75,18 @@ public class MainWindowController extends BaseController {
 
     @FXML
     private Button buttonQuit;
+
+    @FXML
+    private Accordion accordionList;
+
+    @FXML
+    private TitledPane tpPlayersConnected;
+
+    @FXML
+    private TitledPane tpPlayersInGame;
+
+    @FXML
+    private TitledPane tpSpectatorsInGame;
 
     private FileChooser profileChooser;
 
@@ -100,9 +123,23 @@ public class MainWindowController extends BaseController {
         //tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
         listViewSavedTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listViewConnectedUsers.setOnMouseClicked(event -> {
-            if (listViewConnectedUsers.getSelectionModel().getSelectedItem() != null)
-                showOtherProfile(listViewConnectedUsers.getSelectionModel().getSelectedItem());
+            if (event.getClickCount() == 2) {
+                showOtherProfile(listViewConnectedUsers);
+            }
         });
+
+        listViewPlayersInGame.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                showOtherProfile(listViewPlayersInGame);
+            }
+        });
+
+        listViewSpectatorsInGame.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                showOtherProfile(listViewSpectatorsInGame);
+            }
+        });
+
         listViewSavedTables.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>() {
             @Override
             public ListCell<Table> call(ListView<Table> param) {
@@ -135,22 +172,58 @@ public class MainWindowController extends BaseController {
                 return cell;
             }
         });
+        listViewPlayersInGame.setCellFactory(new Callback<ListView<UserLight>, ListCell<UserLight>>() {
+            @Override
+            public ListCell<UserLight> call(ListView<UserLight> param) {
+                ListCell<UserLight> cell = new ListCell<UserLight>(){
+                    @Override
+                    protected void updateItem(UserLight t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getPseudo());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+        listViewSpectatorsInGame.setCellFactory(new Callback<ListView<UserLight>, ListCell<UserLight>>() {
+            @Override
+            public ListCell<UserLight> call(ListView<UserLight> param) {
+                ListCell<UserLight> cell = new ListCell<UserLight>(){
+                    @Override
+                    protected void updateItem(UserLight t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getPseudo());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
         listViewConnectedUsers.setItems(connectedUsers);
+        listViewPlayersInGame.setItems(playersInGame);
+        listViewSpectatorsInGame.setItems(spectatorsInGame);
 
         profileChooser = new FileChooser();
         profileChooser.setTitle("Exporter un profil");
+
+        accordionList.setExpandedPane(tpPlayersConnected);
     }
 
     public void openViewOwnProfil(ActionEvent actionEvent) {
         mController.showViewOwnWindow();
     }
 
-    public void showOtherProfile(UserLight user) {
-        profilePane.setVisible(true);
-        profilePane.setDisable(false);
-        mController.showOtherProfile(user, profilePane);
-        gamePane.setVisible(false);
-        listPane.setVisible(false);
+    public void showOtherProfile(ListView<UserLight> list) {
+        if (list.getSelectionModel().getSelectedItem() != null) {
+            profilePane.setVisible(true);
+            profilePane.setDisable(false);
+            mController.showOtherProfile(list.getSelectionModel().getSelectedItem(), profilePane);
+            gamePane.setVisible(false);
+            listPane.setVisible(false);
+        }
     }
 
     @FXML
@@ -201,6 +274,16 @@ public class MainWindowController extends BaseController {
         mController.getManagerMain().getInterTableToMain().joinTable(gamePane, t);
         listPane.setVisible(false);
         profilePane.setVisible(false);
+
+        playersInGame = FXCollections.observableArrayList(t.getListPlayers().getListUserLights());
+        spectatorsInGame = FXCollections.observableArrayList(t.getListSpectators().getListUserLights());
+        listViewPlayersInGame.setItems(playersInGame);
+        listViewSpectatorsInGame.setItems(spectatorsInGame);
+        accordionList.setExpandedPane(tpPlayersInGame);
+        tpPlayersInGame.setVisible(true);
+        tpPlayersInGame.setDisable(false);
+        tpSpectatorsInGame.setVisible(true);
+        tpSpectatorsInGame.setDisable(false);
 
         inGame = true;
     }
@@ -266,6 +349,13 @@ public class MainWindowController extends BaseController {
         gamePane.setDisable(true);
         listPane.setVisible(true);
         inGame = false;
+
+        tpPlayersInGame.setVisible(false);
+        tpPlayersInGame.setDisable(true);
+        tpSpectatorsInGame.setVisible(false);
+        tpSpectatorsInGame.setDisable(true);
+
+        accordionList.setExpandedPane(tpPlayersConnected);
     }
 
 }

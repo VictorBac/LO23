@@ -12,7 +12,6 @@
 
 <AnchorPane prefHeight="804.0" prefWidth="1220.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.MainWindowController">
    <children>
-          <ListView id="listViewConnectedUsers" fx:id="listViewConnectedUsers" layoutX="14.0" layoutY="47.0" prefHeight="712.0" prefWidth="200.0" />
           <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="17.0" prefHeight="28.0" prefWidth="200.0" style="-fx-background-color: rgb(128, 21, 21);" text="Utilisateurs connectés">
               <font>
                   <Font name="System Bold" size="19.0" />
@@ -94,5 +93,41 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <Accordion fx:id="accordionList" layoutX="13.0" layoutY="47.0" prefHeight="172.0" prefWidth="202.0">
+        <panes>
+          <TitledPane fx:id="tpPlayersConnected" animated="false" text="Joueurs connectés">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                            <ListView id="listViewConnectedUsers" fx:id="listViewConnectedUsers" prefHeight="712.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane fx:id="tpContacts" animated="false" text="Contacts">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane fx:id="tpPlayersInGame" animated="false" disable="true" text="Joueurs de la partie" visible="false">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listViewPlayersInGame" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+            <TitledPane fx:id="tpSpectatorsInGame" animated="false" disable="true" text="Spectateurs de la partie" visible="false">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listViewSpectatorsInGame" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
    </children>
 </AnchorPane>

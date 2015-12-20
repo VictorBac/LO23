@@ -1,18 +1,26 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
@@ -28,6 +36,8 @@ import java.util.ResourceBundle;
 public class ConnectionController extends BaseController {
     public InterfaceFromIHMMain interfromIHMMAIN;
 
+    @FXML
+    private AnchorPane bgimage;
 
     private ObservableList<Server> serverList;
 
@@ -45,8 +55,18 @@ public class ConnectionController extends BaseController {
     @FXML
     public ListView<Server> listViewServers;
 
+    private FileChooser profileChooser;
+
+    /**
+     * lance la connexion avec le serveur
+     * @throws IOException
+     */
     @FXML
     void didButtonConnectClick(ActionEvent event) throws IOException {
+        sendAction();
+    }
+
+    private void sendAction() {
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
 
@@ -69,7 +89,9 @@ public class ConnectionController extends BaseController {
         }
 
     }
-
+    /**
+     * surcharge les méthodes d'affichage pour la listeview serveur
+     */
     //@Override
     public void initialize(URL location, ResourceBundle resources) {
         //serverList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getServersList());
@@ -91,45 +113,75 @@ public class ConnectionController extends BaseController {
                 return cell;
             }
         });
+        profileChooser = new FileChooser();
+        profileChooser.setTitle("Importer un profil");
 
-        // test
-        try
-        {
-            serverList.add(new Server(InetAddress.getByName("000.000.000.000"),"0000"));
-        } catch (UnknownHostException e)
-        {
+        bgimage.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER)
+                sendAction();
+        });
+    }
 
-        }
+    /**
+     * initialise la liste des serveurs
+     */
+    public void initServerlist()
+    {
+        serverList.setAll(mController.getManagerMain().getInterDataToMain().getServersList());
     }
 
     public void change(ActionEvent actionEvent) {
     }
 
+    /**
+     * créer un nouvel utilisateur
+     */
     public void createnewuser(ActionEvent actionEvent) {
         User createUser = new User();
-        //createUser.
     }
 
+
+    /**
+     * créer un nouveau profil
+     */
     public void CreateProfilClick(ActionEvent actionEvent) {
         System.out.println("CreateProfilButton");
         mController.ClickCreateProfil();
 
     }
 
+    /**
+     * ajouter un serveur
+     */
     @FXML
     void didClickAddServerButton(ActionEvent event) {
         mController.showAddServerWindow();
     }
 
+    /**
+     * supprimer un serveur
+     */
     @FXML
     void didClickRemoveServerButton(ActionEvent event)
     {
         Server selectedServer = listViewServers.getSelectionModel().getSelectedItem();
         if (selectedServer != null) {
-            serverList.remove(selectedServer);
             mController.getManagerMain().getInterDataToMain().removeServer(selectedServer);
+            serverList.remove(selectedServer);
+            listViewServers.refresh();
         } else {
             mController.showErrorPopup("Erreur", "Vous devez sélectionner un serveur pour le supprimer.");
+        }
+    }
+
+    /**
+     * supprimer un serveur
+     */
+    public void ImportProfilClick(ActionEvent actionEvent) {
+        File file = profileChooser.showOpenDialog(buttonConnect.getScene().getWindow());
+        if (file != null) {
+            // TODO: Remove comment when integrated
+            //mController.getManagerMain().getInterDataToMain().importProfileFile(file.toURI());
         }
     }
 }

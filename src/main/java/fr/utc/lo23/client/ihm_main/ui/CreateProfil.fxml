@@ -29,6 +29,7 @@
          <image>
             <Image url="@avatar.jpg" />
          </image></ImageView>
+      <Button fx:id="buttonAvatar" layoutX="861.0" layoutY="373.0" mnemonicParsing="false" onAction="#didClickAvatar" text="Modifier l'avatar" />
 
    </children>
 </AnchorPane>

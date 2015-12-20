@@ -32,6 +32,9 @@ public class AddServerController extends BaseController{
     @FXML
     private TextField fieldPort;
 
+    /**
+     * ajouter un serveur
+     */
     @FXML
     void didClickAddButton(ActionEvent event) {
         if (fieldIPAddress.getText().isEmpty() || fieldPort.getText().isEmpty()) {
@@ -44,11 +47,10 @@ public class AddServerController extends BaseController{
             mController.showErrorPopup("Erreur", "Le port doit être entier!");
             return;
         }
-
         try {
             mController.getManagerMain().getInterDataToMain().addServer(InetAddress.getByName(fieldIPAddress.getText()), fieldPort.getText());
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+           mController.showErrorPopup("Erreur", "Hôte inconnu!");
         }
         mController.showConnectionWindow();
     }

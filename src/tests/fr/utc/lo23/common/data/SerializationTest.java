@@ -19,9 +19,9 @@ public class SerializationTest {
         // Create an localUser with username and password
         User localUser = new User("testLocalUser", "testpsw");
         // Write localUser into the local data file
-        Serialization.serializationObject(localUser, "testUserLocal");
+        Serialization.serializationObject(localUser, Serialization.dirLocalSavedFiles + "testUserLocal");
         // Read the local data file into localUser2
-        User localUser2 = (User) Serialization.deserializationObject("testUserLocal");
+        User localUser2 = (User) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + "testUserLocal");
         // Get the username of localUser and localUser2
         String inputPseudo = localUser.getUserLight().getPseudo();
         String outputPseudo = localUser2.getUserLight().getPseudo();

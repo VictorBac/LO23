@@ -1169,14 +1169,20 @@ public class TableController {
     }
 
     public void endHand(ArrayList<Seat> seatPlayers){
-
-
-
-
+        for(Seat seat : seatPlayers)
+        {
+            if(playerControllerMap.get(seat.getPlayer()).getCurrentMoney()<seat.getCurrentAccount())
+            {
+                addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()+playerControllerMap.get(seat.getPlayer()).getCurrentMoney())+" € cette manche !");
+                //TODO: ajouter animation
+            }
+            playerControllerMap.get(seat.getPlayer()).updateMoney(seat.getCurrentAccount());
+        }
         setRefSeats(seatPlayers);
     }
 
     public void notifyEndGame(UserLight winner){
         addLogEntry("Le grand vainqueur de la partie est "+winner.getPseudo()+".");
+        //TODO: remettre l'interface graphique en mode attente de joueurs
     }
 }

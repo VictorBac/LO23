@@ -40,6 +40,7 @@ public class TableController {
     private String turnStatus = null; // null,warmup,flop,turn,river
     private Integer potMoneyInt;
     private ArrayList<Seat> refSeats = new ArrayList<Seat>();
+    private Integer lastRaise;
 
     private boolean isHost = true;
 
@@ -62,19 +63,26 @@ public class TableController {
         chatInitializer();
     }
 
-    @FXML
-    private Slider actionBetMoneySelector;
-    @FXML
-    private Label betLabel;
 
     public TableController(){
         playerControllerMap = new HashMap<UserLight,PlayerController>();
         betMoneyControllerMap = new HashMap<UserLight,BetMoneyController>();
         defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
+
+        lastRaise = 0;
     }
 
+    /**
+     * Called when fxml has finished loading
+     */
     public void initialize(){
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
+        buttonValiderMontant.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                onBetValidate();
+            }
+        });
         actionBetMoneySelector.valueProperty().addListener(new ChangeListener<Number>() {
 
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -89,10 +97,11 @@ public class TableController {
         hideActionBox();
         disableAllActions();
         addLogEntry("Vous avez rejoint la salle.");
-
-
     }
 
+    /**
+     * Initialize every player on the table when created (shown on GUI)
+     */
     public void playerInitializer(){
 
         //Initialisation de la liste des sièges
@@ -108,6 +117,11 @@ public class TableController {
         }
     }
 
+    /**
+     * Add a player to the game
+     * Easier to use than the one under
+     * @param user
+     */
     public void addPlayer(UserLight user) {
         addPlayer(getFirstAvailableSeat(), user, true);
     }
@@ -235,6 +249,12 @@ public class TableController {
     @FXML
     private TextField popupAmountInput;
 
+    @FXML
+    private Slider actionBetMoneySelector;
+    @FXML
+    private Label betLabel;
+    @FXML
+    private Button buttonValiderMontant;
 
     @FXML
     private TitledPane popupLeave;
@@ -299,6 +319,14 @@ public class TableController {
     private void launchGame(javafx.event.ActionEvent event){
         btnLaunchGame.setVisible(false);
         ihmTable.getDataInterface().playGame(table.getIdTable());
+    }
+
+    /**
+     * Setter for last raise
+     * @param lastRaise
+     */
+    public void setLastRaise(Integer lastRaise) {
+        this.lastRaise = lastRaise;
     }
 
     /**
@@ -391,10 +419,14 @@ public class TableController {
         actionBet.getStyleClass().remove("action_bet_off");
         actionBet.getStyleClass().add("active");
         actionBet.getStyleClass().add("action_bet_on");
-        actionBetMoneySelector.setMin(0);   //TODO : get last raise
-        actionBetMoneySelector.setMax(150); //TODO: get allin value (self.money)
-        //ihmTable.getDataInterface().getUser().getMoney ?
+    }
+
+    public void enableActionBetSubMenu() {
+        actionBetMoneySelector.setMin(Math.min(lastRaise, getPlayerMoney()));
+        actionBetMoneySelector.setMax(getPlayerMoney());
         actionBetMoneySelector.setVisible(true);
+        buttonValiderMontant.setVisible(true);
+        betLabel.setVisible(true);
     }
 
     /**
@@ -404,7 +436,13 @@ public class TableController {
         actionBet.getStyleClass().remove("action_bet_on");
         actionBet.getStyleClass().remove("active");
         actionBet.getStyleClass().add("action_bet_off");
+        disableActionBetSubMenu();
+    }
+
+    public void disableActionBetSubMenu() {
         actionBetMoneySelector.setVisible(false);
+        buttonValiderMontant.setVisible(false);
+        betLabel.setVisible(false);
     }
 
     /**
@@ -458,7 +496,6 @@ public class TableController {
             actionToFill.setName(EnumerationAction.FOLD);
             ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("DODO");
-
         }
     }
 
@@ -472,7 +509,6 @@ public class TableController {
             actionToFill.setName(EnumerationAction.CHECK);
             ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("CHECK");
-
         }
     }
 
@@ -484,11 +520,15 @@ public class TableController {
     public void call(javafx.event.ActionEvent event) {
         if (actionCall.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.CALL);
-            //TODO : store previous max bet
-            //ihmTable.getDataInterface().replyAction(actionToFill);
+            actionToFill.setAmount(Math.min(lastRaise, getPlayerMoney()));
+            ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("APPEL");
 
         }
+    }
+
+    public int getPlayerMoney() {
+        return getPlayerControllerOf(ihmTable.getDataInterface().getUser()).getCurrentMoney();
     }
 
     /**
@@ -499,6 +539,7 @@ public class TableController {
     public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.ALLIN);
+            actionToFill.setAmount(getPlayerMoney());
             ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("ALLIN");
 
@@ -512,31 +553,19 @@ public class TableController {
     @FXML
     public void bet(javafx.event.ActionEvent event) {
         if(actionBet.getStyleClass().contains("active")) {
-            //TODO: afficher slider puis recliquer pour envoyer
+            enableActionBetSubMenu(); //Affiche le slider
             actionToFill.setName(EnumerationAction.BET);
-            //TODO: envoyer à data
-            //actionToFill.setAmount((int) actionBetMoneySelector.getValue());
         }
     }
 
-    public ArrayList<Seat> getRefSeats() {
-        return refSeats;
-    }
-
-    public void setRefSeats(ArrayList<Seat> refSeats) {
-        this.refSeats = refSeats;
-    }
-
-    public void addRefSeats(Seat seat) {
-        this.refSeats.add(seat);
-    }
-
     /**
-     * Add log in log view
-     * @param msg
+     * Called when click on "Valider montant" button
      */
-    public void addLogEntry(String msg){
-        logView.getItems().add(msg);
+    public void onBetValidate() {
+        //This can only be called when clicked on button activate
+        actionToFill.setAmount((int)actionBetMoneySelector.getValue());
+        ihmTable.getDataInterface().replyAction(actionToFill);
+        System.out.println("Bet");
     }
 
     /**
@@ -562,7 +591,7 @@ public class TableController {
     }
 
     /*
-     * Should send popAmound value to data (with actionToFill) TODO: Please verify
+     * Should send popAmound value to data (with actionToFill)
      * @param event
      */
     @FXML
@@ -575,6 +604,26 @@ public class TableController {
             return;
         ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));
         hidePopupAmount();
+    }
+
+    public ArrayList<Seat> getRefSeats() {
+        return refSeats;
+    }
+
+    public void setRefSeats(ArrayList<Seat> refSeats) {
+        this.refSeats = refSeats;
+    }
+
+    public void addRefSeats(Seat seat) {
+        this.refSeats.add(seat);
+    }
+
+    /**
+     * Add log in log view
+     * @param msg
+     */
+    public void addLogEntry(String msg){
+        logView.getItems().add(msg);
     }
 
     public void showPopupReady(){

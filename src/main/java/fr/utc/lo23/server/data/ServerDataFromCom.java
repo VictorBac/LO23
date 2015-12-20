@@ -371,12 +371,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         Table curTable =this.getTableFromId(idTable);
         if (curTable.getCurrentGame().startGame()) {
             canLaunch = true;
-            myManager.getInterfaceToCom().tableCreatorRequestToStartGameAccepted(idTable);
+            //TODO:integ5 myManager.getInterfaceToCom().tableCreatorRequestToStartGameAccepted(idTable);
             askMoneyMax(idTable);
         }
         else {
             canLaunch = false;
-            myManager.getInterfaceToCom().tableCreatorRequestToStartGameRejected(idTable);
+            //TODO:integ5 myManager.getInterfaceToCom().tableCreatorRequestToStartGameRejected(idTable);
         }
     }
 
@@ -385,7 +385,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public void askMoneyMax(UUID idTable) {
         Table toAsk = getTableFromId(idTable);
-       myManager.getInterfaceToCom().askPlayersMoney(toAsk.getListPlayers().getListUserLights());
+       //TODO:integ5 myManager.getInterfaceToCom().askPlayersMoney(toAsk.getListPlayers().getListUserLights());
     }
 
     /**
@@ -403,16 +403,16 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             playingTable.getCurrentGame().setMoneyOfPlayer(player,money);   //sets the money of the player in his seat
             playingTable.setNbPlayerSelectedMoney(playingTable.getNbPlayerSelectedMoney()+1);
 
-            myManager.getInterfaceToCom().moneyPlayers(player, money);
-            if (moneyPlayers.get(playingTable).equals(playingTable.getListPlayers().getListUserLights().size())){ // if all players confirmed their money
-                this.askReady(playingTable);    //begins the next phase
-            }
+            //TODO:integ5 myManager.getInterfaceToCom().moneyPlayers(player, money);
+            //TODO:integ5 if (moneyPlayers.get(playingTable).equals(playingTable.getListPlayers().getListUserLights().size())){ // if all players confirmed their money
+            //TODO:integ5    this.askReady(playingTable);    //begins the next phase
+            //TODO:integ5 }
 
-            myManager.getInterfaceToCom().notifyNewSeat(playingTable.getListPlayers().getListUserLights(), player, money);  //transmits the new amount to every player
+            //TODO:integ5 myManager.getInterfaceToCom().notifyNewSeat(playingTable.getListPlayers().getListUserLights(), player, money);  //transmits the new amount to every player
             valid = true;
         }
         else{
-            myManager.getInterfaceToCom().askMoneySinglePlayer(player);
+            //TODO:integ5 myManager.getInterfaceToCom().askMoneySinglePlayer(player);
         }
         return valid;
     }
@@ -422,7 +422,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      *
      */
     public void askReady(Table playingTable) {
-        myManager.getInterfaceToCom().askReady(playingTable.getListPlayers().getListUserLights());
+        //TODO:integ5 myManager.getInterfaceToCom().askReady(playingTable.getListPlayers().getListUserLights());
 
 
     }
@@ -451,13 +451,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         if (playingTable.getVote().size() == playingTable.getListPlayers().getListUserLights().size()){
             if (playingTable.getVote().contains(false)){
                 playingTable.getVote().clear();
-                myManager.getInterfaceToCom().notifyVoteFailed(playingTable);
-                playingTable.setNbPlayerelectedMoney(0);
+                //TODO:integ5 myManager.getInterfaceToCom().notifyVoteFailed(playingTable);
+                //TODO:integ5 playingTable.setNbPlayerelectedMoney(0);
                 askMoneyMax(idTable);
             }
             else{
                 playingTable.getCurrentGame().startGame();
-                myManager.getInterfaceToCom().notifyGameStart(playingTable);
+                //TODO:integ5 myManager.getInterfaceToCom().notifyGameStart(playingTable);
             }
         }
     }

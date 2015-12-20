@@ -34,7 +34,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             //TODO: handle spectateur et player
             dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
-            //NON: dManagerClient.getInterToIHMTable().notifyNewUser(userLightDistant,true);
         } catch (ExistingUserException e) {
             e.printStackTrace();
         }
@@ -46,7 +45,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             //TODO: handle spectateur et player
             dManagerClient.getListUsersLightLocal().remove(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
-            //NON: dManagerClient.getInterToIHMTable().notifyUserLeft(userLightDistant,true);
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
         }
@@ -74,9 +72,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"userJoinedTable()");
         try {
             dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
-            //search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
-            //TODO : dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable),userWhoJoinTheTable,typeOfUserWhoJoinTable);
-            dManagerClient.getInterToIHMTable().notifyNewUser(userWhoJoinTheTable, typeOfUserWhoJoinTable == EnumerationTypeOfUser.PLAYER);
+
+            //search the Table and send it to IHMMain
+            dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable), userWhoJoinTheTable, typeOfUserWhoJoinTable);
+
+            //if the player has join the same Table as the local user we inform IHMTable
+            if(idTable.equals(dManagerClient.getTableLocal().getIdTable()))
+                dManagerClient.getInterToIHMTable().notifyNewUser(userWhoJoinTheTable, typeOfUserWhoJoinTable == EnumerationTypeOfUser.PLAYER);
+
         } catch (TableException e) {
             Console.log(TAG +"User already on the table");
             e.printStackTrace();
@@ -85,7 +88,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
     public void transmitLeaveGame(UUID idTable, UserLight userLightDistant, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
-
+//TODO handle when Userlight ==localUser and idTable==idTableLocal and player or spectator
         Console.log(TAG +"transmitLeaveGame()");
         if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
             try {
@@ -103,7 +106,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
                 e.printStackTrace();
             }
         }
-
     }
 
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
@@ -122,7 +124,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void currentConnectedUser(ArrayList<UserLight> listUserLightConnectedOnServer) {
-        //TODO test
         Console.log(TAG +"currentConnectedUser()");
         dManagerClient.getListUsersLightLocal().setUserList(listUserLightConnectedOnServer);
         dManagerClient.getInterToIHMMain().onlineUsers(listUserLightConnectedOnServer);

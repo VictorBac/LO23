@@ -17,6 +17,6 @@ public class NotifyNewRoundMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().informNewRound(); TODO mettre le bon nom de méthode
+        //threadClient.getNetworkManager().getDataInstance().informNewHand(); TODO décommenter après merge
     }
 }

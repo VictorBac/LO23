@@ -1,5 +1,6 @@
 package fr.utc.lo23.server.network;
 
+import com.sun.corba.se.spi.activation.ActivatorOperations;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
@@ -86,8 +87,11 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         server.sendToAll(newPMessage);
     }
 
-    public void notifyAction(Action act) throws NetworkFailureException {
-
+    @Override
+    public void notifyOtherPlayerAction(ArrayList<UserLight> tablePlayers, Action act) throws NetworkFailureException {
+        NotifyOtherPlayerAction notifyActMsg = new NotifyOtherPlayerAction(act);
+        //tablePlayers.remove(act.getUserLightOfPlayer());//Le joueur connait déjà son action, pas besoin de le notifier ? //TODO vérifier
+        server.sendToListOfUsers(tablePlayers, notifyActMsg);
     }
 
     public void notifyNewTable(Table newTable) throws NetworkFailureException {

@@ -41,10 +41,13 @@ public interface InterfaceServer {
     public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException;
 
     /**
-     *
-     * @param act
+     * Informe les autres joueurs de la table de l'action
+     * d'un joueur
+     * @param ArrayList<UserLight> tablePlayers
+     * @param Action act
+     * @throws NetworkFailureException
      */
-    public void notifyAction(Action act) throws NetworkFailureException;
+    public void notifyOtherPlayerAction(ArrayList<UserLight> tablePlayers, Action act) throws NetworkFailureException;
 
     /**
      *

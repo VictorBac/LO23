@@ -1,10 +1,10 @@
 package fr.utc.lo23.server.network;
 
+import com.sun.corba.se.spi.activation.ActivatorOperations;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
-import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
@@ -87,8 +87,11 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         server.sendToAll(newPMessage);
     }
 
-    public void notifyAction(Action act) throws NetworkFailureException {
-
+    @Override
+    public void notifyOtherPlayerAction(ArrayList<UserLight> tablePlayers, Action act) throws NetworkFailureException {
+        NotifyOtherPlayerAction notifyActMsg = new NotifyOtherPlayerAction(act);
+        //tablePlayers.remove(act.getUserLightOfPlayer());//Le joueur connait déjà son action, pas besoin de le notifier ? //TODO vérifier
+        server.sendToListOfUsers(tablePlayers, notifyActMsg);
     }
 
     public void notifyNewTable(Table newTable) throws NetworkFailureException {
@@ -107,6 +110,44 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     public void startGame(Table tableToStart) throws NetworkFailureException {
 
+    }
+
+    @Override
+    public void newRound(ArrayList<UserLight> aPlayers) {
+        NotifyNewRoundMessage newR = new NotifyNewRoundMessage();
+        server.sendToListOfUsers(aPlayers, newR);
+    }
+
+    @Override
+    public void newTurn(ArrayList<UserLight> aPlayers) {
+        NotifyNewTurnMessage newT = new NotifyNewTurnMessage();
+        server.sendToListOfUsers(aPlayers, newT);
+    }
+
+    @Override
+    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat) {
+        NotifyEndRoundMessage endR = new NotifyEndRoundMessage(aSeat);
+        server.sendToListOfUsers(aPlayers, endR);
+    }
+
+    @Override
+    public void endTurn(ArrayList<UserLight> aPlayers, Integer pot) {
+        NotifyEndTurnMessage endT = new NotifyEndTurnMessage(pot);
+        server.sendToListOfUsers(aPlayers, endT);
+    }
+
+    @Override
+    public void askIfReady(ArrayList<UserLight> aPlayers) {
+        AskReadyGameMessage askReadyM = new AskReadyGameMessage();
+        server.sendToListOfUsers(aPlayers, askReadyM);
+    }
+
+    @Override
+    public void askActionToPLayer(Action a, EnumerationAction[] enAct) {
+        AskActionMessage askActM = new AskActionMessage(a, enAct);
+        ArrayList<UserLight> listP = new ArrayList<UserLight>();
+        listP.add(a.getUserLightOfPlayer());
+        server.sendToListOfUsers(listP,askActM);
     }
 
     @Override

@@ -2,27 +2,24 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.Action;
-import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
+ * Message permettant d'envoyer au serveur l'action d'un joueur
  * Created by rbonneau on 11/12/2015.
  */
 public class SendActionMessage extends Message {
 
     Action act;
-    UserLight userLocal;
 
-    public SendActionMessage(Action a, UserLight ul) {
+    public SendActionMessage(Action a) {
         act = a;
-        userLocal = ul;
     }
 
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act,userLocal);
-
+        threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act, act.getUserLightOfPlayer());
     }
 
     @Override

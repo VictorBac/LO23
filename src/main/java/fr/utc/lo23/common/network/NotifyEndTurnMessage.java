@@ -5,23 +5,25 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
+ * Message pour informer les joueurs
+ * de la fin d'un tour
  * Created by rbonneau on 11/12/2015.
  */
 public class NotifyEndTurnMessage extends Message {
 
-    UserLight ul;
+    Integer pot;
 
-    public NotifyEndTurnMessage(UserLight u) {
-        ul = u;
+    public NotifyEndTurnMessage(Integer turnPot) {
+        pot = turnPot;
     }
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().endTurnConfirmation(ul);
+        //threadServer.getMyServer().getNetworkManager().getDataInstance().endTurnConfirmation();//TODO éclaircir s'il y a usage côté serveur
     }
 
     @Override
     public void process(ServerLink threadClient) {
-
+        threadClient.getNetworkManager().getDataInstance().informEndTurn(pot);
     }
 }

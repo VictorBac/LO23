@@ -70,11 +70,10 @@ public interface InterfaceClient {
     public void sendHeartbeat() throws NetworkFailureException;
     
     /**
-     *
-     * @param act
-     * @param userLocal
+     * Envoie l'action d'un joueur au serveur
+     * @param Action act
      */
-    public void sendAction(Action act,UserLight userLocal) throws NetworkFailureException, IncorrectActionException;
+    public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException;
     
     /**
      *
@@ -91,7 +90,7 @@ public interface InterfaceClient {
 
     public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
 
-    public void requestLoginServer(User u);
+    public void requestLoginServer(User u, String socketIp, int socketPort);
 
     public void sendPacket() throws NetworkFailureException;
 
@@ -126,6 +125,13 @@ public interface InterfaceClient {
     public void confirmationEndTurn(UserLight ul);
 
     public void transmitRequestServer(UserLight player);
+
+    /**
+     * Répond à la demande de askReadyGame
+     * @param UserLigh player
+     * @param boolean answer
+     */
+    public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer);
 }
     
 

@@ -136,8 +136,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public UserLight getUserLightLocal() {
-        Console.log("dManagerClient : " + dManagerClient);
-        Console.log("dManagerClient.getUserLocal() : " + dManagerClient.getUserLocal());
+        //Console.log("dManagerClient : " + dManagerClient);
+        //Console.log("dManagerClient.getUserLocal() : " + dManagerClient.getUserLocal());
         return dManagerClient.getUserLocal().getUserLight();
     }
 

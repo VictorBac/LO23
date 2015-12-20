@@ -29,7 +29,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public UserLight userConnection(User connectingUser) throws ExistingUserException {
         myManager.getUsers().addUser(connectingUser);
-        Console.log(TAG + "\tUser connected.");
+        //Console.log(TAG + "\tUser connected.");
         return connectingUser.getUserLight();
     }
 
@@ -43,7 +43,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         for (User current : myManager.getUsers().getList()) {
             created.add(current.getUserLight());
         }
-        Console.log(TAG + "\tListe des joueurs.");
+        //Console.log(TAG + "\tListe des joueurs.");
         return created;
     }
 
@@ -264,15 +264,21 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param deletedUsr the user to delete
      */
     public void deletePlayer(UserLight deletedUsr) throws UserNotFoundException {
-        boolean found = false;
+        User userToDelete = null;
         for (User current : myManager.getUsers().getList()) {
-            if (current.getUserLight().equals(deletedUsr))
-                found = true;
-            myManager.getUsers().getList().remove(current);
-            Console.log(TAG + "\tPlayer deleted.");
+            if (current.getUserLight().equals(deletedUsr)) {
+                userToDelete = current;
+                break;
+            }
         }
-        if (found == false)
+
+        if (userToDelete == null) {
             throw new fr.utc.lo23.common.data.exceptions.UserNotFoundException(deletedUsr.getIdUser());
+        }
+        else {
+            myManager.getUsers().getList().remove(userToDelete);
+            //Console.log(TAG + "\tPlayer deleted.");
+        }
     }
 
     public void confirmationCardReceived(UserLight player) {

@@ -28,7 +28,6 @@ public class SetMoneyAmountMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-      //TODO : decommenter quand la fonction existe
-        //  threadClient.getNetworkManager().getDataInstance().notifyMoneyAmountAnswer(user, amount);
+        threadClient.getNetworkManager().getDataInstance().notifyMoneyAmountAnswerFromServer(user, amount);
     }
 }

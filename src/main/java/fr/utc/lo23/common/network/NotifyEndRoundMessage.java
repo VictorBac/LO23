@@ -26,6 +26,6 @@ public class NotifyEndRoundMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().informEndHand(aSeat);TODO décommenter après merge
+        threadClient.getNetworkManager().getDataInstance().informEndHand(aSeat);
     }
 }

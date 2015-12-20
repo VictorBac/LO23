@@ -23,7 +23,7 @@ public class SendRequestedProfileMessage  extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().remoteUserProfile(reqProfile);
+        threadClient.getNetworkManager().getDataInstance().remoteUserProfile(reqProfile);
     }
 
 }

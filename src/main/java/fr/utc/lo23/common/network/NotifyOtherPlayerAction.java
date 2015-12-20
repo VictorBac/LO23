@@ -19,7 +19,7 @@ public class NotifyOtherPlayerAction extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        //threadServer.getMyServer().getNetworkManager().getDataInstance().notifyAction(act);//TODO décommenter après merge
+        //TODO : When created : threadServer.getMyServer().getNetworkManager().getDataInstance().notifyAction(act);
     }
 
     @Override

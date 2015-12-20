@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
@@ -27,7 +28,7 @@ public class NotifyPlayerLeftTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //TODO: Manque une interface data locale pour informer qu'un joueur a quitté la table
-        //  threadClient.getNetworkManager().getDataInstance().PlayerLeaveTable(tab,user);
+        //TODO: Voir pour passer le type d'utilisateur
+        threadClient.getNetworkManager().getDataInstance().transmitLeaveGame(tab, user, EnumerationTypeOfUser.PLAYER);
     }
 }

@@ -8,6 +8,7 @@ import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
 import java.net.InetAddress;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +32,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param password
      */
     public void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException {
-        User userLocal = (User) Serialization.deserializationObject(login);
+        User userLocal = (User) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + login);
         if (userLocal == null) {
             throw new LoginNotFoundException(login);
         }
@@ -69,7 +70,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void saveNewProfile(User userLocal) {
         String login = userLocal.getLogin();
-        Serialization.serializationObject(userLocal, login);
+        Serialization.serializationObject(userLocal, Serialization.dirLocalSavedFiles + login);
     }
 
     /**
@@ -103,7 +104,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public TableList getSavedGamesList() {
         return (TableList)Serialization.deserializationObject(
-                dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+                Serialization.dirLocalSavedFiles + dManagerClient.getUserLocal().getLogin() + Serialization.pathSavedGame);
     }
 
     /**
@@ -137,7 +138,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     public void addServer(InetAddress ip, String port) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
         listServers.add(new Server(ip, port));
-        Serialization.serializationObject(listServers, Serialization.pathServerList);
+        Serialization.serializationObject(listServers, Serialization.dirLocalSavedFiles + Serialization.pathServerList);
         dManagerClient.setListServers(listServers);
     }
 
@@ -148,7 +149,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     public void removeServer(Server server) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
         listServers.remove(server);
-        Serialization.serializationObject(listServers, Serialization.pathServerList);
+        Serialization.serializationObject(listServers, Serialization.dirLocalSavedFiles + Serialization.pathServerList);
         dManagerClient.setListServers(listServers);
     }
 
@@ -165,6 +166,24 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void sendLocalUser() throws NetworkFailureException {
         dManagerClient.getInterToCom().sendProfile(dManagerClient.getUserLocal());
+    }
+
+    @Override
+    public void importFiles(String folderPath) {
+        try {
+            Serialization.moveFiles(folderPath, Serialization.dirLocalSavedFiles);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void exportFiles(String folderPath) {
+        try {
+            Serialization.moveFiles(Serialization.dirLocalSavedFiles, folderPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -1,5 +1,7 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.common.data.User;
+import fr.utc.lo23.common.data.UserLight;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
@@ -40,7 +42,10 @@ public class EditOwnProfilController extends BaseController {
     private ImageView imageviewer;
 
     public void initialize(URL location, ResourceBundle resources) {
-
+        //TODO Fonction de data pour recuperer le Userlocal
+        // User edituser = DataGiveMeUser();
+        // fonction de remplissage des champs
+        // fillUserform(edituser);
     }
 
     public void didClickCancelButton(ActionEvent actionEvent) {
@@ -48,7 +53,21 @@ public class EditOwnProfilController extends BaseController {
     }
 
     public void UpdateProfil(ActionEvent actionEvent) {
-    //TODO update profil
+        //TODO fonction de data pour recuperer le Userlocal
+        // User edituser = DataGiveMeUser();
+        User edituser = new User();
+        edituser.setAge(Integer.parseInt(age.getText()));
+        edituser.setEmail(email.getText());
+
+
+    //TODO update profil, fonction de data à appeler, laquelle ?
         mController.showViewOwnWindow();
+    }
+
+    public void fillUserform(User UserLocal) {
+        UserLight lightuser = UserLocal.getUserLight();
+        username.setText(lightuser.getPseudo());
+        age.setText(Integer.toString(UserLocal.getAge()));
+        email.setText(UserLocal.getEmail());
     }
 }

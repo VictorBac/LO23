@@ -7,6 +7,7 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.exceptions.TableException;
+import javafx.application.Platform;
 import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
@@ -30,8 +31,10 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserConnected");
+            //TODO: handle spectateur et player
             dManagerClient.getListUsersLightLocal().addUser(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserConnected(userLightDistant);
+            //NON: dManagerClient.getInterToIHMTable().notifyNewUser(userLightDistant,true);
         } catch (ExistingUserException e) {
             e.printStackTrace();
         }
@@ -40,8 +43,10 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void remoteUserDisonnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserDisonnected");
+            //TODO: handle spectateur et player
             dManagerClient.getListUsersLightLocal().remove(userLightDistant);
             dManagerClient.getInterToIHMMain().remoteUserDisconnected(userLightDistant);
+            //NON: dManagerClient.getInterToIHMTable().notifyUserLeft(userLightDistant,true);
         } catch (UserLightNotFoundException e) {
             e.printStackTrace();
         }
@@ -52,6 +57,16 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"notifyNewTable()");
         dManagerClient.getListTablesLocal().newTable(tableCreatedOnServer);
         dManagerClient.getInterToIHMMain().notifyNewTable(tableCreatedOnServer);
+        System.out.println(tableCreatedOnServer.getCreator());
+        System.out.println(dManagerClient.getUserLocal());
+        if(tableCreatedOnServer.getCreator().equals(dManagerClient.getUserLocal().getUserLight())) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    dManagerClient.getInterToIHMTable().showTable(tableCreatedOnServer);
+                }
+            });
+        }
     }
 
 
@@ -60,8 +75,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         try {
             dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
             //search the Table and send it to IHMMain dManagerClient.getInterToIHMMain();
-             dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable),userWhoJoinTheTable,typeOfUserWhoJoinTable);
-
+            //TODO : dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable),userWhoJoinTheTable,typeOfUserWhoJoinTable);
+            dManagerClient.getInterToIHMTable().notifyNewUser(userWhoJoinTheTable, typeOfUserWhoJoinTable == EnumerationTypeOfUser.PLAYER);
         } catch (TableException e) {
             Console.log(TAG +"User already on the table");
             e.printStackTrace();
@@ -95,7 +110,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"tableJoinAccepted()");
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
-            //TODO need to contact IHMMain missing interface   dManagerClient.getInterToIHMMain();
+            dManagerClient.getInterToIHMMain().tableJoinAccepted(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined), modeUserLocal);
         } catch (TableException e) {
             e.printStackTrace();
         }
@@ -134,18 +149,17 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
-        Console.log(TAG +"transmitMessage()");
+        Console.log(TAG + "transmitMessage()");
         dManagerClient.getInterToIHMTable().notifyNewChatMessage(messageSendByRemoteUser);
     }
 
 
     public void remoteUserProfile(User profileReturnedByTheServer){
-        Console.log(TAG +"remoteUserProfile()");
-        //TODO add this line after integration dManagerClient.getInterToIHMMain().profileRemoteUserFromServer(profileReturnedByTheServer);
+        Console.log(TAG + "remoteUserProfile()");
+        dManagerClient.getInterToIHMMain().profileRemoteUserFromServer(profileReturnedByTheServer);
     }
 
     public void updateStats(Stats statsLocalUser) {
-
         //TODO if this the correct way to change the stats or add the latest stats
         dManagerClient.getUserLocal().setStatsUser(statsLocalUser);
         //for notifying the player that its Stats has changed
@@ -153,7 +167,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void startGame(UUID idTable){
-        Console.log(TAG +"startGame()");
+        Console.log(TAG + "startGame()");
         dManagerClient.getInterToIHMTable().notifyStartGame(dManagerClient.getListTablesLocal().getTable(idTable));
     }
 
@@ -175,7 +189,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void notifyMoneyAmountAnswerFromServer(UserLight player, Integer amount){
         Console.log(TAG +"notifyMoneyAmountAnswerFromServer()");
-        dManagerClient.getInterToIHMTable().notifyMoneyAmountAnswer(player,amount);
+        dManagerClient.getInterToIHMTable().notifyMoneyAmountAnswer(player, amount);
     }
 
     public void askReadyGame(){
@@ -194,6 +208,18 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMTable().notifyAction(action);
     }
 
+
+    public void informNewHand(){
+        Console.log(TAG +"informNewHand()");
+        dManagerClient.getInterToIHMTable().notifyStartHand();
+    }
+
+    public void informNewTurn(){
+        Console.log(TAG +"informNewTurn()");
+        dManagerClient.getInterToIHMTable().notifyStartTour();
+    }
+
+
     public void informEndTurn(Integer potForThisTurn){
         Console.log(TAG +"informEndTurn()");
         dManagerClient.getInterToIHMTable().notifyEndTour(potForThisTurn);
@@ -207,14 +233,14 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     public void saveLogGame(Table tableThatContainGameToSave) {
         //TODO need to test
         Console.log(TAG +"saveLogGame()");
-        TableList listOfAllTableSaved = (TableList) Serialization.deserializationObject(dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+        TableList listOfAllTableSaved = (TableList) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
 
         if (listOfAllTableSaved==null){
             listOfAllTableSaved = new TableList();
         }
 
         listOfAllTableSaved.getListTable().add(tableThatContainGameToSave);
-        Serialization.serializationObject(listOfAllTableSaved,dManagerClient.getUserLocal().getLogin()+Serialization.pathSavedGame);
+        Serialization.serializationObject(listOfAllTableSaved,Serialization.dirLocalSavedFiles + dManagerClient.getUserLocal().getLogin() + Serialization.pathSavedGame);
 
         //TODO inform table or main for saved game?
 

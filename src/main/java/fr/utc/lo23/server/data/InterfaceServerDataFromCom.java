@@ -123,7 +123,5 @@ public interface InterfaceServerDataFromCom {
      */
     void setReadyAnswer(UUID idTable, UserLight user, Boolean answer);
 
-
-
-
+    void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode);
 }

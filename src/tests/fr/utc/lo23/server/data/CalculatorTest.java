@@ -1,63 +1,66 @@
 package fr.utc.lo23.server.data;
 
-import fr.utc.lo23.common.data.Card;
-import fr.utc.lo23.common.data.EnumerationCard;
-import fr.utc.lo23.common.data.PlayerHand;
-import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
+import fr.utc.lo23.common.data.*;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-
-import static org.junit.Assert.assertEquals;
 
 /**
+ * The test for some main function in Calculator.
+ * You can take the test as an example of function usage.
  * Created by Jianghan on 26/11/2015.
  */
 public class CalculatorTest {
-    public CombinationCalculator calculator;
-    ArrayList<Card> cards;
-    ArrayList<Integer> cardValues;
-
+    CombinationCalculator calculator;
     ArrayList<PlayerHand> listOfPlayer;
+    ArrayList<PlayerHand> listWinner;
     ArrayList<Card> cardsOnField;
 
     public CalculatorTest() {
         calculator = new CombinationCalculator();
-        cards = new ArrayList<Card>();
-        try {
-            cards.add(new Card(14, EnumerationCard.CLUB));
-            cards.add(new Card(13,EnumerationCard.DIAMOND));
-            cards.add(new Card(5,EnumerationCard.CLUB));
-            cards.add(new Card(4,EnumerationCard.CLUB));
-            cards.add(new Card(3,EnumerationCard.HEART));
-            cards.add(new Card(3,EnumerationCard.CLUB));
-            cards.add(new Card(2,EnumerationCard.CLUB));
-        } catch (CardFormatInvalidException e) {
-            e.printStackTrace();
-        }
-        
-        cardValues = new ArrayList<Integer>();
-        for (int i = 0; i < cards.size(); i++) {
-            cardValues.add(cards.get(i).getValue());
-        }
-        Collections.sort(cardValues);
-        Collections.reverse(cardValues);
+        Hand oneHand = new Hand();
+        // Add 4 player in this test.
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player1")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player2")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player3")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player4")));
+
+        oneHand.distributeCard();
+        listOfPlayer = oneHand.getListPlayerHand();
+        cardsOnField = oneHand.getListCardField();
     }
 
 
     /**
-     * Rank 1: High card
+     * get Winner Test
      */
     @Test
-    public void testHighCard() {
-        System.out.println("Rank 1: High Card");
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        test.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
-        test = calculator.hasHighCard(test);
-        ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.addAll(Arrays.asList(1, 12, 10, 9, 9, 8));
-        assertEquals(expected, test);
+    public void getWinnerTest() {
+        listWinner = calculator.getWinner(listOfPlayer, cardsOnField);
+    }
+
+    /**
+     * get winner list test
+     */
+    @Test
+    public void greterThanTest() {
+        ArrayList<Integer> left = new ArrayList<>();
+        left.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
+        ArrayList<Integer> right = new ArrayList<>();
+        right.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
+        System.out.println(calculator.greaterThan(left, right));
+    }
+
+    /**
+     * get handRank test
+     */
+    @Test
+    public void getHandRankTest() {
+        calculator.showHand(listOfPlayer, cardsOnField);
+        for (PlayerHand p : listOfPlayer) {
+            System.out.println("Get rank of " + p.getPlayer().getPseudo() + " : " +
+                    calculator.getHandRank(p.getListCardsHand(), cardsOnField));
+        }
+
     }
 }

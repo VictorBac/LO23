@@ -4,15 +4,21 @@ import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Callback;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
@@ -23,7 +29,7 @@ public class ConnectionController extends BaseController {
     public InterfaceFromIHMMain interfromIHMMAIN;
 
 
-    private ObservableList<String> serverList;
+    private ObservableList<Server> serverList;
 
     @FXML
     private Button buttonConnect;
@@ -37,16 +43,18 @@ public class ConnectionController extends BaseController {
     public String pass;
 
     @FXML
-    public ListView listViewServers;
+    public ListView<Server> listViewServers;
 
     @FXML
     void didButtonConnectClick(ActionEvent event) throws IOException {
-        System.out.println("didButtonConnectClick");
-
-
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
 
+        if (login.isEmpty()|| passwd.isEmpty())
+        {
+            mController.showErrorPopup("Erreur", "Vous devez insérer un nom d'utilisateur et un mot de passe");
+            return;
+        }
 
         try { // User logged in
             IHMMainClientManager manager = mController.getManagerMain();
@@ -54,27 +62,44 @@ public class ConnectionController extends BaseController {
             //TODO asynchronous...
             mController.userLoggedIn();
         } catch (LoginNotFoundException e) {
-            mController.showErrorPopup("Error", "Nom d'utilisateur inexistant sur le poste.");
+            mController.showErrorPopup("Erreur", "Nom d'utilisateur inexistant sur le poste.");
 
         } catch (WrongPasswordException e) {
-            mController.showErrorPopup("Error", "Mot de passe incorrect.");
+            mController.showErrorPopup("Erreur", "Mot de passe incorrect.");
         }
 
     }
 
     //@Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("ConnectionController start");
-
-        serverList = FXCollections.observableArrayList();
+        //serverList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getServersList());
+        serverList = FXCollections.observableArrayList(new ArrayList<Server>());
         listViewServers.setItems(serverList);
         listViewServers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        // TODO get server list from DATA
-        //  mController.getManagerMain().getInterDataToMain().getServerList();
+        listViewServers.setCellFactory(new Callback<ListView<Server>, ListCell<Server>>() {
+            @Override
+            public ListCell<Server> call(ListView<Server> param) {
+                ListCell<Server> cell = new ListCell<Server>(){
+                    @Override
+                    protected void updateItem(Server t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getAddress() + ":" + t.getPort());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
 
         // test
-        // TODO remove when data methods are implemented
-        serverList.add("000.000.000.000:0000");
+        try
+        {
+            serverList.add(new Server(InetAddress.getByName("000.000.000.000"),"0000"));
+        } catch (UnknownHostException e)
+        {
+
+        }
     }
 
     public void change(ActionEvent actionEvent) {
@@ -99,15 +124,12 @@ public class ConnectionController extends BaseController {
     @FXML
     void didClickRemoveServerButton(ActionEvent event)
     {
-        int selectedIndex = listViewServers.getSelectionModel().getSelectedIndex();
-        if (selectedIndex != -1) {
-
-            // TODO appeler méthode de interface Data pour supprimer server
-            serverList.remove(listViewServers.getSelectionModel().getSelectedIndex());
-
-        }else {
-
-            mController.showErrorPopup("Error", "Vous devez sélectionner un server pour le supprimer.");
+        Server selectedServer = listViewServers.getSelectionModel().getSelectedItem();
+        if (selectedServer != null) {
+            serverList.remove(selectedServer);
+            mController.getManagerMain().getInterDataToMain().removeServer(selectedServer);
+        } else {
+            mController.showErrorPopup("Erreur", "Vous devez sélectionner un serveur pour le supprimer.");
         }
     }
 }

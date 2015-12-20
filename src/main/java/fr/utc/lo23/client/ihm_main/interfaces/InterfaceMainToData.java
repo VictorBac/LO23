@@ -1,9 +1,6 @@
 package fr.utc.lo23.client.ihm_main.interfaces;
 
-import fr.utc.lo23.common.data.EnumerationTypeOfUser;
-import fr.utc.lo23.common.data.Stats;
-import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.common.data.*;
 
 import java.util.List;
 
@@ -23,5 +20,7 @@ public interface InterfaceMainToData {
     void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type);
     void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type);
     void userStatsUpdated(UserLight user, Stats st);
+    void tableJoinAccepted(Table t, EnumerationTypeOfUser type);
     void tableJoinRefused(Table t);
+    void profileRemoteUserFromServer(User profileReturnedByTheServer);
 }

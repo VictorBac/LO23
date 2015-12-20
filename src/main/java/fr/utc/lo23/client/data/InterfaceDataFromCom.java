@@ -162,6 +162,16 @@ public interface InterfaceDataFromCom {
     public void notifyAction(Action action);
 
     /**
+     * Method to inform the user that a new Hand had started
+     */
+    public void informNewHand();
+
+    /**
+     * Method to inform the user that a new turn had started
+     */
+    public void informNewTurn();
+
+    /**
      * Method to inform the local user that the Hand ended with a list of Seat, their amount of money has changed depending on how won
      *
      * @param listSeat ArrayList of Seat with their latest amount of money

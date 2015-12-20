@@ -15,6 +15,6 @@ public class NotifyNewTurnMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().informNewTurn(); TODO mettre le bon nom de méthode
+        //threadClient.getNetworkManager().getDataInstance().informNewTurn(); TODO décommenter après merge
     }
 }

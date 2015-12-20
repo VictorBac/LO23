@@ -86,7 +86,7 @@ public interface InterfaceServer {
      * la d'une manche
      * @param ArrayList<UserLight> aPlayers
      */
-    public void endRound(ArrayList<UserLight> aPlayers);
+    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat);
 
     /**
      * Envoie un message à tous les joueurs pour notifier

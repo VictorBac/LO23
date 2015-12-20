@@ -121,8 +121,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     @Override
-    public void endRound(ArrayList<UserLight> aPlayers) {
-        NotifyEndRoundMessage endR = new NotifyEndRoundMessage();
+    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat) {
+        NotifyEndRoundMessage endR = new NotifyEndRoundMessage(aSeat);
         server.sendToListOfUsers(aPlayers, endR);
     }
 

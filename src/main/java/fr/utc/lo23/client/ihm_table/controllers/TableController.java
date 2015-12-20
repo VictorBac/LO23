@@ -691,12 +691,12 @@ public class TableController {
      */
     public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept) {
         if(accept) {
-            if(player==ihmTable.getDataInterface().getUser())
+            if(player.equals(ihmTable.getDataInterface().getUser()))
                 addLogEntry("Vous avez accepté de mettre fin au jeu.");
             else
                 addLogEntry(player.getPseudo() + " a accepté de mettre fin au jeu.");
         } else {
-            if(player==ihmTable.getDataInterface().getUser())
+            if(player.equals(ihmTable.getDataInterface().getUser()))
                 addLogEntry("Vous avez refusé de mettre fin au jeu.");
             else
                 addLogEntry(player.getPseudo() + " a refusé de mettre fin au jeu.");
@@ -843,7 +843,7 @@ public class TableController {
                     img1.setY(playerController.getNode().getLayoutY() + 30);
                     tablePane.getChildren().add(img1);
                     playerController.setCard1(img1);
-                    if(playerController.getUserLight()==playerHands.get(0).getPlayer())
+                    if(playerController.getUserLight().equals(playerHands.get(0).getPlayer()))
                     {
                         setPlayerCardAnimation(img1,getImageFromCard(playerHands.get(0).getListCardsHand().get(0)),wait);
                     }
@@ -866,7 +866,7 @@ public class TableController {
                     img2.setY(playerController.getNode().getLayoutY() + 30);
                     tablePane.getChildren().add(img2);
                     playerController.setCard2(img2);
-                    if(playerController.getUserLight()==playerHands.get(0).getPlayer())
+                    if(playerController.getUserLight().equals(playerHands.get(0).getPlayer()))
                     {
                         setPlayerCardAnimation(img2,getImageFromCard(playerHands.get(0).getListCardsHand().get(1)),wait);
                     }

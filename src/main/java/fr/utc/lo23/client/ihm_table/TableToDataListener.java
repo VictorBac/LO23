@@ -234,7 +234,7 @@ public class TableToDataListener implements ITableToDataListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if(actionToFill.getUserLightOfPlayer()==ihmtable.getDataInterface().getUser())
+                if(actionToFill.getUserLightOfPlayer().equals(ihmtable.getDataInterface().getUser()))
                 {
                     ihmtable.getTableController().saveActionToFill(actionToFill);
                     ihmtable.getTableController().showActionBox();
@@ -262,7 +262,7 @@ public class TableToDataListener implements ITableToDataListener {
                 System.out.println(player);
                 System.out.println(ihmtable.getDataInterface().getUser());
                 if(action.getName().equals(EnumerationAction.ALLIN)) {
-                    if(player==ihmtable.getDataInterface().getUser())
+                    if(player.equals(ihmtable.getDataInterface().getUser()))
                         ihmtable.getTableController().addLogEntry("Vous avez fait tapis !");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
@@ -271,7 +271,7 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.BET)) {
-                    if(player==ihmtable.getDataInterface().getUser())
+                    if(player.equals(ihmtable.getDataInterface().getUser()))
                         ihmtable.getTableController().addLogEntry("Vous avez relancé de " + action.getAmount() + "$.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
@@ -280,7 +280,7 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CALL)) {
-                    if(player==ihmtable.getDataInterface().getUser())
+                    if(player.equals(ihmtable.getDataInterface().getUser()))
                         ihmtable.getTableController().addLogEntry("Vous avez suivi.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
@@ -289,14 +289,14 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CHECK)) {
-                    if(player==ihmtable.getDataInterface().getUser())
+                    if(player.equals(ihmtable.getDataInterface().getUser()))
                         ihmtable.getTableController().addLogEntry("Parole.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
                     //if zero then useless ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(0);
                 }
                 else if(action.getName().equals(EnumerationAction.FOLD)) {
-                    if(player==ihmtable.getDataInterface().getUser())
+                    if(player.equals(ihmtable.getDataInterface().getUser()))
                         ihmtable.getTableController().addLogEntry("Vous vous couchez.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");

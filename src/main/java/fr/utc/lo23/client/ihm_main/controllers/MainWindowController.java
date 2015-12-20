@@ -228,7 +228,6 @@ public class MainWindowController extends BaseController {
 
     @FXML
     public void createTable(ActionEvent actionEvent) {
-        //mController.getManagerMain().getInterTableToMain().showTableCreationForm(mController.showCreateTableView().getMainPane());
         gamePane.setVisible(true);
         gamePane.setDisable(false);
         gamePane.getStylesheets().clear();

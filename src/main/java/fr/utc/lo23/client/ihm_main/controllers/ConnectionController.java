@@ -11,8 +11,12 @@ import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
@@ -32,6 +36,8 @@ import java.util.ResourceBundle;
 public class ConnectionController extends BaseController {
     public InterfaceFromIHMMain interfromIHMMAIN;
 
+    @FXML
+    private AnchorPane bgimage;
 
     private ObservableList<Server> serverList;
 
@@ -57,6 +63,10 @@ public class ConnectionController extends BaseController {
      */
     @FXML
     void didButtonConnectClick(ActionEvent event) throws IOException {
+        sendAction();
+    }
+
+    private void sendAction() {
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
 
@@ -79,7 +89,6 @@ public class ConnectionController extends BaseController {
         }
 
     }
-
     /**
      * surcharge les méthodes d'affichage pour la listeview serveur
      */
@@ -106,6 +115,11 @@ public class ConnectionController extends BaseController {
         });
         profileChooser = new FileChooser();
         profileChooser.setTitle("Importer un profil");
+
+        bgimage.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER)
+                sendAction();
+        });
     }
 
     /**

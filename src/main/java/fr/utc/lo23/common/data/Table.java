@@ -2,7 +2,6 @@ package fr.utc.lo23.common.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.UUID;
 import fr.utc.lo23.common.data.exceptions.TableException;
 
@@ -168,12 +167,9 @@ public class Table implements Serializable {
      * @param game : new game to add to the list
      */
     public void addNewGameToList(Game game) throws TableException {
-        Iterator<Game> iter = this.listGames.iterator();
-        while (iter.hasNext())
-        {
+        for(int i=0; i <listGames.size(); i++){
             //if a game in the list is already started, impossible to start a new game
-            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.Playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.Finished){
-                throw new TableException("Impossible to start a new game");
+            if(listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Playing) || listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Finished)){                throw new TableException("Impossible to start a new game");
             }
         }
         this.listGames.add(game);
@@ -189,12 +185,9 @@ public class Table implements Serializable {
      */
     public void addNewGameToList(int ante, int blind, int maxStartMoney) throws TableException {
         Game gameToAdd = new Game(this,ante, blind, maxStartMoney);
-
-        Iterator<Game> iter = this.listGames.iterator();
-        while (iter.hasNext())
-        {
+        for(int i=0; i <listGames.size(); i++){
             //if a game in the list is already started, impossible to start a new game
-            if(iter.next().getStatusOfTheGame() == EnumerationStatusGame.Playing || iter.next().getStatusOfTheGame() == EnumerationStatusGame.Finished){
+            if(listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Playing) || listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Finished)){
                 throw new TableException("Impossible to start a new game");
             }
         }

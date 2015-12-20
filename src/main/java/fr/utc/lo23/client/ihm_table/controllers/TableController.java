@@ -76,6 +76,7 @@ public class TableController {
      * Called when fxml has finished loading
      */
     public void initialize(){
+        btnLaunchGame.setVisible(true);
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
         buttonValiderMontant.setOnAction(new EventHandler<ActionEvent>() {
             @Override

@@ -266,6 +266,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Vous avez fait tapis !");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
+                    ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
@@ -274,6 +275,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Vous avez relancé de " + action.getAmount() + "$.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
+                    ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
@@ -282,6 +284,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Vous avez suivi.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
+                    ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }

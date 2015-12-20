@@ -126,6 +126,7 @@
                   </Label>
                </children>
             </Pane>
+            <Button fx:id="buttonValiderMontant" layoutX="186.0" layoutY="464.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Valider montant" />
          </children>
       </Pane>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1020.0">

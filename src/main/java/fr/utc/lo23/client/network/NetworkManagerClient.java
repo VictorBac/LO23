@@ -162,7 +162,11 @@ public class NetworkManagerClient implements InterfaceClient  {
         //localClient.send(endMsg);
     }
 
-    @Override
+    public void sendMoneyAmount(UUID table, UserLight player, Integer money) {
+        SetMoneyAmountMessage setMoneyAmountM = new SetMoneyAmountMessage(table, player, money);
+        serverLink.send(setMoneyAmountM);
+    }
+
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer) {
         AnswerIfReadyGameMessage answerM = new AnswerIfReadyGameMessage(table, player, answer);
         serverLink.send(answerM);

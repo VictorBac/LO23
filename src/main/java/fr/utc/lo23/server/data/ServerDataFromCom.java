@@ -495,7 +495,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //Si cet utilisateur est le dernier à répondre, lancer les demandes de ready
             if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getListPlayers().getListUserLights().size())
             {
-                //TODO: Appeler la fonction d'envoi des demandes de ready, depuis com ou depuis chez nous ?
+                myManager.getInterfaceToCom().askIfReady(myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
             }
             return true;
         }

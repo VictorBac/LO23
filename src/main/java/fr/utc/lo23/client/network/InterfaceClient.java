@@ -71,7 +71,6 @@ public interface InterfaceClient {
     
     /**
      * Envoie l'action d'un joueur au serveur
-     * @param Action act
      */
     public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException;
     
@@ -128,10 +127,11 @@ public interface InterfaceClient {
 
     /**
      * Répond à la demande de askReadyGame
-     * @param UserLigh player
-     * @param boolean answer
      */
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer);
+
+    public void sendMoneyAmount(UUID table, UserLight player, Integer money);
+
 }
     
 

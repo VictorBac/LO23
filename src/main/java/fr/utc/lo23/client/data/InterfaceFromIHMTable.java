@@ -55,7 +55,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     //TODO
     //params : idGame, idTable?
     public void saveGame() {
-        //TODO pour com cloner table sans liste games, insérer juste le bon game, retourner
+        //TODO pour com cloner table sans liste games, insï¿½rer juste le bon game, retourner
     }
 
 
@@ -93,13 +93,11 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
-    //TODO com must implement method
     public void setStartAmount(int amount){
-        //dManagerClient.getInterToCom().???
+        dManagerClient.getInterToCom().sendMoneyAmount(dManagerClient.getTableLocal().getIdTable(),getUser(),amount);
     }
 
-    //TODO com must implement method
     public void isReady(boolean status) {
-        //dManagerClient.getInterToCom().???
+        dManagerClient.getInterToCom().notifyAnswerAskReadyGame(dManagerClient.getTableLocal().getIdTable(),getUser(),status);
     }
 }

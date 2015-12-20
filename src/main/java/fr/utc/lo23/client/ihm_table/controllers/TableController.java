@@ -195,8 +195,8 @@ public class TableController {
         playerControllerMap.remove(user);
         if (showLog) addLogEntry(user.getPseudo() + " a quitté la partie.");
         controllersList.set(controllersList.indexOf(playerController), null);
-        if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
-            btnLaunchGame.setVisible(false);
+        //TODO if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
+            //TODO btnLaunchGame.setVisible(false);
         //Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
         if(betMoneyControllerMap.get(user)!=null)
             betMoneyControllerMap.get(user).hideBetMoneyBox();
@@ -317,7 +317,7 @@ public class TableController {
      */
     @FXML
     private void launchGame(javafx.event.ActionEvent event){
-        btnLaunchGame.setVisible(false);
+        //TODO btnLaunchGame.setVisible(false);
         ihmTable.getDataInterface().playGame(table.getIdTable());
     }
 
@@ -723,7 +723,7 @@ public class TableController {
      */
     public void showPopupEndGameVote() {
         popupEndGameVote.setVisible(true);
-        btnLaunchGame.setVisible(false);
+        //TODO btnLaunchGame.setVisible(false);
     }
 
     /**

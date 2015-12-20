@@ -102,4 +102,11 @@ public interface InterfaceServer {
      */
     public void askIfReady(ArrayList<UserLight> aPlayers);
 
+    /**
+     * Demander à un joueur quelle sera son action
+     * @param Action a
+     * @param EnumerationAction enAct
+     */
+    public void askActionToPLayer(Action a, EnumerationAction[] enAct);
+
 }

@@ -70,11 +70,10 @@ public interface InterfaceClient {
     public void sendHeartbeat() throws NetworkFailureException;
     
     /**
-     *
-     * @param act
-     * @param userLocal
+     * Envoie l'action d'un joueur au serveur
+     * @param Action act
      */
-    public void sendAction(Action act,UserLight userLocal) throws NetworkFailureException, IncorrectActionException;
+    public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException;
     
     /**
      *

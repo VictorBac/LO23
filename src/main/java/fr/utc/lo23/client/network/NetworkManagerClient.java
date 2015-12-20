@@ -132,8 +132,8 @@ public class NetworkManagerClient implements InterfaceClient  {
         serverLink.send(message);
     }
 
-    public void sendAction(Action act, UserLight userLocal) throws NetworkFailureException, IncorrectActionException {
-        SendActionMessage actMsg = new SendActionMessage(act,userLocal);
+    public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException {
+        SendActionMessage actMsg = new SendActionMessage(act);
         serverLink.send(actMsg);
     }
 

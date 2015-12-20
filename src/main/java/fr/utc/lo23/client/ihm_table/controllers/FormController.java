@@ -96,7 +96,8 @@ public class FormController {
     /**
      * Vérifie la validité des données rentrées par l'utilisateur :
      * Le nom du formulaire doit commencer par une lettre, il peut contenir des lettres, des chiffres et des espaces
-     * La mise doit être non nulle et un nombre positif
+     * L'argent de départ max doit être non nul et un nombre positif
+     * L'ante doit être non nul et un nombre positif
      * Le temps doit être non nul et un nombre positif
      * @param event
      */

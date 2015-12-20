@@ -39,6 +39,8 @@ public class TableController {
     private Action actionToFill;
     private String turnStatus = null; // null,warmup,flop,turn,river
     private Integer potMoneyInt;
+    private ArrayList<Seat> refSeats = new ArrayList<Seat>();
+    private Integer lastRaise;
 
     private boolean isHost = true;
 
@@ -59,56 +61,28 @@ public class TableController {
         this.table = table;
         playerInitializer();
         chatInitializer();
-        //betMoneyBoxInitializer();
-
-        // Commenter ce qu'il y a dessous pour virer les tests
-        try {
-            Card card = new Card(5,EnumerationCard.CLUB);
-            ArrayList<Card> cards = new ArrayList<Card>();
-            cards.add(card);
-            cards.add(card);
-
-            PlayerHand player = new PlayerHand();
-            player.setPlayer(controllersList.get(0).getUserLight());
-
-            player.setListCardsHand(cards);
-            ArrayList<PlayerHand> players = new ArrayList<PlayerHand>();
-            players.add(player);
-
-            showCommonCards();
-            cards.add(card);
-            setFlopCards(cards);
-            //setTurnCard(card);
-            //setRiverCard(card);
-
-            setPlayerCards(players);
-
-            Action action = new Action();
-            action.setUserLightOfPlayer(controllersList.get(0).getUserLight());
-
-            EnumerationAction[] enumac = {EnumerationAction.ALLIN};
-
-            ihmTable.getTableToDataListener().askAction(action,enumac );
-
-
-        } catch (CardFormatInvalidException e) {
-            e.printStackTrace();
-        }
     }
 
-    @FXML
-    private Slider actionBetMoneySelector;
-    @FXML
-    private Label betLabel;
 
     public TableController(){
         playerControllerMap = new HashMap<UserLight,PlayerController>();
         betMoneyControllerMap = new HashMap<UserLight,BetMoneyController>();
         defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
+
+        lastRaise = 0;
     }
 
+    /**
+     * Called when fxml has finished loading
+     */
     public void initialize(){
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
+        buttonValiderMontant.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                onBetValidate();
+            }
+        });
         actionBetMoneySelector.valueProperty().addListener(new ChangeListener<Number>() {
 
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
@@ -123,10 +97,11 @@ public class TableController {
         hideActionBox();
         disableAllActions();
         addLogEntry("Vous avez rejoint la salle.");
-
-
     }
 
+    /**
+     * Initialize every player on the table when created (shown on GUI)
+     */
     public void playerInitializer(){
 
         //Initialisation de la liste des sièges
@@ -142,6 +117,11 @@ public class TableController {
         }
     }
 
+    /**
+     * Add a player to the game
+     * Easier to use than the one under
+     * @param user
+     */
     public void addPlayer(UserLight user) {
         addPlayer(getFirstAvailableSeat(), user, true);
     }
@@ -269,6 +249,12 @@ public class TableController {
     @FXML
     private TextField popupAmountInput;
 
+    @FXML
+    private Slider actionBetMoneySelector;
+    @FXML
+    private Label betLabel;
+    @FXML
+    private Button buttonValiderMontant;
 
     @FXML
     private TitledPane popupLeave;
@@ -333,6 +319,14 @@ public class TableController {
     private void launchGame(javafx.event.ActionEvent event){
         btnLaunchGame.setVisible(false);
         ihmTable.getDataInterface().playGame(table.getIdTable());
+    }
+
+    /**
+     * Setter for last raise
+     * @param lastRaise
+     */
+    public void setLastRaise(Integer lastRaise) {
+        this.lastRaise = lastRaise;
     }
 
     /**
@@ -425,10 +419,14 @@ public class TableController {
         actionBet.getStyleClass().remove("action_bet_off");
         actionBet.getStyleClass().add("active");
         actionBet.getStyleClass().add("action_bet_on");
-        actionBetMoneySelector.setMin(0);   //TODO : get last raise
-        actionBetMoneySelector.setMax(150); //TODO: get allin value (self.money)
-        //ihmTable.getDataInterface().getUser().getMoney ?
+    }
+
+    public void enableActionBetSubMenu() {
+        actionBetMoneySelector.setMin(Math.min(lastRaise, getPlayerMoney()));
+        actionBetMoneySelector.setMax(getPlayerMoney());
         actionBetMoneySelector.setVisible(true);
+        buttonValiderMontant.setVisible(true);
+        betLabel.setVisible(true);
     }
 
     /**
@@ -438,7 +436,13 @@ public class TableController {
         actionBet.getStyleClass().remove("action_bet_on");
         actionBet.getStyleClass().remove("active");
         actionBet.getStyleClass().add("action_bet_off");
+        disableActionBetSubMenu();
+    }
+
+    public void disableActionBetSubMenu() {
         actionBetMoneySelector.setVisible(false);
+        buttonValiderMontant.setVisible(false);
+        betLabel.setVisible(false);
     }
 
     /**
@@ -492,7 +496,6 @@ public class TableController {
             actionToFill.setName(EnumerationAction.FOLD);
             ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("DODO");
-
         }
     }
 
@@ -506,7 +509,6 @@ public class TableController {
             actionToFill.setName(EnumerationAction.CHECK);
             ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("CHECK");
-
         }
     }
 
@@ -518,11 +520,15 @@ public class TableController {
     public void call(javafx.event.ActionEvent event) {
         if (actionCall.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.CALL);
-            //TODO : store previous max bet
-            //ihmTable.getDataInterface().replyAction(actionToFill);
+            actionToFill.setAmount(Math.min(lastRaise, getPlayerMoney()));
+            ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("APPEL");
 
         }
+    }
+
+    public int getPlayerMoney() {
+        return getPlayerControllerOf(ihmTable.getDataInterface().getUser()).getCurrentMoney();
     }
 
     /**
@@ -533,6 +539,7 @@ public class TableController {
     public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.ALLIN);
+            actionToFill.setAmount(getPlayerMoney());
             ihmTable.getDataInterface().replyAction(actionToFill);
             System.out.println("ALLIN");
 
@@ -546,19 +553,19 @@ public class TableController {
     @FXML
     public void bet(javafx.event.ActionEvent event) {
         if(actionBet.getStyleClass().contains("active")) {
-            //TODO: afficher slider puis recliquer pour envoyer
+            enableActionBetSubMenu(); //Affiche le slider
             actionToFill.setName(EnumerationAction.BET);
-            //TODO: envoyer à data
-            //actionToFill.setAmount((int) actionBetMoneySelector.getValue());
         }
     }
 
     /**
-     * Add log in log view
-     * @param msg
+     * Called when click on "Valider montant" button
      */
-    public void addLogEntry(String msg){
-        logView.getItems().add(msg);
+    public void onBetValidate() {
+        //This can only be called when clicked on button activate
+        actionToFill.setAmount((int)actionBetMoneySelector.getValue());
+        ihmTable.getDataInterface().replyAction(actionToFill);
+        System.out.println("Bet");
     }
 
     /**
@@ -584,7 +591,7 @@ public class TableController {
     }
 
     /*
-     * Should send popAmound value to data (with actionToFill) TODO: Please verify
+     * Should send popAmound value to data (with actionToFill)
      * @param event
      */
     @FXML
@@ -597,6 +604,26 @@ public class TableController {
             return;
         ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));
         hidePopupAmount();
+    }
+
+    public ArrayList<Seat> getRefSeats() {
+        return refSeats;
+    }
+
+    public void setRefSeats(ArrayList<Seat> refSeats) {
+        this.refSeats = refSeats;
+    }
+
+    public void addRefSeats(Seat seat) {
+        this.refSeats.add(seat);
+    }
+
+    /**
+     * Add log in log view
+     * @param msg
+     */
+    public void addLogEntry(String msg){
+        logView.getItems().add(msg);
     }
 
     public void showPopupReady(){
@@ -632,7 +659,9 @@ public class TableController {
      * @param event
      */
     @FXML
-    public void showPopupLeave(javafx.event.ActionEvent event) { popupLeave.setVisible(true);}
+    public void showPopupLeave(javafx.event.ActionEvent event) {
+        popupLeave.setVisible(true);
+    }
 
     /**
      * Accept leaving
@@ -662,12 +691,12 @@ public class TableController {
      */
     public void notifyPlayerVoteEndGameAnswer(UserLight player,boolean accept) {
         if(accept) {
-            if(player==ihmTable.getDataInterface().getUser())
+            if(player.equals(ihmTable.getDataInterface().getUser()))
                 addLogEntry("Vous avez accepté de mettre fin au jeu.");
             else
                 addLogEntry(player.getPseudo() + " a accepté de mettre fin au jeu.");
         } else {
-            if(player==ihmTable.getDataInterface().getUser())
+            if(player.equals(ihmTable.getDataInterface().getUser()))
                 addLogEntry("Vous avez refusé de mettre fin au jeu.");
             else
                 addLogEntry(player.getPseudo() + " a refusé de mettre fin au jeu.");
@@ -742,16 +771,11 @@ public class TableController {
      * Reset views associated to cards (on table)
      */
     public void resetCommonCards(){
-        commonCardFlop1.setImage(null);
-        commonCardFlop1.setVisible(false);
-        commonCardFlop2.setImage(null);
-        commonCardFlop2.setVisible(false);
-        commonCardFlop3.setImage(null);
-        commonCardFlop3.setVisible(false);
-        commonCardTurn.setImage(null);
-        commonCardTurn.setVisible(false);
-        commonCardRiver.setImage(null);
-        commonCardRiver.setVisible(false);
+        setCommonCardDropAnimation(commonCardFlop1,1);
+        setCommonCardDropAnimation(commonCardFlop2,50);
+        setCommonCardDropAnimation(commonCardFlop3,100);
+        setCommonCardDropAnimation(commonCardTurn,150);
+        setCommonCardDropAnimation(commonCardRiver,200);
     }
 
     /**
@@ -819,7 +843,7 @@ public class TableController {
                     img1.setY(playerController.getNode().getLayoutY() + 30);
                     tablePane.getChildren().add(img1);
                     playerController.setCard1(img1);
-                    if(playerController.getUserLight()==playerHands.get(0).getPlayer())
+                    if(playerController.getUserLight().equals(playerHands.get(0).getPlayer()))
                     {
                         setPlayerCardAnimation(img1,getImageFromCard(playerHands.get(0).getListCardsHand().get(0)),wait);
                     }
@@ -842,7 +866,7 @@ public class TableController {
                     img2.setY(playerController.getNode().getLayoutY() + 30);
                     tablePane.getChildren().add(img2);
                     playerController.setCard2(img2);
-                    if(playerController.getUserLight()==playerHands.get(0).getPlayer())
+                    if(playerController.getUserLight().equals(playerHands.get(0).getPlayer()))
                     {
                         setPlayerCardAnimation(img2,getImageFromCard(playerHands.get(0).getListCardsHand().get(1)),wait);
                     }
@@ -998,6 +1022,41 @@ public class TableController {
     }
 
     /**
+     * Animation of cards on the table
+     * @param img
+     * @param waitTime
+     */
+    public void setCommonCardDropAnimation(final ImageView img, Integer waitTime){
+        img.setImage(getBackCardImage());
+        double svgX = img.getX();
+        final Timeline timeline2 = new Timeline();
+        timeline2.setCycleCount(1);
+        timeline2.setAutoReverse(false);
+        KeyValue kv2 = new KeyValue(img.xProperty(),commonCardBack.getX() );
+        EventHandler onFinished2 = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                img.setVisible(false);
+                img.setImage(null);
+                img.setX(svgX);
+            }
+        };
+        KeyFrame kf2 = new KeyFrame(Duration.millis(200), onFinished2, kv2);
+        timeline2.getKeyFrames().add(kf2);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                timeline2.play();
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(waitTime), onFinished);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+    }
+
+    /**
      * Cards in flop
      * @param cards
      */
@@ -1011,7 +1070,7 @@ public class TableController {
      * Turn card show
      * @param card
      */
-    public void setTurnCard(Card card){
+    public void setTurnCard(Card card) {
         setCommonCardAnimation(commonCardTurn, getImageFromCard(card));
     }
 
@@ -1019,9 +1078,8 @@ public class TableController {
      * River card show
      * @param card
      */
-    public void setRiverCard(Card card){
+    public void setRiverCard(Card card) {
         setCommonCardAnimation(commonCardRiver, getImageFromCard(card));
-
     }
 
     /**
@@ -1092,7 +1150,39 @@ public class TableController {
         addLogEntry("ERREUR LANCEMENT PARTIE: IL N'Y A PAS ASSEZ DE JOUEURS DANS LA TABLE.");
     }
 
-    public void notifySuccessStartGame(){
+    public void notifySuccessStartGame() {
         addLogEntry("La partie va se lancer d'ici quelques instants.");
+    }
+
+
+    public void beginHand(){
+        addLogEntry("Nouvelle manche.");
+    }
+
+    public void beginTurn(){
+        addLogEntry("Nouveau tour.");
+    }
+
+    public void endTurn(Integer pot){
+        addLogEntry("Fin du tour, il y a "+String.valueOf(Integer.parseInt(potMoney.getText()) + pot)+" dans le pot.");
+        potMoney.setText(String.valueOf(Integer.parseInt(potMoney.getText())+pot));
+    }
+
+    public void endHand(ArrayList<Seat> seatPlayers){
+        for(Seat seat : seatPlayers)
+        {
+            if(playerControllerMap.get(seat.getPlayer()).getCurrentMoney()<seat.getCurrentAccount())
+            {
+                addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()+playerControllerMap.get(seat.getPlayer()).getCurrentMoney())+" € cette manche !");
+                //TODO: ajouter animation
+            }
+            playerControllerMap.get(seat.getPlayer()).updateMoney(seat.getCurrentAccount());
+        }
+        setRefSeats(seatPlayers);
+    }
+
+    public void notifyEndGame(UserLight winner){
+        addLogEntry("Le grand vainqueur de la partie est "+winner.getPseudo()+".");
+        //TODO: remettre l'interface graphique en mode attente de joueurs
     }
 }

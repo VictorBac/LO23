@@ -35,6 +35,12 @@ public class PlayerController{
 
     private UserLight userLight;
 
+    private Integer currentMoney;
+
+    public Integer getCurrentMoney() {
+        return currentMoney;
+    }
+
     public UserLight getUserLight() {
         return userLight;
     }
@@ -105,6 +111,7 @@ public class PlayerController{
             playerMoneyLabel.setText("?????");
         else
             playerMoneyLabel.setText(money.toString()+" $");
+        this.currentMoney = money;
     }
 
     public void setNameAndAvatar(UserLight user,Image defaultImage){

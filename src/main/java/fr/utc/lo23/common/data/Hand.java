@@ -353,7 +353,6 @@ public class Hand implements Serializable{
         for (Map.Entry<UserLight, Integer> entry : effectiveWinningMoney.entrySet()) {
             getCurrentGame().getSeatOfUser(entry.getKey()).addCurrentMoney(entry.getValue());
         }
-
     }
 
 

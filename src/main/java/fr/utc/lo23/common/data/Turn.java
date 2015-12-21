@@ -188,6 +188,7 @@ public class Turn implements Serializable {
     }
 
     public ArrayList<Action> askFirstAction(){
+        //TODO: Gestion de l'ante (qui va se révéler relou, à bien réfléchir)
         ArrayList<Action> arrayAc = new ArrayList<Action>();
         if(getCurrentHand().getListTurn().size()==0)
         {

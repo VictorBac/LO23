@@ -195,16 +195,24 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             {
                 //S'il est finit, résoudre ce tour
                 turn.resolve();
+
                 //Prévenir les utilisateurs
                 myManager.getInterfaceToCom().endTurn(table.getListPlayers().getListUserLights(),turn.getTurnPot());
+
                 // puis vérifier si la manche est finie
                 if(hand.isFinished())
                 {
                     //Si elle est finit résoudre la manche
                     hand.resolve();
+
+                    //Notifier les clients
+                    myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), game.getListSeatPlayerWithPeculeDepart());
+
                     //puis vérifier si la game est finie
-                    if(false)
+                    if(game.isFinished())
                     {
+                        System.out.println("La partie est finie !");
+
                         //Si la game est finie, résoudre la game
 
                         //Puis clore la game
@@ -212,33 +220,22 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     }
                     else
                     {
-                        //sinon créer une nouvelle manche et faire ce qui doit etre fait
+                        //sinon créer une nouvelle manche
+                        hand = new Hand(game);
+                        game.getListHand().add(hand);
+
+                        //et relancer l'algorithme
+                        playGame(table);
                     }
                 }
                 else
                 {
-                    //sinon créer un nouveau tour et appeler la première action
+                    //sinon créer un nouveau tour
                     turn = new Turn(hand);
                     hand.getListTurn().add(turn);
-                    // -------------------------------------------------------------
-                    // CE CODE EST UN COPIER COLLER D'AU DESSUS, IL FAUDRA OPTIMISER
-                    ArrayList<Action> arrayAc = turn.askFirstAction();
-                    if(arrayAc.size()==1)
-                    {
-                        myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(0),(EnumerationAction[])turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).toArray());
-                    }
-                    else
-                    {
-                        //Elle doit etre égale à 3 alors, donc les deux blindes plus l'action à demander
-                        try {
-                            myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(0));
-                            myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(1));
-                        } catch (NetworkFailureException e) {
-                            e.printStackTrace();
-                        }
-                        myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(2),(EnumerationAction[])turn.availableActions(arrayAc.get(2).getUserLightOfPlayer()).toArray());
-                    }
-                    // -------------------------------------------------------------
+
+                    //et relancer l'algorithme
+                    playGame(table);
                 }
             }
             else

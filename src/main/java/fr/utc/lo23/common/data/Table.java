@@ -176,7 +176,8 @@ public class Table implements Serializable {
     public void addNewGameToList(Game game) throws TableException {
         for(int i=0; i <listGames.size(); i++){
             //if a game in the list is already started, impossible to start a new game
-            if(listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Playing) || listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Finished)){                throw new TableException("Impossible to start a new game");
+            if(listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Playing) || listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Finished)){
+                throw new TableException("Impossible to start a new game");
             }
         }
         this.listGames.add(game);

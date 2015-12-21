@@ -215,6 +215,14 @@ public class Game implements Serializable{
         return finished;
     }
 
+    public Seat getSeatOfUser(UserLight user){
+        for(Seat seat : getListSeatPlayerWithPeculeDepart()){
+            if(seat.getPlayer().equals(user))
+                return seat;
+        }
+        return null;
+    }
+
 
 ///////////////////////GETTER and SETTER
     /**

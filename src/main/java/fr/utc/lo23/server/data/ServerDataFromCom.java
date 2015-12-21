@@ -4,6 +4,7 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.*;
 import fr.utc.lo23.common.data.exceptions.UserNotFoundException;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -156,7 +157,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             hand = game.getCurrentHand();
         }
 
-
         if(hand.getListTurn().size()==0)
         {
             //On se situe au début d'un tour
@@ -171,7 +171,22 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         if(turn.getListAction().size()==0)
         {
             //Faire les actions de base
-
+            ArrayList<Action> arrayAc = turn.askFirstAction();
+            if(arrayAc.size()==1)
+            {
+                myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(0),(EnumerationAction[])turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).toArray());
+            }
+            else
+            {
+                //Elle doit etre égale à 3 alors, donc les deux blindes plus l'action à demander
+                try {
+                    myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(0));
+                    myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(1));
+                } catch (NetworkFailureException e) {
+                    e.printStackTrace();
+                }
+                myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(2),(EnumerationAction[])turn.availableActions(arrayAc.get(2).getUserLightOfPlayer()).toArray());
+            }
         }
         else
         {
@@ -179,13 +194,14 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             if(turn.isFinished())
             {
                 //S'il est finit, résoudre ce tour
-
-
+                turn.resolve();
+                //Prévenir les utilisateurs
+                myManager.getInterfaceToCom().endTurn(table.getListPlayers().getListUserLights(),turn.getTurnPot());
                 // puis vérifier si la manche est finie
-                if(false)
+                if(hand.isFinished())
                 {
                     //Si elle est finit résoudre la manche
-
+                    hand.resolve();
                     //puis vérifier si la game est finie
                     if(false)
                     {
@@ -202,6 +218,27 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 else
                 {
                     //sinon créer un nouveau tour et appeler la première action
+                    turn = new Turn(hand);
+                    hand.getListTurn().add(turn);
+                    // -------------------------------------------------------------
+                    // CE CODE EST UN COPIER COLLER D'AU DESSUS, IL FAUDRA OPTIMISER
+                    ArrayList<Action> arrayAc = turn.askFirstAction();
+                    if(arrayAc.size()==1)
+                    {
+                        myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(0),(EnumerationAction[])turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).toArray());
+                    }
+                    else
+                    {
+                        //Elle doit etre égale à 3 alors, donc les deux blindes plus l'action à demander
+                        try {
+                            myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(0));
+                            myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(1));
+                        } catch (NetworkFailureException e) {
+                            e.printStackTrace();
+                        }
+                        myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(2),(EnumerationAction[])turn.availableActions(arrayAc.get(2).getUserLightOfPlayer()).toArray());
+                    }
+                    // -------------------------------------------------------------
                 }
             }
             else
@@ -209,40 +246,19 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 //appeler les actions du joueur prochain
                 askAction(turn.getNextActiveUser(),(EnumerationAction[])turn.availableActions(turn.getNextActiveUser()).toArray());
             }
-
         }
-
-
-
-
-    /*
-
-    Je démarre une manche.
-
+    /*   Je démarre une manche.
     Je demande les ante à tous les joueurs si elles sont definies
     Je commence par mettre l'icone Dealer au premier joueur, et demander les blindes au joueur 2 puis au joueur 3
-
     Je demande aux joueurs dans l'ordre de réaliser des actions, tant que tous n'ont pas joué au moins une fois, et tant qu'il reste un joueur qui ne soit pas couché ou qui n'ait pas la même somme que les autres.
     La relance a une mise minimum, elle est du minimum de la dernière relance
-
     Le tour est finit, je notifie les clients avec les valeurs du pot, j'envoi le flop, puis je lance un nouveau tour
-
     nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi le turn, puis je lance un nouveau
-
     nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi la river, puis je lance un nouveau tour
-
     nouveau tour finit, je résoud les cartes, définit les vainqueurs, puis informe tout le monde.
-
     J'informe que je finis la manche.
-
     S'il ne reste plus qu'un seul joueur avec de l'argent, je termine la game. sinon je décale le premier joueur et je relance une manche.
-
-
-    En cas de vote pour demander la fin de la partie, cette fonction n'est pas appelée, sauf s'il y a un vote négatif lorsque tous les votes ont été faits.
-
-
-     */
-
+    En cas de vote pour demander la fin de la partie, cette fonction n'est pas appelée, sauf s'il y a un vote négatif lorsque tous les votes ont été faits.    */
     }
 
     public void nextStepReplay() {
@@ -275,12 +291,19 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
     }
 
-    public Action replyAction(Action playedAction, UserLight player) {
-        return null;
+    public void replyAction(UUID table, Action playedAction) {
+        try {
+            myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn().addAction(playedAction);
+            playGame(myManager.getTables().getTable(table));
+        }
+        catch(ActionInvalidException a) {
+            Turn turn = myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn();
+            askAction(turn.getNextActiveUser(), (EnumerationAction[]) turn.availableActions(turn.getNextActiveUser()).toArray());
+        }
     }
 
     public void confirmationActionReceived(UserLight sender) {
-
+        // ??? C'est inutile ce truc
     }
 
     public void endTurnConfirmation(UserLight player) {
@@ -464,7 +487,8 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public void askAction(UserLight player, EnumerationAction[] availableActions) {
         Action emptyAction = new Action();
         emptyAction.setUserLightOfPlayer(player);
-
+        //TODO: insérer un action time dedans ?
+        myManager.getInterfaceToCom().askActionToPLayer(emptyAction,availableActions);
     }
 
     /**

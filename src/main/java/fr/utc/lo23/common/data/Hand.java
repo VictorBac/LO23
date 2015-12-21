@@ -3,13 +3,12 @@ package fr.utc.lo23.common.data;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
 import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
+import fr.utc.lo23.server.data.CombinationCalculator;
 
 import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Mar on 20/10/2015.
@@ -222,7 +221,140 @@ public class Hand implements Serializable{
         return true;
     }
 
-    
+    public void addInPot(Integer potAdd){
+        pot += potAdd;
+    }
+
+    public ArrayList<UserLight> getListActiveUsers(){
+        ArrayList<UserLight> users = new ArrayList<UserLight>();
+        for(PlayerHand player : getListPlayerHand())
+        {
+            if(player.isActive())
+                users.add(player.getPlayer());
+        }
+        return users;
+    }
+
+    public Boolean isFinished(){
+        //Si on a déjà joué les 4 tours, ou si tout le monde est couché ou à tapis alors c'est finit, sinon ça ne l'est pas
+        if(getListTurn().size()==4 || getListActiveUsers().size()==0)
+            return true;
+        else
+            return false;
+    }
+
+    public Integer getTotalAmountForAUser(UserLight user){
+        Integer rs = 0;
+        for(Turn turn: getListTurn())
+        {
+            rs += turn.getTotalAmountForAUser(user);
+        }
+        return rs;
+    }
+
+    public void resolve(){
+        HashMap<UserLight,Integer> playerMoneyBet = new HashMap<>();
+        HashMap<UserLight,Integer> effectiveWinningMoney = new HashMap<>();
+        ArrayList<PlayerHand> calculatedPlayerHandList = new ArrayList<>();
+        for(PlayerHand player : getListPlayerHand())
+        {
+            if(!player.isFold()) {
+                playerMoneyBet.put(player.getPlayer(), getTotalAmountForAUser(player.getPlayer()));
+                calculatedPlayerHandList.add(player);
+            }
+        }
+
+        CombinationCalculator cc = new CombinationCalculator();
+
+        //On effectue cet algorithme tant qu'il y a de l'argent à répartir
+        while(playerMoneyBet.size()!=0) {
+            ArrayList<PlayerHand> winners = cc.getWinner(calculatedPlayerHandList, listCardField);
+
+            //S'il y a des ex-aequo, on fait l'algo bien compliqué dessous, sinon on en fait un plus simple
+            if (winners.size() > 1) {
+                //on définit quelques stuctures de données nécessaires aux calcules préliminairs et au tri par ordre croissant
+                HashMap<UserLight,Integer> maxWinningMoney = new HashMap<>();
+                HashMap<Integer,UserLight> revertMaxWinningMoney = new HashMap<>();
+
+                //Pour tous les ex-aequo, on calcule la somme max que chacun peut gagner
+                for (PlayerHand player : winners) {
+                    Integer maxWin = 0;
+                    for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
+                        if (entry.getValue() <= playerMoneyBet.get(player)) {
+                            maxWin += entry.getValue();
+                        } else {
+                            maxWin += playerMoneyBet.get(player);
+                        }
+                    }
+                    maxWinningMoney.put(player.getPlayer(), maxWin);
+                    revertMaxWinningMoney.put(maxWin, player.getPlayer());
+                }
+
+                //On trie dans l'ordre chaque gagnant
+                List<Integer> sortInteger = new ArrayList<Integer>(maxWinningMoney.values());
+                Collections.sort(sortInteger);
+                HashMap<UserLight, Integer> utilMap = new HashMap<>();
+                for (Integer i : sortInteger) {
+                    utilMap.put(revertMaxWinningMoney.get(i), i);
+                }
+
+                //On va donner au plus petit sa valeur de gain, puis aux suivants, ... en retirant cet argent de chaque joueur.
+                for (Map.Entry<UserLight, Integer> entry : utilMap.entrySet()) {
+                    for (Map.Entry<UserLight, Integer> entry2 : utilMap.entrySet()) {
+                        //On assigne ou ajoute la valeur gagnée par le joueur
+                        if (effectiveWinningMoney.containsKey(entry2.getKey()))
+                            effectiveWinningMoney.replace(entry2.getKey(), entry.getValue() / utilMap.size() + effectiveWinningMoney.get(entry2.getKey()));
+                        else
+                            effectiveWinningMoney.put(entry2.getKey(), entry.getValue() / utilMap.size());
+                        //On retire cet argent de tous les parieurs
+                        for (Map.Entry<UserLight, Integer> entry3 : playerMoneyBet.entrySet()) {
+                            playerMoneyBet.replace(entry3.getKey(), playerMoneyBet.get(entry3.getKey()) - entry.getValue() / utilMap.size());
+                        }
+                    }
+                    utilMap.remove(entry.getKey());
+                }
+
+                //On retire désormais de la liste des joueurs ayant pariés ceux qui n'ont plus d'argent parié
+                for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
+                    if (entry.getValue() <= 0)
+                        playerMoneyBet.remove(entry.getKey());
+                }
+            } else {
+                //On calcule l'argent max gagnable
+                UserLight player = winners.get(0).getPlayer();
+                Integer maxWin = 0;
+                for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
+                    if (entry.getValue() <= playerMoneyBet.get(player)) {
+                        maxWin += entry.getValue();
+                    } else {
+                        maxWin += playerMoneyBet.get(player);
+                    }
+                }
+
+                //On se donne cet argent
+                effectiveWinningMoney.put(player, maxWin);
+
+                //On retire désormais l'argent des joueurs ayant pariés, et on retire de la liste des joueurs ceux qui n'ont plus d'argent parié
+                for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
+                    playerMoneyBet.replace(entry.getKey(), playerMoneyBet.get(entry.getKey()) - maxWin);
+                    if (entry.getValue() <= 0)
+                        playerMoneyBet.remove(entry.getKey());
+                }
+            }
+
+            //On supprime les vainqueurs de l'ArrayList<PlayerHand>
+            for(PlayerHand player : winners)
+            {
+                calculatedPlayerHandList.remove(player);
+            }
+        }
+
+        //On assigne les argents finalement gagnés aux Seat
+        for (Map.Entry<UserLight, Integer> entry : effectiveWinningMoney.entrySet()) {
+            getCurrentGame().getSeatOfUser(entry.getKey()).addCurrentMoney(entry.getValue());
+        }
+
+    }
 
 
 ////GETTER And SETTER

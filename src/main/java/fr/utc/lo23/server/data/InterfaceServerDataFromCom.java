@@ -72,7 +72,7 @@ public interface InterfaceServerDataFromCom {
 
     void confirmationCardReceived(UserLight player);
 
-    Action replyAction(Action playedAction, UserLight player);
+    void replyAction(UUID table, Action playedAction);
 
     void confirmationActionReceived(UserLight sender);
 

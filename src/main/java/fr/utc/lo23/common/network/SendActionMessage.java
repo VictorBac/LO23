@@ -19,7 +19,8 @@ public class SendActionMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act, act.getUserLightOfPlayer());
+        //TODO: changer avec UUID ---  tablethreadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act, act.getUserLightOfPlayer());
+
     }
 
     @Override

@@ -87,21 +87,61 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
 
-    public void transmitLeaveGame(UUID idTable, UserLight userLightDistant, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
+    public void transmitLeaveGame(UUID idTable, UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
 //TODO handle when Userlight ==localUser and idTable==idTableLocal and player or spectator
         Console.log(TAG +"transmitLeaveGame()");
+        //if it corresponds to the local user
+       /* if(dManagerClient.getUserLocal().equals(userLightLeavingGame)){
+
+            if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
+                try {
+                    dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightLeavingGame);
+                    dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
+                } catch (TableException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
+                try {
+                    dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightLeavingGame);
+                    dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
+                } catch (TableException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        else{ //if it corresponds to a remote User
+            if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
+                try {
+                    dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightLeavingGame);
+                    dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
+                } catch (TableException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
+                try {
+                    dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightLeavingGame);
+                    dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
+                } catch (TableException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }*/
         if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
             try {
-                dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightDistant);
-                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightDistant,typeOfUserWhoLeftTable);
+                dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightLeavingGame);
+                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
             } catch (TableException e) {
                 e.printStackTrace();
             }
         }
         else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
             try {
-                dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightDistant);
-                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightDistant,typeOfUserWhoLeftTable);
+                dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightLeavingGame);
+                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
             } catch (TableException e) {
                 e.printStackTrace();
             }
@@ -112,6 +152,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         Console.log(TAG +"tableJoinAccepted()");
         try {
             dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
+            Console.log(TAG+"id Table local"+dManagerClient.getTableLocal().getIdTable());
             dManagerClient.getInterToIHMMain().tableJoinAccepted(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined), modeUserLocal);
         } catch (TableException e) {
             e.printStackTrace();

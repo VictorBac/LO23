@@ -132,14 +132,9 @@ public class NetworkManagerClient implements InterfaceClient  {
         serverLink.send(message);
     }
 
-    /**
-     * l'action effectuée par le joueur est envoyée sur le serveur
-     * @param act
-     * @throws NetworkFailureException
-     * @throws IncorrectActionException
-     */
-    public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException {
-        SendActionMessage actMsg = new SendActionMessage(act);
+
+    public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException {
+        SendActionMessage actMsg = new SendActionMessage(act, IdTable);
         serverLink.send(actMsg);
     }
 

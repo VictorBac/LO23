@@ -24,7 +24,7 @@ public class LeaveTableMessage extends Message {
     public void process(ConnectionThread threadServer) {
         PokerServer myServ = threadServer.getMyServer();
         NotifyPlayerLeftTableMessage message = new NotifyPlayerLeftTableMessage(user,tab);
-        myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(tab), message);
+        myServ.sendToAll(message);
     }
 
     @Override

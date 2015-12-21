@@ -132,6 +132,12 @@ public class NetworkManagerClient implements InterfaceClient  {
         serverLink.send(message);
     }
 
+    /**
+     * l'action effectuée par le joueur est envoyée sur le serveur
+     * @param act
+     * @throws NetworkFailureException
+     * @throws IncorrectActionException
+     */
     public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException {
         SendActionMessage actMsg = new SendActionMessage(act);
         serverLink.send(actMsg);
@@ -139,6 +145,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException {
         LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable);
+        serverLink.send(leaveT);
     }
 
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {

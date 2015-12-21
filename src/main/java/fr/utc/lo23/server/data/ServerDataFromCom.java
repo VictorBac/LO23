@@ -100,7 +100,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode) {
         Table toAdd = getTableFromId(idTable);
         try {
-            if(mode == EnumerationTypeOfUser.PLAYER) {
+            if(mode.equals(EnumerationTypeOfUser.PLAYER)) {
                 toAdd.playerJoinTable(player);
             } else {
                 toAdd.spectatorJoinTable(player);
@@ -517,6 +517,8 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //Si cet utilisateur est le dernier à répondre, lancer les demandes de ready
             if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getListPlayers().getListUserLights().size())
             {
+                Console.log(TAG + " : "+ myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
+                Console.log(TAG + " test if interface exist: "+myManager.getInterfaceToCom());
                 myManager.getInterfaceToCom().askIfReady(myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
             }
             return true;

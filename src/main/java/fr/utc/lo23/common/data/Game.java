@@ -183,8 +183,18 @@ public class Game implements Serializable{
     public void setMoneyOfPlayer(UserLight user, int value){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
-            if(user==seat.getPlayer())
+            if(user.equals(seat.getPlayer()))
                 seat.setCurrentAccount(value);
+        }
+    }
+
+    public void intializeMoneyOfPlayer(UserLight user, int value){
+        for(Seat seat: getListSeatPlayerWithPeculeDepart())
+        {
+            if(user.equals(seat.getPlayer())){
+                seat.setCurrentAccount(value);
+                seat.setStartAmount(value);
+            }
         }
     }
 

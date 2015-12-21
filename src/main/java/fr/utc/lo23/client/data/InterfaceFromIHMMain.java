@@ -74,6 +74,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      */
     public void saveNewProfile(User userLocal) {
         String login = userLocal.getLogin();
+        dManagerClient.setUserLocal(userLocal);
         Serialization.serializationObject(userLocal, Serialization.dirLocalSavedFiles + login);
     }
 
@@ -188,6 +189,17 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void importProfileFile(String filePath) {
+        User profile = (User) Serialization.deserializationObject(filePath);
+        saveNewProfile(profile);
+    }
+
+    @Override
+    public void exportProfileFile(String filePath) {
+        Serialization.serializationObject(dManagerClient.getUserLocal(), filePath);
     }
 
 

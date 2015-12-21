@@ -30,6 +30,7 @@ public class SerializationTest {
     }
 
     @Test
-    public void testDeserializationObject() throws Exception {
+    public void testFileMove() throws Exception {
+        Serialization.moveFiles(Serialization.dirLocalSavedFiles + "src", Serialization.dirLocalSavedFiles + "dest");
     }
 }

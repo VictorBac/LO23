@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
  * Created by Jianghan on 01/11/2015.
  */
 public class InterfaceFromIHMMainTest {
-    public InterfaceDataFromIHMMain interfaceDataFromIHMMain;
+    public InterfaceFromIHMMain interfaceDataFromIHMMain = new InterfaceFromIHMMain(new DataManagerClient());
 
 
     @Test
@@ -26,6 +26,6 @@ public class InterfaceFromIHMMainTest {
     @Test
     public void importFilesTest() {
 //        interfaceDataFromIHMMain.importFiles("/Users/mac/Desktop/src/tmp");
-        interfaceDataFromIHMMain.importFiles("./tmp/src/tmp");
+        interfaceDataFromIHMMain.importFiles("./tmp/src");
     }
 }

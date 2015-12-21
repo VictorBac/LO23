@@ -110,6 +110,6 @@ public interface InterfaceServer {
      * @param Action a
      * @param EnumerationAction enAct
      */
-    public void askActionToPLayer(Action a, EnumerationAction[] enAct);
+    public void askActionToPLayer(ArrayList<UserLight> aPlayers, Action a, EnumerationAction[] enAct);
 
 }

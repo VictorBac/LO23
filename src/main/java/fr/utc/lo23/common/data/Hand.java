@@ -22,10 +22,11 @@ public class Hand implements Serializable{
     private ArrayList<Turn> listTurn;
     private ArrayList<Card> listCardField;
     private ArrayList<PlayerHand> listPlayerHand;
-    private ArrayList<UserLight> listPlayerWin;
+    //private ArrayList<UserLight> listPlayerWin; // ? WHAT IS IT FOR ???
     private Timestamp timeStampStartOfTheHand;
-    private UserLight firstPlayer;
-    private ArrayList<Pot> listPotForTheHand;
+    //private UserLight firstPlayer;
+    private Integer pot = 0;
+    private Game currentGame;
 
     private final int NUMBER_OF_CARD_PER_PLAYER_HAND = 2;
     private final int NUMBER_OF_CARD_ON_FIELD = 5;
@@ -40,9 +41,8 @@ public class Hand implements Serializable{
         this.listTurn = new ArrayList<Turn>();
         this.listCardField =  new ArrayList<Card>();
         this.listPlayerHand =  new ArrayList<PlayerHand>();
-        this.listPlayerWin =  new ArrayList<UserLight>();
-        this.firstPlayer =  null;
-        this.listPotForTheHand =  new ArrayList<Pot>();
+        //this.listPlayerWin =  new ArrayList<UserLight>();
+        //this.firstPlayer =  null;
         this.timeStampStartOfTheHand = timeStampStartOfTheHand;
     }
 
@@ -50,21 +50,36 @@ public class Hand implements Serializable{
         this.listTurn = listTurn;
         this.listCardField = listCardField;
         this.listPlayerHand = listPlayerHand;
-        this.listPlayerWin = listPlayerWin;
-        this.firstPlayer = firstPlayer;
-        this.listPotForTheHand = listPotForTheHand;
+        //this.listPlayerWin = listPlayerWin;
+        //this.firstPlayer = firstPlayer;
         this.timeStampStartOfTheHand = timeStampStartOfTheHand;
     }
 
 
-    public Hand(){
+    public Hand(Game game){
+        this.currentGame = game;
         this.listTurn = new ArrayList<Turn>();
         this.listCardField =  new ArrayList<Card>();
         this.listPlayerHand =  new ArrayList<PlayerHand>();
-        this.listPlayerWin =  new ArrayList<UserLight>();
-        this.firstPlayer =  null;
-        this.listPotForTheHand =  new ArrayList<Pot>();
+        for(Seat seat : getCurrentGame().getListSeatPlayerWithPeculeDepart())
+        {
+            if(seat.getStatusPlayer().equals(EnumerationStatusPlayer.CONNECTED) && seat.getCurrentAccount()>0)
+            {
+                listPlayerHand.add(new PlayerHand(seat.getPlayer()));
+            }
+        }
+
+        //Si on est pas au premier round, on met le premier joueur en dernier
+        if(getCurrentGame().getListHand().size()!=0)
+        {
+            getListPlayerHand().add(getListPlayerHand().get(0));
+            getListPlayerHand().remove(0);
+        }
+
+        //this.listPlayerWin =  new ArrayList<UserLight>();
         this.timeStampStartOfTheHand = new Timestamp(Calendar.getInstance().getTime().getTime());
+
+        distributeCard();
     }
 
     /**
@@ -187,19 +202,24 @@ public class Hand implements Serializable{
      * @return the PlayerHand from the UserLight given in parameter
      */
     public PlayerHand getPlayer(UserLight userLightFromPlayer){
-        PlayerHand playerFound = null;
         for(PlayerHand p :this.listPlayerHand){
             if(p.getPlayer().equals(userLightFromPlayer)){
-                playerFound = p;
-                break;
+                return p;
             }
         }
-        return playerFound;
+        return null;
     }
 
-    public void addNewPot(){
-        Pot newPot = new Pot();
-        listPotForTheHand.add(newPot);
+    public Boolean isTurnFinished(){
+        Turn turn = this.getCurrentTurn();
+        for(Action action : turn.getListAction())
+        {
+            //this.get
+        }
+
+
+
+        return true;
     }
 
     
@@ -229,7 +249,7 @@ public class Hand implements Serializable{
      * Getter that return the list of the play who have win on the Hand
      * @return a list of UserLight which can be used to distribute the amount of point won
      */
-    public ArrayList<UserLight> getListPlayerWin() {return listPlayerWin;}
+    //public ArrayList<UserLight> getListPlayerWin() {return listPlayerWin;}
 
     /**
      * Getter that return the Time when the Hand starts
@@ -241,15 +261,9 @@ public class Hand implements Serializable{
      * Getter that return the UserLight of the First player of the Hand
      * @return a UserLight
      */
-    public UserLight getFirstPlayer() {return firstPlayer;}
+    //public UserLight getFirstPlayer() {return firstPlayer;}
 
-    /**
-     * Getter that return the list of Pot for the Hand, there can be multiple Por for one Hand and for each Pot some players associated
-     * @return an ArrayList of Pot
-     */
-    public ArrayList<Pot> getListPotForTheHand() {return listPotForTheHand;}
-
-    public void setFirstPlayer(UserLight firstPlayer) {this.firstPlayer = firstPlayer;}
+    //public void setFirstPlayer(UserLight firstPlayer) {this.firstPlayer = firstPlayer;}
 
 
     public void setListTurn(ArrayList<Turn> listTurn) {
@@ -264,11 +278,23 @@ public class Hand implements Serializable{
         this.listPlayerHand = listPlayerHand;
     }
 
-    public void setListPlayerWin(ArrayList<UserLight> listPlayerWin) {
+    /*public void setListPlayerWin(ArrayList<UserLight> listPlayerWin) {
         this.listPlayerWin = listPlayerWin;
+    }*/
+
+    public Integer getPot() {
+        return pot;
     }
 
-    public void setListPotForTheHand(ArrayList<Pot> listPotForTheHand) {
-        this.listPotForTheHand = listPotForTheHand;
+    public void setPot(Integer pot) {
+        this.pot = pot;
+    }
+
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
     }
 }

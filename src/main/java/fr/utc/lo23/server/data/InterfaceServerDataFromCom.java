@@ -105,7 +105,7 @@ public interface InterfaceServerDataFromCom {
 
     public void getAnswerReady(UUID idTable, UserLight player, boolean ready);
 
-    public void askAction (UserLight player, Action empty);
+    public void askAction (UserLight player, EnumerationAction[] availableActions);
 
     public void getAction(UserLight player, Action attempt);
 

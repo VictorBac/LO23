@@ -24,48 +24,86 @@ public class Turn implements Serializable {
      * timeStampOfTurn : the interval to make the next action
      */
     private ArrayList<Action> listAction;
-    private ArrayList<UserLight> listPlayerNoAllinNoFold;
+    /*private ArrayList<UserLight> listPlayerActive;
     private ArrayList<UserLight> listPlayerAllin;
-    private ArrayList<UserLight> listPlayerFold;
-    private Game currentGame;
+    private ArrayList<UserLight> listPlayerFold;*/
+    private Hand currentHand;
     private Timestamp timeStampOfTurn;
+    private Integer turnPot = 0;
 
     /**
      *  Constructor
-     *  @param currentGameToAdd the current game from which we get the information to initialize
      */
-    public Turn(Game currentGameToAdd){
+    public Turn(Hand currentHandToAdd){
         this.listAction = new ArrayList<Action>();
         this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
-        this.currentGame = currentGameToAdd;
+        this.currentHand = currentHandToAdd;
 
-        // initialize listPlayerNoAllinNoFold
-        if (currentGameToAdd.getCurrentHand().getListTurn().size() == 1){
-            // if it's the first turn in the hand, add all the players in the list
-            for (Seat item : currentGameToAdd.getListSeatPlayerWithPeculeDepart()
-             ) {
-                this.listPlayerNoAllinNoFold.add(item.getPlayer());
+        /*if(getCurrentHand().getListTurn().size()==0)
+        {
+            //On initialise les listes selon les valeurs de la game
+            listPlayerActive = new ArrayList<UserLight>();
+            for(Seat seat : currentHand.getCurrentGame().getListSeatPlayerWithPeculeDepart())
+            {
+                if(seat.getStatusPlayer().equals(EnumerationStatusPlayer.CONNECTED) && seat.getCurrentAccount()>0)
+                {
+                    listPlayerActive.add(seat.getPlayer());
+                }
             }
-        }else{
+            listPlayerAllin = new ArrayList<UserLight>();
+            listPlayerFold = new ArrayList<UserLight>();
+        }
+        else
+        {
+            //On initialise les listes selon les valeurs du tour précédent
+            listPlayerActive = new ArrayList<UserLight>();
+            for(UserLight user : currentHand.getCurrentTurn().getListPlayerActive())
+            {
+                listPlayerActive.add(user);
+            }
+
+            listPlayerFold = new ArrayList<UserLight>();
+            for(UserLight user : currentHand.getCurrentTurn().getListPlayerFold())
+            {
+                listPlayerFold.add(user);
+            }
+
+            listPlayerAllin = new ArrayList<UserLight>();
+            for(UserLight user : currentHand.getCurrentTurn().getListPlayerAllin())
+            {
+                listPlayerAllin.add(user);
+            }
+        }*/
+
+        /*   ANCIEN ALGORITHME PRESENTANT DES SOUCIS
+        // initialize listPlayerActive
+        if (currentHand.getListTurn().size() == 1){
+            // if it's the first turn in the hand, add all the players in the list
+            for (Seat item : currentHand.getCurrentGame().getListSeatPlayerWithPeculeDepart())
+            {
+                this.listPlayerActive.add(item.getPlayer());
+            }
+        }
+        else
+        {
             // if it's not the first turn in the hand, get the information from the last turn
-            for (UserLight item : currentGameToAdd.getCurrentHand().getListTurn().get(currentGameToAdd.getCurrentHand().getListTurn().size()-2).getListPlayerNoAllinNoFold()
+            for (UserLight item : currentHand.getListTurn().get(currentHand.getListTurn().size()-2).getListPlayerActive()
                     ) {
-                this.listPlayerNoAllinNoFold.add(item);
+                this.listPlayerActive.add(item);
             }
         }
 
         // initialize listPlayerAllin from the last turn
-        for (UserLight item : currentGameToAdd.getCurrentHand().getListTurn().get(currentGameToAdd.getCurrentHand().getListTurn().size()-2).getListPlayerAllin()
+        for (UserLight item : currentHand.getListTurn().get(currentHand.getListTurn().size()-2).getListPlayerAllin()
              ) {
             this.getListPlayerAllin().add(item);
         }
 
-        // initialize listPlayerAllin from the last turn
-        for (UserLight item : currentGameToAdd.getCurrentHand().getListTurn().get(currentGameToAdd.getCurrentHand().getListTurn().size()-2).getListPlayerFold()
+        // initialize listPlayerFold from the last turn
+        for (UserLight item : currentHand.getListTurn().get(currentHand.getListTurn().size()-2).getListPlayerFold()
                 ) {
             this.getListPlayerFold().add(item);
-        }
-
+        }*/
     }
 
     /**
@@ -73,9 +111,33 @@ public class Turn implements Serializable {
      * @param newAction
      * @throws ActionInvalidException
      */
+
     public void addAction(Action newAction) throws ActionInvalidException{
 
-        Hand currentHand = currentGame.getCurrentHand();
+        if(availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName()))
+        {
+            if (newAction.getName().equals(EnumerationAction.FOLD)) {
+                getCurrentHand().getPlayer(newAction.getUserLightOfPlayer()).setFold();
+            } else if (newAction.getName().equals(EnumerationAction.CHECK)) {
+
+            } else if (newAction.getName().equals(EnumerationAction.CALL)) {
+                //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
+            } else if (newAction.getName().equals(EnumerationAction.BET)) {
+                //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
+            } else if (newAction.getName().equals(EnumerationAction.ALLIN)) {
+                //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
+                getCurrentHand().getPlayer(newAction.getUserLightOfPlayer()).setAllin();
+            }
+            this.getListAction().add(newAction);
+        }
+        else
+        {
+            System.out.println("ALERTE TRICHE: un player a envoyé une action interdite au serveur. Action: "+newAction);
+            //System.exit(1);
+        }
+
+
+        /* ANCIEN ALGORITHME SE BASANT SUR L'ANCIEN SYSTEME DE POT
         ArrayList<Pot> pot = currentHand.getListPotForTheHand();
 
         if ( availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName())){
@@ -146,7 +208,7 @@ public class Turn implements Serializable {
             }
         }else{
             throw new ActionInvalidException("Invalid Action!");
-        }
+        }*/
     }
 
     /**
@@ -155,6 +217,7 @@ public class Turn implements Serializable {
      * @param index the current position of the pot to set value
      * @param min moneyInPot = ( nowMin - lastMin ) * Nb, min = lastMin here
      */
+    /* WHAT THE FUCK IS THIS FUNCTION FOR ???
     public void distributePot(ArrayList<UserLight> listAllIn, int index, int min){
         ArrayList<UserLight> list = listAllIn;
         int sizeOrigin = list.size();
@@ -208,21 +271,22 @@ public class Turn implements Serializable {
             if (list.size() != 0)
                 distributePot(list, index+1, minAmount);
         }
-    }
+    }*/
 
     /**
      * Method to test if the action is available for a specific user
      * @param user
      * @return the list of available action
      */
-    public ArrayList<EnumerationAction> availableActions(UserLight user) throws ActionInvalidException{
-        // if the user have made "all in" action, he cannot do anything after
-        if ( !isAllIn(user) ) {
+    public ArrayList<EnumerationAction> availableActions(UserLight user){
+        // if the user have made "all in" or "fold" action, he cannot do anything after
+        if ( !getCurrentHand().getPlayer(user).isAllin() && !getCurrentHand().getPlayer(user).isFold() )
+        {
             ArrayList<EnumerationAction> tempArray = new ArrayList<EnumerationAction>();
             // We can do "fold" and "all in" at any time
             tempArray.add(EnumerationAction.FOLD);
             tempArray.add(EnumerationAction.ALLIN);
-            int money = currentGame.getMoneyOfPlayer(user);
+            int money = currentHand.getCurrentGame().getMoneyOfPlayer(user);
 
             // when a new turn starts, the first one can check
             //    because only when all the amounts are the same, we can display a new card
@@ -238,10 +302,60 @@ public class Turn implements Serializable {
             }
             return tempArray;
         }
-        else{
-            throw new ActionInvalidException("This player cannot make any action now!");
+        else
+        {
+            return null;
         }
+    }
 
+    public ArrayList<UserLight> getListActiveUsers(){
+        ArrayList<UserLight> users = new ArrayList<UserLight>();
+        for(PlayerHand player : getCurrentHand().getListPlayerHand())
+        {
+            if(player.isActive())
+                users.add(player.getPlayer());
+        }
+        return users;
+    }
+
+    public UserLight getNextActiveUser(){
+        UserLight lastActionner = getCurrentAction().getUserLightOfPlayer();
+        Integer currentIndex = getListActiveUsers().indexOf(lastActionner)+1;
+        if(currentIndex>=getListActiveUsers().size())
+        {
+            currentIndex = 0;
+        }
+        return getListActiveUsers().get(currentIndex);
+    }
+
+    public Boolean isFinished(){
+        //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
+        if(getListAction().size()<getListActiveUsers().size())
+            return false;
+
+        //sinon il faut vérifier que tous les joueurs actifs aient le même montant
+        Integer val = -1;
+        for(UserLight user: getListActiveUsers())
+        {
+            if(val==-1)
+            {
+                val = getTotalAmountForAUser(user);
+                continue;
+            }
+            if(getTotalAmountForAUser(user)!=val)
+                return false;
+        }
+        return true;
+    }
+
+    public ArrayList<Action> getActionsOfUser(UserLight user) {
+        ArrayList<Action> rs = new ArrayList<Action>();
+        for(Action ac : getListAction())
+        {
+            if(ac.getUserLightOfPlayer().equals(user))
+                rs.add(ac);
+        }
+        return rs;
     }
 
     /**
@@ -250,7 +364,7 @@ public class Turn implements Serializable {
      * @param user
      * @return
      */
-    public boolean isAllIn( UserLight user ){
+    /*public boolean isAllIn( UserLight user ){
         for (UserLight item : listPlayerAllin
              ) {
             if ( item == user ){
@@ -258,7 +372,7 @@ public class Turn implements Serializable {
             }
         }
         return false;
-    }
+    }*/
 
     /**
      * Method to test if all players in the list bet the same amount
@@ -285,7 +399,7 @@ public class Turn implements Serializable {
     private int getTotalAmountForAUser ( UserLight user ){
         int amount = 0;
         // need to add all the turns
-        for (Turn eachTurn : currentGame.getCurrentHand().getListTurn()
+        for (Turn eachTurn : currentHand.getListTurn()
              ) {
             for (Action a : eachTurn.getListAction()
                     ) {
@@ -303,7 +417,7 @@ public class Turn implements Serializable {
      */
     private int getMaxMoneyBetInTheHand(){
         int max = 0;
-        for (UserLight total : listPlayerNoAllinNoFold
+        /*for (UserLight total : listPlayerActive
                 ) {
             if( getTotalAmountForAUser(total) > max )
                 max = getTotalAmountForAUser(total);
@@ -312,7 +426,7 @@ public class Turn implements Serializable {
              ) {
             if ( getTotalAmountForAUser(total) > max)
                 max = getTotalAmountForAUser(total);
-        }
+        }*/
         return max;
     }
 
@@ -320,20 +434,20 @@ public class Turn implements Serializable {
      * Method to test if a turn is over
      * @return
      */
-    public boolean isOver(){
-        if (listPlayerNoAllinNoFold.size() != 0 ){
-            if ( isSameAmount(listPlayerNoAllinNoFold) )
+   /* public boolean isOver(){
+        if (listPlayerActive.size() != 0 ){
+            if ( isSameAmount(listPlayerActive) )
                 return true;
             else
                 return false;
-        }else if (listPlayerNoAllinNoFold.size() == 0) {
+        }else if (listPlayerActive.size() == 0) {
             if (listPlayerAllin.size() != 0)
                 return true;
             else
                 return false;
         }
         return false;
-    }
+    }*/
 
     /**
      * Method to get the current action
@@ -355,14 +469,6 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Getter to return the current game with which this turn is associated
-     * @return the information of current game
-     */
-    public Game getCurrentGame() {
-        return currentGame;
-    }
-
-    /**
      * Getter to return the time when this turn started
      * @return a Timestamp returned that represent when the Turn started
      */
@@ -374,37 +480,32 @@ public class Turn implements Serializable {
      * Getter to return the list of players still alive
      * @return
      */
-    public ArrayList<UserLight> getListPlayerNoAllinNoFold() {
-        return listPlayerNoAllinNoFold;
-    }
+    /*public ArrayList<UserLight> getListPlayerActive() {
+        return listPlayerActive;
+    }*/
 
     /**
      * Getter to return the list of players who have "all in"
      * @return
      */
-    public ArrayList<UserLight> getListPlayerAllin() {
+
+    /*public ArrayList<UserLight> getListPlayerAllin() {
         return listPlayerAllin;
-    }
+    }*/
 
     /**
      * getter to return the list of players who have folded
      * @return
      */
-    public ArrayList<UserLight> getListPlayerFold() {
+    /*public ArrayList<UserLight> getListPlayerFold() {
         return listPlayerFold;
-    }
+    }*/
 
     /**
      * Setter to modify the value of the list of action
      * @param listAction
      */
     public void setListAction(ArrayList<Action> listAction) { this.listAction = listAction; }
-
-    /**
-     * Setter to modify the value of the current game
-     * @param currentGame
-     */
-    public void setCurrentGame(Game currentGame) { this.currentGame = currentGame; }
 
     /**
      * Setter to modify the interval of making the next action
@@ -414,25 +515,33 @@ public class Turn implements Serializable {
 
     /**
      * Setter to modify the list of players still alive
-     * @param listPlayerNoAllinNoFold
+     * @param listPlayerActive
      */
-    public void setListPlayerNoAllinNoFold(ArrayList<UserLight> listPlayerNoAllinNoFold) {
-        this.listPlayerNoAllinNoFold = listPlayerNoAllinNoFold;
-    }
+   /* public void setListPlayerActive(ArrayList<UserLight> listPlayerActive) {
+        this.listPlayerActive = listPlayerActive;
+    }*/
 
     /**
      * Setter to modify the list of players who have "all in"
      * @param listPlayerAllin
      */
-    public void setListPlayerAllin(ArrayList<UserLight> listPlayerAllin) {
+    /*public void setListPlayerAllin(ArrayList<UserLight> listPlayerAllin) {
         this.listPlayerAllin = listPlayerAllin;
-    }
+    }*/
 
     /**
      * Setter to modify the list of players who have folded
      * @param listPlayerFold
      */
-    public void setListPlayerFold(ArrayList<UserLight> listPlayerFold) {
+   /* public void setListPlayerFold(ArrayList<UserLight> listPlayerFold) {
         this.listPlayerFold = listPlayerFold;
+    }*/
+
+    public Hand getCurrentHand() {
+        return currentHand;
+    }
+
+    public void setCurrentHand(Hand currentHand) {
+        this.currentHand = currentHand;
     }
 }

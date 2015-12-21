@@ -40,6 +40,8 @@ public class Game implements Serializable{
      * @param ante
      * @param statusOfTheGame
      * @param listUserSpectator
+     *
+     * Apparemment il n'est jamais utilisé celui la, y a vraiment besoin de le garder ?  en plus il ne remplis pas la table !
      */
     public Game(UUID idGame, ArrayList<Hand> listHand, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, Chat chatGame, Timestamp timeStampStartOfTheGame, int ante, EnumerationStatusGame statusOfTheGame, ArrayList<UserLight> listUserSpectator) {
         this.idGame = idGame;
@@ -287,6 +289,18 @@ public class Game implements Serializable{
 
     public void setReadyUserAnswers(HashMap<UserLight, Boolean> readyUserAnswers) {
         this.readyUserAnswers = readyUserAnswers;
+    }
+
+    public Table getTableOfTheGame() {
+        return tableOfTheGame;
+    }
+
+    public void setTableOfTheGame(Table tableOfTheGame) {
+        this.tableOfTheGame = tableOfTheGame;
+    }
+
+    public void setListSeatPlayerWithPeculeDepart(ArrayList<Seat> listSeatPlayerWithPeculeDepart) {
+        this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
     }
 }
 

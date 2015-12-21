@@ -2,8 +2,11 @@ package fr.utc.lo23.server.data;
 
 import fr.utc.lo23.common.data.*;
 import org.junit.Test;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 /**
  * The test for some main function in Calculator.
@@ -18,7 +21,7 @@ public class CalculatorTest {
 
     public CalculatorTest() {
         calculator = new CombinationCalculator();
-        Hand oneHand = new Hand();
+        Hand oneHand = new Hand(new Timestamp(Calendar.getInstance().getTime().getTime()));
         // Add 4 player in this test.
         oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player1")));
         oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player2")));

@@ -32,7 +32,7 @@ public class AddServerController extends BaseController{
     private TextField fieldPort;
 
     /**
-     * ajouter un serveur
+     * Add a server
      */
     @FXML
     public void didClickAddButton(ActionEvent event) {
@@ -54,6 +54,10 @@ public class AddServerController extends BaseController{
         mController.showConnectionWindow();
     }
 
+    /**
+     * Cancel Button
+     * @param event
+     */
     @FXML
     public void didClickCancelButton(ActionEvent event) {
         mController.showConnectionWindow();

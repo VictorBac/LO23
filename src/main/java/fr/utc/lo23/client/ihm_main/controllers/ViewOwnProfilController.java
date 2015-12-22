@@ -48,19 +48,25 @@ public class ViewOwnProfilController extends BaseController {
         mController.showEditProfilWindow();
     }
 
+    private String imagePath;
+
     public void initData(){
         User currentUser = mController.getManagerMain().getManagerData().getUserLocal();
         UserLight currentLight = currentUser.getUserLight();
         labelPlayer.setText(currentLight.getPseudo());
-        labelStats.setText(currentUser.getStats().getStats().toString());
-        try {
-            imageviewer.setImage(currentLight.getAvatar().getImageAvatar());
-        } catch (IOException e) {
-            mController.showErrorPopup("Erreur", "Avatar introuvable !");
+        //labelStats.setText(currentUser.getStats().getStats().toString());
+        if (currentLight.getAvatar() != null) {
+            imagePath = currentLight.getAvatar().getPath();
+            try {
+                imageviewer.setImage(currentLight.getAvatar().getImageAvatar());
+            } catch (IOException e) {
+                mController.showErrorPopup("Erreur", "Avatar introuvable !");
+            }
         }
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+        imagePath = "";
     }
 
 }

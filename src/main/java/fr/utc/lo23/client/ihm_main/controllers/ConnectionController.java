@@ -47,7 +47,7 @@ public class ConnectionController extends BaseController {
     private FileChooser profileChooser;
 
     /**
-     * lance la connexion avec le serveur
+     * Start the connection with the server
      * @throws IOException
      */
     @FXML
@@ -55,6 +55,11 @@ public class ConnectionController extends BaseController {
         sendAction();
     }
 
+    /**
+     * Connection action,
+     * We try if the login and the password aren't empty, then we send the login and password to DATA
+     * in order to be connected
+     */
     private void sendAction() {
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
@@ -79,7 +84,7 @@ public class ConnectionController extends BaseController {
 
     }
     /**
-     * surcharge les méthodes d'affichage pour la listeview serveur
+     * Override display methods to show the listviewServers
      */
     //@Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -111,26 +116,16 @@ public class ConnectionController extends BaseController {
     }
 
     /**
-     * initialise la liste des serveurs
+     * initialization of the Server list
      */
     public void initServerlist()
     {
         serverList.setAll(mController.getManagerMain().getInterDataToMain().getServersList());
     }
 
-    public void change(ActionEvent actionEvent) {
-    }
 
     /**
-     * créer un nouvel utilisateur
-     */
-    public void createnewuser(ActionEvent actionEvent) {
-        User createUser = new User();
-    }
-
-
-    /**
-     * créer un nouveau profil
+     * Open the window to create a new profil
      */
     public void CreateProfilClick(ActionEvent actionEvent) {
         System.out.println("CreateProfilButton");
@@ -139,7 +134,7 @@ public class ConnectionController extends BaseController {
     }
 
     /**
-     * ajouter un serveur
+     * Open the window to create a new server
      */
     @FXML
     public void didClickAddServerButton(ActionEvent event) {
@@ -147,7 +142,7 @@ public class ConnectionController extends BaseController {
     }
 
     /**
-     * supprimer un serveur
+     * Delete a server
      */
     @FXML
     public void didClickRemoveServerButton(ActionEvent event)
@@ -163,7 +158,7 @@ public class ConnectionController extends BaseController {
     }
 
     /**
-     * supprimer un serveur
+     * Import a profile from a file
      */
     public void ImportProfilClick(ActionEvent actionEvent) {
         File file = profileChooser.showOpenDialog(buttonConnect.getScene().getWindow());

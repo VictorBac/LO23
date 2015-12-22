@@ -41,5 +41,7 @@ public class DataManagerServer {
         return interfaceFromCom;
     }
 
-
+    public void setInterfaceToCom(InterfaceServer interfaceToCom) {
+        this.interfaceToCom = interfaceToCom;
+    }
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 
 <GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="610.0" stylesheets="@style.css" vgap="10" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ConnectionController">
     <columnConstraints>
@@ -18,37 +20,34 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="610.0" GridPane.rowIndex="1">
+        <AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="610.0" style="-fx-background-color: #D6DBDA;" GridPane.rowIndex="1">
             <children>
-                <TextField fx:id="fieldUsername" layoutX="29.0" layoutY="81.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Pseudo">
+                <TextField fx:id="fieldUsername" layoutX="29.0" layoutY="81.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Pseudo" style="-fx-background-color: #F2F7F6;" />
+                <PasswordField fx:id="fieldPassword" layoutX="29.0" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Mot de passe" style="-fx-background-color: #F2F7F6;" />
+                <Button fx:id="buttonConnect" layoutX="30.0" layoutY="232.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didButtonConnectClick" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #3B8474; bor: black;" text="Connexion" textFill="WHITE">
                     <font>
-                        <Font size="14.0" />
-                    </font></TextField>
-                <PasswordField fx:id="fieldPassword" layoutX="29.0" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="254.0" promptText="Mot de passe">
-                    <font>
-                        <Font size="14.0" />
+                        <Font name="System Bold" size="12.0" />
                     </font>
-                </PasswordField>
-                <Button fx:id="buttonConnect" layoutX="30.0" layoutY="232.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didButtonConnectClick" prefHeight="40.0" prefWidth="120.0" text="Connexion">
+            </Button>
+                <Button fx:id="CreateButton" layoutX="163.0" layoutY="232.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateProfilClick" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #3B8474; bor: black;" text="Création profil" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font></Button>
-                <Button fx:id="CreateButton" layoutX="163.0" layoutY="232.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateProfilClick" prefHeight="40.0" prefWidth="120.0" text="Création profil">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font></Button>
-                <ListView id="listViewServers" fx:id="listViewServers" layoutX="311.0" layoutY="55.0" prefHeight="229.0" prefWidth="285.0" />
-                <Button fx:id="buttonAddServer" layoutX="509.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didClickAddServerButton" prefHeight="23.0" prefWidth="23.0" text="+">
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+            </Button>
+                <ListView id="listViewServers" fx:id="listViewServers" layoutX="311.0" layoutY="55.0" prefHeight="229.0" prefWidth="285.0" style="-fx-background-color: #F2F7F6;" />
+                <Button fx:id="buttonAddServer" layoutX="509.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didClickAddServerButton" prefHeight="23.0" prefWidth="23.0" style="-fx-background-color: #3B8474;" text="+" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="9.0" />
-                    </font></Button>
-                <Button fx:id="buttonRemoveServer" layoutX="536.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didClickRemoveServerButton" prefHeight="23.0" prefWidth="23.0" text="-">
+                    </font>
+            </Button>
+                <Button fx:id="buttonRemoveServer" layoutX="536.0" layoutY="294.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#didClickRemoveServerButton" prefHeight="23.0" prefWidth="23.0" style="-fx-background-color: #3B8474;" text="-" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="9.0" />
-                    </font></Button>
-                <Label layoutX="416.0" layoutY="29.0" style="-fx-background-color: rgb(128, 21, 21);" text="Serveurs">
+                    </font>
+            </Button>
+                <Label alignment="CENTER" layoutX="311.0" layoutY="29.0" prefHeight="31.0" prefWidth="285.0" style="-fx-background-color: #3B8474;" text="Serveurs" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="21.0" />
                     </font>
                 </Label>
                 <Label fx:id="labeluser" layoutX="70.0" layoutY="126.0">
@@ -66,9 +65,9 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-            <Button fx:id="importprofil" layoutX="86.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ImportProfilClick" prefHeight="40.0" prefWidth="141.0" text="Importer Profil">
+            <Button fx:id="importprofil" layoutX="86.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ImportProfilClick" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #3B8474; bor: black;" text="Importer Profil" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
             </children>

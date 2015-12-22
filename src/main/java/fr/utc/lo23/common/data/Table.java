@@ -47,17 +47,17 @@ public class Table implements Serializable {
 
     /**
      * Constructor
-     * @param name
-     * @param creator
-     * @param acceptSpectator
-     * @param acceptChatSpectator
-     * @param nbPlayerMax
-     * @param nbPlayerMin
-     * @param abandonAmiable
-     * @param petiteBlinde
-     * @param timeForAction
-     * @param ante
-     * @param startMoneyMax
+     * @param name : name of the table
+     * @param creator UserLight who created the table (can launch game...)
+     * @param acceptSpectator : true if accept, false otherwise
+     * @param acceptChatSpectator : true if accept, false otherwise
+     * @param nbPlayerMax : maximum number of players on the table
+     * @param nbPlayerMin : minimum number of players on the table
+     * @param abandonAmiable : true if authorised, false otherwise
+     * @param petiteBlinde : value of small blinde
+     * @param timeForAction : time to play
+     * @param ante : ante's value
+     * @param startMoneyMax : start money
      */
     public Table(String name, UserLight creator, boolean acceptSpectator, boolean acceptChatSpectator, int nbPlayerMax, int nbPlayerMin, boolean abandonAmiable, int petiteBlinde, int timeForAction, int ante, int startMoneyMax){
         this.setIdTable(UUID.randomUUID());
@@ -87,7 +87,7 @@ public class Table implements Serializable {
      * method to add a player to the table, with checking if it is possible
      * Check if it's possible (call checkConditionPlayerJoin())
      * @param player : player
-     * @throws fr.utc.lo23.common.data.exceptions.TableException
+     * @throws fr.utc.lo23.common.data.exceptions.TableException : throws exception if player can't be added
      */
     public void playerJoinTable(UserLight player) throws TableException {
         // number of players on the table < max number of players AND player not already in the table
@@ -102,8 +102,8 @@ public class Table implements Serializable {
 
     /**
      * Delete player from the table
-     * @param player
-     * @throws TableException
+     * @param player : player who wants to leave table
+     * @throws TableException : throws exception if player is not in the table
      */
     public void playerLeaveTable(UserLight player) throws  TableException{
         //if abandonAmiable = true and player already on the table
@@ -132,8 +132,8 @@ public class Table implements Serializable {
     /**
      * Add a spectator to the table
      * Check if it's possible (call checkConditionSpectatorJoin())
-     * @param spectator
-     * @throws TableException
+     * @param spectator : spectator who wants to join the table
+     * @throws TableException : throws exception if spectator can't be added
      */
     public void spectatorJoinTable(UserLight spectator) throws TableException {
         //  spectator not on the table yet
@@ -148,8 +148,8 @@ public class Table implements Serializable {
 
     /**
      * Delete a spectator from the table
-     * @param spectator
-     * @throws TableException
+     * @param spectator : spectator who wants to leave the table
+     * @throws TableException : throws exception if spectator is not on the table
      */
     public void spectatorLeaveTable(UserLight spectator) throws TableException{
         //spectator already on the table
@@ -164,20 +164,23 @@ public class Table implements Serializable {
 
     /**
      * Check if a spectator can join the table
+     * @return : true if spectator can join, false otherwise
      */
     public boolean checkConditionSpectatorJoin(){
         return isAcceptSpectator();
     }
 
+
     /**
      * Add a new game in the table's games list
      * @param game : new game to add to the list
+     * @throws TableException : throws exception if game can't be added
      */
     public void addNewGameToList(Game game) throws TableException {
         for(int i=0; i <listGames.size(); i++){
             //if a game in the list is already started, impossible to start a new game
             if(listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Playing) || listGames.get(i).getStatusOfTheGame().equals(EnumerationStatusGame.Finished)){
-                throw new TableException("Impossible to start a new game");
+                throw new TableException("Impossible to add a new game");
             }
         }
         this.listGames.add(game);
@@ -214,114 +217,215 @@ public class Table implements Serializable {
 
     /******************* GETTERS AND SETTERS ********************************/
 
+    /**
+     * get the table's id
+     * @return : table's id
+     */
     public UUID getIdTable() {
         return idTable;
     }
 
+    /**
+     * set the table's id
+     * @param idTable : table's id
+     */
     public void setIdTable(UUID idTable) {
         this.idTable = idTable;
     }
 
+    /**
+     * get table's name
+     * @return : table's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * set table's name
+     * @param name : name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * return creator of the table
+     * @return : table's creator
+     */
     public UserLight getCreator() {return creator;}
 
+    /**
+     * set table's creator
+     * @param creator : player who created the table
+     */
     public void setCreator(UserLight creator) {this.creator = creator;}
 
+    /**
+     * return if accpet spectator is true
+     * @return : true if yes, false otherwise
+     */
     public boolean isAcceptSpectator() {
         return acceptSpectator;
     }
 
+    /**
+     * set accaptSpectator
+     * @param acceptSpectator : value to set
+     */
     public void setAcceptSpectator(boolean acceptSpectator) {
         this.acceptSpectator = acceptSpectator;
     }
 
+    /**
+     * return if acceptChatSpectator is true
+     * @return : true or false
+     */
     public boolean isAcceptChatSpectator() {
         return acceptChatSpectator;
     }
 
+    /**
+     * set acceptChatSpectator's value
+     * @param acceptChatSpectator : value to set
+     */
     public void setAcceptChatSpectator(boolean acceptChatSpectator) {
         this.acceptChatSpectator = acceptChatSpectator;
     }
 
+    /**
+     * return nbPlayerMax
+     * @return : nbPlayerMax
+     */
     public int getNbPlayerMax() {
         return nbPlayerMax;
     }
 
+    /**
+     * set nbplayerMax
+     * @param nbPlayerMax : value to set
+     */
     public void setNbPlayerMax(int nbPlayerMax) {
         this.nbPlayerMax = nbPlayerMax;
     }
 
+    /**
+     * get nbplayerMax
+     * @return : nbplayerMax
+     */
     public int getNbPlayerMin() {
         return nbPlayerMin;
     }
 
+    /**
+     * set nbplayerMax
+     * @param nbPlayerMin : value to set
+     */
     public void setNbPlayerMin(int nbPlayerMin) {
         this.nbPlayerMin = nbPlayerMin;
     }
 
+    /**
+     * get the current Game in the list (last one)
+     * @return : current game
+     */
     public Game getCurrentGame(){
         return listGames.get(listGames.size()-1);
     }
 
+    /**
+     * return abandonamiable's value
+     * @return : true or false
+     */
     public boolean isAbandonAmiable() {
         return abandonAmiable;
     }
 
+    /**
+     * set abandonamiable's value
+     * @param abandonAmiable : valeu to set
+     */
     public void setAbandonAmiable(boolean abandonAmiable) {
         this.abandonAmiable = abandonAmiable;
     }
 
+    /**
+     * return games' list
+     * @return : games' list
+     */
     public ArrayList<Game> getListGames() {
         return listGames;
     }
 
+    /**
+     * set games' list value
+     * @param listGames : value to set
+     */
     public void setListGames(ArrayList<Game> listGames) {
         this.listGames = listGames;
     }
 
+    /**
+     * return timeForAction's value
+     * @return : timeForAction
+     */
     public int getTimeForAction() {
         return timeForAction;
     }
 
+    /**
+     * set timeForAction's value
+     * @param timeForAction : value to set
+     */
     public void setTimeForAction(int timeForAction) {
         this.timeForAction = timeForAction;
     }
 
+    /**
+     * return Players' list
+     * @return : players' list
+     */
     public UserLightList getListPlayers() {
         return listPlayers;
     }
 
-    public void setListPlayers(UserLightList listPlayers) {
-        this.listPlayers = listPlayers;
-    }
 
+    /**
+     * return spectators' list
+     * @return : listSpectators
+     */
     public UserLightList getListSpectators() {
         return listSpectators;
     }
 
-    public void setListSpectators(UserLightList listSpectators) {
-        this.listSpectators = listSpectators;
-    }
-
+    /**
+     * return vote's value
+     * @return : vote's value
+     */
     public ArrayList<Boolean> getVote() {
         return vote;
     }
 
+    /**
+     * set vote's value
+     * @param vote : value to set
+     */
     public void setVote(ArrayList<Boolean> vote) {
         this.vote = vote;
     }
 
+    /**
+     * return the number of players who selected their money
+     * @return : number of players
+     */
     public int getNbPlayerSelectedMoney() {
         return nbPlayerSelectedMoney;
     }
 
+    /**
+     * set the number of players who selected their money
+     * @param nbPlayerSelectedMoney : value to set
+     */
     public void setNbPlayerSelectedMoney(int nbPlayerSelectedMoney) {
         this.nbPlayerSelectedMoney = nbPlayerSelectedMoney;
     }

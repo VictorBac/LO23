@@ -38,6 +38,8 @@ public interface InterfaceDataFromIHMTable {
 
     /**
      * method to send a chat message
+     * @param message : message to send
+     * @param idTableLocale : table's id
      */
     public void sendMessage(MessageChat message, UUID idTableLocale);
 
@@ -55,12 +57,13 @@ public interface InterfaceDataFromIHMTable {
 
     /**
      * Transmit the "leave game" request
+     * @param player : player who send request
      */
     public void transmitRequest(UserLight player);
 
     /**
      * Return the local user
-     * @return
+     * @return : local user
      */
     public UserLight getUser();
 

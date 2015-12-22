@@ -19,8 +19,8 @@ public class Pot implements Serializable {
 
     /**
      * Constructor
-     * @param valeurPot
-     * @param players
+     * @param valeurPot : value of the pot
+     * @param players : players in the pot
      */
     public Pot(int valeurPot, UserLightList players) {
         this.setValeurPot(valeurPot);
@@ -49,18 +49,34 @@ public class Pot implements Serializable {
 
 /********************* Getters and Setters ***************************/
 
+    /**
+     * return the pot's value
+     * @return : value
+     */
     public int getValeurPot() {
         return valeurPot;
     }
 
+    /**
+     * set the pot's value
+     * @param valeurPot : value tot set
+     */
     public void setValeurPot(int valeurPot) {
         this.valeurPot = valeurPot;
     }
 
+    /**
+     * return list of players
+     * @return : list of players
+     */
     public UserLightList getPlayers() {
         return players;
     }
 
+    /**
+     * set list of players' value
+     * @param players : value to set
+     */
     public void setPlayers(UserLightList players) {
         this.players = players;
     }

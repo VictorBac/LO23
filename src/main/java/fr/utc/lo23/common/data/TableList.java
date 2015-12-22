@@ -19,7 +19,7 @@ public class TableList implements Serializable {
 
     /**
      * Constructor
-     * @param listTable
+     * @param listTable : tables's list
      */
     public TableList(ArrayList<Table> listTable) {
         this.listTable = listTable;
@@ -44,7 +44,8 @@ public class TableList implements Serializable {
 
     /**
      * Method to delete a table from the list
-     * @param table
+     * @param table : table to delete
+     * @throws TableException : if table can't be deleted
      */
     public void deleteTable(Table table) throws TableException{
         if(this.getListTable().contains(table)) {
@@ -60,7 +61,7 @@ public class TableList implements Serializable {
      * @param newUser : User to add
      * @param typeOfUser : player or spectator
      * @return Table the User is in
-     * @throws TableException
+     * @throws TableException : if user can't be added
      */
     public Table addUserToTable(UUID idTable, UserLight newUser, EnumerationTypeOfUser typeOfUser) throws TableException {
         //get the index of the table  if it is in the list
@@ -123,10 +124,18 @@ public class TableList implements Serializable {
 
 /********************* Getters and Setters *****************************/
 
+    /**
+     * return the tables' list
+     * @return : tables' list
+     */
     public ArrayList<Table> getListTable() {
         return listTable;
     }
 
+    /**
+     * set the tables' list
+     * @param listTable : value to set
+     */
     public void setListTable(ArrayList<Table> listTable) {
         this.listTable = listTable;
     }

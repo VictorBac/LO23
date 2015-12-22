@@ -23,9 +23,9 @@ public class Seat implements Serializable {
 
     /**
      * Constructor
-     * @param player
-     * @param startAmount
-     * @param currentAccount
+     * @param player : player on the seat
+     * @param startAmount : account at the begining of the game
+     * @param currentAccount : current amount of money
      */
     public Seat(UserLight player, int startAmount, int currentAccount) {
         this.setPlayer(player);
@@ -36,7 +36,7 @@ public class Seat implements Serializable {
 
     /**
      * Constructor called when a player join the table
-     * @param player
+     * @param player : player on the seat
      */
     public Seat(UserLight player) {
         this.setPlayer(player);
@@ -78,6 +78,7 @@ public class Seat implements Serializable {
     /**
      * method to soustract a bet amount to the actual amount
      * @param amount : amount to bet
+     * @throws SeatException : if account will be negative
      */
     public void spendAmount(int amount) throws SeatException{
         if(this.currentAccount > amount)
@@ -88,34 +89,66 @@ public class Seat implements Serializable {
     }
 
 
+    /**
+     * return current account
+     * @return : current account
+     */
     public int getCurrentAccount() {
         return currentAccount;
     }
 
+    /**
+     * set current account
+     * @param currentAccount : value to set
+     */
     public void setCurrentAccount(int currentAccount) {
         this.currentAccount = currentAccount;
     }
 
+    /**
+     * return the player of the seat
+     * @return : player
+     */
     public UserLight getPlayer() {
         return player;
     }
 
+    /**
+     * set the player of the seat
+     * @param player : value to set
+     */
     public void setPlayer(UserLight player) {
         this.player = player;
     }
 
+    /**
+     * return start amount
+     * @return : start amount
+     */
     public int getStartAmount() {
         return startAmount;
     }
 
+    /**
+     * set start amount
+     * @param startAmount : value to set
+     */
     public void setStartAmount(int startAmount) {
         this.startAmount = startAmount;
     }
 
+    /**
+     * return the player's status
+     * @return : status
+     */
     public EnumerationStatusPlayer getStatusPlayer() {
         return statusPlayer;
     }
 
+    /**
+     * set player's status
+     * @param statusPlayer : player'sstatus
+     */
     public void setStatusPlayer(EnumerationStatusPlayer statusPlayer) {
         this.statusPlayer = statusPlayer;
     }

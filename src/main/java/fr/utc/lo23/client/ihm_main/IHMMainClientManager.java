@@ -195,24 +195,14 @@ public class IHMMainClientManager {
     {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    mainWinController.setConnectedUsers(getConnectedUsers());
-                }
-            });
+            Platform.runLater(() -> mainWinController.setConnectedUsers(getConnectedUsers()));
         }
     }
     private void updateMainWindowTableList()
     {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    mainWinController.setTables(getTables());
-                }
-            });
+            Platform.runLater(() -> mainWinController.setTables(getTables()));
         }
     }
 }

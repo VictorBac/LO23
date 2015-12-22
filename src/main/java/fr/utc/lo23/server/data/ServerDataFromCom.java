@@ -150,6 +150,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //On se situe au tout début d'une game
             hand = new Hand(game);
             game.getListHand().add(hand);
+            //TODO: envoyer cartes des joueurs, en attente de server :  myManager.getInterfaceToCom().
         }
         else
         {
@@ -162,6 +163,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //On se situe au début d'un tour
             turn = new Turn(hand);
             hand.getListTurn().add(turn);
+            //TODO: envoyer cartes communes, en attente de server: myManager.getInterfaceToCom().
         }
         else
         {
@@ -172,9 +174,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         {
             //Faire les actions de base
             ArrayList<Action> arrayAc = turn.askFirstAction();
+            System.out.println(arrayAc);
             if(arrayAc.size()==1)
             {
-                myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(0),(EnumerationAction[])turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).toArray());
+                EnumerationAction[] ref = new EnumerationAction[turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).size()];
+                ref = turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).toArray(ref);
+                myManager.getInterfaceToCom().askActionToPLayer(table.getListPlayers().getListUserLights(),arrayAc.get(0),ref);
             }
             else
             {
@@ -182,10 +187,14 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 try {
                     myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(0));
                     myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(1));
+                    System.out.println("SUCCES ENVOI BLINDE");
                 } catch (NetworkFailureException e) {
+                    System.out.println("ERROR ENVOI BLINDE");
                     e.printStackTrace();
                 }
-                myManager.getInterfaceToCom().askActionToPLayer(arrayAc.get(2),(EnumerationAction[])turn.availableActions(arrayAc.get(2).getUserLightOfPlayer()).toArray());
+                EnumerationAction[] ref = new EnumerationAction[turn.availableActions(arrayAc.get(2).getUserLightOfPlayer()).size()];
+                ref = turn.availableActions(arrayAc.get(2).getUserLightOfPlayer()).toArray(ref);
+                myManager.getInterfaceToCom().askActionToPLayer(table.getListPlayers().getListUserLights(),arrayAc.get(2),ref);
             }
         }
         else
@@ -223,6 +232,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         //sinon créer une nouvelle manche
                         hand = new Hand(game);
                         game.getListHand().add(hand);
+                        //TODO: envoyer cartes des joueurs, en attente de server :  myManager.getInterfaceToCom().
 
                         //et relancer l'algorithme
                         playGame(table);
@@ -233,6 +243,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     //sinon créer un nouveau tour
                     turn = new Turn(hand);
                     hand.getListTurn().add(turn);
+                    //TODO: envoyer cartes communes, en attente de server: myManager.getInterfaceToCom().
 
                     //et relancer l'algorithme
                     playGame(table);
@@ -241,7 +252,9 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             else
             {
                 //appeler les actions du joueur prochain
-                askAction(turn.getNextActiveUser(),(EnumerationAction[])turn.availableActions(turn.getNextActiveUser()).toArray());
+                EnumerationAction[] ref = new EnumerationAction[turn.availableActions(turn.getNextActiveUser()).size()];
+                ref = turn.availableActions(turn.getNextActiveUser()).toArray(ref);
+                askAction(table,turn.getNextActiveUser(),ref);
             }
         }
     /*   Je démarre une manche.
@@ -295,7 +308,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
         catch(ActionInvalidException a) {
             Turn turn = myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn();
-            askAction(turn.getNextActiveUser(), (EnumerationAction[]) turn.availableActions(turn.getNextActiveUser()).toArray());
+            askAction(myManager.getTables().getTable(table),turn.getNextActiveUser(), (EnumerationAction[]) turn.availableActions(turn.getNextActiveUser()).toArray());
         }
     }
 
@@ -481,11 +494,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * asks the player which action he wants to perform
      * @param player the UserLight of the player
      */
-    public void askAction(UserLight player, EnumerationAction[] availableActions) {
+    public void askAction(Table table,UserLight player, EnumerationAction[] availableActions) {
         Action emptyAction = new Action();
         emptyAction.setUserLightOfPlayer(player);
         //TODO: insérer un action time dedans ?
-        myManager.getInterfaceToCom().askActionToPLayer(emptyAction,availableActions);
+        myManager.getInterfaceToCom().askActionToPLayer(table.getListPlayers().getListUserLights(),emptyAction,availableActions);
     }
 
     /**
@@ -517,8 +530,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //Si cet utilisateur est le dernier à répondre, lancer les demandes de ready
             if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getListPlayers().getListUserLights().size())
             {
-                Console.log(TAG + " : "+ myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
-                Console.log(TAG + " test if interface exist: "+myManager.getInterfaceToCom());
                 myManager.getInterfaceToCom().askIfReady(myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
             }
             return true;
@@ -530,26 +541,33 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public void setReadyAnswer(UUID idTable, UserLight user, Boolean answer){
         myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().put(user,answer);
+    }
+
+    public void checkIfEverybodyIsReady(UUID idTable){
         //Si cet utilisateur est le dernier à répondre, lancer la partie
         if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().size())
         {
-            //Réordonnancement des Seat pour correspondre au positionnement des joueurs (et virer les joueurs qui se seraient déconnectés entre temps, est-ce un bien ou un mal ?)
-            Game game = myManager.getTables().getTable(idTable).getCurrentGame();
-            ArrayList<Seat> newSeat = new ArrayList<>();
-            for(UserLight usr : game.getTableOfTheGame().getListPlayers().getListUserLights())
-            {
-                for(Seat seat : game.getListSeatPlayerWithPeculeDepart())
-                {
-                    if(seat.getPlayer().equals(usr)) {
-                        newSeat.add(seat);
-                        break;
+            if(true) { //TODO Vérifier si tout le monde a dis oui
+                //Réordonnancement des Seat pour correspondre au positionnement des joueurs (et virer les joueurs qui se seraient déconnectés entre temps, est-ce un bien ou un mal ?)
+                Game game = myManager.getTables().getTable(idTable).getCurrentGame();
+                ArrayList<Seat> newSeat = new ArrayList<>();
+                for (UserLight usr : game.getTableOfTheGame().getListPlayers().getListUserLights()) {
+                    for (Seat seat : game.getListSeatPlayerWithPeculeDepart()) {
+                        if (seat.getPlayer().equals(usr)) {
+                            newSeat.add(seat);
+                            break;
+                        }
                     }
                 }
-            }
-            game.setListSeatPlayerWithPeculeDepart(newSeat);
+                game.setListSeatPlayerWithPeculeDepart(newSeat);
 
-            game.startGame();
-            playGame(myManager.getTables().getTable(idTable));
+                game.startGame();
+                playGame(myManager.getTables().getTable(idTable));
+            }
+            else
+            {
+                //TODO Renvoyer les demandes d'argent
+            }
         }
     }
 

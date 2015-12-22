@@ -110,13 +110,13 @@ public class MainControllerClient extends Application {
 
     private <T extends BaseController>T instantiateWindow(String resource, String windowTitle)
     {
-        Parent root = null;
+        Parent root;
 
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(resource));
-            root = (Parent) fxmlLoader.load();
+            root = fxmlLoader.load();
             T controller =  fxmlLoader.getController();
             controller.setMainController(this);
             pmStage.setTitle(windowTitle);
@@ -125,7 +125,7 @@ public class MainControllerClient extends Application {
             //root.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
             root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
             pmStage.show();
-            return (T) controller;
+            return controller;
 
         } catch (IOException e) {
             // TODO ?

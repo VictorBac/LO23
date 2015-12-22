@@ -2,7 +2,6 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -36,7 +35,7 @@ public class AddServerController extends BaseController{
      * ajouter un serveur
      */
     @FXML
-    void didClickAddButton(ActionEvent event) {
+    public void didClickAddButton(ActionEvent event) {
         if (fieldIPAddress.getText().isEmpty() || fieldPort.getText().isEmpty()) {
             mController.showErrorPopup("Erreur", "Toutes les informations doivent être insérées");
             return;
@@ -56,7 +55,7 @@ public class AddServerController extends BaseController{
     }
 
     @FXML
-    void didClickCancelButton(ActionEvent event) {
+    public void didClickCancelButton(ActionEvent event) {
         mController.showConnectionWindow();
     }
 

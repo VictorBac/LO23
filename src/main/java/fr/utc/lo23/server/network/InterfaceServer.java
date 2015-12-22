@@ -106,10 +106,17 @@ public interface InterfaceServer {
     public void askIfReady(ArrayList<UserLight> aPlayers);
 
     /**
+     * Transmission d'une action validée aux antres joueurs
+     * @param a
+     * @param aPlayers
+     * @param user
+     */
+    public void transmitAction(Action a,ArrayList<UserLight> aPlayers,UserLight user);
+    /**
      * Demander à un joueur quelle sera son action
      * @param Action a
      * @param EnumerationAction enAct
      */
-    public void askActionToPLayer(Action a, EnumerationAction[] enAct);
+    public void askActionToPLayer(ArrayList<UserLight> aPlayers, Action a, EnumerationAction[] enAct);
 
 }

@@ -18,15 +18,10 @@ public class Turn implements Serializable {
 
     /**
      * listAction : the list of action in this turn
-     * listPlayerNoAllinNoFold : the list of the players who can still make action in this turn
-     * listPlayerAllin : the list of players who have made the action "all in"
      * currentGame : the current game with witch this turn is associated
      * timeStampOfTurn : the interval to make the next action
      */
     private ArrayList<Action> listAction;
-    /*private ArrayList<UserLight> listPlayerActive;
-    private ArrayList<UserLight> listPlayerAllin;
-    private ArrayList<UserLight> listPlayerFold;*/
     private Hand currentHand;
     private Timestamp timeStampOfTurn;
     private Integer turnPot = 0;
@@ -38,72 +33,6 @@ public class Turn implements Serializable {
         this.listAction = new ArrayList<Action>();
         this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.currentHand = currentHandToAdd;
-
-        /*if(getCurrentHand().getListTurn().size()==0)
-        {
-            //On initialise les listes selon les valeurs de la game
-            listPlayerActive = new ArrayList<UserLight>();
-            for(Seat seat : currentHand.getCurrentGame().getListSeatPlayerWithPeculeDepart())
-            {
-                if(seat.getStatusPlayer().equals(EnumerationStatusPlayer.CONNECTED) && seat.getCurrentAccount()>0)
-                {
-                    listPlayerActive.add(seat.getPlayer());
-                }
-            }
-            listPlayerAllin = new ArrayList<UserLight>();
-            listPlayerFold = new ArrayList<UserLight>();
-        }
-        else
-        {
-            //On initialise les listes selon les valeurs du tour précédent
-            listPlayerActive = new ArrayList<UserLight>();
-            for(UserLight user : currentHand.getCurrentTurn().getListPlayerActive())
-            {
-                listPlayerActive.add(user);
-            }
-
-            listPlayerFold = new ArrayList<UserLight>();
-            for(UserLight user : currentHand.getCurrentTurn().getListPlayerFold())
-            {
-                listPlayerFold.add(user);
-            }
-
-            listPlayerAllin = new ArrayList<UserLight>();
-            for(UserLight user : currentHand.getCurrentTurn().getListPlayerAllin())
-            {
-                listPlayerAllin.add(user);
-            }
-        }*/
-
-        /*   ANCIEN ALGORITHME PRESENTANT DES SOUCIS
-        // initialize listPlayerActive
-        if (currentHand.getListTurn().size() == 1){
-            // if it's the first turn in the hand, add all the players in the list
-            for (Seat item : currentHand.getCurrentGame().getListSeatPlayerWithPeculeDepart())
-            {
-                this.listPlayerActive.add(item.getPlayer());
-            }
-        }
-        else
-        {
-            // if it's not the first turn in the hand, get the information from the last turn
-            for (UserLight item : currentHand.getListTurn().get(currentHand.getListTurn().size()-2).getListPlayerActive()
-                    ) {
-                this.listPlayerActive.add(item);
-            }
-        }
-
-        // initialize listPlayerAllin from the last turn
-        for (UserLight item : currentHand.getListTurn().get(currentHand.getListTurn().size()-2).getListPlayerAllin()
-             ) {
-            this.getListPlayerAllin().add(item);
-        }
-
-        // initialize listPlayerFold from the last turn
-        for (UserLight item : currentHand.getListTurn().get(currentHand.getListTurn().size()-2).getListPlayerFold()
-                ) {
-            this.getListPlayerFold().add(item);
-        }*/
     }
 
     /**
@@ -190,7 +119,7 @@ public class Turn implements Serializable {
     public ArrayList<Action> askFirstAction(){
         //TODO: Gestion de l'ante (qui va se révéler relou, à bien réfléchir)
         ArrayList<Action> arrayAc = new ArrayList<Action>();
-        if(getCurrentHand().getListTurn().size()==0)
+        if(getCurrentHand().getListTurn().size()==1)
         {
             Action ac1 = new Action();
             Action ac2 = new Action();
@@ -199,11 +128,13 @@ public class Turn implements Serializable {
             ac1.setUserLightOfPlayer(getListActiveUsers().get(0));
             ac1.setName(EnumerationAction.BLINDE);
             ac1.setAmount(getCurrentHand().getCurrentGame().getBlind());
+            getCurrentHand().getCurrentGame().getSeatOfUser(ac1.getUserLightOfPlayer()).addCurrentMoney(-ac1.getAmount());
             //TODO: ac1.setTime ??
 
             ac2.setUserLightOfPlayer(getListActiveUsers().get(1));
             ac2.setName(EnumerationAction.BIGBLINDE);
             ac2.setAmount(getCurrentHand().getCurrentGame().getBlind()*2);
+            getCurrentHand().getCurrentGame().getSeatOfUser(ac2.getUserLightOfPlayer()).addCurrentMoney(-ac2.getAmount());
             //TODO: ac2.setTime ??
 
             ac3.setUserLightOfPlayer(getNextActiveUserAfterUser(getListActiveUsers().get(1)));

@@ -295,7 +295,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
 
-
+    public void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer){
+        dManagerClient.getInterToIHMTable().notifyReadyGameAnswer(player,answer);
+    }
 
 
 

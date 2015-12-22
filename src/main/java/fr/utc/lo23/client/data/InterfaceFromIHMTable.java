@@ -76,7 +76,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     public void replyAction(Action action) {
         try {
-            dManagerClient.getInterToCom().sendAction(action);
+            dManagerClient.getInterToCom().sendAction(action,dManagerClient.getTableLocal().getIdTable());
         } catch (NetworkFailureException e) {
             e.printStackTrace();
         } catch (IncorrectActionException e) {
@@ -105,7 +105,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
     public void setStartAmount(int amount){
-        dManagerClient.getInterToCom().sendMoneyAmount(dManagerClient.getTableLocal().getIdTable(),getUser(),amount);
+        dManagerClient.getInterToCom().sendMoneyAmount(dManagerClient.getTableLocal().getIdTable(),dManagerClient.getUserLocal().getUserLight(),amount);
     }
 
     public void isReady(boolean status) {

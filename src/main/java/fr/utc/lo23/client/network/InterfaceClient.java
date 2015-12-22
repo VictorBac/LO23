@@ -68,11 +68,15 @@ public interface InterfaceClient {
      *
      */
     public void sendHeartbeat() throws NetworkFailureException;
-    
+
     /**
      * Envoie l'action d'un joueur au serveur
+     * @param Action act
+     * @param UUID IdTable
+     * @throws NetworkFailureException
+     * @throws IncorrectActionException
      */
-    public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException;
+    public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException;
     
     /**
      *

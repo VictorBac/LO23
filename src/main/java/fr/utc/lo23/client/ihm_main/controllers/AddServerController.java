@@ -47,8 +47,8 @@ public class AddServerController extends BaseController{
             return;
         }
         try {
-            mController.getManagerMain().getInterDataToMain().addServer(InetAddress.getByName(fieldIPAddress.getText()), fieldPort.getText());
-        } catch (UnknownHostException e) {
+            mController.getManagerMain().getInterDataToMain().addServer(fieldIPAddress.getText(), Integer.parseInt(fieldPort.getText()));
+        } catch (Exception e) {
            mController.showErrorPopup("Erreur", "Hôte inconnu!");
         }
         mController.showConnectionWindow();

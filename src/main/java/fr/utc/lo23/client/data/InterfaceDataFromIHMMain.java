@@ -22,7 +22,7 @@ public interface InterfaceDataFromIHMMain {
      * @param login
      * @param password
      */
-    void logUser(String login, String password) throws LoginNotFoundException, WrongPasswordException;
+    void logUser(String login, String password, String ip, Integer port) throws LoginNotFoundException, WrongPasswordException;
 
     /**
      * Method to get the user's all information
@@ -83,7 +83,7 @@ public interface InterfaceDataFromIHMMain {
      * @param ip
      * @param port
      */
-    void addServer(InetAddress ip, String port);
+    void addServer(String ip, Integer port);
 
     /**
      * Method to remove server

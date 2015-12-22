@@ -63,6 +63,8 @@ public class ConnectionController extends BaseController {
     private void sendAction() {
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
+        String ip = listViewServers.getSelectionModel().getSelectedItem().getAddress();
+        Integer port = listViewServers.getSelectionModel().getSelectedItem().getPort();
 
         if (login.isEmpty()|| passwd.isEmpty())
         {
@@ -72,7 +74,7 @@ public class ConnectionController extends BaseController {
 
         try { // User logged in
             IHMMainClientManager manager = mController.getManagerMain();
-            manager.getInterDataToMain().logUser(login,passwd);
+            manager.getInterDataToMain().logUser(login,passwd,ip, port);
             //TODO asynchronous...
             mController.userLoggedIn();
         } catch (LoginNotFoundException e) {

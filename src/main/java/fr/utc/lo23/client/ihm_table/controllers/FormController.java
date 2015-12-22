@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Controller of the create table form
+ * Controlleur du formulaire de création de table
  */
 public class FormController {
 
@@ -148,7 +148,7 @@ public class FormController {
         }
 
         if (errors.isEmpty()){ // Toutes les valeurs sont correctement remplies
-            // Getting values
+            // Récupération des valeurs rentrées par l'utilisateur
             String tableName = formName.getText();
             boolean spectator = formSpectatorYes.isSelected();
             boolean spectatorChat = formSpectatorChatYes.isSelected();
@@ -158,7 +158,7 @@ public class FormController {
             Integer ante = Integer.valueOf(formAnte.getText());
             Integer moneyMax = Integer.valueOf(formMoneyMax.getText());
 
-            // Sending Table to Data
+            // Envoie de la table à Data
             ihmTable.getDataInterface().tableToCreate(new Table(tableName, ihmTable.getDataInterface().getUser(), spectator, spectatorChat, playerMax, playerMin, abandon, blinde, tempsMax, ante, moneyMax));
         }
     }

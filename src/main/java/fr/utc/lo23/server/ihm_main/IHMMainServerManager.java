@@ -25,13 +25,28 @@ public class IHMMainServerManager {
 
     // Getters et Setters
 
+    /**
+     * Getter interfaceMainToCom
+     * @return interfaceMainToCom
+     */
+
     public InterMain getInterfaceMainToCom() {
         return interfaceMainToCom;
     }
 
+    /**
+     * Getter interfaceComToMain
+     * @return interfaceComToMain
+     */
+
     public InterfaceComToMain getInterfaceComToMain() {
         return interfaceComToMain;
     }
+
+    /**
+     * Getter managerCom
+     * @return managerCom
+     */
 
     public NetworkManagerServer getManagerCom() {
         return managerCom;
@@ -42,14 +57,20 @@ public class IHMMainServerManager {
      */
     private MainWindowController windowController;
 
+    /**
+     * Setter windowController
+     * @param windowController
+     */
+
     public void setWindowController(MainWindowController windowController) {
         this.windowController = windowController;
     }
 
-
+    /**
+     * Managers creation and interfaces linkage
+     */
 
     public IHMMainServerManager() {
-        // création des managers
         managerData = new DataManagerServer();
         managerCom = new NetworkManagerServer();
 

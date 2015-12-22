@@ -99,6 +99,12 @@ public class IHMMainClientManager {
         updateMainWindowTableList();
     }
 
+    public void removeTable(Table table)
+    {
+        if (tables.contains(table))
+            tables.remove(table);
+        updateMainWindowTableList();
+    }
     //Getters et setters de nos interfaces
 
     public InterfaceMainToData getInterMainToData() {

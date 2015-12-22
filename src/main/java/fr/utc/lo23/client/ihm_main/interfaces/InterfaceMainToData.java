@@ -15,6 +15,7 @@ public interface InterfaceMainToData {
     void onlineUsers(List<UserLight> userList);
     void updateView();
     void notifyNewTable(Table t);
+    void notifyDeletedTable(Table t);
     void returnHome();
     void currentTables(List<Table> currentTables);
     void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type);

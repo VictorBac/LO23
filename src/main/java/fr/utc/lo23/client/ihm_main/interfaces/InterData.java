@@ -69,6 +69,11 @@ import java.util.List;
     }
 
     @Override
+    public void notifyDeletedTable(Table t) {
+        managerMain.removeTable(t);
+    }
+
+    @Override
     public void returnHome() {
         Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().backFromGame());
     }
@@ -121,11 +126,13 @@ import java.util.List;
             }
         });
     }
+
     @Override
     public void tableCreated(Table tableCreatedOnServer) {
         Platform.runLater(() ->
             managerMain.getControllerMain().getMainWindowController().joinCreatedTable(tableCreatedOnServer));
     }
+
     @Override
     public void notifyNewUserInTable(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController()

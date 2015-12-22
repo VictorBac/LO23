@@ -28,7 +28,7 @@ public class Pot implements Serializable {
     }
 
     /**
-     * Constructeur par d�faut
+     * Default constructor
      */
     public Pot() {
         this.players = new UserLightList();
@@ -40,7 +40,7 @@ public class Pot implements Serializable {
     }
 
     /**
-     * add player to the end of the pot
+     * add player at the end of the pot
      * @param player : player to add
      */
     public void addPlayer(UserLight player){

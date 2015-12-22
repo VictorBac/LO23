@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import fr.utc.lo23.common.data.exceptions.StatsSizeException;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -119,8 +120,8 @@ public class User implements Serializable{
      * @param beginMse : la mise de depart du joueur
      * @param points : son score par partie
      */
-    public void updateStats(int beginMse, int points){
-        statsUser.updateStats(beginMse, points);
+    public void updateStats(Integer beginMse, Integer points) throws StatsSizeException {
+        statsUser.addNewStat(beginMse, points);
     };
 
 

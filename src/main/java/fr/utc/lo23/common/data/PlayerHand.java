@@ -6,13 +6,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Classe repr�sentant les cartes dans les mains d'un joueur
+ * Calss representing the cards in a player's hand
  * Created by Haroldcb on 21/10/2015.
  */
 public class PlayerHand implements Serializable {
     /**
-     * listCardsHand : cartes dans la main du joueur
-     * player : joueur
+     * listCardsHand : cards in player's hand
+     * player : owner of the hand
      */
     private ArrayList<Card> listCardsHand;
     private UserLight player;
@@ -20,7 +20,7 @@ public class PlayerHand implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructeur
+     * Constructor
      * @param listCardsHand
      * @param player
      */
@@ -30,7 +30,7 @@ public class PlayerHand implements Serializable {
     }
 
     /**
-     * Constructeur début Hand
+     * Constructor
      * @param player
      */
     public PlayerHand(UserLight player) {
@@ -39,7 +39,7 @@ public class PlayerHand implements Serializable {
     }
 
     /**
-     * Constructeur par d�faut
+     * Default constructor
      */
     public PlayerHand() {
         this.listCardsHand = new ArrayList<Card>();
@@ -47,8 +47,8 @@ public class PlayerHand implements Serializable {
     }
 
     /**
-     * Methode permettant d'ajouter une carte � un joueur
-     * @param carte : carte � ajouter
+     * Method to add a card to a player
+     * @param carte : card to add
      */
     public void addNewCard(Card carte){
         this.listCardsHand.add(carte);

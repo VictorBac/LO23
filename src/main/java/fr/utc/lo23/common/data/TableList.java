@@ -84,9 +84,9 @@ public class TableList implements Serializable {
 
 
     /**
-     *
+     * Return the index of the table from its UUID if it's in the tables list
      * @param idTable
-     * @return
+     * @return : index of the table if contained, -1 if not
      */
     private int getIDTable(UUID idTable) {
         int index = 0;

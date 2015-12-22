@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
+ * Controller used to manage the Connection Window
  * Created by jbmartin on 04/11/15.
  */
 public class ConnectionController extends BaseController {
@@ -50,7 +51,12 @@ public class ConnectionController extends BaseController {
      * Start the connection with the server
      * @throws IOException
      */
+
+
     @FXML
+    /** On a click to connect, we start our function that manage it
+     *
+     */
     public void didButtonConnectClick(ActionEvent event) throws IOException {
         sendAction();
     }
@@ -86,9 +92,9 @@ public class ConnectionController extends BaseController {
 
     }
     /**
-     * Override display methods to show the listviewServers
+     * Override display methods that display the listview of Servers
      */
-    //@Override
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         serverList = FXCollections.observableArrayList(new ArrayList<Server>());
         listViewServers.setItems(serverList);
@@ -144,7 +150,7 @@ public class ConnectionController extends BaseController {
     }
 
     /**
-     * Delete a server
+     * Delete the selected server
      */
     @FXML
     public void didClickRemoveServerButton(ActionEvent event)

@@ -40,6 +40,8 @@ public class Game implements Serializable{
      * @param ante
      * @param statusOfTheGame
      * @param listUserSpectator
+     *
+     * Apparemment il n'est jamais utilisé celui la, y a vraiment besoin de le garder ?  en plus il ne remplis pas la table !
      */
     public Game(UUID idGame, ArrayList<Hand> listHand, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, Chat chatGame, Timestamp timeStampStartOfTheGame, int ante, EnumerationStatusGame statusOfTheGame, ArrayList<UserLight> listUserSpectator) {
         this.idGame = idGame;
@@ -181,8 +183,18 @@ public class Game implements Serializable{
     public void setMoneyOfPlayer(UserLight user, int value){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
-            if(user==seat.getPlayer())
+            if(user.equals(seat.getPlayer()))
                 seat.setCurrentAccount(value);
+        }
+    }
+
+    public void intializeMoneyOfPlayer(UserLight user, int value){
+        for(Seat seat: getListSeatPlayerWithPeculeDepart())
+        {
+            if(user.equals(seat.getPlayer())){
+                seat.setCurrentAccount(value);
+                seat.setStartAmount(value);
+            }
         }
     }
 
@@ -211,6 +223,14 @@ public class Game implements Serializable{
         else
             finished = false;
         return finished;
+    }
+
+    public Seat getSeatOfUser(UserLight user){
+        for(Seat seat : getListSeatPlayerWithPeculeDepart()){
+            if(seat.getPlayer().equals(user))
+                return seat;
+        }
+        return null;
     }
 
 
@@ -287,6 +307,18 @@ public class Game implements Serializable{
 
     public void setReadyUserAnswers(HashMap<UserLight, Boolean> readyUserAnswers) {
         this.readyUserAnswers = readyUserAnswers;
+    }
+
+    public Table getTableOfTheGame() {
+        return tableOfTheGame;
+    }
+
+    public void setTableOfTheGame(Table tableOfTheGame) {
+        this.tableOfTheGame = tableOfTheGame;
+    }
+
+    public void setListSeatPlayerWithPeculeDepart(ArrayList<Seat> listSeatPlayerWithPeculeDepart) {
+        this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
     }
 }
 

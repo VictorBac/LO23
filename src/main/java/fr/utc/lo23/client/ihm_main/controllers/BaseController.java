@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 
 /**
  * The Class from which all of our Controllers inherit
+ * It s mainly used to access our main Controller
  * Created by jbmartin on 01/12/2015.
  */
 public abstract class BaseController implements Initializable {

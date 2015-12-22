@@ -1,10 +1,12 @@
 package fr.utc.lo23.common.data;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Classe représentant les cartes dans les mains d'un joueur
+ * Classe reprï¿½sentant les cartes dans les mains d'un joueur
  * Created by Haroldcb on 21/10/2015.
  */
 public class PlayerHand implements Serializable {
@@ -14,6 +16,7 @@ public class PlayerHand implements Serializable {
      */
     private ArrayList<Card> listCardsHand;
     private UserLight player;
+    private Boolean allin = false;
     private static final long serialVersionUID = 1L;
 
     /**
@@ -27,7 +30,16 @@ public class PlayerHand implements Serializable {
     }
 
     /**
-     * Constructeur par défaut
+     * Constructeur dÃ©but Hand
+     * @param player
+     */
+    public PlayerHand(UserLight player) {
+        this.listCardsHand = new ArrayList<Card>();
+        this.player = player;
+    }
+
+    /**
+     * Constructeur par dï¿½faut
      */
     public PlayerHand() {
         this.listCardsHand = new ArrayList<Card>();
@@ -35,8 +47,8 @@ public class PlayerHand implements Serializable {
     }
 
     /**
-     * Methode permettant d'ajouter une carte à un joueur
-     * @param carte : carte à ajouter
+     * Methode permettant d'ajouter une carte ï¿½ un joueur
+     * @param carte : carte ï¿½ ajouter
      */
     public void addNewCard(Card carte){
         this.listCardsHand.add(carte);
@@ -58,5 +70,31 @@ public class PlayerHand implements Serializable {
 
     public void setPlayer(UserLight player) {
         this.player = player;
+    }
+
+    public Boolean isAllin() {
+        return allin;
+    }
+
+    public void setAllin() {
+        this.allin = true;
+    }
+
+    public Boolean isFold(){
+        if(getListCardsHand().size()==0)
+            return true;
+        else
+            return false;
+    }
+
+    public void setFold(){
+        getListCardsHand().clear();
+    }
+
+    public Boolean isActive(){
+        if(!isFold() && !isAllin())
+            return true;
+        else
+            return false;
     }
 }

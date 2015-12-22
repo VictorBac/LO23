@@ -64,19 +64,28 @@ public class EditOwnProfilController extends BaseController {
 
     /**
      * Data initialization of the Edit Window, we get the current user from DATA,
-     * then we call our function to fill
+     * then we call our function to fill the user's information
      */
     public void initdata(){
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
         fillUserform(edituser);
     }
+
+    /**
+     * Cancel button, Exit the edition of profile,
+     * go back to the Window which display your view your own profile
+     */
     public void didClickCancelButton(ActionEvent actionEvent) {
         mController.showViewOwnWindow();
     }
 
 
     /**
-     * mettre un profil à jour
+     * Update Profile,
+     * we get the User from DATA,
+     * we set his new information,
+     * if he wants to change his password, we check first that the "old password" is the same as the current one,
+     * at the end, we call the update function of DATA.
      */
     public void UpdateProfil(ActionEvent actionEvent) {
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
@@ -102,7 +111,8 @@ public class EditOwnProfilController extends BaseController {
     }
 
     /**
-     * rempli le controller avec les informations actuelles
+     * We fill the Window with the User's informations
+     * @param UserLocal the User from who we have to fill the information.
      */
     public void fillUserform(User UserLocal) {
         UserLight lightuser = UserLocal.getUserLight();
@@ -121,6 +131,9 @@ public class EditOwnProfilController extends BaseController {
 
 
     @FXML
+    /**
+     * Button to change the Avatar of the profile, the user has to give the file of his image.
+     */
     void avatarButtonClick(ActionEvent event) {
         File file = avatarChooser.showOpenDialog(username.getScene().getWindow());
         if (file != null)

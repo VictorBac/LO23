@@ -138,6 +138,8 @@ public interface InterfaceServer {
      */
     public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException;
 
+    public void stop();
 
+    public void sendLogGame() throws NetworkFailureException;
 
     }

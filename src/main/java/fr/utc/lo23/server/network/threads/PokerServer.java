@@ -30,7 +30,7 @@ public class PokerServer extends Thread {
      * @param portToListen default port to listen is defined in const var, if you would like to change it,
      *                     give an other number here
      */
-    public PokerServer(NetworkManagerServer manager, Integer portToListen) throws NetworkFailureException{
+    public PokerServer(NetworkManagerServer manager, Integer portToListen) throws NetworkFailureException, IOException {
         Console.logn("Lancement du serveur.... ");
         networkManager = manager;
         threadsClientList = new ArrayList<ConnectionThread>();
@@ -48,14 +48,10 @@ public class PokerServer extends Thread {
      * Create the socket
      * @throws Exception
      */
-    public void initSocket(int portToListen) throws NetworkFailureException {
+    public void initSocket(int portToListen) throws NetworkFailureException, IOException {
         if (null != listeningSocket) throw new NetworkFailureException("Le socket serveur existe déjà");
-        try {
-            listeningSocket = new ServerSocket(portToListen);
-        }
-        catch (Exception e){
-            throw new NetworkFailureException("Impossible de prendre la main sur le port: " + portToListen);
-        }
+        listeningSocket = new ServerSocket(portToListen);
+
     }
 
     /**

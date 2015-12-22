@@ -107,7 +107,7 @@ public interface InterfaceClient {
      * @param socketIp ip of the server
      * @param socketPort port of the server
      */
-    public void requestLoginServer(User u, String socketIp, int socketPort);
+    public void requestLoginServer(User u, String socketIp, int socketPort) throws Exception;
 
     /**
      * Send a packet

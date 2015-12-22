@@ -4,38 +4,47 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * Class for statistic. Hope it will be used.
  * Created by Jianghan on 20/10/2015.
  */
 public class Stats implements Serializable {
     private static final long serialVersionUID = 1L;
-    private ArrayList<Integer> listMiseBegin;
-    private ArrayList<Integer> listPointsByGame;
+    //mise de depart du joueur
+    private ArrayList<Integer> startPointsList;
+    //points par partie du joueur
+    private ArrayList<Integer> endPointsList;
 
-    /**
-     * Method to update these two ArrayLists
-     * @param beginMse : mise de depart du joueur
-     * @param points : points par partie du joueur
-     */
-    public void updateStats(int beginMse, int points){
-        listMiseBegin.add(beginMse);
-        listPointsByGame.add(points);
+    public Stats() {
+        this.startPointsList = new ArrayList<>();
+        this.endPointsList = new ArrayList<>();
     }
 
     /**
-     * Ajoute une nouvelle stat au joueur
-     * @param newStat
-     * TODO : how does it work?
+     * Set startPoints List and endPoints List.
+     * @param start start points list
+     * @param end end points list
      */
-    public void addNewStat(int newStat){
-
-
+    public void setStats(ArrayList<Integer> start, ArrayList<Integer> end){
+        this.startPointsList = start;
+        this.endPointsList = end;
     }
 
     /**
-     * getter of listPointsByGame
-     * @return the attribute listPointsByGame
+     * Add a new record to the statistic
+     * @param startPoint mise de depart du joueur
+     * @param endPoints points par partie du joueur
      */
-    public ArrayList<Integer> getStats(){
-        return listPointsByGame;
-    };
+    public void addNewStat(int startPoint, int endPoints){
+        startPointsList.add(startPoint);
+        endPointsList.add(endPoints);
+    }
+
+    /******************* Gettor **********************/
+    public ArrayList<Integer> getStartPointsList() {
+        return startPointsList;
+    }
+
+    public ArrayList<Integer> getEndPointsList() {
+        return endPointsList;
+    }
 }

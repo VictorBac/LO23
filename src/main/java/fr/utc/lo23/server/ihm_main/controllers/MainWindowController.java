@@ -1,5 +1,6 @@
 package fr.utc.lo23.server.ihm_main.controllers;
 
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.ihm_main.IHMMainServerManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -79,7 +81,13 @@ public class MainWindowController {
     {
         try {
             int portNumber = Integer.parseInt(fieldPort.getText());
-            manager.getInterfaceComToMain().start(portNumber);
+            try {
+                manager.getInterfaceComToMain().start(portNumber);
+            } catch (NetworkFailureException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             addTextLog("Starting server on port " + portNumber + "...");
             fieldPort.setDisable(true);

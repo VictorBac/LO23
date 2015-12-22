@@ -85,7 +85,7 @@ public class ConnectionController extends BaseController {
 
         try { // User logged in
             IHMMainClientManager manager = mController.getManagerMain();
-            manager.getInterDataToMain().logUser(login,passwd);
+            manager.getInterDataToMain().logUser(login,passwd,ip,port);
             //TODO asynchronous...
             mController.userLoggedIn();
         } catch (LoginNotFoundException e) {
@@ -93,6 +93,8 @@ public class ConnectionController extends BaseController {
 
         } catch (WrongPasswordException e) {
             mController.showErrorPopup("Erreur", "Mot de passe incorrect.");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

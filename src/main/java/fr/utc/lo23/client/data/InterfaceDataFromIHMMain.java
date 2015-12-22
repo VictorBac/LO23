@@ -22,7 +22,7 @@ public interface InterfaceDataFromIHMMain {
      * @param login
      * @param password
      */
-    void logUser(String login, String password, String ip, Integer port) throws LoginNotFoundException, WrongPasswordException;
+    void logUser(String login, String password, String ip, Integer port) throws Exception;
 
     /**
      * Method to get the user's all information

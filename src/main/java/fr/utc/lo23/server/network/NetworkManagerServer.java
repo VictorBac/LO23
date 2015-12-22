@@ -11,6 +11,7 @@ import fr.utc.lo23.server.ihm_main.interfaces.InterMain;
 import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -52,7 +53,7 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     /* == METHODES IMPLEMENTATION == */
 
     @Override
-    public void start(int portToListen) throws NetworkFailureException {
+    public void start(int portToListen) throws NetworkFailureException, IOException {
         if(dataInstance == null)Console.log("Interface data non set dans network");
 
         server = new PokerServer(this, listeningPort);

@@ -32,7 +32,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param login
      * @param password
      */
-    public void logUser(String login, String password, String ip, Integer port) throws LoginNotFoundException, WrongPasswordException {
+    public void logUser(String login, String password, String ip, Integer port) throws Exception {
         User userLocal = (User) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + login);
         if (userLocal == null) {
             throw new LoginNotFoundException(login);
@@ -54,10 +54,6 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
 
             dManagerClient.getInterToCom().requestLoginServer(userLogin, ip, port);
-            //TODO: set socketIp and socketPort with IHM data
-            String socketIp = Params.DEFAULT_SERVER_ADDRESS;
-            int socketPort = Params.DEFAULT_SERVER_PORT;
-            dManagerClient.getInterToCom().requestLoginServer(userLogin, socketIp, socketPort);
         }
     }
 

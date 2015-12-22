@@ -35,18 +35,11 @@ public class ServerLink extends Thread {
     /**
      * Try to connect to the server
      * @throws Exception
-     * @param newSocketIp
-     * @param newSocketPort
+     * @param socketIp
+     * @param socketPort
      */
-    public void connect(InetAddress newSocketIp, String newSocketPort) throws Exception{
+    public void connect(String socketIp, int socketPort) throws Exception{
         if (null != socket) throw new NetworkFailureException("La socket client existe déjà");
-
-        String socketIp = Params.DEFAULT_SERVER_ADDRESS;
-        if(newSocketIp != null)
-            socketIp = newSocketIp;
-        int socketPort = Params.DEFAULT_SERVER_PORT;
-        if(newSocketPort != -1)
-            socketPort = newSocketPort;
 
         socket = new Socket();
         Console.log("Le client tente de se connecter sur: " + socketIp + ":" + socketPort);

@@ -2,6 +2,7 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.*;
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
@@ -46,16 +47,14 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             throw new WrongPasswordException();
         } else {
             Console.log("loguser "+ userLocal.toString());
-
             //remove the psw and send userLocal to server
             dManagerClient.setUserLocal(userLocal);
             User userLogin = new User(userLocal);
             userLogin.setPwd(null);
 
-            //set socketIp and socketPort with IHM data
-            InetAddress socketIp = server.getAddress();
-            String socketPort = server.getPort();
-
+            //TODO: set socketIp and socketPort with IHM data
+            String socketIp = Params.DEFAULT_SERVER_ADDRESS;
+            int socketPort = Params.DEFAULT_SERVER_PORT;
             dManagerClient.getInterToCom().requestLoginServer(userLogin, socketIp, socketPort);
         }
     }

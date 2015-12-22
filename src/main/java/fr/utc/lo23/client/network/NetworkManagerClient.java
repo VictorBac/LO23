@@ -42,7 +42,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     /* == METHODES IMPLEMENTATION == */
 
     @Override
-    public void requestLoginServer(User u, InetAddress socketIp, String socketPort){
+    public void requestLoginServer(User u, String socketIp, int socketPort){
         try {
             serverLink.connect(socketIp, socketPort);
         } catch (Exception e) {

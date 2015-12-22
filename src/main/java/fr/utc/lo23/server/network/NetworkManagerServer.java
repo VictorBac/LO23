@@ -143,11 +143,16 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     @Override
-    public void askActionToPLayer(Action a, EnumerationAction[] enAct) {
+    public void transmitAction(Action a,ArrayList<UserLight> aPlayers,UserLight user){
+        TransmitActionMessage message = new TransmitActionMessage(a, user);
+        server.sendToListOfUsers(aPlayers,message);
+    }
+
+    @Override
+    public void askActionToPLayer(ArrayList<UserLight> aPlayers, Action a, EnumerationAction[] enAct) {
+        //Envoyer la demande d'action au joueur lui-même
         AskActionMessage askActM = new AskActionMessage(a, enAct);
-        ArrayList<UserLight> listP = new ArrayList<UserLight>();
-        listP.add(a.getUserLightOfPlayer());
-        server.sendToListOfUsers(listP,askActM);
+        server.sendToListOfUsers(aPlayers,askActM);
     }
 
     @Override

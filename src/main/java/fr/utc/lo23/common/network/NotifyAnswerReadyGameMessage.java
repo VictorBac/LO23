@@ -5,8 +5,8 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message permettant de transmettre la réponse
- * au ready d'un joueur à tous les autres joueurs de la table
+ * Message permettant de transmettre la rï¿½ponse
+ * au ready d'un joueur ï¿½ tous les autres joueurs de la table
  * Created by rbonneau on 19/12/2015.
  */
 public class NotifyAnswerReadyGameMessage extends Message {
@@ -25,6 +25,6 @@ public class NotifyAnswerReadyGameMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //threadClient.getNetworkManager().getDataInstance().inforReadyAnswerFromOtherPlayer(otherPlayer, answer);//TODO mettre bon nom de méthode
+        threadClient.getNetworkManager().getDataInstance().infosReadyAnswerFromOtherPlayer(otherPlayer, answer);
     }
 }

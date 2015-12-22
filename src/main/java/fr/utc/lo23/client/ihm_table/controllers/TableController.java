@@ -42,6 +42,10 @@ public class TableController {
     private ArrayList<Seat> refSeats = new ArrayList<Seat>();
     private Integer lastRaise;
 
+    public HashMap<UserLight, PlayerController> getPlayerControllerMap() {
+        return playerControllerMap;
+    }
+
     private boolean isHost = true;
 
     public Table getTable() {
@@ -49,7 +53,11 @@ public class TableController {
     }
 
     public PlayerController getPlayerControllerOf(UserLight user){
-        return playerControllerMap.get(user);
+        for (Map.Entry<UserLight, PlayerController> entry : playerControllerMap.entrySet()) {
+            if(entry.getKey().getIdUser().equals(user.getIdUser()))
+                return entry.getValue();
+        }
+        return null;
     }
 
     public void setInterface(IHMTable ihmTable){
@@ -601,6 +609,8 @@ public class TableController {
         if(popupAmountInput.getText().isEmpty())
             return;
         amount = Integer.parseInt(popupAmountInput.getText());
+        System.out.println(amount);
+        System.out.println(table.getCurrentGame().getMaxStartMoney());
         if(amount <= 0 || amount > table.getCurrentGame().getMaxStartMoney())
             return;
         ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));

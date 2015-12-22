@@ -24,17 +24,20 @@ public class SetMoneyAmountMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().setMoneyPlayer(table,user,amount);
-
-        //Informe les autres joueurs de la table de l'argent du joueur
-        ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(table);
-        SetMoneyAmountMessage notifyAnswerToOthers = new SetMoneyAmountMessage(table,user,amount);
-
-        for (UserLight u : aPlayers) {
-            if (u.getIdUser() != user.getIdUser()) {
-                threadServer.send(notifyAnswerToOthers);
-            }
+        if(threadServer.getMyServer().getNetworkManager().getDataInstance().setMoneyPlayer(table,user,amount))
+        {
+            //Accepter et envoyer à tout le monde
+            ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(table);
+            SetMoneyAmountMessage notifyAnswerToOthers = new SetMoneyAmountMessage(table,user,amount);
+            threadServer.getMyServer().sendToListOfUsers(aPlayers,notifyAnswerToOthers);
         }
+        else
+        {
+            //Refuser à l'host et redemmander
+            AskMoneyMessage askMoneyMess = new AskMoneyMessage();
+            threadServer.send(askMoneyMess);
+        }
+
     }
 
     @Override

@@ -72,7 +72,7 @@ public interface InterfaceServerDataFromCom {
 
     void confirmationCardReceived(UserLight player);
 
-    Action replyAction(Action playedAction, UserLight player);
+    void replyAction(UUID table, Action playedAction);
 
     void confirmationActionReceived(UserLight sender);
 
@@ -105,7 +105,7 @@ public interface InterfaceServerDataFromCom {
 
     public void getAnswerReady(UUID idTable, UserLight player, boolean ready);
 
-    public void askAction (UserLight player, Action empty);
+    public void askAction (Table table, UserLight player, EnumerationAction[] availableActions);
 
     public void getAction(UserLight player, Action attempt);
 
@@ -124,4 +124,6 @@ public interface InterfaceServerDataFromCom {
     void setReadyAnswer(UUID idTable, UserLight user, Boolean answer);
 
     void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode);
+
+    void checkIfEverybodyIsReady(UUID idtable);
 }

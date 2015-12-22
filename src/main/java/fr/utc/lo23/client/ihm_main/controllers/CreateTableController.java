@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * lance la controller table
+ * Start the Table Controller, we give to TABLE a Pane
  */
 
 public class CreateTableController extends BaseController{

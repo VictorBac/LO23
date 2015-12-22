@@ -55,7 +55,7 @@ public class CreateController extends BaseController {
     private String imagePath;
     /**
      * Create a new user, the User need to have filled the nickname, his age, and his password
-     * check if the password is well writen twice, then create a new user.
+     * check if the password is well writen twice, then create a new user and sending him to DATA.
      */
     public void createNewUser(ActionEvent actionEvent) {
         String testpass;
@@ -107,10 +107,16 @@ public class CreateController extends BaseController {
     }
 
     @FXML
+    /**
+     * Cancel Button, come back to the Connection Window
+     */
     public void didClickCancelButton(ActionEvent event) {
         mController.showConnectionWindow();
     }
 
+    /**
+     * Initialization of the Window, with the standard avatar image
+     */
     public void initialize(URL location, ResourceBundle resources) {
         avatarChooser = new FileChooser();
         avatarChooser.setTitle("Choix de l'avatar");
@@ -118,6 +124,9 @@ public class CreateController extends BaseController {
     }
 
     @FXML
+    /**
+     * click to change the avatar, the user has to give the path of his picture.
+     */
     public void didClickAvatar(ActionEvent event) {
         File file = avatarChooser.showOpenDialog(username.getScene().getWindow());
         if (file != null)

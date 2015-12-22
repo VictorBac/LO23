@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
+ * This controller is used to manage the Edit Profil Window
  * Created by leclercvictor on 08/12/2015.
  */
 public class EditOwnProfilController extends BaseController {
@@ -50,12 +51,21 @@ public class EditOwnProfilController extends BaseController {
     private FileChooser avatarChooser;
     private String imagePath;
 
+    /**
+     * initialization of the Window with the current Avatar of the User
+     * @param location
+     * @param resources
+     */
     public void initialize(URL location, ResourceBundle resources) {
         imagePath = "";
         avatarChooser = new FileChooser();
         avatarChooser.setTitle("Choix de l'avatar");
     }
 
+    /**
+     * Data initialization of the Edit Window, we get the current user from DATA,
+     * then we call our function to fill
+     */
     public void initdata(){
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
         fillUserform(edituser);

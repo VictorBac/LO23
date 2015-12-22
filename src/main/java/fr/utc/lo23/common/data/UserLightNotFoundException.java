@@ -3,7 +3,7 @@ package fr.utc.lo23.common.data;
 import java.util.UUID;
 
 /**
- * Created by Rémy on 31/10/2015.
+ * Created by Rï¿½my on 31/10/2015.
  */
 public class UserLightNotFoundException extends Exception {
 

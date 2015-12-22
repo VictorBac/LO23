@@ -2,6 +2,7 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.*;
 import fr.utc.lo23.client.network.main.Console;
+import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
@@ -52,8 +53,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             userLogin.setPwd(null);
 
             //TODO: set socketIp and socketPort with IHM data
-            String socketIp = null;
-            int socketPort = -1;
+            String socketIp = Params.DEFAULT_SERVER_ADDRESS;
+            int socketPort = Params.DEFAULT_SERVER_PORT;
             dManagerClient.getInterToCom().requestLoginServer(userLogin, socketIp, socketPort);
         }
     }

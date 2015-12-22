@@ -3,6 +3,7 @@ package fr.utc.lo23.client.network;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.*;
 
+import java.net.InetAddress;
 import java.util.UUID;
 
 /**
@@ -93,7 +94,7 @@ public interface InterfaceClient {
 
     public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
 
-    public void requestLoginServer(User u, String socketIp, int socketPort);
+    public void requestLoginServer(User u, InetAddress socketIp, String socketPort);
 
     public void sendPacket() throws NetworkFailureException;
 

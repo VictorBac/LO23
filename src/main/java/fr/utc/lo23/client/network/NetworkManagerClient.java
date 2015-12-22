@@ -9,6 +9,7 @@ import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 
+import java.net.InetAddress;
 import java.util.UUID;
 
 /**
@@ -46,7 +47,7 @@ public class NetworkManagerClient implements InterfaceClient  {
      * @param socketPort
      * @throws NetworkFailureException
      */
-    public void requestLoginServer(User u, String socketIp, int socketPort){
+    public void requestLoginServer(User u, InetAddress socketIp, String socketPort){
         try {
             serverLink.connect(socketIp, socketPort);
         } catch (Exception e) {

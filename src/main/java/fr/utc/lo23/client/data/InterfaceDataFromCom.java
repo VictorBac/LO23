@@ -214,4 +214,10 @@ public interface InterfaceDataFromCom {
     public void stopGame(Game gameOfTheUserLocal);
 
     public void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer);
+
+    /**
+     * Method to notify that a Table was destroyed on the server
+     * @param idTableDestroyed  UUID of the Table which is destroyed
+     */
+    public void deleteTable(UUID idTableDestroyed);
 }

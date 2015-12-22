@@ -54,6 +54,10 @@ public class AddServerController extends BaseController{
         mController.showConnectionWindow();
     }
 
+    /**
+     * Bouton Cancel
+     * @param event
+     */
     @FXML
     public void didClickCancelButton(ActionEvent event) {
         mController.showConnectionWindow();

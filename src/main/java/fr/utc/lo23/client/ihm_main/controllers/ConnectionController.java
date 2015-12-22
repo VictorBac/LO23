@@ -1,41 +1,30 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
-import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
-import fr.utc.lo23.client.data.InterfaceFromIHMMain;
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 /**
  * Created by jbmartin on 04/11/15.
  */
 public class ConnectionController extends BaseController {
-    public InterfaceFromIHMMain interfromIHMMAIN;
-
     @FXML
     private AnchorPane bgimage;
 
@@ -62,7 +51,7 @@ public class ConnectionController extends BaseController {
      * @throws IOException
      */
     @FXML
-    void didButtonConnectClick(ActionEvent event) throws IOException {
+    public void didButtonConnectClick(ActionEvent event) throws IOException {
         sendAction();
     }
 
@@ -94,7 +83,6 @@ public class ConnectionController extends BaseController {
      */
     //@Override
     public void initialize(URL location, ResourceBundle resources) {
-        //serverList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getServersList());
         serverList = FXCollections.observableArrayList(new ArrayList<Server>());
         listViewServers.setItems(serverList);
         listViewServers.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -154,7 +142,7 @@ public class ConnectionController extends BaseController {
      * ajouter un serveur
      */
     @FXML
-    void didClickAddServerButton(ActionEvent event) {
+    public void didClickAddServerButton(ActionEvent event) {
         mController.showAddServerWindow();
     }
 
@@ -162,7 +150,7 @@ public class ConnectionController extends BaseController {
      * supprimer un serveur
      */
     @FXML
-    void didClickRemoveServerButton(ActionEvent event)
+    public void didClickRemoveServerButton(ActionEvent event)
     {
         Server selectedServer = listViewServers.getSelectionModel().getSelectedItem();
         if (selectedServer != null) {

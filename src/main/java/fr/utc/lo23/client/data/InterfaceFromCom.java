@@ -301,6 +301,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
 
+    public void deleteTable(UUID idTableDestroyed){
+        //TODO add in integration dManagerClient.getInterToIHMMain().notifyDeletedTable(dManagerClient.getListTablesLocal().getTable(idTableDestroyed));
+    }
 
 
 

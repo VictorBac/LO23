@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Created by R�my on 20/10/2015.
+ * Created by Remy on 20/10/2015.
  */
 public class UserLight implements Serializable {
 
@@ -15,7 +15,7 @@ public class UserLight implements Serializable {
     private ImageAvatar avatar;
 
     /**
-     * empty constructor
+     * Empty constructor
      */
     public UserLight(){
 
@@ -31,6 +31,10 @@ public class UserLight implements Serializable {
         this.avatar = toCopy.getAvatar();
     }
 
+    /**
+     * Constructor with only pseudo, the UUID is generated
+     * @param nickname pseudo of the User
+     */
     public UserLight(String nickname)
     {
         this.idUser = UUID.randomUUID();
@@ -39,6 +43,7 @@ public class UserLight implements Serializable {
     }
 
     /**
+     * Constructor deprecated
      * @deprecated
      * @param pseudo
      * @param avatar
@@ -49,25 +54,51 @@ public class UserLight implements Serializable {
         this.avatar = new ImageAvatar(avatar.getPath());
     }
 
+    /**
+     * Constructor that takes the pseudo and the path to the Image
+     * @param pseudo pseudo of the User
+     * @param pathImageAvatar String of the Image used for the Avatar
+     * @throws IOException error if no file was found for the Image at the Path specified
+     */
     public UserLight(String pseudo, String pathImageAvatar) throws IOException {
         this.pseudo = pseudo;
         this.avatar = new ImageAvatar(pathImageAvatar);
     }
 
+    /**
+     * Getter to get the UUID
+     * @return the UUID of the UserLight
+     */
     public UUID getIdUser(){
         return idUser;
     }
 
+    /**
+     * Getter to get the pseudo
+     * @return String that corresponds to the pseudo of the UserLight
+     */
     public String getPseudo(){
         return pseudo;
     }
 
+    /**
+     * Getter to get the ImageAvatar of the UserLight
+     * @return ImageAvatar of the UserLight
+     */
     public ImageAvatar getAvatar(){ return avatar; }
 
+    /**
+     * Setter to set the UUID of the User, avoid to use
+     * @param idUser the UUID of the UserLight
+     */
     public void setIdUser(UUID idUser) {
         this.idUser = idUser;
     }
 
+    /**
+     *
+     * @param pseudo
+     */
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }

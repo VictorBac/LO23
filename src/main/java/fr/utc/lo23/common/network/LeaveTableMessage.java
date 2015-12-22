@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
@@ -13,19 +14,21 @@ import java.util.UUID;
 public class LeaveTableMessage extends Message {
     UserLight user;
     UUID tab ;
+    EnumerationTypeOfUser userType;
 
-    public LeaveTableMessage(UserLight userLocal, UUID idTable) {
+    public LeaveTableMessage(UserLight userLocal, UUID idTable, EnumerationTypeOfUser usertype) {
         super();
         this.user = userLocal;
         this.tab = idTable;
+        this.userType = usertype;
     }
 
     @Override
     public void process(ConnectionThread threadServer) {
         PokerServer myServ = threadServer.getMyServer();
-        NotifyPlayerLeftTableMessage message = new NotifyPlayerLeftTableMessage(user,tab);
+        NotifyPlayerLeftTableMessage message = new NotifyPlayerLeftTableMessage(user,tab,userType);
         //TODO : decommenter quand data ready
-        // myServ.getNetworkManager().getDataInstance().playerLeftTable(user, tab);
+        // myServ.getNetworkManager().getDataInstance().playerLeftTable(user, tab,userType);
         myServ.sendToAll(message);
     }
 

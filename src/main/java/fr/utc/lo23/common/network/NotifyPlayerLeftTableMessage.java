@@ -14,11 +14,13 @@ public class NotifyPlayerLeftTableMessage extends Message {
 
     UserLight user;
     UUID tab ;
+    EnumerationTypeOfUser userType;
 
-    public NotifyPlayerLeftTableMessage(UserLight userLocal, UUID idTable) {
+    public NotifyPlayerLeftTableMessage(UserLight userLocal, UUID idTable, EnumerationTypeOfUser usertype) {
         super();
         this.user = userLocal;
         this.tab = idTable;
+        this.userType = usertype;
     }
 
     @Override
@@ -28,7 +30,6 @@ public class NotifyPlayerLeftTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //TODO: Voir pour passer le type d'utilisateur
-        threadClient.getNetworkManager().getDataInstance().transmitLeaveGame(tab, user, EnumerationTypeOfUser.PLAYER);
+        threadClient.getNetworkManager().getDataInstance().transmitLeaveGame(tab, user, userType);
     }
 }

@@ -10,6 +10,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -34,8 +35,10 @@ public class ServerLink extends Thread {
     /**
      * Try to connect to the server
      * @throws Exception
+     * @param newSocketIp
+     * @param newSocketPort
      */
-    public void connect(String newSocketIp, int newSocketPort) throws Exception{
+    public void connect(InetAddress newSocketIp, String newSocketPort) throws Exception{
         if (null != socket) throw new NetworkFailureException("La socket client existe déjà");
 
         String socketIp = Params.DEFAULT_SERVER_ADDRESS;

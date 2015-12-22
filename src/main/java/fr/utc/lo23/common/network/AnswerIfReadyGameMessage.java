@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Message permettant de répondre à la demande de ready du serveur
+ * Message permettant de rï¿½pondre ï¿½ la demande de ready du serveur
  * pour joueur
  * Created by rbonneau on 19/12/2015.
  */
@@ -28,15 +28,13 @@ public class AnswerIfReadyGameMessage extends Message {
     public void process(ConnectionThread threadServer) {
         threadServer.getMyServer().getNetworkManager().getDataInstance().setReadyAnswer(tableId, player, answer);
 
-        //Informe les autres joueurs de la table de la réponse du joueur
+        //Informe les autres joueurs de la table de la rÃ©ponse du joueur
         ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(tableId);
         NotifyAnswerReadyGameMessage notifyAnswerToOthers = new NotifyAnswerReadyGameMessage(player, answer);
-        
-        for (UserLight u : aPlayers) {
-            if (u.getIdUser() != player.getIdUser()) {
-                threadServer.send(notifyAnswerToOthers);
-            }
-        }
+        threadServer.getMyServer().sendToListOfUsers(aPlayers,notifyAnswerToOthers);
+
+
+        threadServer.getMyServer().getNetworkManager().getDataInstance().checkIfEverybodyIsReady(tableId);
     }
 
     @Override

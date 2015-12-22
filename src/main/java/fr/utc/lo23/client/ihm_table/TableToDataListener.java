@@ -269,6 +269,7 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.BET)) {
                     if(player.equals(ihmtable.getDataInterface().getUser()))
@@ -278,6 +279,7 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CALL)) {
                     if(player.equals(ihmtable.getDataInterface().getUser()))
@@ -287,6 +289,7 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CHECK)) {
                     if(player.equals(ihmtable.getDataInterface().getUser()))
@@ -301,6 +304,32 @@ public class TableToDataListener implements ITableToDataListener {
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
                     ihmtable.getTableController().graphicFoldUser(player);
+                }
+                else if(action.getName().equals(EnumerationAction.ANTE)) {
+                    if(player.equals(ihmtable.getDataInterface().getUser())) {
+                        ihmtable.getTableController().addLogEntry("Vous avez mis " + action.getAmount() + " d'Ante" );
+                    } else {
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " a mis " + action.getAmount() + " d'Ante" );
+                    }
+                    ihmtable.getTableController().getPlayerControllerOf(player).updateMoney(action.getAmount());
+                }
+                else if(action.getName().equals(EnumerationAction.BLINDE)) {
+                    if(player.equals(ihmtable.getDataInterface().getUser())) {
+                        ihmtable.getTableController().addLogEntry("Vous êtes la petite blinde.");
+                    } else {
+
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " est la petite blinde.");
+                    }
+                    ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
+                }
+                else if(action.getName().equals(EnumerationAction.BIGBLINDE)) {
+                    if(player.equals(ihmtable.getDataInterface().getUser())) {
+                        ihmtable.getTableController().addLogEntry("Vous êtes la grosse blinde.");
+                    } else {
+
+                        ihmtable.getTableController().addLogEntry(player.getPseudo() + " est la grosse blinde.");
+                    }
+                    ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else
                 {

@@ -55,6 +55,10 @@ public class Seat implements Serializable {
         this.statusPlayer = EnumerationStatusPlayer.CONNECTED;
     }
 
+    public void addCurrentMoney(Integer amount){
+        currentAccount += amount;
+    }
+
     /**
      * method to add a won amount to the actual
      * @param amount : won amount

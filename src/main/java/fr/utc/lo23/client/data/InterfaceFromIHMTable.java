@@ -63,10 +63,19 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
 
+    /**
+     * Send message to the server
+     * @param message : message to send
+     * @param idTableLocale : table's id from which message is sent
+     */
     public void sendMessage(MessageChat message, UUID idTableLocale){
         dManagerClient.getInterToCom().sendMessage(message, idTableLocale);
     }
 
+    /**
+     * ask to start the game
+     * @param idTable : table on which starting the game
+     */
     public void playGame(UUID idTable) {
         try {
             dManagerClient.getInterToCom().LaunchGame(idTable,dManagerClient.getUserLocal().getUserLight());
@@ -75,6 +84,10 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         }
     }
 
+    /**
+     * send an action to server
+     * @param action : action to reply
+     */
     public void replyAction(Action action) {
         try {
             dManagerClient.getInterToCom().sendAction(action,dManagerClient.getTableLocal().getIdTable());
@@ -86,17 +99,26 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
 
+    /**
+     * transmit a request to server
+     * @param player : player who sent the request
+     */
     public void transmitRequest(UserLight player){
         dManagerClient.getInterToCom().transmitRequestServer(player);
     }
 
+    /**
+     * return the local user
+     * @return : local user
+     */
     public UserLight getUser(){
         return dManagerClient.getUserLocal().getUserLight();
     }
 
 
-    //TODO
-    //save stats, return to table page?
+    /**
+     * ask to quit game
+     */
     public void quitGame(){
         try {
             EnumerationTypeOfUser localUserType = findTypeOfUserIsLocalPlayer(getUser());
@@ -131,10 +153,18 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     }
 
+    /**
+     * set the beginning amount of money
+     * @param amount : amount to set
+     */
     public void setStartAmount(int amount){
         dManagerClient.getInterToCom().sendMoneyAmount(dManagerClient.getTableLocal().getIdTable(),dManagerClient.getUserLocal().getUserLight(),amount);
     }
 
+    /**
+     * send to server that player is ready
+     * @param status : player's status
+     */
     public void isReady(boolean status) {
         dManagerClient.getInterToCom().notifyAnswerAskReadyGame(dManagerClient.getTableLocal().getIdTable(),getUser(),status);
     }

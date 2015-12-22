@@ -140,9 +140,9 @@ public interface InterfaceDataFromCom {
     public void askReadyGame();
 
     /**
-     * Method to keep the local player hand locally
+     * Method to receive playersHand
      *
-     * @param playerHandUserLocal PlayerHand of the local User
+     * @param listPlayersHands PlayerHand of the local User
      */
     public void stockCards(ArrayList<PlayerHand> playerHandUserLocal);
 

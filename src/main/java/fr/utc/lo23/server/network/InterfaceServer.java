@@ -14,8 +14,8 @@ import java.util.UUID;
 
 
 /**
- *
- * @author Jean-CÃ´me D LO23
+ * Interface provided to data server-side
+ * @author Jean-Côme D LO23
  */
 public interface InterfaceServer {
 
@@ -31,9 +31,11 @@ public interface InterfaceServer {
      */
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException;
 
-
-
-
+    /**
+     * Sends data's log to the client
+     * @param LogGame logs
+     * @throws NetworkFailureException
+     */
     public void sendLogGame(Game LogGame) throws NetworkFailureException;
 
     /**
@@ -58,16 +60,20 @@ public interface InterfaceServer {
     public void notifyNewTable(Table newTable) throws NetworkFailureException;
 
     /**
-     *
+     * Notifies the disconnection of another player
      * @param distantUser
      */
     public void notifyDisconnection(User distantUser) throws NetworkFailureException;
 
+    /**
+     * Sends a chat packet
+     * @throws NetworkFailureException
+     */
     public void sendChatPacket() throws NetworkFailureException;
 
     /**
-     * Send a message to start the table
-     * @param tableToStart
+     * Sends a message to start the table
+     * @param tableToStart table
      * @throws NetworkFailureException
      */
     public void startGame(Table tableToStart)throws NetworkFailureException;
@@ -75,57 +81,60 @@ public interface InterfaceServer {
     /**
      * Sends a message to all players in a game
      * notifying that the Round begins
-     * @param ArrayList<UserLight> aPlayers
+     * @param aPlayers all table's players
      */
     public void newRound(ArrayList<UserLight> aPlayers);
 
     /**
      * Sends a message to all players in a game
      * notifying that the Turn begins
-     * @param ArrayList<UserLight> aPlayers
+     * @param aPlayers all table's players
      */
     public void newTurn(ArrayList<UserLight> aPlayers);
 
     /**
      * Sends a message to all players in a game
      * notifying the end of the Round
-     * @param ArrayList<UserLight> aPlayers
+     * @param aPlayers all table's players
      */
     public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat);
 
     /**
      * Sends a message to all players in a game
      * notifying the end of the Turn
-     * @param ArrayList<UserLight> aPlayers
+     * @param aPlayers all table's players
+     *
      */
     public void endTurn(ArrayList<UserLight> aPlayers, Integer pot);
 
     /**
      * Sends a message to all players in a table
      * asking them if they are ready
-     * @param ArrayList<UserLight> aPlayers
+     * @param aPlayers all table's players
      */
     public void askIfReady(ArrayList<UserLight> aPlayers);
 
     /**
-     * Transmit a validated action to others players in the game
-     * @param a
-     * @param aPlayers
+     * Transmits a validated action to others players in the game
+     * @param a action
+     * @param aPlayers all table's players
      * @param user
      */
     public void transmitAction(Action a,ArrayList<UserLight> aPlayers,UserLight user);
+
     /**
      * Asks a player which will be his next action
-     * @param Action a
-     * @param EnumerationAction enAct
+     * @param a empty action to be filled
+     * @param enAct enumation of possible actions
      */
     public void askActionToPLayer(ArrayList<UserLight> aPlayers, Action a, EnumerationAction[] enAct);
 
 
     /**
-     * Asks a player which will be his next action
-     * @param ArrayList<UserLight> aPlayers
-     * @param ArrayList<PlayerHand> ph
+     * Sends the new cards to a player
+     * @param aPlayers list of table's players
+     * @param ph list of hands
+     * @throws NetworkFailureException
      */
     public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException;
 

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
+ * Controller used to manage the Connection Window
  * Created by jbmartin on 04/11/15.
  */
 public class ConnectionController extends BaseController {
@@ -50,7 +51,12 @@ public class ConnectionController extends BaseController {
      * Start the connection with the server
      * @throws IOException
      */
+
+
     @FXML
+    /** On a click to connect, we start our function that manage it
+     *
+     */
     public void didButtonConnectClick(ActionEvent event) throws IOException {
         sendAction();
     }
@@ -63,6 +69,13 @@ public class ConnectionController extends BaseController {
     private void sendAction() {
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
+        if (listViewServers.getSelectionModel().getSelectedItem() == null)
+        {
+            mController.showErrorPopup("Erreur", "Vous devez sélectionner au moins un serveur !");
+            return;
+        }
+        String ip = listViewServers.getSelectionModel().getSelectedItem().getAddress();
+        Integer port = listViewServers.getSelectionModel().getSelectedItem().getPort();
 
         if (login.isEmpty()|| passwd.isEmpty())
         {
@@ -72,7 +85,7 @@ public class ConnectionController extends BaseController {
 
         try { // User logged in
             IHMMainClientManager manager = mController.getManagerMain();
-            manager.getInterDataToMain().logUser(login,passwd,new Server(null,null));
+            manager.getInterDataToMain().logUser(login,passwd);
             //TODO asynchronous...
             mController.userLoggedIn();
         } catch (LoginNotFoundException e) {
@@ -84,7 +97,7 @@ public class ConnectionController extends BaseController {
 
     }
     /**
-     * Override display methods to show the listviewServers
+     * Override display methods that display the listview of Servers
      */
     //@Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -121,6 +134,7 @@ public class ConnectionController extends BaseController {
     public void initServerlist()
     {
         serverList.setAll(mController.getManagerMain().getInterDataToMain().getServersList());
+        listViewServers.getSelectionModel().select(0);
     }
 
 
@@ -142,7 +156,7 @@ public class ConnectionController extends BaseController {
     }
 
     /**
-     * Delete a server
+     * Delete the selected server
      */
     @FXML
     public void didClickRemoveServerButton(ActionEvent event)
@@ -163,8 +177,7 @@ public class ConnectionController extends BaseController {
     public void ImportProfilClick(ActionEvent actionEvent) {
         File file = profileChooser.showOpenDialog(buttonConnect.getScene().getWindow());
         if (file != null) {
-            // TODO: Remove comment when integrated
-            //mController.getManagerMain().getInterDataToMain().importProfileFile(file.toURI());
+            mController.getManagerMain().getInterDataToMain().importProfileFile(file.getPath());
         }
     }
 }

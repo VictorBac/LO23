@@ -18,6 +18,7 @@ import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by leclercvictor on 24/11/2015.
@@ -98,6 +99,12 @@ public class IHMMainClientManager {
         updateMainWindowTableList();
     }
 
+    public void removeTable(Table table)
+    {
+        if (tables.contains(table))
+            tables.remove(table);
+        updateMainWindowTableList();
+    }
     //Getters et setters de nos interfaces
 
     public InterfaceMainToData getInterMainToData() {
@@ -204,5 +211,12 @@ public class IHMMainClientManager {
         if (mainWinController != null) {
             Platform.runLater(() -> mainWinController.setTables(getTables()));
         }
+    }
+
+    public void updateTable(Table tableTheUserhaveleft) {
+        tables.removeIf(table -> table.getIdTable().equals(tableTheUserhaveleft.getIdTable()));
+        updateMainWindowTableList();
+        tables.add(tableTheUserhaveleft);
+        updateMainWindowTableList();
     }
 }

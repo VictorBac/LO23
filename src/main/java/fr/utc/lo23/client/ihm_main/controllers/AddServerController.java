@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 /**
+ * Controller used to manage the window which allow to create a new server
  * Created by jbmartin on 07/12/2015.
  */
 public class AddServerController extends BaseController{
@@ -32,7 +33,8 @@ public class AddServerController extends BaseController{
     private TextField fieldPort;
 
     /**
-     * Add a server
+     * Add a server,
+     * We check if the IP address and Port are filled and then we send it to DATA.
      */
     @FXML
     public void didClickAddButton(ActionEvent event) {
@@ -47,8 +49,8 @@ public class AddServerController extends BaseController{
             return;
         }
         try {
-            mController.getManagerMain().getInterDataToMain().addServer(InetAddress.getByName(fieldIPAddress.getText()), fieldPort.getText());
-        } catch (UnknownHostException e) {
+            mController.getManagerMain().getInterDataToMain().addServer(fieldIPAddress.getText(), Integer.parseInt(fieldPort.getText()));
+        } catch (Exception e) {
            mController.showErrorPopup("Erreur", "Hôte inconnu!");
         }
         mController.showConnectionWindow();
@@ -56,6 +58,7 @@ public class AddServerController extends BaseController{
 
     /**
      * Cancel Button
+     * back to the Connection Window.
      * @param event
      */
     @FXML

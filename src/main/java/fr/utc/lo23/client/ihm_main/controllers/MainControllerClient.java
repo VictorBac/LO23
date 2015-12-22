@@ -4,6 +4,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
  */
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Application;
@@ -19,6 +20,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class use to manage the Main Window of the POKER App
+ */
 public class MainControllerClient extends Application {
 
     private Stage pmStage;

@@ -2,9 +2,12 @@ package fr.utc.lo23.server.ihm_main.controllers;
 
 import fr.utc.lo23.server.ihm_main.IHMMainServerManager;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.InetAddress;
@@ -51,6 +54,16 @@ public class MainWindowController {
     public void initialize() {
         try {
             labelIp.setText(InetAddress.getLocalHost().getHostAddress());
+
+            bgimage.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    if (buttonStart.isDisabled())
+                        stopServer();
+                    else
+                        startServer();
+                }
+
+            });
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -59,6 +72,11 @@ public class MainWindowController {
 
     @FXML
     void handleButtonStartAction(ActionEvent event) {
+        startServer();
+    }
+
+    public void startServer()
+    {
         try {
             int portNumber = Integer.parseInt(fieldPort.getText());
             manager.getInterfaceComToMain().start(portNumber);
@@ -73,12 +91,16 @@ public class MainWindowController {
         }
     }
 
-    @FXML
-    void handleButtonStopAction(ActionEvent event) {
+    public void stopServer() {
         addTextLog("Stopping server ! qui ne marche pas actuellement (pas implémentée par com)");
         fieldPort.setDisable(false);
         buttonStart.setDisable(false);
         buttonStop.setDisable(true);
+    }
+
+    @FXML
+    void handleButtonStopAction(ActionEvent event) {
+        stopServer();
 
         // TODO quand ils l'auront implémentée
 //        manager.getInterfaceComToMain().stop();

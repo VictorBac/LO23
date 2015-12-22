@@ -69,6 +69,11 @@ import java.util.List;
     }
 
     @Override
+    public void notifyDeletedTable(Table t) {
+        managerMain.removeTable(t);
+    }
+
+    @Override
     public void returnHome() {
         Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().backFromGame());
     }
@@ -88,8 +93,13 @@ import java.util.List;
     }
 
     @Override
-    public void userLeftTable(Table t, UserLight user, EnumerationTypeOfUser type) {
+    public void userLeftTableRemote(Table tableTheUserhaveleft, UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
+        Platform.runLater(() -> managerMain.updateTable(tableTheUserhaveleft));
+    }
 
+    @Override
+    public void userLeftTableLocal(Table tableTheUserhaveleft, UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
+        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().userLeftTableLocal(userLightLeavingGame, typeOfUserWhoLeftTable));
     }
 
     @Override
@@ -115,5 +125,17 @@ import java.util.List;
                 controller.setFullData(profileReturnedByTheServer);
             }
         });
+    }
+
+    @Override
+    public void tableCreated(Table tableCreatedOnServer) {
+        Platform.runLater(() ->
+            managerMain.getControllerMain().getMainWindowController().joinCreatedTable(tableCreatedOnServer));
+    }
+
+    @Override
+    public void notifyNewUserInTable(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
+        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController()
+                .userJoinTableLocal(userWhoJoinTheTable, typeOfUserWhoJoinTable));
     }
 }

@@ -10,7 +10,7 @@ import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+import java.util.UUID;
 
 
 /**
@@ -32,6 +32,8 @@ public interface InterfaceServer {
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException;
 
 
+
+
     public void sendLogGame(Game LogGame) throws NetworkFailureException;
 
     /**
@@ -41,8 +43,7 @@ public interface InterfaceServer {
     public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException;
 
     /**
-     * Informe les autres joueurs de la table de l'action
-     * d'un joueur
+     * Notifies other players from the table of a player action
      * @param ArrayList<UserLight> tablePlayers
      * @param Action act
      * @throws NetworkFailureException
@@ -50,7 +51,8 @@ public interface InterfaceServer {
     public void notifyOtherPlayerAction(ArrayList<UserLight> tablePlayers, Action act) throws NetworkFailureException;
 
     /**
-     *
+     *Notifies that a new Table has been created
+     *It is sent to all players within the Users connected
      * @param newTable
      */
     public void notifyNewTable(Table newTable) throws NetworkFailureException;
@@ -71,52 +73,58 @@ public interface InterfaceServer {
     public void startGame(Table tableToStart)throws NetworkFailureException;
 
     /**
-     * Envoie un message à tous les joueurs pour notifier
-     * le début d'une nouvelle manche
+     * Sends a message to all players in a game
+     * notifying that the Round begins
      * @param ArrayList<UserLight> aPlayers
      */
     public void newRound(ArrayList<UserLight> aPlayers);
 
     /**
-     * Envoie un message à tous les joueurs pour notifier
-     * le début d'un nouveau tour
+     * Sends a message to all players in a game
+     * notifying that the Turn begins
      * @param ArrayList<UserLight> aPlayers
      */
     public void newTurn(ArrayList<UserLight> aPlayers);
 
     /**
-     * Envoie un message à tous les joueurs pour notifier
-     * la d'une manche
+     * Sends a message to all players in a game
+     * notifying the end of the Round
      * @param ArrayList<UserLight> aPlayers
      */
     public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat);
 
     /**
-     * Envoie un message à tous les joueurs pour notifier
-     * la fin d'un tour
+     * Sends a message to all players in a game
+     * notifying the end of the Turn
      * @param ArrayList<UserLight> aPlayers
      */
     public void endTurn(ArrayList<UserLight> aPlayers, Integer pot);
 
     /**
-     * Envoi un message à tous les joueurs d'une table
-     * pour demander s'ils sont prêts
+     * Sends a message to all players in a table
+     * asking them if they are ready
      * @param ArrayList<UserLight> aPlayers
      */
     public void askIfReady(ArrayList<UserLight> aPlayers);
 
     /**
-     * Transmission d'une action validée aux antres joueurs
+     * Transmit a validated action to others players in the game
      * @param a
      * @param aPlayers
      * @param user
      */
     public void transmitAction(Action a,ArrayList<UserLight> aPlayers,UserLight user);
     /**
-     * Demander à un joueur quelle sera son action
+     * Asks a player which will be his next action
      * @param Action a
      * @param EnumerationAction enAct
      */
     public void askActionToPLayer(ArrayList<UserLight> aPlayers, Action a, EnumerationAction[] enAct);
 
-}
+
+
+    public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException;
+
+
+
+    }

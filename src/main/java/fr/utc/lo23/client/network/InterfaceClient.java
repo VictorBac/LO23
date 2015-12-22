@@ -13,117 +13,153 @@ import java.util.UUID;
 public interface InterfaceClient {
     
     /**
-     * Creation d'un utilisateur par le client
+     * Creation of a user by the client
      * @param u 
      */
     public void sendProfile(User u) throws NetworkFailureException;
 
     /**
-     * Demande d'envoi de la liste des users connectes
+     * Asking the list of connected users
      * @throws NetworkFailureException
      */
     public void requestUserList()throws NetworkFailureException;
 
     /**
-     * Demande d'envoi de la liste des tables
+     * Asking a list of active tables
      * @throws NetworkFailureException
      */
     public void requestTableList()throws NetworkFailureException;
 
     /**
-     * 
-     * @param u
+     *  Consult a profile
+     * @param  u Profil we want to see
      */
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
-    
 
+    /**
+     * Table  creation
+     * @param  maker creator of the table
+     * @param  t table he created
+     * @throws NetworkFailureException
+     * @throws TooManyTablesException
+     */
     public void createTable(UserLight maker, Table t) throws NetworkFailureException, TooManyTablesException;
     
     /**
-     *
-     * @param userLocal
+     *  Change made on your profile
+     * @param userLocal UserLight local
      */
     public void updateProfile(User userLocal) throws NetworkFailureException;
-    
-    /**
-     *
-     * @param userLocal
-     */
-    public void leaveRoom(UserLight userLocal) throws NetworkFailureException;
 
     /**
-     * @param idTable
-     * @param userInit
+     * The player sets him ready to launch the game
+     * @param idTable Table launched
+     * @param userInit User who is ready
      */
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException;
 
 
     /**
-     *
-     * @param userLocal
-     * @param tableToJoin
+     *  A player want to join the table
+     * @param userLocal User to join
+     * @param tableToJoin Table to join
      */
     public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException;
         
     /**
-     *
+     *HeartBeat
+     * Every 10 second, client thread send a message to the server to say he's alive.
      */
     public void sendHeartbeat() throws NetworkFailureException;
 
     /**
-     * Envoie l'action d'un joueur au serveur
-     * @param Action act
-     * @param UUID IdTable
+     * Send action of a player to the server
+     * @param  act Action made
+     * @param  IdTable Table on which it has been made
      * @throws NetworkFailureException
      * @throws IncorrectActionException
      */
     public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException;
     
     /**
-     *
-     * @param userLocal
-     * @param IdTable
+     * User leaves a table
+     * @param userLocal user
+     * @param IdTable table
      */
-    public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException;
+    public void leaveTable(UserLight userLocal, UUID IdTable, EnumerationTypeOfUser type) throws NetworkFailureException;
     
     /**
-     *
-     * @param userLocal
+     *  Request the game to be logged
+     * @param userLocal user who wants it logged
      */
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException;
 
+    /**
+     * Launch a saved game to rewatch it
+     * @throws NetworkFailureException
+     * @throws IncorrectFileException
+     */
     public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
 
+    /**
+     * Login to the server
+     * @param u User
+     * @param socketIp ip of the server
+     * @param socketPort port of the server
+     */
     public void requestLoginServer(User u, InetAddress socketIp, String socketPort);
 
+    /**
+     * Send a packet
+     * @throws NetworkFailureException
+     */
     public void sendPacket() throws NetworkFailureException;
 
+    /**
+     * Ask the server to join a game
+     * @param userLocal User requesting to play
+     * @param tableId Table to join
+     * @throws NetworkFailureException
+     */
     public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException;
 
     /**
-     *
-     * @param userLocal
+     * Ask the user's stat
+     * @param userLocal User
      */
     public void requestUserStats(UserLight userLocal) throws NetworkFailureException;
-    
+
     /**
-     *
-     */
-    public void queryNextStepReplay() throws NetworkFailureException;
-    
-    /**
-     *
+     * Ask the game to be stopped
+     * @throws NetworkFailureException
      */
     public void askStopGame() throws NetworkFailureException;
+
     /**
-     *
+     * Notify the disconnection of a player
+     * @param maker User
+     * @throws NetworkFailureException
      */
     public void notifyDisconnection(User maker) throws NetworkFailureException;
 
+    /**
+     * Send a chat message
+     * @param message chat message
+     * @param tableID table on which it has been sent
+     */
     public void sendMessage(MessageChat message,UUID tableID);
 
+    /**
+     * Confirm we have received the card
+     * @param ul user who received the card
+     */
     public void confirmationCardReceived(UserLight ul);
 
+    /**
+     * Request an action to be replayed
+     * @param action
+     * @param player
+     */
     public void replayAction(Action action, UserLight player);
 
     public void confirmationEndTurn(UserLight ul);
@@ -131,10 +167,19 @@ public interface InterfaceClient {
     public void transmitRequestServer(UserLight player);
 
     /**
-     * Répond à la demande de askReadyGame
+     * Notify if the player is ready to play
+     * @param table Table id
+     * @param player Player who responded
+     * @param answer Answer
      */
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer);
 
+    /**
+     * Send the amount of money chosen by the player
+     * @param table Table id
+     * @param player User
+     * @param money Amount chosen
+     */
     public void sendMoneyAmount(UUID table, UserLight player, Integer money);
 
 }

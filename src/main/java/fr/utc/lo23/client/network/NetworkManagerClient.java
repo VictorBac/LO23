@@ -40,13 +40,8 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     /* == METHODES IMPLEMENTATION == */
-    /**
-     * Envoi la reclamation de connexion du client.
-     * @param u
-     * @param socketIp
-     * @param socketPort
-     * @throws NetworkFailureException
-     */
+
+    @Override
     public void requestLoginServer(User u, InetAddress socketIp, String socketPort){
         try {
             serverLink.connect(socketIp, socketPort);
@@ -61,10 +56,7 @@ public class NetworkManagerClient implements InterfaceClient  {
         Console.log("RequestLoginMessage envoyé");
     }
 
-    /**
-     * Request de la liste des users connectes
-     * @throws NetworkFailureException
-     */
+    @Override
     public void requestUserList() throws NetworkFailureException {
         //Request user list
         Console.logn("Creation d'un Request de list des users");
@@ -72,10 +64,7 @@ public class NetworkManagerClient implements InterfaceClient  {
         serverLink.send(reqUseList);
     }
 
-    /**
-     * Request la liste des tables actives
-     * @throws NetworkFailureException
-     */
+    @Override
     public void requestTableList() throws NetworkFailureException {
         //Request table list
         Console.logn("Creation d'un Request de list des users");
@@ -83,157 +72,142 @@ public class NetworkManagerClient implements InterfaceClient  {
         serverLink.send(reqTabList);
     }
 
-    /**
-     * Envoi d'une requête pour avoir des informations détaillées d'un profil
-     * @param u
-     * @throws NetworkFailureException
-     * @throws ProfileNotFoundOnServerException
-     */
+    @Override
     public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException {
         Console.log("Creation d'un Request Profile message\n");
         RequestProfileMessage reqProf = new RequestProfileMessage(u);
         serverLink.send(reqProf);
     }
 
-    /**
-     * Envoi d'une table à créer sur le serveur
-     * @throws NetworkFailureException
-     * @throws TooManyTablesException
-     */
+    @Override
     public void createTable(UserLight maker, Table tabletoCreate) throws NetworkFailureException, TooManyTablesException {
         Console.log("Creation d'un Send New Table message\n");
         CreateTableMessage createTableMsg = new CreateTableMessage(maker, tabletoCreate);
         serverLink.send(createTableMsg);
     }
 
-    /**
-     * Envoi du profil modifié de l'user au serveur
-     * @param userLocal
-     * @throws NetworkFailureException
-     */
+    @Override
     public void updateProfile(User userLocal) throws NetworkFailureException {
         Console.log("Creation d'un Update Profile message\n");
         UpdateProfileMessage reqProf = new UpdateProfileMessage(userLocal);
         serverLink.send(reqProf);
     }
 
+    @Override
     public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
         Console.log("Tentative de connection à une table");
         RequestJoinTableMessage requestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoin,mode);
         serverLink.send(requestJoinTableMes);
     }
 
-    /**
-     * Envoi un heartbeat pour maintenir la connection
-     * @throws NetworkFailureException
-     */
+    @Override
     public void sendHeartbeat() throws NetworkFailureException {
         //Console.log("Creation d'un Heartbeat message\n");
         HeartbeatMessage message = new HeartbeatMessage();
         serverLink.send(message);
     }
 
-
+    @Override
     public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException {
         SendActionMessage actMsg = new SendActionMessage(act, IdTable);
         serverLink.send(actMsg);
     }
 
-    public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException {
-        LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable);
+    @Override
+    public void leaveTable(UserLight userLocal, UUID IdTable, EnumerationTypeOfUser type) throws NetworkFailureException {
+        LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable,type);
         serverLink.send(leaveT);
     }
 
+    @Override
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
         RequestLogGameMessage logM = new RequestLogGameMessage(userLocal);
         serverLink.send(logM);
     }
 
+    @Override
     public void sendMessage(MessageChat message, UUID tableId) {
         SendChatMessageMessage messageToSend = new SendChatMessageMessage(this.getDataInstance().getUserLightLocal(),message,tableId);
         serverLink.send(messageToSend);
     }
 
+    @Override
     public void confirmationCardReceived(UserLight ul) {
         NotifyCardReceivedMessage cardReceivedMessage = new NotifyCardReceivedMessage(ul);
         serverLink.send(cardReceivedMessage);
     }
 
+    @Override
     public void confirmationEndTurn(UserLight ul) {
         //TODO vu que l'interface est côté serveur, voir si on en a toujours besoin ici
         //NotifyEndTurnMessage endMsg = new NotifyEndTurnMessage(ul);
         //localClient.send(endMsg);
     }
 
+    @Override
     public void sendMoneyAmount(UUID table, UserLight player, Integer money) {
         SetMoneyAmountMessage setMoneyAmountM = new SetMoneyAmountMessage(table, player, money);
         serverLink.send(setMoneyAmountM);
     }
 
+    @Override
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer) {
         AnswerIfReadyGameMessage answerM = new AnswerIfReadyGameMessage(table, player, answer);
         serverLink.send(answerM);
     }
 
+    @Override
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
         LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
         serverLink.send(LGMess);
     }
 
-    /**
-     * Envoi d'une notification de déconnexion
-     * @throws NetworkFailureException
-     */
+    @Override
     public void notifyDisconnection(User maker) throws NetworkFailureException {
         Console.log("Creation d'un notifyDisconnection message\n");
         NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(maker);
         serverLink.send(NotifyD);
     }
 
-     /* =========================================== EMPTY METHODES =========================================== */
+     /* =========================================== EMPTY METHODS =========================================== */
 
-    /**
-     *
-     * @param u
-     * @throws NetworkFailureException
-     */
+    @Override
     public void sendProfile(User u) throws NetworkFailureException {
 
     }
 
+    @Override
     public void launchSavedGame() throws NetworkFailureException, IncorrectFileException {
 
     }
 
+    @Override
     public void sendPacket() throws NetworkFailureException {
 
     }
 
+    @Override
     public void requestUserStats(UserLight userLocal) throws NetworkFailureException {
 
     }
 
-    public void queryNextStepReplay() throws NetworkFailureException {
-
-    }
-
+    @Override
     public void askStopGame() throws NetworkFailureException {
 
     }
 
+    @Override
     public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException {
 
     }
 
-    public void leaveRoom(UserLight userLocal) throws NetworkFailureException {
-
-    }
-
+    @Override
     public void transmitRequestServer(UserLight player) {
 
     }
 
+    @Override
     public void replayAction(Action action, UserLight player) {
 
     }

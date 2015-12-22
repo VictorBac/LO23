@@ -152,6 +152,11 @@ public class PlayerController{
         if(!playerInfos.getStyleClass().contains("money"))
             playerInfos.getStyleClass().add("money");
     }
+    
+    public void setYouAreThinkingStatus(){
+        playerInfos.setVisible(true);
+        playerInfos.setText("Votre tour...");
+    }
 
     public void setBetMoneyAmount(Integer amount){
         playerInfos.setVisible(true);

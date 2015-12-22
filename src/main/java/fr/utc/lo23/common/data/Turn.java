@@ -189,6 +189,8 @@ public class Turn implements Serializable {
 
     public Boolean isFinished(){
         //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
+
+        System.out.println(getCurrentHand().getListTurn().size());
         if(getCurrentHand().getListTurn().size()==1)
         {
             if(getListAction().size()-2<getListActiveUsers().size())
@@ -209,9 +211,8 @@ public class Turn implements Serializable {
             if(val==-1)
             {
                 val = getMoneyBetInTheTurnForAUser(user);
-                continue;
             }
-            if(getMoneyBetInTheTurnForAUser(user)!=val)
+            else if(!getMoneyBetInTheTurnForAUser(user).equals(val))
                 return false;
         }
         return true;

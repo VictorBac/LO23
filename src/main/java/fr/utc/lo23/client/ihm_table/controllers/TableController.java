@@ -195,7 +195,7 @@ public class TableController {
     }
 
     public void removePlayer(UserLight user, boolean showLog) {
-        PlayerController playerController = playerControllerMap.get(user);
+        PlayerController playerController = getPlayerControllerOf(user);
         if(playerController == null) {
             //This user doesn't exist
             System.out.println("ERROR: Cet utilisateur a déjà été supprimé.");
@@ -1145,11 +1145,11 @@ public class TableController {
      * @param user
      */
     public void graphicFoldUser(UserLight user){
-        setPlayerFoldCardAnimation(playerControllerMap.get(user).getCard1(),1);
-        setPlayerFoldCardAnimation(playerControllerMap.get(user).getCard2(),100);
-        playerControllerMap.get(user).setCard1(null);
-        playerControllerMap.get(user).setCard2(null);
-        playerControllerMap.get(user).setBetMoneyAmount(-1);
+        setPlayerFoldCardAnimation(getPlayerControllerOf(user).getCard1(),1);
+        setPlayerFoldCardAnimation(getPlayerControllerOf(user).getCard2(),100);
+        getPlayerControllerOf(user).setCard1(null);
+        getPlayerControllerOf(user).setCard2(null);
+        getPlayerControllerOf(user).setBetMoneyAmount(-1);
     }
 
     /**
@@ -1183,7 +1183,7 @@ public class TableController {
      * @param user
      */
     public void setThinkingForAction(UserLight user){
-        playerControllerMap.get(user).setThinkingStatus();
+        getPlayerControllerOf(user).setThinkingStatus();
     }
 
     public void notifyFailStartGame(){
@@ -1233,6 +1233,7 @@ public class TableController {
                 }
             }
             getPlayerControllerOf(seat.getPlayer()).updateMoney(seat.getCurrentAccount());
+            playerC.clearReadyStatus();
         }
         setRefSeats(seatPlayers);
 

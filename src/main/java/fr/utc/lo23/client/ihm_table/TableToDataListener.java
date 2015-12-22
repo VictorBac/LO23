@@ -241,6 +241,7 @@ public class TableToDataListener implements ITableToDataListener {
                     ihmtable.getTableController().disableAllActions();
                     for (EnumerationAction action : listPossible)
                         ihmtable.getTableController().enableAction(action);
+                    ihmtable.getTableController().getPlayerControllerOf(ihmtable.getDataInterface().getUser()).setYouAreThinkingStatus();
                 }
                 else
                 {

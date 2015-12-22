@@ -91,7 +91,6 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     @Override
     public void notifyOtherPlayerAction(ArrayList<UserLight> tablePlayers, Action act) throws NetworkFailureException {
         NotifyOtherPlayerAction notifyActMsg = new NotifyOtherPlayerAction(act);
-        //tablePlayers.remove(act.getUserLightOfPlayer());//Le joueur connait déjà son action, pas besoin de le notifier ? //TODO vérifier
         server.sendToListOfUsers(tablePlayers, notifyActMsg);
     }
 
@@ -126,8 +125,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     @Override
-    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat) {
-        NotifyEndRoundMessage endR = new NotifyEndRoundMessage(aSeat);
+    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat, ArrayList<PlayerHand> apl) {
+        NotifyEndRoundMessage endR = new NotifyEndRoundMessage(aSeat,apl);
         server.sendToListOfUsers(aPlayers, endR);
     }
 

@@ -150,7 +150,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //On se situe au tout début d'une game
             hand = new Hand(game);
             game.getListHand().add(hand);
-            //TODO: envoyer cartes des joueurs, en attente de server :  myManager.getInterfaceToCom().
+
+            //Envoyer ses cartes à chaque joueur
+            for(PlayerHand player : hand.getListPlayerHand())
+            {
+                ArrayList<UserLight> users = new ArrayList<>();
+                users.add(player.getPlayer());
+                ArrayList<PlayerHand> players = new ArrayList<>();
+                players.add(player);
+                try {
+                    myManager.getInterfaceToCom().sendCards(users,players);
+                } catch (NetworkFailureException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         else
         {
@@ -163,7 +176,9 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //On se situe au début d'un tour
             turn = new Turn(hand);
             hand.getListTurn().add(turn);
-            //TODO: envoyer cartes communes, en attente de server: myManager.getInterfaceToCom().
+
+
+
         }
         else
         {
@@ -174,7 +189,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         {
             //Faire les actions de base
             ArrayList<Action> arrayAc = turn.askFirstAction();
-            System.out.println(arrayAc);
+            System.out.println("LISTE ACTION ENVOYEE FIRST TURN: "+arrayAc);
             if(arrayAc.size()==1)
             {
                 EnumerationAction[] ref = new EnumerationAction[turn.availableActions(arrayAc.get(0).getUserLightOfPlayer()).size()];
@@ -202,20 +217,22 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             //Vérifier si le tour est finit
             if(turn.isFinished())
             {
+                System.out.println("Le tour est finit");
                 //S'il est finit, résoudre ce tour
                 turn.resolve();
 
                 //Prévenir les utilisateurs
-                myManager.getInterfaceToCom().endTurn(table.getListPlayers().getListUserLights(),turn.getTurnPot());
+                myManager.getInterfaceToCom().endTurn(table.getListPlayers().getListUserLights(),hand.getPot());
 
                 // puis vérifier si la manche est finie
                 if(hand.isFinished())
                 {
+                    System.out.println("La hand est finit");
                     //Si elle est finit résoudre la manche
                     hand.resolve();
 
                     //Notifier les clients
-                    myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), game.getListSeatPlayerWithPeculeDepart());
+                    myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), game.getListSeatPlayerWithPeculeDepart(),hand.getListPlayerHand());
 
                     //puis vérifier si la game est finie
                     if(game.isFinished())
@@ -229,10 +246,29 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     }
                     else
                     {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         //sinon créer une nouvelle manche
                         hand = new Hand(game);
                         game.getListHand().add(hand);
-                        //TODO: envoyer cartes des joueurs, en attente de server :  myManager.getInterfaceToCom().
+
+                        //Envoyer ses cartes à chaque joueur
+                        for(PlayerHand player : hand.getListPlayerHand())
+                        {
+                            ArrayList<UserLight> users = new ArrayList<>();
+                            users.add(player.getPlayer());
+                            ArrayList<PlayerHand> players = new ArrayList<>();
+                            players.add(player);
+                            try {
+                                myManager.getInterfaceToCom().sendCards(users,players);
+                            } catch (NetworkFailureException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
                         //et relancer l'algorithme
                         playGame(table);
@@ -240,10 +276,57 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 }
                 else
                 {
+                    System.out.println("La manche n'est pas finie");
                     //sinon créer un nouveau tour
                     turn = new Turn(hand);
                     hand.getListTurn().add(turn);
-                    //TODO: envoyer cartes communes, en attente de server: myManager.getInterfaceToCom().
+
+                    if(hand.getListTurn().size()==2) {
+                        PlayerHand playSend = new PlayerHand();
+                        playSend.setPlayer(null);
+                        ArrayList<Card> cards = new ArrayList<>();
+                        cards.add(hand.getListCardField().get(0));
+                        cards.add(hand.getListCardField().get(1));
+                        cards.add(hand.getListCardField().get(2));
+                        playSend.setListCardsHand(cards);
+                        ArrayList<PlayerHand> players = new ArrayList<>();
+                        players.add(playSend);
+                        try {
+                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                        } catch (NetworkFailureException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if(hand.getListTurn().size()==3)
+                    {
+                        PlayerHand playSend = new PlayerHand();
+                        playSend.setPlayer(null);
+                        ArrayList<Card> cards = new ArrayList<>();
+                        cards.add(hand.getListCardField().get(3));
+                        playSend.setListCardsHand(cards);
+                        ArrayList<PlayerHand> players = new ArrayList<>();
+                        players.add(playSend);
+                        try {
+                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                        } catch (NetworkFailureException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else if(hand.getListTurn().size()==4)
+                    {
+                        PlayerHand playSend = new PlayerHand();
+                        playSend.setPlayer(null);
+                        ArrayList<Card> cards = new ArrayList<>();
+                        cards.add(hand.getListCardField().get(4));
+                        playSend.setListCardsHand(cards);
+                        ArrayList<PlayerHand> players = new ArrayList<>();
+                        players.add(playSend);
+                        try {
+                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                        } catch (NetworkFailureException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     //et relancer l'algorithme
                     playGame(table);
@@ -251,6 +334,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             }
             else
             {
+                System.out.println("Le tour n'est pas finit");
                 //appeler les actions du joueur prochain
                 EnumerationAction[] ref = new EnumerationAction[turn.availableActions(turn.getNextActiveUser()).size()];
                 ref = turn.availableActions(turn.getNextActiveUser()).toArray(ref);
@@ -304,11 +388,21 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public void replyAction(UUID table, Action playedAction) {
         try {
             myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn().addAction(playedAction);
+            //TODO: notifier users
+            try {
+                myManager.getInterfaceToCom().notifyOtherPlayerAction(myManager.getTables().getTable(table).getListPlayers().getListUserLights(),playedAction);
+            } catch (NetworkFailureException e) {
+                e.printStackTrace();
+            }
+
             playGame(myManager.getTables().getTable(table));
         }
         catch(ActionInvalidException a) {
+            //TODO erreur dans la reprise
             Turn turn = myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn();
-            askAction(myManager.getTables().getTable(table),turn.getNextActiveUser(), (EnumerationAction[]) turn.availableActions(turn.getNextActiveUser()).toArray());
+            EnumerationAction[] ref = new EnumerationAction[turn.availableActions(turn.getNextActiveUser()).size()];
+            ref = turn.availableActions(turn.getNextActiveUser()).toArray(ref);
+            askAction(myManager.getTables().getTable(table),turn.getNextActiveUser(), ref);
         }
     }
 

@@ -24,8 +24,6 @@ public class SendCardMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-    //TODO
-    //    threadClient.getNetworkManager().getDataInstance().stockCards(pHand);
-
+        threadClient.getNetworkManager().getDataInstance().stockCards(pHand);
     }
 }

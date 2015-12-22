@@ -41,6 +41,7 @@ public class TableController {
     private Integer potMoneyInt;
     private ArrayList<Seat> refSeats = new ArrayList<Seat>();
     private Integer lastRaise;
+    private Boolean firstHand = true;
 
     public HashMap<UserLight, PlayerController> getPlayerControllerMap() {
         return playerControllerMap;
@@ -504,6 +505,8 @@ public class TableController {
         if(actionFold.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.FOLD);
             ihmTable.getDataInterface().replyAction(actionToFill);
+            disableAllActions();
+            hideActionBox();
             System.out.println("DODO");
         }
     }
@@ -517,6 +520,8 @@ public class TableController {
         if (actionCheck.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.CHECK);
             ihmTable.getDataInterface().replyAction(actionToFill);
+            disableAllActions();
+            hideActionBox();
             System.out.println("CHECK");
         }
     }
@@ -529,8 +534,10 @@ public class TableController {
     public void call(javafx.event.ActionEvent event) {
         if (actionCall.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.CALL);
-            actionToFill.setAmount(Math.min(lastRaise, getPlayerMoney()));
+            //NON server gère actionToFill.setAmount(lastRaise);
             ihmTable.getDataInterface().replyAction(actionToFill);
+            disableAllActions();
+            hideActionBox();
             System.out.println("APPEL");
 
         }
@@ -550,6 +557,8 @@ public class TableController {
             actionToFill.setName(EnumerationAction.ALLIN);
             actionToFill.setAmount(getPlayerMoney());
             ihmTable.getDataInterface().replyAction(actionToFill);
+            disableAllActions();
+            hideActionBox();
             System.out.println("ALLIN");
 
         }
@@ -574,6 +583,8 @@ public class TableController {
         //This can only be called when clicked on button activate
         actionToFill.setAmount((int)actionBetMoneySelector.getValue());
         ihmTable.getDataInterface().replyAction(actionToFill);
+        disableAllActions();
+        hideActionBox();
         System.out.println("Bet");
     }
 
@@ -839,7 +850,26 @@ public class TableController {
      * @param playerHands
      */
     public void setPlayerCards(ArrayList<PlayerHand> playerHands){
+
         int wait = 1;
+
+        if(!firstHand) {
+            resetCommonCards();
+            potMoney.setText("0 €");
+            int waitanimfold = 1;
+            for(Map.Entry<UserLight,PlayerController> entry : playerControllerMap.entrySet())
+            {
+                setPlayerFoldCardAnimation(entry.getValue().getCard1(),waitanimfold);
+                setPlayerFoldCardAnimation(entry.getValue().getCard2(),waitanimfold+10);
+                waitanimfold+=60;
+            }
+
+            wait = 2000;
+        }
+
+        firstHand = false;
+
+
         if(playerHands.size()==1)
         {
             for(PlayerController playerController :controllersList)
@@ -1162,6 +1192,8 @@ public class TableController {
     }
 
     public void notifySuccessStartGame() {
+
+        turnStatus = "warmup";
         addLogEntry("La partie va se lancer d'ici quelques instants.");
     }
 
@@ -1175,21 +1207,38 @@ public class TableController {
     }
 
     public void endTurn(Integer pot){
-        addLogEntry("Fin du tour, il y a "+String.valueOf(Integer.parseInt(potMoney.getText()) + pot)+" dans le pot.");
-        potMoney.setText(String.valueOf(Integer.parseInt(potMoney.getText())+pot));
+        addLogEntry("Fin du tour, il y a " + pot + " dans le pot.");
+        potMoney.setText(pot+" €");
     }
 
-    public void endHand(ArrayList<Seat> seatPlayers){
+
+
+    public void endHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla){
         for(Seat seat : seatPlayers)
         {
-            if(playerControllerMap.get(seat.getPlayer()).getCurrentMoney()<seat.getCurrentAccount())
+            PlayerController playerC = getPlayerControllerOf(seat.getPlayer());
+            if(playerC.getCurrentMoney()<seat.getCurrentAccount())
             {
-                addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()+playerControllerMap.get(seat.getPlayer()).getCurrentMoney())+" € cette manche !");
-                //TODO: ajouter animation
+                addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()-playerC.getCurrentMoney())+" € cette manche !");
             }
-            playerControllerMap.get(seat.getPlayer()).updateMoney(seat.getCurrentAccount());
+
+            for(PlayerHand pl : apla)
+            {
+                if(pl.getPlayer().equals(seat.getPlayer()))
+                {
+                    if(pl.getListCardsHand() != null) { // && pl.getListCardsHand().size()==2
+                        playerC.getCard1().setImage(getImageFromCard(pl.getListCardsHand().get(0)));
+                        playerC.getCard2().setImage(getImageFromCard(pl.getListCardsHand().get(1)));
+                    }
+                }
+            }
+            getPlayerControllerOf(seat.getPlayer()).updateMoney(seat.getCurrentAccount());
         }
         setRefSeats(seatPlayers);
+
+        potMoney.setText("0 €");
+
+        turnStatus = "warmup";
     }
 
     public void notifyEndGame(UserLight winner){

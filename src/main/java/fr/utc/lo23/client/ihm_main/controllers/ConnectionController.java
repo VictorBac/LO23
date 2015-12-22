@@ -72,7 +72,7 @@ public class ConnectionController extends BaseController {
 
         try { // User logged in
             IHMMainClientManager manager = mController.getManagerMain();
-            manager.getInterDataToMain().logUser(login,passwd);
+            manager.getInterDataToMain().logUser(login,passwd,new Server(null,null));
             //TODO asynchronous...
             mController.userLoggedIn();
         } catch (LoginNotFoundException e) {

@@ -183,11 +183,20 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         return dManagerClient.getUserLocal().getUserLight();
     }
 
-    public void stockCards(PlayerHand playerHandUserLocal) {
+    public void stockCards(ArrayList<PlayerHand> playerHandUserLocal) {
         Console.log(TAG +"stockCards()");
-        dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand().add(playerHandUserLocal);
-        dManagerClient.getInterToIHMTable().notifyPlayersCards(dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand());
-        //we send first cards at the beginning of the hand from the local user and at the end of the hand we show other cards
+        if(playerHandUserLocal.size()==1)
+        {
+            if(playerHandUserLocal.get(0).getPlayer()==null)
+                dManagerClient.getInterToIHMTable().notifyCommonCards(playerHandUserLocal.get(0).getListCardsHand());
+            else
+                dManagerClient.getInterToIHMTable().notifyPlayersCards(playerHandUserLocal);
+        }
+        else {
+            //dManagerClient.getTableLocal().getCurrentGame().getCurrentHand().getListPlayerHand().add(playerHandUserLocal);
+            dManagerClient.getInterToIHMTable().notifyPlayersCards(playerHandUserLocal);
+            //we send first cards at the beginning of the hand from the local user and at the end of the hand we show other cards
+        }
     }
 
     public void transmitMessage(MessageChat messageSendByRemoteUser) {
@@ -267,9 +276,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMTable().notifyEndTour(potForThisTurn);
     }
 
-    public void informEndHand(ArrayList<Seat> listSeat) {
+    public void informEndHand(ArrayList<Seat> listSeat,ArrayList<PlayerHand> apla) {
         Console.log(TAG +"informEndHand()");
-        dManagerClient.getInterToIHMTable().notifyEndHand(listSeat);
+        dManagerClient.getInterToIHMTable().notifyEndHand(listSeat,apla);
     }
 
     public void saveLogGame(Table tableThatContainGameToSave) {

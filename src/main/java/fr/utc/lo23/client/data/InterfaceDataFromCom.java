@@ -144,7 +144,7 @@ public interface InterfaceDataFromCom {
      *
      * @param playerHandUserLocal PlayerHand of the local User
      */
-    public void stockCards(PlayerHand playerHandUserLocal);
+    public void stockCards(ArrayList<PlayerHand> playerHandUserLocal);
 
 
     /**
@@ -176,7 +176,7 @@ public interface InterfaceDataFromCom {
      *
      * @param listSeat ArrayList of Seat with their latest amount of money
      */
-    public void informEndHand(ArrayList<Seat> listSeat);
+    public void informEndHand(ArrayList<Seat> listSeat,ArrayList<PlayerHand> apla);
 
     /**
      * Method to inform the local user that the Turn ended with the Pot at the end of Turn

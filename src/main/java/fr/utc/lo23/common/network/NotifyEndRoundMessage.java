@@ -1,6 +1,7 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.PlayerHand;
 import fr.utc.lo23.common.data.Seat;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
@@ -14,9 +15,11 @@ import java.util.ArrayList;
 public class NotifyEndRoundMessage extends Message {
 
     private ArrayList<Seat> aSeat;
+    private ArrayList<PlayerHand> playerHands;
 
-    public NotifyEndRoundMessage(ArrayList<Seat> a) {
+    public NotifyEndRoundMessage(ArrayList<Seat> a, ArrayList<PlayerHand> pla) {
         aSeat = a;
+        playerHands = pla;
     }
 
     @Override
@@ -26,6 +29,6 @@ public class NotifyEndRoundMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().informEndHand(aSeat);
+        threadClient.getNetworkManager().getDataInstance().informEndHand(aSeat,playerHands);
     }
 }

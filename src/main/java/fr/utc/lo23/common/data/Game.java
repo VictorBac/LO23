@@ -174,7 +174,7 @@ public class Game implements Serializable{
     public int getMoneyOfPlayer(UserLight user){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
-            if(user==seat.getPlayer())
+            if(user.equals(seat.getPlayer()))
                 return seat.getCurrentAccount();
         }
         return -1;

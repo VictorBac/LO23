@@ -117,7 +117,7 @@ public interface ITableToDataListener {
      * Fonction à appeler après la résolution d'une manche
      * permet à IHM-Table d'afficher les nouvelles informations
      */
-    public void notifyEndHand(ArrayList<Seat> seatPlayers);
+    public void notifyEndHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla);
 
     /*
      * Fonction à appeler après la confirmation du serveur qu'un vote pour quitter la partie a été lancé

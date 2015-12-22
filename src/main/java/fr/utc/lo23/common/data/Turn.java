@@ -43,6 +43,8 @@ public class Turn implements Serializable {
 
     public void addAction(Action newAction) throws ActionInvalidException{
 
+        System.out.println("VERIF ACTIONS: "+availableActions(newAction.getUserLightOfPlayer()));
+        System.out.println("acion player: "+newAction.getName());
         if(availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName()))
         {
             if (newAction.getName().equals(EnumerationAction.FOLD)) {
@@ -50,6 +52,8 @@ public class Turn implements Serializable {
             } else if (newAction.getName().equals(EnumerationAction.CHECK)) {
 
             } else if (newAction.getName().equals(EnumerationAction.CALL)) {
+                //Mettre l'argent dans l'action
+                newAction.setAmount(getMaxMoneyBetInTheTurn()-getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
                 //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
             } else if (newAction.getName().equals(EnumerationAction.BET)) {
                 //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
@@ -89,15 +93,16 @@ public class Turn implements Serializable {
             int money = currentHand.getCurrentGame().getMoneyOfPlayer(user);
 
             // when the money bet by the player is equal to the max amount bet by another one, the player can check
-            if (listAction.size() == 0 || getTotalAmountForAUser(user) == getMaxMoneyBetInTheTurn()) {
+            if (listAction.size() == 0 || getMoneyBetInTheTurnForAUser(user).equals(getMaxMoneyBetInTheTurn())) {
                 tempArray.add(EnumerationAction.CHECK);
             }
-            if (money + getTotalAmountForAUser(user) > getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn() != 0) {
+            if (money > getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn() != 0 && getMaxMoneyBetInTheTurn()!=getMoneyBetInTheTurnForAUser(user)) {
                 tempArray.add(EnumerationAction.CALL);
             }
-            if (money + getTotalAmountForAUser(user) > getMaxMoneyBetInTheTurn()) {
+            if (money > getMaxMoneyBetInTheTurn()) {
                 tempArray.add(EnumerationAction.BET);
             }
+            System.out.println(tempArray);
             return tempArray;
         }
         else
@@ -129,12 +134,14 @@ public class Turn implements Serializable {
             ac1.setName(EnumerationAction.BLINDE);
             ac1.setAmount(getCurrentHand().getCurrentGame().getBlind());
             getCurrentHand().getCurrentGame().getSeatOfUser(ac1.getUserLightOfPlayer()).addCurrentMoney(-ac1.getAmount());
+            getListAction().add(ac1);
             //TODO: ac1.setTime ??
 
             ac2.setUserLightOfPlayer(getListActiveUsers().get(1));
             ac2.setName(EnumerationAction.BIGBLINDE);
             ac2.setAmount(getCurrentHand().getCurrentGame().getBlind()*2);
             getCurrentHand().getCurrentGame().getSeatOfUser(ac2.getUserLightOfPlayer()).addCurrentMoney(-ac2.getAmount());
+            getListAction().add(ac2);
             //TODO: ac2.setTime ??
 
             ac3.setUserLightOfPlayer(getNextActiveUserAfterUser(getListActiveUsers().get(1)));
@@ -154,11 +161,20 @@ public class Turn implements Serializable {
 
     public UserLight getNextActiveUser(){
         UserLight lastActionner = getCurrentAction().getUserLightOfPlayer();
+
+        for(UserLight user : getListActiveUsers())
+        {
+            if(user.equals(lastActionner))
+                lastActionner = user;
+        }
+
+
         Integer currentIndex = getListActiveUsers().indexOf(lastActionner)+1;
         if(currentIndex>=getListActiveUsers().size())
         {
             currentIndex = 0;
         }
+        System.out.println("getNextActive: "+getListActiveUsers().get(currentIndex));
         return getListActiveUsers().get(currentIndex);
     }
 
@@ -173,19 +189,29 @@ public class Turn implements Serializable {
 
     public Boolean isFinished(){
         //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
-        if(getListAction().size()<getListActiveUsers().size())
-            return false;
+        if(getCurrentHand().getListTurn().size()==1)
+        {
+            if(getListAction().size()-2<getListActiveUsers().size())
+                return false;
+        }
+        else
+        {
+            if(getListAction().size()<getListActiveUsers().size())
+                return false;
+        }
 
+        System.out.println("on a pas renvoyé false");
         //sinon il faut vérifier que tous les joueurs actifs aient le même montant
         Integer val = -1;
         for(UserLight user: getListActiveUsers())
         {
+            System.out.println("MONEY BET PAR USER :"+getMoneyBetInTheTurnForAUser(user));
             if(val==-1)
             {
-                val = getTotalAmountForAUser(user);
+                val = getMoneyBetInTheTurnForAUser(user);
                 continue;
             }
-            if(getTotalAmountForAUser(user)!=val)
+            if(getMoneyBetInTheTurnForAUser(user)!=val)
                 return false;
         }
         return true;
@@ -212,10 +238,18 @@ public class Turn implements Serializable {
 
     public Integer getMaxMoneyBetInTheTurn(){
         Integer money = 0;
-        for(PlayerHand player : getCurrentHand().getListPlayerHand())
-        {
-            if(getTotalAmountForAUser(player.getPlayer())>money)
-                money = getTotalAmountForAUser(player.getPlayer());
+        for (Action a : getListAction()) {
+            if(a.getAmount()>money)
+                money = a.getAmount();
+        }
+        return money;
+    }
+
+    public Integer getMoneyBetInTheTurnForAUser(UserLight user){
+        Integer money = 0;
+        for (Action a : getListAction()) {
+            if(a.getUserLightOfPlayer().equals(user))
+                money += a.getAmount();
         }
         return money;
     }
@@ -228,11 +262,9 @@ public class Turn implements Serializable {
     public Integer getTotalAmountForAUser ( UserLight user ){
         int amount = 0;
         // need to add all the turns
-        for (Turn eachTurn : currentHand.getListTurn()
-             ) {
-            for (Action a : eachTurn.getListAction()
-                    ) {
-                if ( a.getUserLightOfPlayer() == user ){
+        for (Turn eachTurn : currentHand.getListTurn()) {
+            for (Action a : eachTurn.getListAction()) {
+                if ( a.getUserLightOfPlayer().equals(user)){
                     amount += a.getAmount();
                 }
             }

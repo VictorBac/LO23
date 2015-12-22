@@ -330,6 +330,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " est la grosse blinde.");
                     }
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
+                    ihmtable.getTableController().setLastRaise(action.getAmount());
                 }
                 else
                 {
@@ -369,11 +370,11 @@ public class TableToDataListener implements ITableToDataListener {
      * Fonction à appeler après la résolution d'une manche
      * permet à IHM-Table d'afficher les nouvelles informations
      */
-    public void notifyEndHand(ArrayList<Seat> seatPlayers){
+    public void notifyEndHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                ihmtable.getTableController().endHand(seatPlayers);
+                ihmtable.getTableController().endHand(seatPlayers,apla);
             }
         });
     }

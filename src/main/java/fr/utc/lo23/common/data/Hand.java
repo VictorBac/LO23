@@ -247,7 +247,7 @@ public class Hand implements Serializable{
         Integer rs = 0;
         for(Turn turn: getListTurn())
         {
-            rs += turn.getTotalAmountForAUser(user);
+            rs += turn.getMoneyBetInTheTurnForAUser(user);
         }
         return rs;
     }
@@ -271,6 +271,11 @@ public class Hand implements Serializable{
             ArrayList<PlayerHand> winners = cc.getWinner(calculatedPlayerHandList, listCardField);
 
             //S'il y a des ex-aequo, on fait l'algo bien compliqué dessous, sinon on en fait un plus simple
+            //TODO: corriger algo ex-aequo
+            ArrayList<PlayerHand> winners2 = new ArrayList<>();
+            winners2.add(winners.get(0));
+            winners = winners2;
+
             if (winners.size() > 1) {
                 //on définit quelques stuctures de données nécessaires aux calcules préliminairs et au tri par ordre croissant
                 HashMap<UserLight,Integer> maxWinningMoney = new HashMap<>();
@@ -335,11 +340,22 @@ public class Hand implements Serializable{
                 effectiveWinningMoney.put(player, maxWin);
 
                 //On retire désormais l'argent des joueurs ayant pariés, et on retire de la liste des joueurs ceux qui n'ont plus d'argent parié
-                for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
+
+                System.out.println(playerMoneyBet);
+
+                HashMap<UserLight,Integer> tempHash = new HashMap<>();
+                for(Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet())
+                {
+                    tempHash.put(entry.getKey(),entry.getValue());
+                }
+
+                for (Map.Entry<UserLight, Integer> entry : tempHash.entrySet()) {
                     playerMoneyBet.replace(entry.getKey(), playerMoneyBet.get(entry.getKey()) - maxWin);
-                    if (entry.getValue() <= 0)
+                    if (playerMoneyBet.get(entry.getKey()) - maxWin <= 0)
                         playerMoneyBet.remove(entry.getKey());
                 }
+
+                System.out.println(playerMoneyBet);
             }
 
             //On supprime les vainqueurs de l'ArrayList<PlayerHand>

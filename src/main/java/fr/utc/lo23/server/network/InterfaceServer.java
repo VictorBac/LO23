@@ -91,7 +91,7 @@ public interface InterfaceServer {
      * notifying the end of the Round
      * @param ArrayList<UserLight> aPlayers
      */
-    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat);
+    public void endRound(ArrayList<UserLight> aPlayers, ArrayList<Seat> aSeat, ArrayList<PlayerHand> apl);
 
     /**
      * Sends a message to all players in a game

@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by R�my on 20/10/2015.
+ * Created by Remy on 20/10/2015.
  */
 
 public class User implements Serializable{
@@ -33,10 +33,18 @@ public class User implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor without argument
+     */
     public User(){
 
     };
 
+    /**
+     * Constructor to initialize a User with its login and its password
+     * @param login
+     * @param password
+     */
     public User(String login, String password){
 
         this.core = new UserLight(login);

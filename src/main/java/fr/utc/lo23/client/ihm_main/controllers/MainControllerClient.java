@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class use to manage the Main Window of the POKER App
+ */
 public class MainControllerClient extends Application {
 
     private Stage pmStage;

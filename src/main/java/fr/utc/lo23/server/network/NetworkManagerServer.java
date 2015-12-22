@@ -50,17 +50,16 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     }
 
     /* == METHODES IMPLEMENTATION == */
-    public void start(int portToListen) {
+
+    @Override
+    public void start(int portToListen) throws NetworkFailureException {
         if(dataInstance == null)Console.log("Interface data non set dans network");
-        try {
-            server = new PokerServer(this, listeningPort);
-        }
-        catch (Exception e){
-            Console.log(e.getMessage());
-        }
+
+        server = new PokerServer(this, listeningPort);
         server.start();
     }
 
+    @Override
     public void stop() {
         try{
             server.shutdown();
@@ -71,18 +70,22 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     }
 
+    @Override
     public void sendTableList(ArrayList<Table> tableList) throws NetworkFailureException {
 
     }
 
+    @Override
     public void sendPlayers(ArrayList<UserLight> userList) throws NetworkFailureException {
 
     }
 
+    @Override
     public void sendLogGame() throws NetworkFailureException {
 
     }
 
+    @Override
     public void notifyNewPlayer(UserLight userDistant) throws NetworkFailureException {
         NotifyNewPlayerMessage newPMessage = new NotifyNewPlayerMessage(userDistant);
         server.sendToAll(newPMessage);
@@ -94,20 +97,24 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         server.sendToListOfUsers(tablePlayers, notifyActMsg);
     }
 
+    @Override
     public void notifyNewTable(Table newTable) throws NetworkFailureException {
         NotifyNewTableMessage notifNewTable = new NotifyNewTableMessage(newTable);
         server.sendToAll(notifNewTable);
     }
 
+    @Override
     public void notifyDisconnection(User distantUser) throws NetworkFailureException {
         NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(distantUser);
         server.sendToAll(NotifyD);
     }
 
+    @Override
     public void sendChatPacket() throws NetworkFailureException {
 
     }
 
+    @Override
     public void startGame(Table tableToStart) throws NetworkFailureException {
 
     }

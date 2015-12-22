@@ -7,14 +7,14 @@ import java.net.InetAddress;
 import java.util.UUID;
 
 /**
- *
+ * Interface provided to data, client-side
  * @author Jean-Côme D LO23
  */
 public interface InterfaceClient {
     
     /**
      * Creation of a user by the client
-     * @param u 
+     * @param u User's modified profile
      */
     public void sendProfile(User u) throws NetworkFailureException;
 
@@ -67,7 +67,7 @@ public interface InterfaceClient {
     public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException;
         
     /**
-     *HeartBeat
+     * HeartBeat
      * Every 10 second, client thread send a message to the server to say he's alive.
      */
     public void sendHeartbeat() throws NetworkFailureException;
@@ -107,7 +107,7 @@ public interface InterfaceClient {
      * @param socketIp ip of the server
      * @param socketPort port of the server
      */
-    public void requestLoginServer(User u, String socketIp, int socketPort);
+    public void requestLoginServer(User u, String socketIp, int socketPort) throws Exception;
 
     /**
      * Send a packet

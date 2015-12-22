@@ -24,6 +24,6 @@ public class NotifyOtherPlayerAction extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+threadClient.getNetworkManager().getDataInstance().notifyAction(act);
     }
 }

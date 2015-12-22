@@ -122,7 +122,11 @@ public interface InterfaceServer {
     public void askActionToPLayer(ArrayList<UserLight> aPlayers, Action a, EnumerationAction[] enAct);
 
 
-
+    /**
+     * Asks a player which will be his next action
+     * @param ArrayList<UserLight> aPlayers
+     * @param ArrayList<PlayerHand> ph
+     */
     public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException;
 
 

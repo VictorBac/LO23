@@ -69,6 +69,11 @@ public class ConnectionController extends BaseController {
     private void sendAction() {
         String login = fieldUsername.getText();
         String passwd = fieldPassword.getText();
+        if (listViewServers.getSelectionModel().getSelectedItem() == null)
+        {
+            mController.showErrorPopup("Erreur", "Vous devez sélectionner au moins un serveur !");
+            return;
+        }
         String ip = listViewServers.getSelectionModel().getSelectedItem().getAddress();
         Integer port = listViewServers.getSelectionModel().getSelectedItem().getPort();
 
@@ -129,6 +134,7 @@ public class ConnectionController extends BaseController {
     public void initServerlist()
     {
         serverList.setAll(mController.getManagerMain().getInterDataToMain().getServersList());
+        listViewServers.getSelectionModel().select(0);
     }
 
 

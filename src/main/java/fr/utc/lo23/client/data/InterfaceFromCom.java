@@ -58,6 +58,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         System.out.println(tableCreatedOnServer.getCreator());
         System.out.println(dManagerClient.getUserLocal());
         if(tableCreatedOnServer.getCreator().equals(dManagerClient.getUserLocal().getUserLight())) {
+            dManagerClient.getInterToIHMMain().tableCreated(tableCreatedOnServer);
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -77,9 +78,10 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable), userWhoJoinTheTable, typeOfUserWhoJoinTable);
 
             //if the player has join the same Table as the local user we inform IHMTable
-            if(idTable.equals(dManagerClient.getTableLocal().getIdTable()))
+            if(idTable.equals(dManagerClient.getTableLocal().getIdTable())) {
                 dManagerClient.getInterToIHMTable().notifyNewUser(userWhoJoinTheTable, typeOfUserWhoJoinTable == EnumerationTypeOfUser.PLAYER);
-
+                dManagerClient.getInterToIHMMain().notifyNewUserInTable(userWhoJoinTheTable, typeOfUserWhoJoinTable);
+            }
         } catch (TableException e) {
             Console.log(TAG +"User already on the table");
             e.printStackTrace();
@@ -133,7 +135,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
             try {
                 dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightLeavingGame);
-                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
+                //dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
             } catch (TableException e) {
                 e.printStackTrace();
             }
@@ -141,7 +143,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
             try {
                 dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightLeavingGame);
-                dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
+                //dManagerClient.getInterToIHMMain().userLeftTable(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
             } catch (TableException e) {
                 e.printStackTrace();
             }

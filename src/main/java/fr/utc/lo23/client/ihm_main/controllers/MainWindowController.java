@@ -278,11 +278,12 @@ public class MainWindowController extends BaseController {
         spectatorsInGame = FXCollections.observableArrayList(t.getListSpectators().getListUserLights());
         listViewPlayersInGame.setItems(playersInGame);
         listViewSpectatorsInGame.setItems(spectatorsInGame);
-        accordionList.setExpandedPane(tpPlayersInGame);
         tpPlayersInGame.setVisible(true);
         tpPlayersInGame.setDisable(false);
         tpSpectatorsInGame.setVisible(true);
         tpSpectatorsInGame.setDisable(false);
+        if (e.equals(EnumerationTypeOfUser.PLAYER)) accordionList.setExpandedPane(tpPlayersInGame);
+        else accordionList.setExpandedPane(tpSpectatorsInGame);
 
         inGame = true;
     }
@@ -291,6 +292,19 @@ public class MainWindowController extends BaseController {
         mController.showErrorPopup("Erreur", "Impossible de rejoindre la table");
     }
 
+    public void joinCreatedTable(Table t) {
+        playersInGame = FXCollections.observableArrayList(t.getListPlayers().getListUserLights());
+        spectatorsInGame = FXCollections.observableArrayList(t.getListSpectators().getListUserLights());
+        listViewPlayersInGame.setItems(playersInGame);
+        listViewSpectatorsInGame.setItems(spectatorsInGame);
+        accordionList.setExpandedPane(tpPlayersInGame);
+        tpPlayersInGame.setVisible(true);
+        tpPlayersInGame.setDisable(false);
+        tpSpectatorsInGame.setVisible(true);
+        tpSpectatorsInGame.setDisable(false);
+
+        inGame = true;
+    }
     public void addTables(List<Table> currentTables) {
         tablesList = FXCollections.observableArrayList(currentTables);
         tableViewCurrentTables.setItems(tablesList);
@@ -320,6 +334,9 @@ public class MainWindowController extends BaseController {
     public void setTables(List<Table> tables) {
         tablesList = FXCollections.observableArrayList(tables);
         tableViewCurrentTables.setItems(tablesList);
+        // Sale hack pour JavaFX <3
+        tableViewCurrentTables.getColumns().get(0).setVisible(false);
+        tableViewCurrentTables.getColumns().get(0).setVisible(true);
     }
 
     public void ClickQuit(ActionEvent actionEvent) {
@@ -357,4 +374,32 @@ public class MainWindowController extends BaseController {
         accordionList.setExpandedPane(tpPlayersConnected);
     }
 
+    public void userJoinTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
+        if (typeOfUserWhoJoinTable.equals(EnumerationTypeOfUser.PLAYER))
+        {
+            playersInGame.add(userWhoJoinTheTable);
+            listViewPlayersInGame.setItems(playersInGame);
+            listViewPlayersInGame.refresh();
+        }
+        else
+        {
+            spectatorsInGame.add(userWhoJoinTheTable);
+            listViewSpectatorsInGame.setItems(spectatorsInGame);
+            listViewSpectatorsInGame.refresh();
+        }
+    }
+
+    public void userLeftTableLocal(UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
+        if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)) {
+            playersInGame.remove(userLightLeavingGame);
+            listViewPlayersInGame.setItems(playersInGame);
+            listViewPlayersInGame.refresh();
+        }
+        else
+        {
+            spectatorsInGame.remove(userLightLeavingGame);
+            listViewSpectatorsInGame.setItems(spectatorsInGame);
+            listViewSpectatorsInGame.refresh();
+        }
+    }
 }

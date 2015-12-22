@@ -4,6 +4,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
  */
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Server;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Application;

@@ -601,6 +601,8 @@ public class TableController {
         if(popupAmountInput.getText().isEmpty())
             return;
         amount = Integer.parseInt(popupAmountInput.getText());
+        System.out.println(amount);
+        System.out.println(table.getCurrentGame().getMaxStartMoney());
         if(amount <= 0 || amount > table.getCurrentGame().getMaxStartMoney())
             return;
         ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));

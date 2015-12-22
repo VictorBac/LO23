@@ -509,6 +509,9 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * Permet à com de transmettre les start money des utilisateurs pour validation ou refus, et sauvegarde coté server si validation
      */
     public boolean setMoneyPlayer(UUID idTable, UserLight user, Integer startAmount){
+        System.out.println(idTable);
+        System.out.println(user);
+        System.out.println(startAmount);
         if(myManager.getTables().getTable(idTable).getCurrentGame().getMaxStartMoney()<startAmount && startAmount<myManager.getTables().getTable(idTable).getCurrentGame().getBlind()*2) {
             return false;
         }
@@ -519,6 +522,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             {
                 Console.log(TAG + " : "+ myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
                 Console.log(TAG + " test if interface exist: "+myManager.getInterfaceToCom());
+                System.out.println(myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
                 myManager.getInterfaceToCom().askIfReady(myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
             }
             return true;

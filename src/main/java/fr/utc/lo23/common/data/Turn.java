@@ -199,11 +199,13 @@ public class Turn implements Serializable {
             ac1.setUserLightOfPlayer(getListActiveUsers().get(0));
             ac1.setName(EnumerationAction.BLINDE);
             ac1.setAmount(getCurrentHand().getCurrentGame().getBlind());
+            getCurrentHand().getCurrentGame().getSeatOfUser(ac1.getUserLightOfPlayer()).addCurrentMoney(-ac1.getAmount());
             //TODO: ac1.setTime ??
 
             ac2.setUserLightOfPlayer(getListActiveUsers().get(1));
             ac2.setName(EnumerationAction.BIGBLINDE);
             ac2.setAmount(getCurrentHand().getCurrentGame().getBlind()*2);
+            getCurrentHand().getCurrentGame().getSeatOfUser(ac2.getUserLightOfPlayer()).addCurrentMoney(-ac2.getAmount());
             //TODO: ac2.setTime ??
 
             ac3.setUserLightOfPlayer(getNextActiveUserAfterUser(getListActiveUsers().get(1)));

@@ -3,6 +3,9 @@ package fr.utc.lo23.common.data;
 import fr.utc.lo23.client.network.main.Console;
 import org.junit.Test;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 /**
@@ -13,7 +16,7 @@ public class HandTest {
     @Test
     public void testDistributeCard() throws Exception {
 
-        Hand oneHand = new Hand();
+        Hand oneHand = new Hand(new Timestamp(Calendar.getInstance().getTime().getTime()));
         oneHand.getListPlayerHand().add(new PlayerHand());
         oneHand.getListPlayerHand().add(new PlayerHand());
         oneHand.getListPlayerHand().add(new PlayerHand());

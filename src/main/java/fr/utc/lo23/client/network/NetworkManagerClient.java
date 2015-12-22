@@ -132,13 +132,15 @@ public class NetworkManagerClient implements InterfaceClient  {
         serverLink.send(message);
     }
 
-    public void sendAction(Action act) throws NetworkFailureException, IncorrectActionException {
-        SendActionMessage actMsg = new SendActionMessage(act);
+
+    public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException {
+        SendActionMessage actMsg = new SendActionMessage(act, IdTable);
         serverLink.send(actMsg);
     }
 
     public void leaveTable(UserLight userLocal, UUID IdTable) throws NetworkFailureException {
         LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable);
+        serverLink.send(leaveT);
     }
 
     public void requestLogGame(UserLight userLocal) throws NetworkFailureException {
@@ -169,6 +171,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer) {
         AnswerIfReadyGameMessage answerM = new AnswerIfReadyGameMessage(table, player, answer);
+        System.out.println("Envoi ready à server");
         serverLink.send(answerM);
     }
 

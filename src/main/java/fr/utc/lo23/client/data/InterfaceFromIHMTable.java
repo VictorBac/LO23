@@ -2,6 +2,7 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.TooManyTablesException;
 
@@ -28,6 +29,8 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
      */
     public void tableToCreate(Table table){
         try {
+            //initialize local table
+            dManagerClient.setTableLocal(table);
             dManagerClient.getInterToCom().createTable(getUser(),table);
         } catch (NetworkFailureException e) {
             e.printStackTrace();
@@ -71,10 +74,14 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         }
     }
 
-
-    //TODO Com must implement replyAction(Action action)
     public void replyAction(Action action) {
-        //dManagerClient.getInterToCom().replyAction(action);
+        try {
+            dManagerClient.getInterToCom().sendAction(action,dManagerClient.getTableLocal().getIdTable());
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        } catch (IncorrectActionException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -90,11 +97,15 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     //TODO
     //save stats, return to table page?
     public void quitGame(){
-
+        try {
+            dManagerClient.getInterToCom().leaveTable(getUser(),dManagerClient.getTableLocal().getIdTable());
+        } catch (NetworkFailureException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setStartAmount(int amount){
-        dManagerClient.getInterToCom().sendMoneyAmount(dManagerClient.getTableLocal().getIdTable(),getUser(),amount);
+        dManagerClient.getInterToCom().sendMoneyAmount(dManagerClient.getTableLocal().getIdTable(),dManagerClient.getUserLocal().getUserLight(),amount);
     }
 
     public void isReady(boolean status) {

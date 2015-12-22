@@ -23,8 +23,7 @@ public class SendActionMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        //threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act, act.getUserLightOfPlayer(), tableId);//TODO mettre le bon ordre des params qd data aura ajout� l'UID
-        //TODO: changer avec UUID ---  tablethreadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(act, act.getUserLightOfPlayer());
+        threadServer.getMyServer().getNetworkManager().getDataInstance().replyAction(tableID,act);
 
     }
 

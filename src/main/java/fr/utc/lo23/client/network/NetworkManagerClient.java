@@ -171,6 +171,7 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer) {
         AnswerIfReadyGameMessage answerM = new AnswerIfReadyGameMessage(table, player, answer);
+        System.out.println("Envoi ready à server");
         serverLink.send(answerM);
     }
 

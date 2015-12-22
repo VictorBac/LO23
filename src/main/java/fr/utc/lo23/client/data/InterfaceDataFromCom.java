@@ -212,4 +212,6 @@ public interface InterfaceDataFromCom {
      * @param gameOfTheUserLocal Game that was stopped
      */
     public void stopGame(Game gameOfTheUserLocal);
+
+    public void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer);
 }

@@ -105,7 +105,7 @@ public interface InterfaceServerDataFromCom {
 
     public void getAnswerReady(UUID idTable, UserLight player, boolean ready);
 
-    public void askAction (UserLight player, EnumerationAction[] availableActions);
+    public void askAction (Table table, UserLight player, EnumerationAction[] availableActions);
 
     public void getAction(UserLight player, Action attempt);
 
@@ -124,4 +124,6 @@ public interface InterfaceServerDataFromCom {
     void setReadyAnswer(UUID idTable, UserLight user, Boolean answer);
 
     void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode);
+
+    void checkIfEverybodyIsReady(UUID idtable);
 }

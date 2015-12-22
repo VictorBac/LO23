@@ -305,7 +305,6 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
                     ihmtable.getTableController().graphicFoldUser(player);
                 }
-                /* TODO: Uncomment when merge done and data side ready
                 else if(action.getName().equals(EnumerationAction.ANTE)) {
                     if(player.equals(ihmtable.getDataInterface().getUser())) {
                         ihmtable.getTableController().addLogEntry("Vous avez mis " + action.getAmount() + " d'Ante" );
@@ -331,7 +330,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " est la grosse blinde.");
                     }
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
-                }*/
+                }
                 else
                 {
                     System.out.println("ERROR: L'action renseignée ne possède pas d'action de poker.");

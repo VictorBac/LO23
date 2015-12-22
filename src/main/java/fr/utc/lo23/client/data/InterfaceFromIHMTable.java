@@ -76,7 +76,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
     public void replyAction(Action action) {
         try {
-            dManagerClient.getInterToCom().sendAction(action);
+            dManagerClient.getInterToCom().sendAction(action,dManagerClient.getTableLocal().getIdTable());
         } catch (NetworkFailureException e) {
             e.printStackTrace();
         } catch (IncorrectActionException e) {

@@ -12,6 +12,7 @@ import fr.utc.lo23.server.ihm_main.interfaces.ServerWindowInterface;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  *
@@ -157,6 +158,17 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     @Override
     public void sendLogGame(Game LogGame) throws NetworkFailureException {
+
+    }
+
+
+    @Override
+    public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException {
+
+        SendCardMessage cardMessage = new SendCardMessage(ph);
+
+        server.sendToListOfUsers(aPlayers,cardMessage);
+
 
     }
 }

@@ -177,8 +177,7 @@ public class ConnectionController extends BaseController {
     public void ImportProfilClick(ActionEvent actionEvent) {
         File file = profileChooser.showOpenDialog(buttonConnect.getScene().getWindow());
         if (file != null) {
-            // TODO: Remove comment when integrated
-            //mController.getManagerMain().getInterDataToMain().importProfileFile(file.toURI());
+            mController.getManagerMain().getInterDataToMain().importProfileFile(file.getPath());
         }
     }
 }

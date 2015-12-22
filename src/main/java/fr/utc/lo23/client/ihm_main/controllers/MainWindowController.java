@@ -326,8 +326,7 @@ public class MainWindowController extends BaseController {
     public void ExportProfil(ActionEvent actionEvent) {
         File file = profileChooser.showSaveDialog(tableViewCurrentTables.getScene().getWindow());
         if (file != null) {
-            // TODO: Remove comment when integrated
-            //mController.getManagerMain().getInterDataToMain().exportProfileFile(file.toURI());
+            mController.getManagerMain().getInterDataToMain().exportProfileFile(file.getPath());
         }
     }
 

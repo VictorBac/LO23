@@ -57,10 +57,10 @@ public interface InterfaceDataFromCom {
      * Method to notify that a user left the game
      *
      * @param idTable                id of the table the user left
-     * @param userLightDistant       UserLight of a user who left a Game
+     * @param userLightLeavingGame       UserLight of a user who left a Game
      * @param typeOfUserWhoLeftTable the user is a spectator or a player
      */
-    public void transmitLeaveGame(UUID idTable, UserLight userLightDistant, EnumerationTypeOfUser typeOfUserWhoLeftTable);
+    public void transmitLeaveGame(UUID idTable, UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable);
 
     /**
      * Method that return  a UserLightList that contain all UserLight that the Local user has locally
@@ -212,4 +212,6 @@ public interface InterfaceDataFromCom {
      * @param gameOfTheUserLocal Game that was stopped
      */
     public void stopGame(Game gameOfTheUserLocal);
+
+    public void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer);
 }

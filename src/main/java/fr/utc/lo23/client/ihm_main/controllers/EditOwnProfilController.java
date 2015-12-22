@@ -1,16 +1,9 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
-import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.event.ActionEvent;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -18,6 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by leclercvictor on 08/12/2015.

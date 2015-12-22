@@ -102,4 +102,10 @@ public interface InterfaceDataFromIHMMain {
     void importFiles(String folderPath);
 
     void exportFiles(String folderPath);
+
+    void importProfileFile(String filePath);
+
+    void exportProfileFile(String filePath);
+
+
 }

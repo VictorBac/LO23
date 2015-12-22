@@ -74,7 +74,6 @@ public class Serialization {
             System.out.println(dir);
             // check files
             File[] files = dir.listFiles();
-            System.out.println(files);
             if (files == null)
                 return;
             // object dir

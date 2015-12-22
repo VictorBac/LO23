@@ -54,7 +54,8 @@ public class CreateController extends BaseController {
 
     private String imagePath;
     /**
-     * créer un nouveul utilisateur
+     * Create a new user, the User need to have filled the nickname, his age, and his password
+     * check if the password is well writen twice, then create a new user.
      */
     public void createNewUser(ActionEvent actionEvent) {
         String testpass;

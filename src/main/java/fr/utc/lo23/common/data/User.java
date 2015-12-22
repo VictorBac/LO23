@@ -119,8 +119,8 @@ public class User implements Serializable{
      * @param beginMse : la mise de depart du joueur
      * @param points : son score par partie
      */
-    public void updateStats(int beginMse, int points){
-        statsUser.updateStats(beginMse, points);
+    public void updateStats(Integer beginMse, Integer points){
+        statsUser.addNewStat(beginMse, points);
     };
 
 

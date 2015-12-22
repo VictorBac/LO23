@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.data;
 
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.exceptions.network.IncorrectActionException;
@@ -13,7 +14,7 @@ import java.util.UUID;
  * Created by Haroldcb on 21/10/2015.
  */
 public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
-
+    private final String TAG ="InterfaceFromIHMTable - ";
     private DataManagerClient dManagerClient;
 
     public InterfaceFromIHMTable(DataManagerClient dManagerClient) {
@@ -98,10 +99,36 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     //save stats, return to table page?
     public void quitGame(){
         try {
-            dManagerClient.getInterToCom().leaveTable(getUser(),dManagerClient.getTableLocal().getIdTable());
+            EnumerationTypeOfUser localUserType = findTypeOfUserIsLocalPlayer(getUser());
+            if(localUserType!=null) //if error not
+                dManagerClient.getInterToCom().leaveTable(getUser(),dManagerClient.getTableLocal().getIdTable(),localUserType);
+            else
+                Console.log(TAG + "localUser has no type");
         } catch (NetworkFailureException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Method to find the type of the user on the local Table
+     * @param userToFindType UserLight which its type we have to find
+     * @return EnumerationTypeOfUser of the user given in parameter on the local Table, return null if not existing
+     */
+    private EnumerationTypeOfUser findTypeOfUserIsLocalPlayer(UserLight userToFindType){
+        EnumerationTypeOfUser typeOfLocalUser = null;
+        try {
+            if(dManagerClient.getTableLocal().getListPlayers().findUser(getUser().getIdUser())!=null)
+                typeOfLocalUser = EnumerationTypeOfUser.PLAYER;
+            else if(dManagerClient.getTableLocal().getListSpectators().findUser(getUser().getIdUser())!=null)
+                typeOfLocalUser = EnumerationTypeOfUser.SPECTATOR;
+        } catch (UserLightNotFoundException e) {
+            typeOfLocalUser = null;
+            e.printStackTrace();
+        }
+        return typeOfLocalUser;
+
+
     }
 
     public void setStartAmount(int amount){

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -7,18 +8,44 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ViewAutreProfilController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ViewAutreProfilController">
    <children>
-      <Label layoutX="235.0" layoutY="44.0" text="Player" textAlignment="RIGHT" />
-      <Label layoutX="229.0" layoutY="106.0" text="Age" textAlignment="RIGHT" />
-      <Button fx:id="back" layoutX="477.0" layoutY="216.0" mnemonicParsing="false" onAction="#didClickBackButton" text="Back" />
-      <ImageView fx:id="imageviewer" fitHeight="176.0" fitWidth="106.0" layoutX="595.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@avatar.jpg" />
-         </image></ImageView>
-      <Label layoutX="169.0" layoutY="199.0" text="Player Statistics" />
-      <Label fx:id="labelPlayer" layoutX="469.0" layoutY="35.0" text="Label" />
-      <Label fx:id="labelAge" layoutX="469.0" layoutY="106.0" text="Label" />
+      <GridPane prefHeight="249.0" prefWidth="726.0" style="-fx-background-color: #D6DBDA;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Visualisation d'un profil" textFill="#034939" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label text="Pseudo du joueur:" textAlignment="RIGHT" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label text="Âge" textAlignment="RIGHT" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#didClickBackButton" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #3B8474;" text="Retour" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="imageviewer" fitHeight="182.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@avatar.jpg" />
+               </image>
+            </ImageView>
+            <Label text="Statistiques du joueur:" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Label fx:id="labelPlayer" text="Récupération..." textFill="#007057" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label fx:id="labelAge" text="Récupération..." textFill="#007057" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
 
    </children>
 </AnchorPane>

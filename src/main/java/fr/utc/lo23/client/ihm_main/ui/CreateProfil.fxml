@@ -9,7 +9,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <Pane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.CreateController">
    <children>
       <GridPane style="-fx-background-color: #D6DBDA;">
@@ -46,7 +45,7 @@
             <Button fx:id="buttonAvatar" layoutX="861.0" layoutY="373.0" mnemonicParsing="false" onAction="#didClickAvatar" style="-fx-background-color: #3B8474;" text="Modifier l'avatar" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
             <Label alignment="CENTER" prefHeight="36.0" prefWidth="504.0" text="Création de profil" textAlignment="CENTER" textFill="#034939" GridPane.columnSpan="3">
                <font>
-                  <Font name="System Bold" size="25.0" />
+                  <Font size="25.0" />
                </font>
             </Label>
       

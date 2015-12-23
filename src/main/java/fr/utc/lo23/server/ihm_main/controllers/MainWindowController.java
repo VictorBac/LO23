@@ -67,6 +67,7 @@ public class MainWindowController {
 
             });
         } catch (UnknownHostException e) {
+            addTextLog("Erreur lors du lancement du serveur "+ e.getMessage());
             e.printStackTrace();
         }
 
@@ -83,19 +84,19 @@ public class MainWindowController {
             int portNumber = Integer.parseInt(fieldPort.getText());
             try {
                 manager.getInterfaceComToMain().start(portNumber);
+                addTextLog("Starting server on port " + portNumber + "...");
+                fieldPort.setDisable(true);
+                buttonStart.setDisable(true);
+                buttonStop.setDisable(false);
             } catch (NetworkFailureException e) {
+                addTextLog("Erreur lors du lancement du serveur " + e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
+                addTextLog("Erreur lors du lancement du serveur " + e.getMessage());
                 e.printStackTrace();
             }
-
-            addTextLog("Starting server on port " + portNumber + "...");
-            fieldPort.setDisable(true);
-            buttonStart.setDisable(true);
-            buttonStop.setDisable(false);
-
         }catch (NumberFormatException e) {
-            showErrorPopup("Error", "Le champs Port doit impérativement être un nombre !");
+            showErrorPopup("Error", "Le champ Port doit impérativement être un entier !");
         }
     }
 
@@ -109,7 +110,6 @@ public class MainWindowController {
     @FXML
     void handleButtonStopAction(ActionEvent event) {
         stopServer();
-
         // TODO quand ils l'auront implémentée
 //        manager.getInterfaceComToMain().stop();
     }

@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,6 +56,7 @@ public class MainControllerClient extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         pmStage = primaryStage;
+        pmStage.initStyle(StageStyle.UTILITY);
         managerMain = new IHMMainClientManager();
         managerMain.setControllerMain(this);
         showConnectionWindow();
@@ -70,7 +72,7 @@ public class MainControllerClient extends Application {
     }
 
     public void ClickCreateProfil() {
-        createProfileController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml", "Création de profile");
+        createProfileController = instantiateWindow("/fr/utc/lo23/client/ihm_main/ui/CreateProfil.fxml", "Création de profil");
     }
 
 

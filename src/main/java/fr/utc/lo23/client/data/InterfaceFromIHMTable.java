@@ -3,6 +3,7 @@ package fr.utc.lo23.client.data;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.Table;
+import fr.utc.lo23.common.data.exceptions.TableException;
 import fr.utc.lo23.exceptions.network.IncorrectActionException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.TooManyTablesException;
@@ -123,7 +124,21 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         try {
             EnumerationTypeOfUser localUserType = findTypeOfUserIsLocalPlayer(getUser());
             if(localUserType!=null) //if error not
-                dManagerClient.getInterToCom().leaveTable(getUser(),dManagerClient.getTableLocal().getIdTable(),localUserType);
+            {
+                dManagerClient.getInterToCom().leaveTable(getUser(), dManagerClient.getTableLocal().getIdTable(), localUserType);
+                if (localUserType.equals(EnumerationTypeOfUser.PLAYER))
+                    try {
+                        dManagerClient.getTableLocal().playerLeaveTable(getUser());
+                    } catch (TableException e) {
+                        e.printStackTrace();
+                    }
+                else
+                    try {
+                        dManagerClient.getTableLocal().spectatorLeaveTable(getUser());
+                    } catch (TableException e) {
+                        e.printStackTrace();
+                    }
+            }
             else
                 Console.log(TAG + "localUser has no type");
         } catch (NetworkFailureException e) {

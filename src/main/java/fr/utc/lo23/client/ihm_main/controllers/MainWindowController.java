@@ -2,31 +2,23 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
 import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by jbmartin on 18/11/15.
@@ -74,9 +66,6 @@ public class MainWindowController extends BaseController {
     private ObservableList<Table> tablesSavedList;
 
     @FXML
-    private Button buttonQuit;
-
-    @FXML
     private Accordion accordionList;
 
     @FXML
@@ -90,13 +79,12 @@ public class MainWindowController extends BaseController {
 
     private FileChooser profileChooser;
 
+    private static final int DOUBLE_CLICK = 2;
+
     // Boolean pour savoir si le joueur est en partie ou pas
     private boolean inGame = false;
 
-    public void change(ActionEvent actionEvent) {
-    }
-
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
 
         columnTableCreator.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getCreator().getPseudo()));
 
@@ -113,30 +101,28 @@ public class MainWindowController extends BaseController {
         tableViewCurrentTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableViewCurrentTables.setOnMouseClicked(event -> {
             // Double-click, l'utilisateur veut entrer en jeu
-            if (event.getClickCount() == 2)
-            {
+            if (event.getClickCount() == DOUBLE_CLICK) {
                 joinTableAction(EnumerationTypeOfUser.PLAYER);
             }
         });
         tableViewCurrentTables.setPlaceholder(new Label("Aucune table en cours actuellement..."));
 
         tablesSavedList = FXCollections.observableArrayList();
-        //tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
         listViewSavedTables.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listViewConnectedUsers.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == DOUBLE_CLICK) {
                 showOtherProfile(listViewConnectedUsers);
             }
         });
 
         listViewPlayersInGame.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == DOUBLE_CLICK) {
                 showOtherProfile(listViewPlayersInGame);
             }
         });
 
         listViewSpectatorsInGame.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == DOUBLE_CLICK) {
                 showOtherProfile(listViewSpectatorsInGame);
             }
         });
@@ -144,7 +130,7 @@ public class MainWindowController extends BaseController {
         listViewSavedTables.setCellFactory(new Callback<ListView<Table>, ListCell<Table>>() {
             @Override
             public ListCell<Table> call(ListView<Table> param) {
-                ListCell<Table> cell = new ListCell<Table>(){
+                return new ListCell<Table>(){
                     @Override
                     protected void updateItem(Table t, boolean bln) {
                         super.updateItem(t, bln);
@@ -153,7 +139,6 @@ public class MainWindowController extends BaseController {
                         }
                     }
                 };
-                return cell;
             }
         });
         listViewSavedTables.setItems(tablesSavedList);
@@ -161,7 +146,7 @@ public class MainWindowController extends BaseController {
                 new Callback<ListView<UserLight>, ListCell<UserLight>>() {
             @Override
             public ListCell<UserLight> call(ListView<UserLight> param) {
-                ListCell<UserLight> cell = new ListCell<UserLight>(){
+                return new ListCell<UserLight>(){
                     @Override
                     protected void updateItem(UserLight t, boolean bln) {
                         super.updateItem(t, bln);
@@ -170,7 +155,6 @@ public class MainWindowController extends BaseController {
                         }
                     }
                 };
-                return cell;
             }
         };
 
@@ -188,7 +172,8 @@ public class MainWindowController extends BaseController {
         accordionList.setExpandedPane(tpPlayersConnected);
     }
 
-    public void openViewOwnProfil(ActionEvent actionEvent) {
+    @FXML
+    public void openViewOwnProfil() {
         mController.showViewOwnWindow();
     }
 
@@ -203,7 +188,7 @@ public class MainWindowController extends BaseController {
     }
 
     @FXML
-    public void createTable(ActionEvent actionEvent) {
+    public void createTable() {
         gamePane.setVisible(true);
         gamePane.setDisable(false);
         gamePane.getStylesheets().clear();
@@ -219,25 +204,24 @@ public class MainWindowController extends BaseController {
                 mController.getManagerMain().getInterDataToMain().joinTableWithMode(tableViewCurrentTables.getSelectionModel().getSelectedItem().getIdTable(),
                         mode);
             } catch (FullTableException e) {
-                mController.showErrorPopup("Erreur", "Table pleine !");
+                mController.showErrorPopup("Table pleine !");
+                e.printStackTrace();
             } catch (NetworkFailureException e) {
-                mController.showErrorPopup("Erreur", "Erreur réseau !");
+                mController.showErrorPopup("Erreur réseau !");
                 e.printStackTrace();
             }
-        }
-        else
-        {
-            mController.showErrorPopup("Erreur", "Vous devez sélectionner une table avant de pouvoir en rejoindre une");
+        } else {
+            mController.showErrorPopup("Vous devez sélectionner une table avant de pouvoir en rejoindre une");
         }
     }
 
     @FXML
-    public void joinTableAsPlayer(ActionEvent actionEvent) {
+    public void joinTableAsPlayer() {
         joinTableAction(EnumerationTypeOfUser.PLAYER);
     }
 
     @FXML
-    public void joinTableAsSpectator(ActionEvent event) {
+    public void joinTableAsSpectator() {
         joinTableAction(EnumerationTypeOfUser.SPECTATOR);
     }
 
@@ -258,14 +242,17 @@ public class MainWindowController extends BaseController {
         tpPlayersInGame.setDisable(false);
         tpSpectatorsInGame.setVisible(true);
         tpSpectatorsInGame.setDisable(false);
-        if (e.equals(EnumerationTypeOfUser.PLAYER)) accordionList.setExpandedPane(tpPlayersInGame);
-        else accordionList.setExpandedPane(tpSpectatorsInGame);
+        if (e.equals(EnumerationTypeOfUser.PLAYER)) {
+            accordionList.setExpandedPane(tpPlayersInGame);
+        } else {
+            accordionList.setExpandedPane(tpSpectatorsInGame);
+        }
 
         inGame = true;
     }
 
-    public void joinRefusedTable(Table t) {
-        mController.showErrorPopup("Erreur", "Impossible de rejoindre la table");
+    public void joinRefusedTable() {
+        mController.showErrorPopup("Impossible de rejoindre la table");
     }
 
     public void joinCreatedTable(Table t) {
@@ -281,25 +268,14 @@ public class MainWindowController extends BaseController {
 
         inGame = true;
     }
-    public void addTables(List<Table> currentTables) {
-        tablesList = FXCollections.observableArrayList(currentTables);
-        tableViewCurrentTables.setItems(tablesList);
-    }
 
-    /*public void testTablesView() {
-        Table table1 = new Table("CCC", new UserLight("Dada"), true, false, 20, 10, false, 30, 5000);
-        List<Table> list = new ArrayList<Table>();
-        list.add(table1);
-        mController.getManagerMain().getInterMainToData().currentTables(list);
-    }*/
-
-    public void setConnectedUsers(List<UserLight> users)
-    {
+    public void setConnectedUsers(List<UserLight> users) {
         connectedUsers = FXCollections.observableArrayList(users);
         listViewConnectedUsers.setItems(connectedUsers);
     }
 
-    public void ExportProfil(ActionEvent actionEvent) {
+    @FXML
+    public void exportProfil() {
         File file = profileChooser.showSaveDialog(tableViewCurrentTables.getScene().getWindow());
         if (file != null) {
             mController.getManagerMain().getInterDataToMain().exportProfileFile(file.getPath());
@@ -314,7 +290,8 @@ public class MainWindowController extends BaseController {
         tableViewCurrentTables.getColumns().get(0).setVisible(true);
     }
 
-    public void ClickQuit(ActionEvent actionEvent) {
+    @FXML
+    public void clickQuit() {
         try {
             mController.getManagerMain().getInterDataToMain().exitAsked();
         } catch (NetworkFailureException e) {
@@ -325,14 +302,14 @@ public class MainWindowController extends BaseController {
 
     public void backFromViewProfile() {
         profilePane.setVisible(false);
-        if (inGame)
-        {
+        if (inGame) {
             // On est en jeu, on doit réafficher la table de jeu
             gamePane.setVisible(true);
             gamePane.setDisable(false);
+        } else {
+            // Sinon on affiche le menu principal
+            listPane.setVisible(true);
         }
-        // Sinon on affiche le menu principal
-        else listPane.setVisible(true);
     }
 
     public void backFromGame() {
@@ -350,14 +327,11 @@ public class MainWindowController extends BaseController {
     }
 
     public void userJoinTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
-        if (typeOfUserWhoJoinTable.equals(EnumerationTypeOfUser.PLAYER))
-        {
+        if (typeOfUserWhoJoinTable.equals(EnumerationTypeOfUser.PLAYER)) {
             playersInGame.add(userWhoJoinTheTable);
             listViewPlayersInGame.setItems(playersInGame);
             listViewPlayersInGame.refresh();
-        }
-        else
-        {
+        } else {
             spectatorsInGame.add(userWhoJoinTheTable);
             listViewSpectatorsInGame.setItems(spectatorsInGame);
             listViewSpectatorsInGame.refresh();
@@ -369,9 +343,7 @@ public class MainWindowController extends BaseController {
             playersInGame.remove(userLightLeavingGame);
             listViewPlayersInGame.setItems(playersInGame);
             listViewPlayersInGame.refresh();
-        }
-        else
-        {
+        } else {
             spectatorsInGame.remove(userLightLeavingGame);
             listViewSpectatorsInGame.setItems(spectatorsInGame);
             listViewSpectatorsInGame.refresh();

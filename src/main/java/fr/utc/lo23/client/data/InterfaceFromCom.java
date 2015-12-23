@@ -1,14 +1,11 @@
 package fr.utc.lo23.client.data;
 
-import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
-import fr.utc.lo23.client.network.InterfaceClient;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.common.data.exceptions.TableException;
 import javafx.application.Platform;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -70,17 +67,17 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
     public void userJoinedTable(UUID idTable, UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
-        Console.log(TAG +"userJoinedTable()");
+        Console.log(TAG +"userJoinedTableRemote()");
         try {
             dManagerClient.getListTablesLocal().addUserToTable(idTable,userWhoJoinTheTable,typeOfUserWhoJoinTable);
 
             //search the Table and send it to IHMMain
-            dManagerClient.getInterToIHMMain().userJoinedTable(dManagerClient.getListTablesLocal().getTable(idTable), userWhoJoinTheTable, typeOfUserWhoJoinTable);
+            dManagerClient.getInterToIHMMain().userJoinedTableRemote(dManagerClient.getListTablesLocal().getTable(idTable), userWhoJoinTheTable, typeOfUserWhoJoinTable);
 
             //if the player has join the same Table as the local user we inform IHMTable
-            if(idTable.equals(dManagerClient.getTableLocal().getIdTable())) {
+            if(dManagerClient.getTableLocal() != null && idTable.equals(dManagerClient.getTableLocal().getIdTable())) {
                 dManagerClient.getInterToIHMTable().notifyNewUser(userWhoJoinTheTable, typeOfUserWhoJoinTable == EnumerationTypeOfUser.PLAYER);
-                dManagerClient.getInterToIHMMain().notifyNewUserInTable(userWhoJoinTheTable, typeOfUserWhoJoinTable);
+                dManagerClient.getInterToIHMMain().userJoinedTableLocal(userWhoJoinTheTable, typeOfUserWhoJoinTable);
             }
         } catch (TableException e) {
             Console.log(TAG +"User already on the table");
@@ -93,18 +90,17 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 //TODO handle when Userlight ==localUser and idTable==idTableLocal and player or spectator
         Console.log(TAG +"transmitLeaveGame()");
         //if it corresponds to the local user
-        if(dManagerClient.getUserLocal().equals(userLightLeavingGame)){
+        if(dManagerClient.getUserLocal().getUserLight().equals(userLightLeavingGame)){
             //nothing
-
         }
         else{ //if it corresponds to a remote User
             //if it is local Table
-            if(idTable.equals(dManagerClient.getTableLocal().getIdTable())){
+            if(dManagerClient.getTableLocal() != null && idTable.equals(dManagerClient.getTableLocal().getIdTable())){
+                dManagerClient.getInterToIHMMain().userLeftTableLocal(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
                 if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
                     try {
                         dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightLeavingGame);
                         dManagerClient.getInterToIHMTable().notifyUserLeft(userLightLeavingGame,true);
-                        dManagerClient.getInterToIHMMain().userLeftTableLocal(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
                     } catch (TableException e) {
                         e.printStackTrace();
                     }
@@ -113,7 +109,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
                     try {
                         dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightLeavingGame);
                         dManagerClient.getInterToIHMTable().notifyUserLeft(userLightLeavingGame,false);
-                        dManagerClient.getInterToIHMMain().userLeftTableLocal(dManagerClient.getListTablesLocal().getTable(idTable),userLightLeavingGame,typeOfUserWhoLeftTable);
                     } catch (TableException e) {
                         e.printStackTrace();
                     }
@@ -123,7 +118,6 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
                 if(typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)){
                     try {
                         dManagerClient.getListTablesLocal().getTable(idTable).playerLeaveTable(userLightLeavingGame);
-                        dManagerClient.getInterToIHMMain().userLeftTableRemote(dManagerClient.getListTablesLocal().getTable(idTable), userLightLeavingGame, typeOfUserWhoLeftTable);
                     } catch (TableException e) {
                         e.printStackTrace();
                     }
@@ -131,13 +125,13 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
                 else if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.SPECTATOR)){
                     try {
                         dManagerClient.getListTablesLocal().getTable(idTable).spectatorLeaveTable(userLightLeavingGame);
-                        dManagerClient.getInterToIHMMain().userLeftTableRemote(dManagerClient.getListTablesLocal().getTable(idTable), userLightLeavingGame, typeOfUserWhoLeftTable);
                     } catch (TableException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }
+        dManagerClient.getInterToIHMMain().userLeftTableRemote(dManagerClient.getListTablesLocal().getTable(idTable), userLightLeavingGame, typeOfUserWhoLeftTable);
     }
 
     public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
@@ -327,13 +321,13 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
 /*
-    public void userJoinedTable() { //Useless
+    public void userJoinedTableRemote() { //Useless
         //TODO should just increase able counter --> need id Table
         //dManagerClient.getInterToIHMMain();
         //TODO or we take UserLight as a parameter and add it to the Table (maybe type Player/Spectator) waiting harold
     }
 
-    //TODO add a parameter discuss with Com to add id of the Table or maybe delete this one and see with userJoinedTable()
+    //TODO add a parameter discuss with Com to add id of the Table or maybe delete this one and see with userJoinedTableRemote()
     public void addPlayer(UserLight userLightDistant) {//useless
     }*/
 

@@ -1,28 +1,19 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+
+import java.io.IOException;
 
 /**
  * Created by leclercvictor on 08/12/2015.
  */
 public class ViewAutreProfilController extends BaseController {
-
-    @FXML
-    private Button back;
-
     @FXML
     private Label labelPlayer;
 
@@ -32,27 +23,26 @@ public class ViewAutreProfilController extends BaseController {
     @FXML
     private ImageView imageviewer;
 
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-
-    public void didClickBackButton(ActionEvent actionEvent) {
+    @FXML
+    public void didClickBackButton() {
         mController.getMainWindowController().backFromViewProfile();
     }
 
     public void initdata(UserLight profilautre) {
         labelPlayer.setText(profilautre.getPseudo());
         try {
-            if (profilautre.getAvatar() != null)
+            if (profilautre.getAvatar() != null) {
                 imageviewer.setImage(profilautre.getAvatar().getImageAvatar());
+            }
         } catch (IOException e) {
-            mController.showErrorPopup("Erreur", "Avatar introuvable !");
+            mController.showErrorPopup("Avatar introuvable !");
         }
         try {
             mController.getManagerMain().getInterDataToMain().getUser(profilautre);
         } catch (ProfileNotFoundOnServerException e) {
-            mController.showErrorPopup("Erreur", "Profil inconnu du côté serveur ??");
+            mController.showErrorPopup("Profil inconnu du côté serveur ??");
         } catch (NetworkFailureException e) {
-            mController.showErrorPopup("Erreur réseau", "Vérifier votre connexion internet");
+            mController.showErrorPopup("Vérifier votre connexion internet");
         }
     }
 

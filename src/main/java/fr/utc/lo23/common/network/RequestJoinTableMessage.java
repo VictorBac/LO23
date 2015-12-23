@@ -41,7 +41,8 @@ public class RequestJoinTableMessage extends Message {
             {
                 System.out.println(user);
             }
-            myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(idTab),notifNewPlayTable);
+            myServ.sendToAll(notifNewPlayTable);
+            //myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(idTab),notifNewPlayTable);
          }else {
             RefuseJoinTableMessage refuse = new RefuseJoinTableMessage(idTab,mode);
             threadServer.send(refuse);

@@ -3,21 +3,16 @@ package fr.utc.lo23.server.ihm_main.controllers;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.server.ihm_main.IHMMainServerManager;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.ResourceBundle;
 
 /**
  * Created by jbmartin on 01/12/2015.
@@ -45,13 +40,14 @@ public class MainWindowController {
     @FXML
     private TextArea textLog;
 
+    public MainWindowController(){
+
+    }
+
     public void setManager(IHMMainServerManager manager) {
         this.manager = manager;
     }
 
-    public MainWindowController(){
-
-    }
 
     public void initialize() {
         try {
@@ -59,10 +55,11 @@ public class MainWindowController {
 
             bgimage.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
-                    if (buttonStart.isDisabled())
+                    if (buttonStart.isDisabled()) {
                         stopServer();
-                    else
+                    } else {
                         startServer();
+                    }
                 }
 
             });
@@ -74,12 +71,11 @@ public class MainWindowController {
     }
 
     @FXML
-    void handleButtonStartAction(ActionEvent event) {
+    void handleButtonStartAction() {
         startServer();
     }
 
-    public void startServer()
-    {
+    public void startServer() {
         try {
             int portNumber = Integer.parseInt(fieldPort.getText());
             try {
@@ -108,28 +104,21 @@ public class MainWindowController {
     }
 
     @FXML
-    void handleButtonStopAction(ActionEvent event) {
+    void handleButtonStopAction() {
         stopServer();
-        // TODO quand ils l'auront implémentée
-//        manager.getInterfaceComToMain().stop();
+        // TODO quand ils l'auront implémentée, ajouter le stop serveur
     }
 
 
-    public void addTextLog(String msg)
-    {
+    public void addTextLog(String msg) {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         textLog.appendText("[" + timestamp + "] " + msg + "\n");
     }
 
-
-
-    private void showErrorPopup(String title, String msg)
-    {
+    private void showErrorPopup(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(msg);
         alert.showAndWait();
     }
-
-
 }

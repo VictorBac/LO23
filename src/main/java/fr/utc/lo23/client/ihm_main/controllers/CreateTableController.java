@@ -15,7 +15,7 @@ public class CreateTableController extends BaseController{
     @FXML
     private AnchorPane mainPane;
 
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
 
     }
 

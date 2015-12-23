@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.ihm_main;
 
-import fr.utc.lo23.client.data.*;
+import fr.utc.lo23.client.data.DataManagerClient;
+import fr.utc.lo23.client.data.InterfaceDataFromIHMMain;
 import fr.utc.lo23.client.ihm_main.controllers.ConnectionController;
 import fr.utc.lo23.client.ihm_main.controllers.MainControllerClient;
 import fr.utc.lo23.client.ihm_main.controllers.MainWindowController;
@@ -8,17 +9,16 @@ import fr.utc.lo23.client.ihm_main.interfaces.InterData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterTable;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToTable;
-import fr.utc.lo23.client.ihm_table.*;
+import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToMainListener;
 import fr.utc.lo23.client.network.NetworkManagerClient;
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.Table;
-import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Created by leclercvictor on 24/11/2015.
@@ -49,14 +49,39 @@ public class IHMMainClientManager {
 
     private ConnectionController controllerConnection;
     private MainControllerClient controllerMain;
-    // TODO ajouter profileController
 
     private List<UserLight> connectedUsers;
     private List<Table> tables;
 
+    public IHMMainClientManager() {
+
+        //Création des managers
+        managerData = new DataManagerClient();
+        managerNetwork = new NetworkManagerClient(managerData.getInterFromCom());
+        managerTable = new IHMTable();
+
+        //Création de nos interfaces
+        interMainToData = new InterData(this);
+        interMainToTable = new InterTable(this);
+
+        //Link des interfaces de Data
+        managerData.setInterToCom(managerNetwork);
+        managerData.setInterToIHMTable(managerTable.getTableToDataListener());
+        managerData.setInterToIHMMain(interMainToData);
+
+        //Link des interfaces de Table
+        managerTable.setDataInterface(managerData.getInterFromIHMTable());
+        managerTable.setMainInterface(this.getInterMainToTable());
+
+        interTableToMain = managerTable.getTableToMainListener();
+        interDataToMain = managerData.getInterFromIHMMain();
+
+    }
+
     public List<UserLight> getConnectedUsers() {
-        if (connectedUsers == null)
+        if (connectedUsers == null) {
             connectedUsers = new ArrayList<>();
+        }
         return connectedUsers;
     }
 
@@ -65,8 +90,7 @@ public class IHMMainClientManager {
         updateMainWindowConnectedUsersList();
     }
 
-    public void addConnectedUser(UserLight u)
-    {
+    public void addConnectedUser(UserLight u) {
         if (!this.connectedUsers.contains(u)) {
             this.connectedUsers.add(u);
         }
@@ -74,35 +98,34 @@ public class IHMMainClientManager {
     }
 
 
-    public void removeConnectedUser(UserLight u)
-    {
+    public void removeConnectedUser(UserLight u) {
         this.connectedUsers.remove(u);
         updateMainWindowConnectedUsersList();
     }
 
     public List<Table> getTables() {
-        if (tables == null)
+        if (tables == null) {
             tables = new ArrayList<>();
+        }
         return tables;
     }
 
-    public void setTables(List<Table> listTables)
-    {
+    public void setTables(List<Table> listTables) {
         this.tables = listTables;
         updateMainWindowTableList();
     }
 
-    public void addTable(Table table)
-    {
-        if (!tables.contains(table))
+    public void addTable(Table table) {
+        if (!tables.contains(table)) {
             tables.add(table);
+        }
         updateMainWindowTableList();
     }
 
-    public void removeTable(Table table)
-    {
-        if (tables.contains(table))
+    public void removeTable(Table table) {
+        if (tables.contains(table)) {
             tables.remove(table);
+        }
         updateMainWindowTableList();
     }
     //Getters et setters de nos interfaces
@@ -172,41 +195,16 @@ public class IHMMainClientManager {
 
 
 
-    public IHMMainClientManager() {
-
-        //Création des managers
-        managerData = new DataManagerClient();
-        managerNetwork = new NetworkManagerClient(managerData.getInterFromCom());
-        managerTable = new IHMTable();
-
-        //Création de nos interfaces
-        interMainToData = new InterData(this);
-        interMainToTable = new InterTable(this);
-
-        //Link des interfaces de Data
-        managerData.setInterToCom(managerNetwork);
-        managerData.setInterToIHMTable(managerTable.getTableToDataListener());
-        managerData.setInterToIHMMain(interMainToData);
-
-        //Link des interfaces de Table
-        managerTable.setDataInterface(managerData.getInterFromIHMTable());
-        managerTable.setMainInterface(this.getInterMainToTable());
-
-        interTableToMain = managerTable.getTableToMainListener();
-        interDataToMain = managerData.getInterFromIHMMain();
-
-    }
 
 
-    private void updateMainWindowConnectedUsersList ()
-    {
+
+    private void updateMainWindowConnectedUsersList () {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
             Platform.runLater(() -> mainWinController.setConnectedUsers(getConnectedUsers()));
         }
     }
-    private void updateMainWindowTableList()
-    {
+    private void updateMainWindowTableList() {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
             Platform.runLater(() -> mainWinController.setTables(getTables()));

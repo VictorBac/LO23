@@ -1,16 +1,10 @@
 package fr.utc.lo23.client.ihm_main.interfaces;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
-import fr.utc.lo23.client.ihm_main.controllers.MainWindowController;
 import fr.utc.lo23.client.ihm_main.controllers.ViewAutreProfilController;
-import fr.utc.lo23.client.ihm_main.interfaces.InterfaceMainToData;
 import fr.utc.lo23.common.data.*;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,11 +53,6 @@ import java.util.List;
     }
 
     @Override
-    public void updateView() {
-
-    }
-
-    @Override
     public void notifyNewTable(Table t) {
         managerMain.addTable(t);
     }
@@ -88,8 +77,8 @@ import java.util.List;
     }
 
     @Override
-    public void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type) {
-        
+    public void userJoinedTableRemote(Table t, UserLight user, EnumerationTypeOfUser type) {
+        Platform.runLater(() -> managerMain.updateTable(t));
     }
 
     @Override
@@ -114,7 +103,7 @@ import java.util.List;
 
     @Override
     public void tableJoinRefused(Table t) {
-        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().joinRefusedTable(t));
+        Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController().joinRefusedTable());
     }
 
     @Override
@@ -134,8 +123,18 @@ import java.util.List;
     }
 
     @Override
-    public void notifyNewUserInTable(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
+    public void userJoinedTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         Platform.runLater(() -> managerMain.getControllerMain().getMainWindowController()
                 .userJoinTableLocal(userWhoJoinTheTable, typeOfUserWhoJoinTable));
+    }
+
+    @Override
+    public void notifyLoginAccepted() {
+        Platform.runLater(() -> managerMain.getControllerMain().userLoggedIn());
+    }
+
+    @Override
+    public void notifyLoginRefused() {
+        Platform.runLater(() -> managerMain.getControllerMain().getConnectionWindowController().loginRefused());
     }
 }

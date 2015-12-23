@@ -22,6 +22,28 @@ public class IHMMainServerManager {
     private DataManagerServer managerData;
     private NetworkManagerServer managerCom;
 
+    /**
+     * MainWindowController
+     */
+    private MainWindowController windowController;
+
+    /**
+     * Managers creation and interfaces linkage
+     */
+    public IHMMainServerManager() {
+        managerData = new DataManagerServer();
+        managerCom = new NetworkManagerServer();
+
+        interfaceMainToCom = new InterMain(this);
+
+        //Link des interfaces
+        managerCom.setInterMain(interfaceMainToCom);
+        managerCom.setDataInstance(managerData.getInterfaceFromCom());
+        managerData.setInterfaceToCom(managerCom);
+
+
+        interfaceComToMain = managerCom;
+    }
 
     // Getters et Setters
 
@@ -53,11 +75,6 @@ public class IHMMainServerManager {
     }
 
     /**
-     * MainWindowController
-     */
-    private MainWindowController windowController;
-
-    /**
      * Setter windowController
      * @param windowController
      */
@@ -66,33 +83,8 @@ public class IHMMainServerManager {
         this.windowController = windowController;
     }
 
-    /**
-     * Managers creation and interfaces linkage
-     */
 
-    public IHMMainServerManager() {
-        managerData = new DataManagerServer();
-        managerCom = new NetworkManagerServer();
-
-        interfaceMainToCom = new InterMain(this);
-
-        //Link des interfaces
-        managerCom.setInterMain(interfaceMainToCom);
-        managerCom.setDataInstance(managerData.getInterfaceFromCom());
-        managerData.setInterfaceToCom(managerCom);
-
-
-        interfaceComToMain = managerCom;
-    }
-
-
-    public void addLogLine(String msg)
-    {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                windowController.addTextLog(msg);
-            }
-        });
+    public void addLogLine(String msg) {
+        Platform.runLater(() -> windowController.addTextLog(msg));
     }
 }

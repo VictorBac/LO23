@@ -3,9 +3,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
 import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -15,21 +13,12 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * This controller is used to manage the Edit Profil Window
  * Created by leclercvictor on 08/12/2015.
  */
 public class EditOwnProfilController extends BaseController {
-
-    @FXML
-    private Button cancel;
-
-    @FXML
-    private Button update;
-
     @FXML
     private TextField username;
 
@@ -53,10 +42,8 @@ public class EditOwnProfilController extends BaseController {
 
     /**
      * initialization of the Window with the current Avatar of the User
-     * @param location
-     * @param resources
      */
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         imagePath = "";
         avatarChooser = new FileChooser();
         avatarChooser.setTitle("Choix de l'avatar");
@@ -75,7 +62,8 @@ public class EditOwnProfilController extends BaseController {
      * Cancel button, Exit the edition of profile,
      * go back to the Window which display your view your own profile
      */
-    public void didClickCancelButton(ActionEvent actionEvent) {
+    @FXML
+    public void didClickCancelButton() {
         mController.showViewOwnWindow();
     }
 
@@ -87,7 +75,8 @@ public class EditOwnProfilController extends BaseController {
      * if he wants to change his password, we check first that the "old password" is the same as the current one,
      * at the end, we call the update function of DATA.
      */
-    public void UpdateProfil(ActionEvent actionEvent) {
+    @FXML
+    public void updateProfil() {
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
         edituser.setAge(Integer.parseInt(age.getText()));
         edituser.setEmail(email.getText());
@@ -96,9 +85,8 @@ public class EditOwnProfilController extends BaseController {
         if (!oldpassword.getText().isEmpty()){
             if (edituser.getPwd().equals(oldpassword.getText())){
                 edituser.setPwd(newpassword.getText());
-            }
-            else {
-                mController.showErrorPopup("Erreur", "Le champ ancien mot de passe ne corespond pas au mot de passe actuel.");
+            } else {
+                mController.showErrorPopup("Le champ ancien mot de passe ne corespond pas au mot de passe actuel.");
             }
         }
         try {
@@ -112,19 +100,19 @@ public class EditOwnProfilController extends BaseController {
 
     /**
      * We fill the Window with the User's informations
-     * @param UserLocal the User from who we have to fill the information.
+     * @param userLocal the User from who we have to fill the information.
      */
-    public void fillUserform(User UserLocal) {
-        UserLight lightuser = UserLocal.getUserLight();
+    public void fillUserform(User userLocal) {
+        UserLight lightuser = userLocal.getUserLight();
         username.setText(lightuser.getPseudo());
-        age.setText(Integer.toString(UserLocal.getAge()));
-        email.setText(UserLocal.getEmail());
+        age.setText(Integer.toString(userLocal.getAge()));
+        email.setText(userLocal.getEmail());
         if (lightuser.getAvatar() != null) {
             imagePath = lightuser.getAvatar().getPath();
             try {
                 imageviewer.setImage(lightuser.getAvatar().getImageAvatar());
             } catch (IOException e) {
-                mController.showErrorPopup("Erreur", "Avatar introuvable !");
+                mController.showErrorPopup("Avatar introuvable !");
             }
         }
     }
@@ -134,10 +122,9 @@ public class EditOwnProfilController extends BaseController {
     /**
      * Button to change the Avatar of the profile, the user has to give the file of his image.
      */
-    void avatarButtonClick(ActionEvent event) {
+    void avatarButtonClick() {
         File file = avatarChooser.showOpenDialog(username.getScene().getWindow());
-        if (file != null)
-        {
+        if (file != null) {
             imagePath = file.getAbsolutePath();
             try {
                 imageviewer.setImage(new Image(file.toURI().toURL().toString(),

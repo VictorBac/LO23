@@ -13,12 +13,11 @@ public interface InterfaceMainToData {
     void remoteUserDisconnected(UserLight remoteUser);
     void contactNotificationEvent(UserLight remoteUser);
     void onlineUsers(List<UserLight> userList);
-    void updateView();
     void notifyNewTable(Table t);
     void notifyDeletedTable(Table t);
     void returnHome();
     void currentTables(List<Table> currentTables);
-    void userJoinedTable(Table t, UserLight user, EnumerationTypeOfUser type);
+    void userJoinedTableRemote(Table t, UserLight user, EnumerationTypeOfUser type);
     void userLeftTableRemote(Table tableTheUserhaveleft,UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable);
     void userLeftTableLocal(Table tableTheUserhaveleft,UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable);
     void userStatsUpdated(UserLight user, Stats st);
@@ -28,5 +27,8 @@ public interface InterfaceMainToData {
 
     void tableCreated(Table tableCreatedOnServer);
 
-    void notifyNewUserInTable(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable);
+    void userJoinedTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable);
+
+    void notifyLoginAccepted();
+    void notifyLoginRefused();
 }

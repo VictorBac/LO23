@@ -32,7 +32,7 @@ public class Chat implements Serializable {
     }
 
     /**
-     * method to add a new message in the chat
+     * Method to add a new message in the chat
      * @param message : message to send
      * @see  fr.utc.lo23.common.data.MessageChat
      */

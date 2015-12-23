@@ -46,7 +46,7 @@ public class Card implements Serializable {
         else{
             this.value = value;
             this.symbol = symbol;
-            this.id = symbol + Integer.toString(value);
+            this.id = symbol + Integer.toString(value);//concatenation between the symbol and the value
         }
     }
 
@@ -70,6 +70,9 @@ public class Card implements Serializable {
         return symbolChar;
     }
 
+    /**
+     * Method used to print a Card with the value and the symbol
+     */
     public void printCard () {
 //        String ANSI_RESET = (char)27 + "[0m ";
 //        String ANSI_RED = (char)27 + "[31m ";

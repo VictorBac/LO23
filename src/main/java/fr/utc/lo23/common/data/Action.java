@@ -43,10 +43,14 @@ public class Action implements Serializable{
 
     }
 
+
+
     /**
-     * @param name an EnumerationAction to specify the type of action
-     * @param amount an int to specify how much money is bet (when action is bet)
-     * @param userLightOfPlayer attribute to characterize the player who made the action
+     * Constructor to initialise all attributes except the Timestamp which is setting to the current Date
+     * @param name  EnumerationAction to specify the type of Action
+     * @param amount  int to specify how much money is bet (when action is bet or other actions that needs money), the value must be 0
+     * @param userLightOfPlayer UserLight attribute to characterize the player who made the action
+     * @throws ActionInvalidException returned if the amount is less than 0 or if the amount cannot corresponds to the Action
      */
     public Action(EnumerationAction name, int amount, UserLight userLightOfPlayer) throws ActionInvalidException {
         if(name==null || userLightOfPlayer == null)
@@ -76,7 +80,9 @@ public class Action implements Serializable{
         this(originalAction.name, originalAction.amount, new UserLight(),originalAction.timeStampOfAction);
     }
 
-
+    /**
+     * Constructor without argument
+     */
     public Action(){
 
         this.name = null;
@@ -118,11 +124,18 @@ public class Action implements Serializable{
      */
     public Timestamp getTimeStampOfAction() {return timeStampOfAction;}
 
-
+    /**
+     * Setter to change the type of an Action
+     * @param name EnumerationAction for the Action
+     */
     public void setName(EnumerationAction name) {
         this.name = name;
     }
 
+    /**
+     * Setter to change the Amount of money spend for the Action
+     * @param amount int that must be higher than 0 (if it is not the case the amount will be set to 0)
+     */
     public void setAmount(int amount) {
         if(amount < 0)
             this.amount = 0;
@@ -130,6 +143,10 @@ public class Action implements Serializable{
             this.amount = amount;
     }
 
+    /**
+     * setter that change the UserLight associated to an Action
+     * @param userLightOfPlayer UserLight of the Player associated to an Action
+     */
     public void setUserLightOfPlayer(UserLight userLightOfPlayer) {
         this.userLightOfPlayer = userLightOfPlayer;
     }

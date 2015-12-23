@@ -10,20 +10,28 @@ import java.util.Base64;
 /**
  * Created by Remy on 20/10/2015.
  * see http://myjeeva.com/convert-image-to-string-and-string-to-image-in-java.html
+ * Class that represent the Image of a user
  */
 public class ImageAvatar implements  Serializable{
+    private static final long serialVersionUID = 1L;
 
     private String pathToImage; //path to the local image
     private byte[] imageDataByteArray; //image of the avatar which was converted to byte array
-
     private final String pathTemporaryImageFile = "./tmp/TemporaryFileImage";
-    private static final long serialVersionUID = 1L;
 
-
+    /**
+     * Constructor
+     * @param pathToImage String for the path of the image that the User want to use
+     * @throws IOException can throw exception if the file doesn't exist or is not correct
+     */
     public ImageAvatar(String pathToImage) throws IOException {
         setPath(pathToImage);
     }
 
+    /**
+     * Get the path of the file image
+     * @return String containing the path to the Image
+     */
     public String getPath(){
         return pathToImage;
     }
@@ -77,8 +85,10 @@ public class ImageAvatar implements  Serializable{
     }
 
 
-
-
+    /**
+     * toString Override that show the path of the Image
+     * @return
+     */
     @Override
     public String toString() {
         return "ImageAvatar{" +

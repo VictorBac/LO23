@@ -93,7 +93,7 @@ public class Table implements Serializable {
         // number of players on the table < max number of players AND player not already in the table
         if (checkConditionPlayerJoin() && !this.listPlayers.getListUserLights().contains(player)){
             this.listPlayers.getListUserLights().add(player);
-            //this.getCurrentGame().addPlayer(player);
+            //Remove : the player is not added yet to the Game this.getCurrentGame().addPlayer(player);
         }
         else {
             throw new TableException("Impossible to add this new player");

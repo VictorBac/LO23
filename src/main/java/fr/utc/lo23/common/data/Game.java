@@ -29,36 +29,10 @@ public class Game implements Serializable{
     private HashMap<UserLight,Boolean> readyUserAnswers;
     private Integer maxStartMoney;
 
-    /**
-     * Constructor with all parameter
-     * @param idGame
-     * @param listHand
-     * @param blind
-     * @param listSeatPlayerWithPeculeDepart
-     * @param chatGame
-     * @param timeStampStartOfTheGame
-     * @param ante
-     * @param statusOfTheGame
-     * @param listUserSpectator
-     *
-     * Apparemment il n'est jamais utilisé celui la, y a vraiment besoin de le garder ?  en plus il ne remplis pas la table !
-     */
-    public Game(UUID idGame, ArrayList<Hand> listHand, int blind, ArrayList<Seat> listSeatPlayerWithPeculeDepart, Chat chatGame, Timestamp timeStampStartOfTheGame, int ante, EnumerationStatusGame statusOfTheGame, ArrayList<UserLight> listUserSpectator) {
-        this.idGame = idGame;
-        this.listHand = listHand;
-        this.blind = blind;
-        this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
-        this.chatGame = chatGame;
-        this.timeStampStartOfTheGame = timeStampStartOfTheGame;
-        this.ante = ante;
-        this.statusOfTheGame = statusOfTheGame;
-        this.listUserSpectator = listUserSpectator;
-        this.readyUserAnswers = new HashMap<UserLight,Boolean>();
-    }
 
     /**
      * Constructor used to initialize a game for the table, it initialize the uuid, and the status of the game to waiting for players,
-     * @param tableOfTheGame Table of Game it is refered to
+     * @param tableOfTheGame Table of Game it is referred to
      * @param ante small amount of money that each player has to pay at each Hand
      * @param blind amount of money that the small blind user has to pay at the beginning of the Hand
      * @param maxStartMoney max Money to start with
@@ -78,8 +52,6 @@ public class Game implements Serializable{
         this.maxStartMoney = maxStartMoney;
     }
 
-    //TODO comment those method
-
     /**
      * Method to know the current Hand
      * @return the last Hand of the Array
@@ -88,13 +60,17 @@ public class Game implements Serializable{
         return this.listHand.get(this.listHand.size()-1);
     }
 
+    /**
+     * Method to add a player to the Game, it creates a new Seat with the UserLight inside
+     * @param newUserLightPlayerJoinGame UserLight of the Player we want to add to the list of Seat
+     */
     public void addPlayer(UserLight newUserLightPlayerJoinGame){
         this.listSeatPlayerWithPeculeDepart.add(new Seat(newUserLightPlayerJoinGame));
     }
 
     /**
      * Method to set a player as disconnected on the Game
-     * @param userLightPlayerToRemoveFromTheGame �UserLight of the player who is disconnected
+     * @param userLightPlayerToRemoveFromTheGame UserLight of the player who is disconnected
      */
     public void deletePlayer(UserLight userLightPlayerToRemoveFromTheGame){
         int sizeListSeat = this.listSeatPlayerWithPeculeDepart.size();
@@ -104,7 +80,6 @@ public class Game implements Serializable{
                 this.listSeatPlayerWithPeculeDepart.get(index).setStatusPlayer(EnumerationStatusPlayer.DISCONNECTED);
                 break;
             }
-
         }
     }
 
@@ -132,29 +107,10 @@ public class Game implements Serializable{
         this.listUserSpectator.add(newUserLightSpectatorJoinGame);
     }
 
-
-    private UserLight getCurrentPlayer(){
-        return null;//TODO remove this line
-    }
-    private UserLight getNextPlayer(){
-        return null; //TODO remove this line
-    }
-
-
     /**
-     * Method that take an action that has been played and give it to the current Hand
-     * @param newActionDoneByPlayer Action played on this Hand
+     * Method that checks if all conditions are filled to start the game, if they are then set the timestamp of the Game and change its status to connected
+     * @return true if there are a number of player corresponding to the interval of value set by the creator of the Table
      */
-    private void playAction(Action newActionDoneByPlayer) throws ActionInvalidException {
-        //TODO need to do some check First
-        //TODO change the behaviour it is not the best way to do it
-        getCurrentHand().playAction(newActionDoneByPlayer);
-    }
-
-
-    /**
-     * Method to start the Game
-      */
     public Boolean startGame(){
         if(tableOfTheGame.getListPlayers().getListUserLights().size()>=tableOfTheGame.getNbPlayerMin() && tableOfTheGame.getListPlayers().getListUserLights().size()<=tableOfTheGame.getNbPlayerMax()) {
             this.timeStampStartOfTheGame = new Timestamp(Calendar.getInstance().getTime().getTime());
@@ -165,12 +121,18 @@ public class Game implements Serializable{
             return false;
     }
 
-
+    /**
+     * Method to stop the game, it change the status to Finished
+     */
     public void stopGame(){
         this.statusOfTheGame = EnumerationStatusGame.Finished;
-
     }
 
+    /**
+     * Method that search the current amount of money of a Player
+     * @param user UserLight of the player
+     * @return current amount of money of the Player or -1 if no player was found that corresponds to the specified UserLight
+     */
     public int getMoneyOfPlayer(UserLight user){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
@@ -180,6 +142,11 @@ public class Game implements Serializable{
         return -1;
     }
 
+    /**
+     * Method that change the current amount of money of the specified player
+     * @param user UserLight of the player
+     * @param value new current amount of money of the player
+     */
     public void setMoneyOfPlayer(UserLight user, int value){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
@@ -188,6 +155,11 @@ public class Game implements Serializable{
         }
     }
 
+    /**
+     * Method userd to search a player and initialize its current amount and its start amount with a value
+     * @param user UserLight of the Player
+     * @param value int that corresponds to the amount of money
+     */
     public void intializeMoneyOfPlayer(UserLight user, int value){
         for(Seat seat: getListSeatPlayerWithPeculeDepart())
         {
@@ -198,6 +170,11 @@ public class Game implements Serializable{
         }
     }
 
+    /**
+     * Method that is used to create a Seat for a player
+     * @param user UserLight of a player that join the Game
+     * @param startMoney smaount of money the player is gonna start with
+     */
     public void createPlayerSeat(UserLight user,Integer startMoney){
         Seat seat =new Seat();
         seat.setPlayer(user);
@@ -225,6 +202,11 @@ public class Game implements Serializable{
         return finished;
     }
 
+    /**
+     * Method to search and return the Seat of a player
+     * @param user UserLight of a player
+     * @return Seat of a player, null if no Seat was found
+     */
     public Seat getSeatOfUser(UserLight user){
         for(Seat seat : getListSeatPlayerWithPeculeDepart()){
             if(seat.getPlayer().equals(user))
@@ -289,34 +271,68 @@ public class Game implements Serializable{
      */
     public ArrayList<UserLight> getListUserSpectator() {return listUserSpectator;}
 
+    /**
+     * Set the blind for the Game
+     * @param blind int corresponding to the blind
+     */
     public void setBlind(int blind) {this.blind = blind;}
+
+    /**
+     * Set the ante for the Game
+     * @param ante int corresponding to the ante
+     */
     public void setAnte(int ante) {this.ante = ante;}
+
+    /**
+     * Set the status of the Game
+     * @param statusOfTheGame EnumerationStatusGame
+     */
     public void setStatusOfTheGame(EnumerationStatusGame statusOfTheGame) {this.statusOfTheGame = statusOfTheGame;}
 
+    /**
+     * Get the maxStartMoney of the Game
+     * @return Integer maxStartMoney of the Game
+     */
     public Integer getMaxStartMoney() {
         return maxStartMoney;
     }
 
+    /**
+     * Set the maxStartMoney of the Game
+     * @param maxStartMoney Integer
+     */
     public void setMaxStartMoney(Integer maxStartMoney) {
         this.maxStartMoney = maxStartMoney;
     }
 
+    /**
+     * Get the list of vote of each player contained in an HashMap for the Ready to Start Game question
+     * @return HashMap<UserLight,Boolean> containing the answer of each player
+     */
     public HashMap<UserLight, Boolean> getReadyUserAnswers() {
         return readyUserAnswers;
     }
 
-    public void setReadyUserAnswers(HashMap<UserLight, Boolean> readyUserAnswers) {
-        this.readyUserAnswers = readyUserAnswers;
-    }
-
+    /**
+     * Get the Table of this Game
+     * @return Table associated with the Game
+     */
     public Table getTableOfTheGame() {
         return tableOfTheGame;
     }
 
+    /**
+     * Set the Table of this Game
+     * @param tableOfTheGame Table that needs to be associated with the Game
+     */
     public void setTableOfTheGame(Table tableOfTheGame) {
         this.tableOfTheGame = tableOfTheGame;
     }
 
+    /**
+     * set the list of Seat of Player for this Game
+     * @param listSeatPlayerWithPeculeDepart ArrayList<Seat> containing the list of Seat for each Player
+     */
     public void setListSeatPlayerWithPeculeDepart(ArrayList<Seat> listSeatPlayerWithPeculeDepart) {
         this.listSeatPlayerWithPeculeDepart = listSeatPlayerWithPeculeDepart;
     }

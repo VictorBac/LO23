@@ -66,7 +66,12 @@ public class Serialization {
         return objectDeserialized;
     }
 
-
+    /**
+     * Method to move files from on location to another
+     * @param from String path to the location where the original file is
+     * @param to String path to the location where the file has to be moved
+     * @throws Exception TODO change Exception to be more specific ans remove the SystoutPrint
+     */
     public static void moveFiles(String from, String to) throws Exception {
         System.out.println(to);
         try {

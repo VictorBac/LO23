@@ -85,7 +85,7 @@ public class TableController {
      * Called when fxml has finished loading
      */
     public void initialize(){
-        btnLaunchGame.setVisible(true);
+
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
         buttonValiderMontant.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -160,6 +160,7 @@ public class TableController {
         }
     }
 
+    /* CETTE FONCTION N'EST PLUS UTILISEE
     public void betMoneyBoxInitializer(){
         Point2D betPlayerBoxWidthHeight = new Point2D(585.0, 155.0);
         Point2D betPlayerBoxCenter = new Point2D(510.0, 215.0);
@@ -176,7 +177,7 @@ public class TableController {
             i++;
         }
 
-    }
+    }*/
 
     public int getFirstAvailableSeat() {
         for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
@@ -225,7 +226,7 @@ public class TableController {
             i++;
         }
         //On crée les betMoneyBox
-        betMoneyBoxInitializer();
+        //betMoneyBoxInitializer();
     }
 
     @FXML
@@ -1194,6 +1195,7 @@ public class TableController {
     public void notifySuccessStartGame() {
 
         turnStatus = "warmup";
+        reorderPlayers();
         addLogEntry("La partie va se lancer d'ici quelques instants.");
     }
 

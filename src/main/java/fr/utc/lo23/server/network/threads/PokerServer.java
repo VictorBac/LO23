@@ -100,7 +100,7 @@ public class PokerServer extends Thread {
         InterfaceServerDataFromCom dataInterface = this.networkManager.getDataInstance();
 
         for (ConnectionThread threadClient : threadsClientList) {
-            if(threadClient.getUserId() == userId) {
+            if(threadClient.getUserId().equals(userId)) {
                 threadsClientList.remove(threadClient);
                 User userToDelete = dataInterface.getUserById(userId);
                 this.networkManager.notifyDisconnection(userToDelete);
@@ -114,7 +114,7 @@ public class PokerServer extends Thread {
 
     private ConnectionThread getThreadFromUserId(UUID userId){
         for (ConnectionThread threadClient : threadsClientList) {
-            if (threadClient.getUserId() == userId) return threadClient;
+            if (threadClient.getUserId().equals(userId)) return threadClient;
         }
         return null; // If not found
     }

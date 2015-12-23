@@ -129,6 +129,7 @@ public class MainControllerClient extends Application {
             pmStage.setScene(scene);
             //root.getStylesheets().add(getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/style.css").toExternalForm());
             root.setStyle("-fx-background-image: url('/fr/utc/lo23/client/ihm_main/ui/poker.png')");
+            pmStage.setResizable(false);
             pmStage.centerOnScreen();
             pmStage.show();
             return controller;

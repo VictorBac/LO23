@@ -47,10 +47,16 @@ public class TableController {
         return playerControllerMap;
     }
 
-    private boolean isHost = true;
-
     public Table getTable() {
         return table;
+    }
+
+    public UserLight getInstanceOfUserLightStockedInPlayerController(UserLight user){
+        for (Map.Entry<UserLight, PlayerController> entry : playerControllerMap.entrySet()) {
+            if(entry.getKey().getIdUser().equals(user.getIdUser()))
+                return entry.getKey();
+        }
+        return null;
     }
 
     public PlayerController getPlayerControllerOf(UserLight user){
@@ -85,7 +91,8 @@ public class TableController {
      * Called when fxml has finished loading
      */
     public void initialize(){
-
+        hideCommonCards();
+        btnLaunchGame.setVisible(false);
         betLabel.setText(Math.round(actionBetMoneySelector.getValue()) + "");
         buttonValiderMontant.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -149,7 +156,7 @@ public class TableController {
         playerControllerMap.put(user, playerController);
         controllersList.set(id, playerController);
         if (showLog) addLogEntry(user.getPseudo()+" a rejoint la salle.");
-        if(isHost && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
+        if(table.getCreator().equals(ihmTable.getDataInterface().getUser()) && table.getListPlayers().getListUserLights().size() >= table.getNbPlayerMin())
             btnLaunchGame.setVisible(true);
     }
 
@@ -203,14 +210,16 @@ public class TableController {
             System.exit(0);
             return;
         }
+        user = getInstanceOfUserLightStockedInPlayerController(user);
         playerControllerMap.remove(user);
-        if (showLog) addLogEntry(user.getPseudo() + " a quitté la partie.");
+        if (showLog)
+            addLogEntry(user.getPseudo() + " a quitté la partie.");
         controllersList.set(controllersList.indexOf(playerController), null);
-        //TODO if(isHost && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
-            //TODO btnLaunchGame.setVisible(false);
-        //Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
-        if(betMoneyControllerMap.get(user)!=null)
-            betMoneyControllerMap.get(user).hideBetMoneyBox();
+        if(table.getCreator().equals(ihmTable.getDataInterface().getUser()) && table.getListPlayers().getListUserLights().size() < table.getNbPlayerMin())
+            btnLaunchGame.setVisible(false);
+        //DEPRECIE Si on est au milieu d'une partie, on cache juste le betMoneyBox correspondant à l'utilisateur
+        //if(betMoneyControllerMap.get(user)!=null)
+        //    betMoneyControllerMap.get(user).hideBetMoneyBox();
         playerController.destroyGraphic();
     }
 
@@ -225,7 +234,7 @@ public class TableController {
             playerController.setPositions(coords);
             i++;
         }
-        //On crée les betMoneyBox
+        //DEPERECIE On crée les betMoneyBox
         //betMoneyBoxInitializer();
     }
 
@@ -328,7 +337,7 @@ public class TableController {
      */
     @FXML
     private void launchGame(javafx.event.ActionEvent event){
-        //TODO btnLaunchGame.setVisible(false);
+        btnLaunchGame.setVisible(false);
         ihmTable.getDataInterface().playGame(table.getIdTable());
     }
 
@@ -1193,8 +1202,8 @@ public class TableController {
     }
 
     public void notifySuccessStartGame() {
-
         turnStatus = "warmup";
+        showCommonCards();
         reorderPlayers();
         addLogEntry("La partie va se lancer d'ici quelques instants.");
     }

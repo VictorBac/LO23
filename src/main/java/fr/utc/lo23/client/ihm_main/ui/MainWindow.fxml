@@ -10,7 +10,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane prefHeight="804.0" prefWidth="1220.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.MainWindowController">
+<AnchorPane prefHeight="804.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.MainWindowController">
    <children>
           <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="17.0" prefHeight="28.0" prefWidth="200.0" style="-fx-background-color: rgb(128, 21, 21);" text="Utilisateurs connectés">
               <font>

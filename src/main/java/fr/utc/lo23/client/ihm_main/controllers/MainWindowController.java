@@ -118,6 +118,7 @@ public class MainWindowController extends BaseController {
                 joinTableAction(EnumerationTypeOfUser.PLAYER);
             }
         });
+        tableViewCurrentTables.setPlaceholder(new Label("Aucune table en cours actuellement..."));
 
         tablesSavedList = FXCollections.observableArrayList();
         //tablesSavedList = FXCollections.observableArrayList(mController.getManagerMain().getInterDataToMain().getSavedGamesList().getListTable());
@@ -156,52 +157,27 @@ public class MainWindowController extends BaseController {
             }
         });
         listViewSavedTables.setItems(tablesSavedList);
+        Callback<ListView<UserLight>, ListCell<UserLight>> cb =
+                new Callback<ListView<UserLight>, ListCell<UserLight>>() {
+            @Override
+            public ListCell<UserLight> call(ListView<UserLight> param) {
+                ListCell<UserLight> cell = new ListCell<UserLight>(){
+                    @Override
+                    protected void updateItem(UserLight t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (t != null) {
+                            setText(t.getPseudo());
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
 
-        listViewConnectedUsers.setCellFactory(new Callback<ListView<UserLight>, ListCell<UserLight>>() {
-            @Override
-            public ListCell<UserLight> call(ListView<UserLight> param) {
-                ListCell<UserLight> cell = new ListCell<UserLight>(){
-                    @Override
-                    protected void updateItem(UserLight t, boolean bln) {
-                        super.updateItem(t, bln);
-                        if (t != null) {
-                            setText(t.getPseudo());
-                        }
-                    }
-                };
-                return cell;
-            }
-        });
-        listViewPlayersInGame.setCellFactory(new Callback<ListView<UserLight>, ListCell<UserLight>>() {
-            @Override
-            public ListCell<UserLight> call(ListView<UserLight> param) {
-                ListCell<UserLight> cell = new ListCell<UserLight>(){
-                    @Override
-                    protected void updateItem(UserLight t, boolean bln) {
-                        super.updateItem(t, bln);
-                        if (t != null) {
-                            setText(t.getPseudo());
-                        }
-                    }
-                };
-                return cell;
-            }
-        });
-        listViewSpectatorsInGame.setCellFactory(new Callback<ListView<UserLight>, ListCell<UserLight>>() {
-            @Override
-            public ListCell<UserLight> call(ListView<UserLight> param) {
-                ListCell<UserLight> cell = new ListCell<UserLight>(){
-                    @Override
-                    protected void updateItem(UserLight t, boolean bln) {
-                        super.updateItem(t, bln);
-                        if (t != null) {
-                            setText(t.getPseudo());
-                        }
-                    }
-                };
-                return cell;
-            }
-        });
+        listViewConnectedUsers.setCellFactory(cb);
+        listViewPlayersInGame.setCellFactory(cb);
+        listViewSpectatorsInGame.setCellFactory(cb);
+
         listViewConnectedUsers.setItems(connectedUsers);
         listViewPlayersInGame.setItems(playersInGame);
         listViewSpectatorsInGame.setItems(spectatorsInGame);

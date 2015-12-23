@@ -56,7 +56,6 @@ public class MainControllerClient extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         pmStage = primaryStage;
-        pmStage.initStyle(StageStyle.UTILITY);
         managerMain = new IHMMainClientManager();
         managerMain.setControllerMain(this);
         showConnectionWindow();

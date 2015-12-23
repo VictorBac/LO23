@@ -19,7 +19,7 @@ public class InterfaceFromIHMMainTest {
         // Write test localUser into the local data file
         Serialization.serializationObject(localUser, Serialization.dirLocalSavedFiles + "testUserLocal");
         // Call logUser in interfaceDataFromIHMMain
-        interfaceDataFromIHMMain.logUser("testLocalUser", "testpsw");
+        //interfaceDataFromIHMMain.logUser("testLocalUser", "testpsw");
     }
 
 

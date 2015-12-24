@@ -40,7 +40,6 @@ public class TableController {
     private Integer potMoneyInt;
     private ArrayList<Seat> refSeats = new ArrayList<Seat>();
     private Integer lastRaise;
-    private Boolean firstHand = true;
     public Boolean isGameLaunched = false;
     private Integer numberCardsSet = 0;
 
@@ -805,11 +804,16 @@ public class TableController {
      * Reset views associated to cards (on table)
      */
     public void resetCommonCards(){
-        setCommonCardDropAnimation(commonCardFlop1,1);
-        setCommonCardDropAnimation(commonCardFlop2,50);
-        setCommonCardDropAnimation(commonCardFlop3,100);
-        setCommonCardDropAnimation(commonCardTurn,150);
-        setCommonCardDropAnimation(commonCardRiver,200);
+        if(numberCardsSet>0)
+            setCommonCardDropAnimation(commonCardFlop1,1);
+        if(numberCardsSet>1)
+            setCommonCardDropAnimation(commonCardFlop2,50);
+        if(numberCardsSet>2)
+            setCommonCardDropAnimation(commonCardFlop3,100);
+        if(numberCardsSet>3)
+            setCommonCardDropAnimation(commonCardTurn,150);
+        if(numberCardsSet>4)
+            setCommonCardDropAnimation(commonCardRiver,200);
     }
 
     /**
@@ -849,7 +853,8 @@ public class TableController {
 
         int wait = 1;
 
-        if(!firstHand) {
+        if(numberCardsSet>0)
+        {
             resetCommonCards();
             potMoney.setText("0 €");
             int waitanimfold = 1;
@@ -863,8 +868,7 @@ public class TableController {
             wait = 2000;
         }
 
-        firstHand = false;
-
+        numberCardsSet=0;
 
         if(playerHands.size()==1)
         {
@@ -1222,6 +1226,7 @@ public class TableController {
 
 
     public void endHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla){
+
         for(Seat seat : seatPlayers)
         {
             PlayerController playerC = getPlayerControllerOf(seat.getPlayer());
@@ -1230,13 +1235,13 @@ public class TableController {
                 addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()-playerC.getCurrentMoney())+" € cette manche !");
             }
 
-            for(PlayerHand pl : apla)
-            {
-                if(pl.getPlayer().equals(seat.getPlayer()))
-                {
-                    if(pl.getListCardsHand() != null) { // && pl.getListCardsHand().size()==2
-                        playerC.getCard1().setImage(getImageFromCard(pl.getListCardsHand().get(0)));
-                        playerC.getCard2().setImage(getImageFromCard(pl.getListCardsHand().get(1)));
+            if(!apla.equals(null)) {
+                for (PlayerHand pl : apla) {
+                    if (pl.getPlayer().equals(seat.getPlayer())) {
+                        if (pl.getListCardsHand() != null) { // && pl.getListCardsHand().size()==2
+                            playerC.getCard1().setImage(getImageFromCard(pl.getListCardsHand().get(0)));
+                            playerC.getCard2().setImage(getImageFromCard(pl.getListCardsHand().get(1)));
+                        }
                     }
                 }
             }
@@ -1246,7 +1251,6 @@ public class TableController {
         setRefSeats(seatPlayers);
 
         potMoney.setText("0 €");
-        numberCardsSet = 0;
     }
 
     public void notifyEndGame(UserLight winner){

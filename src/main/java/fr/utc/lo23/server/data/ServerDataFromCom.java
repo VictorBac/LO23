@@ -258,6 +258,15 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         }
                     }
 
+                    if(hand.getListPerformersUsers().size()<=1)
+                    {
+                        try {
+                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),null);
+                        } catch (NetworkFailureException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     hand.resolve();
 
                     //Notifier les clients

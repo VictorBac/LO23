@@ -231,6 +231,7 @@ public class TableController {
         for(PlayerController playerController : controllersList)
         {
             playerController.clearReadyStatus();
+            playerController.updateMoney(-1);
             Point2D coords = TableUtils.getPlayerPosition(i, table.getListPlayers().getListUserLights().size());
             playerController.setPositions(coords);
             i++;
@@ -603,6 +604,11 @@ public class TableController {
      * Show popup amount
      */
     public void showPopupAmount(){
+        for(PlayerController player : controllersList)
+        {
+            player.clearReadyStatus();
+            player.updateMoney(-1);
+        }
         popupAmount.setVisible(true);
     }
 
@@ -850,7 +856,7 @@ public class TableController {
      * @param playerHands
      */
     public void setPlayerCards(ArrayList<PlayerHand> playerHands){
-
+        isGameLaunched = true;
         int wait = 1;
 
         if(numberCardsSet>0)
@@ -1150,6 +1156,10 @@ public class TableController {
         return new Image(getClass().getResource("../images/cards/back.png").toExternalForm());
     }
 
+    public Image getJetonsImage(){
+        return new Image(getClass().getResource("../images/moneyBetPlayer.png").toExternalForm());
+    }
+
     /**
      * animation to get player cards (2)
      * @param user
@@ -1202,7 +1212,6 @@ public class TableController {
     }
 
     public void notifySuccessStartGame() {
-        isGameLaunched = true;
         showCommonCards();
         reorderPlayers();
         addLogEntry("La partie va se lancer d'ici quelques instants.");
@@ -1218,12 +1227,67 @@ public class TableController {
     }
 
     public void endTurn(Integer pot){
-        addLogEntry("Fin du tour, il y a " + pot + " dans le pot.");
-        potMoney.setText(pot+" €");
+        addLogEntry("Fin du tour, il y a " + pot + "$ dans le pot.");
+        potMoney.setText(pot+" $");
+        for(PlayerController player : controllersList)
+        {
+            if(player.getBetMoney()>0)
+                setMoneyPlayerToPotAnimation(player);
+        }
         setLastRaise(table.getCurrentGame().getBlind()*2);
     }
 
+    public void setPotToMoneyPlayerAnimation(final PlayerController player){
+        final ImageView img = new ImageView();
+        img.setImage(getJetonsImage());
+        img.setX(potMoney.getLayoutX()+commonCardPane.getLayoutX()+10);
+        img.setY(potMoney.getLayoutY()+commonCardPane.getLayoutY()+10);
+        img.setPreserveRatio(false);
+        img.setFitWidth(30);
+        img.setFitHeight(15);
+        img.setVisible(true);
+        player.getRoot().getChildren().add(img);
 
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        KeyValue kv1 = new KeyValue(img.xProperty(),player.getNode().getLayoutX()+50 );
+        KeyValue kv2 = new KeyValue(img.yProperty(),player.getNode().getLayoutY()+90 );
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                player.getRoot().getChildren().remove(img);
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished,kv1,kv2);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+    }
+
+    public void setMoneyPlayerToPotAnimation(final PlayerController player){
+        final ImageView img = new ImageView();
+        img.setImage(getJetonsImage());
+        img.setX(player.getNode().getLayoutX()+50);
+        img.setY(player.getNode().getLayoutY()+90);
+        img.setPreserveRatio(false);
+        img.setFitWidth(30);
+        img.setFitHeight(15);
+        img.setVisible(true);
+        player.getRoot().getChildren().add(img);
+
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        KeyValue kv1 = new KeyValue(img.xProperty(),potMoney.getLayoutX()+commonCardPane.getLayoutX()+10 );
+        KeyValue kv2 = new KeyValue(img.yProperty(),potMoney.getLayoutY()+commonCardPane.getLayoutY()+10 );
+        EventHandler onFinished = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                player.getRoot().getChildren().remove(img);
+            }
+        };
+        KeyFrame kf = new KeyFrame(Duration.millis(2000), onFinished,kv1,kv2);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+    }
 
     public void endHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla){
 
@@ -1233,6 +1297,7 @@ public class TableController {
             if(playerC.getCurrentMoney()<seat.getCurrentAccount())
             {
                 addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()-playerC.getCurrentMoney())+" € cette manche !");
+                setPotToMoneyPlayerAnimation(playerC);
             }
 
             if(!apla.equals(null)) {

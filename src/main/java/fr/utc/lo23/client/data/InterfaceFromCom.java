@@ -292,6 +292,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
 
     public void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer){
+        Console.log(TAG +"answerReadyGame()");
         dManagerClient.getInterToIHMTable().notifyReadyGameAnswer(player,answer);
     }
 

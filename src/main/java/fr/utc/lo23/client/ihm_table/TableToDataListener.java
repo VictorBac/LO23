@@ -303,6 +303,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Vous vous couchez.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
+                    ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(0);
                     ihmtable.getTableController().graphicFoldUser(player);
                 }
                 else if(action.getName().equals(EnumerationAction.ANTE)) {

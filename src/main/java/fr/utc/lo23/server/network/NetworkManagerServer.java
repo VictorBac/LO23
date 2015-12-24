@@ -168,6 +168,11 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     }
 
+    public void askMoneyAmount(UUID idTable){
+        AskMoneyMessage askMoneyMess = new AskMoneyMessage();
+        server.sendToListOfUsers(getDataInstance().getPlayersByTable(idTable), askMoneyMess);
+    }
+
 
     @Override
     public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException {

@@ -146,18 +146,18 @@
                      <children>
                         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="510.0" styleClass="chat">
                            <children>
-                              <ListView fx:id="chatList" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="510.0" styleClass="chatMessage">
+                              <ListView fx:id="chatList" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="510.0" styleClass="chatMessage">
                                  <VBox.margin>
                                     <Insets left="-1.0" />
                                  </VBox.margin></ListView>
                               <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="510.0" styleClass="inputMessageBox">
                                  <children>
-                                    <TextField fx:id="messageToSend" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#sendMessage" prefHeight="30.0" prefWidth="435.0" styleClass="inputMessage">
+                                    <TextField fx:id="messageToSend" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#sendMessage" prefHeight="30.0" prefWidth="411.0" styleClass="inputMessage">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="60.0" styleClass="sendChat" text="Envoyer">
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="84.0" styleClass="sendChat" text="Envoyer">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>

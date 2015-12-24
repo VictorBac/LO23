@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+
 /**
  * Created by Bastien F. on 24/11/15.
  */
@@ -125,7 +127,15 @@ public class PlayerController{
 
     public void setNameAndAvatar(UserLight user,Image defaultImage){
         playerNameLabel.setText(user.getPseudo());
-        avatarImageView.setImage(defaultImage);
+            if(user.getAvatar()!=null) {
+                try {
+                    avatarImageView.setImage(user.getAvatar().getImageAvatar());
+                } catch (IOException e) {
+                    avatarImageView.setImage(defaultImage);
+                }
+            }
+            else
+                avatarImageView.setImage(defaultImage);
         setUserLight(user);
     }
 

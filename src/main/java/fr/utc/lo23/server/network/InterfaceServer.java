@@ -46,8 +46,8 @@ public interface InterfaceServer {
 
     /**
      * Notifies other players from the table of a player action
-     * @param ArrayList<UserLight> tablePlayers
-     * @param Action act
+     * @param tablePlayers
+     * @param act
      * @throws NetworkFailureException
      */
     public void notifyOtherPlayerAction(ArrayList<UserLight> tablePlayers, Action act) throws NetworkFailureException;
@@ -141,5 +141,7 @@ public interface InterfaceServer {
     public void stop();
 
     public void sendLogGame() throws NetworkFailureException;
+
+    public void askMoneyAmount(UUID idTable);
 
     }

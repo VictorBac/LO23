@@ -4,9 +4,11 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.*;
 import fr.utc.lo23.common.data.exceptions.UserNotFoundException;
+import fr.utc.lo23.common.network.AskMoneyMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -654,7 +656,16 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         //Si cet utilisateur est le dernier à répondre, lancer la partie
         if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().size())
         {
-            if(true) { //TODO Vérifier si tout le monde a dis oui
+            Boolean refuse = false;
+            for (Map.Entry<UserLight, Boolean> entry : myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().entrySet())
+            {
+                if(!entry.getValue()) {
+                    refuse = true;
+                    break;
+                }
+            }
+
+            if(!refuse) {
                 //Réordonnancement des Seat pour correspondre au positionnement des joueurs (et virer les joueurs qui se seraient déconnectés entre temps, est-ce un bien ou un mal ?)
                 Game game = myManager.getTables().getTable(idTable).getCurrentGame();
                 ArrayList<Seat> newSeat = new ArrayList<>();
@@ -668,12 +679,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 }
                 game.setListSeatPlayerWithPeculeDepart(newSeat);
 
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 game.startGame();
                 playGame(myManager.getTables().getTable(idTable));
             }
             else
             {
-                //TODO Renvoyer les demandes d'argent
+                myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().clear();
+                myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().clear();
+                myManager.getInterfaceToCom().askMoneyAmount(idTable);
             }
         }
     }

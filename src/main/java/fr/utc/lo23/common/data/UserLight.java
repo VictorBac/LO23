@@ -22,13 +22,13 @@ public class UserLight implements Serializable {
     }
 
     /**
-     * Copy constructor
-     * @param toCopy the UserLight to copy.
+     * Copy constructor that perform deep copy
+     * @param toCopy the UserLight to copy from
      */
     public UserLight(UserLight toCopy)  {
         this.idUser = toCopy.getIdUser();
         this.pseudo = toCopy.getPseudo();
-        this.avatar = toCopy.getAvatar();
+        this.avatar = new ImageAvatar(toCopy.getAvatar());
     }
 
     /**
@@ -40,18 +40,6 @@ public class UserLight implements Serializable {
         this.idUser = UUID.randomUUID();
         this.pseudo = nickname;
         this.avatar = null;
-    }
-
-    /**
-     * Constructor deprecated
-     * @deprecated
-     * @param pseudo
-     * @param avatar
-     * @throws IOException
-     */
-    public UserLight(String pseudo, ImageAvatar avatar) throws IOException {
-        this.pseudo = pseudo;
-        this.avatar = new ImageAvatar(avatar.getPath());
     }
 
     /**
@@ -96,27 +84,60 @@ public class UserLight implements Serializable {
     }
 
     /**
-     *
-     * @param pseudo
+     * Set the pseudo of the UserLight
+     * @param pseudo String for the UserLight
      */
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
 
+    /**
+     * Set the Avatar of the UserLight
+     * @param avatar ImageAvatar for the UserLight
+     */
     public void setAvatar(ImageAvatar avatar) {
         this.avatar = avatar;
     }
 
     /**
-     *
+     * TODO remove
      * compares the ID of two UserLights
      * @param toCompare
      * @return
      */
-    public boolean equals(UserLight toCompare){
+    /**public boolean equals(UserLight toCompare){
         return this.idUser.equals(toCompare.getIdUser());
+    }*/
+
+    /**
+     * Overriding the equal method, only the UUID is used to compare
+     * @param o Object to Compare with, needs to be a UserLight
+     * @return true if this is the equivalent object else it returns false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserLight userLight = (UserLight) o;
+
+        return this.idUser.equals(userLight.idUser);
+
     }
 
+    /**
+     * Overriding the hashCode method to keep the contract between the equal() and hashCode(). When using HashMap it is relevant to do so.
+     * @return the hash obtained by the hash of the UUID
+     */
+    @Override
+    public int hashCode() {
+        return idUser.hashCode();
+    }
+
+    /**
+     * Overriding the to String method
+     * @return String obtained by the concatenation of the UUID, the pseudo and the path of the image Avatar
+     */
     @Override
     public String toString() {
         return "UserLight{" +

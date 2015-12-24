@@ -19,6 +19,14 @@ public class Contact implements Serializable {
     private ArrayList<Group> groupList;
 
     /**
+     * Default constructor
+     */
+    public Contact(){
+        groupList = new ArrayList<Group>();
+    }
+
+
+    /**
      * Method to add a UserLight to a group
      * @param groupName : the name of group to add the contact
      * @param newContact : the name of contact to add

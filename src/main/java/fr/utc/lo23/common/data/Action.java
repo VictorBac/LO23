@@ -17,6 +17,7 @@ public class Action implements Serializable{
     private int amount;
     private UserLight userLightOfPlayer;
     private Timestamp timeStampOfAction;
+    private int betAmountThisTurn;
 
     /**
      * Constructor to create an Action
@@ -165,5 +166,13 @@ public class Action implements Serializable{
      */
     public void setActionTime(){
         this.timeStampOfAction = new Timestamp(Calendar.getInstance().getTime().getTime());
+    }
+
+    public int getBetAmountThisTurn() {
+        return betAmountThisTurn;
+    }
+
+    public void setBetAmountThisTurn(int betAmountThisTurn) {
+        this.betAmountThisTurn = betAmountThisTurn;
     }
 }

@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.EnumerationTypeOfUser;
+import fr.utc.lo23.common.data.Table;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 import java.util.UUID;
@@ -12,10 +13,10 @@ import java.util.UUID;
 public class AcceptJoinTableMessage extends Message {
 
     private EnumerationTypeOfUser mode;
-    private UUID idTab;
+    private Table table;
 
-    public AcceptJoinTableMessage(UUID tableToJoinID, EnumerationTypeOfUser mode){
-        this.idTab=tableToJoinID;
+    public AcceptJoinTableMessage(Table tableToJoin, EnumerationTypeOfUser mode){
+        this.table=tableToJoin;
         this.mode=mode;
     }
 
@@ -26,6 +27,6 @@ public class AcceptJoinTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().tableJoinAccepted(idTab,  mode);
+        threadClient.getNetworkManager().getDataInstance().tableJoinAccepted(table,  mode);
     }
 }

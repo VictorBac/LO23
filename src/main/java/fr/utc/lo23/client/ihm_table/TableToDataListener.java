@@ -163,7 +163,8 @@ public class TableToDataListener implements ITableToDataListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                getIhmtable().getTableController().getPlayerControllerOf(player).setReadyStatus(hasValidated);
+                if(!getIhmtable().getTableController().isGameLaunched)
+                    getIhmtable().getTableController().getPlayerControllerOf(player).setReadyStatus(hasValidated);
             }
         });
 
@@ -268,8 +269,7 @@ public class TableToDataListener implements ITableToDataListener {
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
                     ihmtable.getTableController().setLastRaise(action.getAmount());
-                    // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getBetAmountThisTurn());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.BET)) {
@@ -278,18 +278,17 @@ public class TableToDataListener implements ITableToDataListener {
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
                     ihmtable.getTableController().setLastRaise(action.getAmount());
-                    // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getBetAmountThisTurn());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
+                    ihmtable.getTableController().setLastRaise(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CALL)) {
                     if(player.equals(ihmtable.getDataInterface().getUser()))
                         ihmtable.getTableController().addLogEntry("Vous avez suivi.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
-                    ihmtable.getTableController().setLastRaise(action.getAmount());
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getBetAmountThisTurn());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CHECK)) {
@@ -297,7 +296,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Parole.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " check.");
-                    //if zero then useless ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(0);
+                    ihmtable.getTableController().getPlayerControllerOf(player).setCheckStatus();
                 }
                 else if(action.getName().equals(EnumerationAction.FOLD)) {
                     if(player.equals(ihmtable.getDataInterface().getUser()))
@@ -322,6 +321,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " est la petite blinde.");
                     }
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.BIGBLINDE)) {
                     if(player.equals(ihmtable.getDataInterface().getUser())) {
@@ -331,6 +331,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " est la grosse blinde.");
                     }
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                     ihmtable.getTableController().setLastRaise(action.getAmount());
                 }
                 else

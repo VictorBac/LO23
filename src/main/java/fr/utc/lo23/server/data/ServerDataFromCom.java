@@ -229,6 +229,35 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 {
                     System.out.println("La hand est finit");
                     //Si elle est finit résoudre la manche
+
+                    if(hand.getListTurn().size()<4 && hand.getListPerformersUsers().size()>1)
+                    {
+                        PlayerHand playSend = new PlayerHand();
+                        playSend.setPlayer(null);
+                        ArrayList<Card> cards = new ArrayList<>();
+
+                        if(hand.getListTurn().size()==1)
+                        {
+                            cards.add(hand.getListCardField().get(0));
+                            cards.add(hand.getListCardField().get(1));
+                            cards.add(hand.getListCardField().get(2));
+                        }
+                        if(hand.getListTurn().size()<=2)
+                        {
+                            cards.add(hand.getListCardField().get(3));
+                        }
+                        cards.add(hand.getListCardField().get(4));
+
+                        playSend.setListCardsHand(cards);
+                        ArrayList<PlayerHand> players = new ArrayList<>();
+                        players.add(playSend);
+                        try {
+                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                        } catch (NetworkFailureException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     hand.resolve();
 
                     //Notifier les clients
@@ -247,7 +276,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     else
                     {
                         try {
-                            Thread.sleep(5000);
+                            Thread.sleep(10000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -281,52 +310,27 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     turn = new Turn(hand);
                     hand.getListTurn().add(turn);
 
-                    if(hand.getListTurn().size()==2) {
-                        PlayerHand playSend = new PlayerHand();
-                        playSend.setPlayer(null);
-                        ArrayList<Card> cards = new ArrayList<>();
+                    PlayerHand playSend = new PlayerHand();
+                    playSend.setPlayer(null);
+                    ArrayList<Card> cards = new ArrayList<>();
+
+                    if(hand.getListTurn().size()==2)
+                    {
                         cards.add(hand.getListCardField().get(0));
                         cards.add(hand.getListCardField().get(1));
-                        cards.add(hand.getListCardField().get(2));
-                        playSend.setListCardsHand(cards);
-                        ArrayList<PlayerHand> players = new ArrayList<>();
-                        players.add(playSend);
-                        try {
-                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
-                        } catch (NetworkFailureException e) {
-                            e.printStackTrace();
-                        }
                     }
-                    else if(hand.getListTurn().size()==3)
-                    {
-                        PlayerHand playSend = new PlayerHand();
-                        playSend.setPlayer(null);
-                        ArrayList<Card> cards = new ArrayList<>();
-                        cards.add(hand.getListCardField().get(3));
-                        playSend.setListCardsHand(cards);
-                        ArrayList<PlayerHand> players = new ArrayList<>();
-                        players.add(playSend);
-                        try {
-                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
-                        } catch (NetworkFailureException e) {
-                            e.printStackTrace();
-                        }
+                    cards.add(hand.getListCardField().get(hand.getListTurn().size()));
+
+                    playSend.setListCardsHand(cards);
+                    ArrayList<PlayerHand> players = new ArrayList<>();
+                    players.add(playSend);
+                    try {
+                        myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                    } catch (NetworkFailureException e) {
+                        e.printStackTrace();
                     }
-                    else if(hand.getListTurn().size()==4)
-                    {
-                        PlayerHand playSend = new PlayerHand();
-                        playSend.setPlayer(null);
-                        ArrayList<Card> cards = new ArrayList<>();
-                        cards.add(hand.getListCardField().get(4));
-                        playSend.setListCardsHand(cards);
-                        ArrayList<PlayerHand> players = new ArrayList<>();
-                        players.add(playSend);
-                        try {
-                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
-                        } catch (NetworkFailureException e) {
-                            e.printStackTrace();
-                        }
-                    }
+
+
 
                     //et relancer l'algorithme
                     playGame(table);
@@ -465,7 +469,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param idTable the id to look for
      * @return the table if found, else null
      */
-    private Table getTableFromId(UUID idTable){
+    public Table getTableFromId(UUID idTable){
         // Inutile ?  Table wantedTable = null;
         ArrayList<Table> tableList = getTableList();
         for (Table cur : tableList){

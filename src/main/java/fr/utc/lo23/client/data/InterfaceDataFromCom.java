@@ -72,10 +72,10 @@ public interface InterfaceDataFromCom {
     /**
      * Method to confirm that the local user has actually correctly join the table
      *
-     * @param idTableLocalUserJoined the id of the Table the User joined
+     * @param TableLocalUserJoined the id of the Table the User joined
      * @param modeUserLocal          an EnumerationTypeOfUser the mode which he has chosen to adopt spectator or player
      */
-    public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
+    public void tableJoinAccepted(Table TableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
 
     /**
      * Method to notify that the local user is not able to join the table
@@ -142,7 +142,7 @@ public interface InterfaceDataFromCom {
     /**
      * Method to receive playersHand
      *
-     * @param listPlayersHands PlayerHand of the local User
+     * @param playerHandUserLocal PlayerHand of the local User
      */
     public void stockCards(ArrayList<PlayerHand> playerHandUserLocal);
 

@@ -134,6 +134,11 @@ public class PlayerController{
         playerBox.setLayoutY(coords.getY() - 55);
     }
 
+    public void setCheckStatus(){
+        playerInfos.setVisible(true);
+        playerInfos.setText("Check");
+    }
+
     public void setReadyStatus(boolean isReady){
         playerInfos.setVisible(true);
         if(isReady) {

@@ -37,11 +37,12 @@ public class TableController {
     private ArrayList<PlayerController> controllersList; //This is used to find where you can seat
     private Image defaultImage;
     private Action actionToFill;
-    private String turnStatus = null; // null,warmup,flop,turn,river
     private Integer potMoneyInt;
     private ArrayList<Seat> refSeats = new ArrayList<Seat>();
     private Integer lastRaise;
     private Boolean firstHand = true;
+    public Boolean isGameLaunched = false;
+    private Integer numberCardsSet = 0;
 
     public HashMap<UserLight, PlayerController> getPlayerControllerMap() {
         return playerControllerMap;
@@ -230,6 +231,7 @@ public class TableController {
         int i=0;
         for(PlayerController playerController : controllersList)
         {
+            playerController.clearReadyStatus();
             Point2D coords = TableUtils.getPlayerPosition(i, table.getListPlayers().getListUserLights().size());
             playerController.setPositions(coords);
             i++;
@@ -370,6 +372,7 @@ public class TableController {
      */
     public void hideActionBox(){
         actionBox.setVisible(false);
+        disableActionBetSubMenu();
     }
 
     /**
@@ -442,7 +445,7 @@ public class TableController {
     }
 
     public void enableActionBetSubMenu() {
-        actionBetMoneySelector.setMin(Math.min(lastRaise, getPlayerMoney()));
+        actionBetMoneySelector.setMin(lastRaise*2);
         actionBetMoneySelector.setMax(getPlayerMoney());
         actionBetMoneySelector.setVisible(true);
         buttonValiderMontant.setVisible(true);
@@ -565,7 +568,6 @@ public class TableController {
     public void allIn(javafx.event.ActionEvent event) {
         if (actionAllin.getStyleClass().contains("active")) {
             actionToFill.setName(EnumerationAction.ALLIN);
-            actionToFill.setAmount(getPlayerMoney());
             ihmTable.getDataInterface().replyAction(actionToFill);
             disableAllActions();
             hideActionBox();
@@ -811,47 +813,31 @@ public class TableController {
     }
 
     /**
-     * Set cards according to turnStatus
+     * Set cards according to numberCardsSet
      * @param cards
      */
     public void setCards(ArrayList<Card> cards){
-        if(turnStatus.equals("turn"))
+        for(Card card : cards)
         {
-            //Afficher les cartes du river
-            if(cards.size()>1)
+            switch(numberCardsSet)
             {
-                System.out.println("Comportement anormal, il ne devrait y avoir qu'une seule carte dans la river");
-                System.exit(0);
+                case 0:
+                    setFlopCard(card,numberCardsSet);
+                    break;
+                case 1:
+                    setFlopCard(card,numberCardsSet);
+                    break;
+                case 2:
+                    setFlopCard(card,numberCardsSet);
+                    break;
+                case 3:
+                    setTurnCard(card);
+                    break;
+                case 4:
+                    setRiverCard(card);
+                    break;
             }
-            setRiverCard(cards.get(0));
-            turnStatus = "river";
-        }
-        else if(turnStatus.equals("flop"))
-        {
-            //Afficher les cartes du turn
-            if(cards.size()>1)
-            {
-                System.out.println("Comportement anormal, il ne devrait y avoir qu'une seule carte dans le turn");
-                System.exit(0);
-            }
-            setTurnCard(cards.get(0));
-            turnStatus = "turn";
-        }
-        else if(turnStatus.equals("warmup"))
-        {
-            //Afficher les cartes du flop
-            if(cards.size()!=3)
-            {
-                System.out.println("Comportement anormal, il devrait y avoir 3 cartes dans le flop");
-                System.exit(0);
-            }
-            setFlopCards(cards);
-            turnStatus = "flop";
-        }
-        else
-        {
-            System.out.println("Comportement anormal, cette fonction ne devrait être appelée que si turnStatus est bien complété. (ie warmup, flop, turn)");
-            System.exit(0);
+            numberCardsSet++;
         }
     }
 
@@ -1109,12 +1095,22 @@ public class TableController {
 
     /**
      * Cards in flop
-     * @param cards
+     * @param card
+     * @param whereiam
      */
-    public void setFlopCards(ArrayList<Card> cards){
-        setCommonCardAnimation(commonCardFlop1, getImageFromCard(cards.get(0)));
-        setCommonCardAnimation(commonCardFlop2, getImageFromCard(cards.get(1)));
-        setCommonCardAnimation(commonCardFlop3, getImageFromCard(cards.get(2)));
+    public void setFlopCard(Card card,Integer whereiam){
+        switch(whereiam)
+        {
+            case 0:
+                setCommonCardAnimation(commonCardFlop1, getImageFromCard(card));
+                break;
+            case 1:
+                setCommonCardAnimation(commonCardFlop2, getImageFromCard(card));
+                break;
+            case 2:
+                setCommonCardAnimation(commonCardFlop3, getImageFromCard(card));
+                break;
+        }
     }
 
     /**
@@ -1202,7 +1198,7 @@ public class TableController {
     }
 
     public void notifySuccessStartGame() {
-        turnStatus = "warmup";
+        isGameLaunched = true;
         showCommonCards();
         reorderPlayers();
         addLogEntry("La partie va se lancer d'ici quelques instants.");
@@ -1220,6 +1216,7 @@ public class TableController {
     public void endTurn(Integer pot){
         addLogEntry("Fin du tour, il y a " + pot + " dans le pot.");
         potMoney.setText(pot+" €");
+        setLastRaise(table.getCurrentGame().getBlind()*2);
     }
 
 
@@ -1249,8 +1246,7 @@ public class TableController {
         setRefSeats(seatPlayers);
 
         potMoney.setText("0 €");
-
-        turnStatus = "warmup";
+        numberCardsSet = 0;
     }
 
     public void notifyEndGame(UserLight winner){

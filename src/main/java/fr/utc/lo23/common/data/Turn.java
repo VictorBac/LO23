@@ -25,6 +25,7 @@ public class Turn implements Serializable {
     private Hand currentHand;
     private Timestamp timeStampOfTurn;
     private Integer turnPot = 0;
+    private Integer numberActivePlayersAtTheBeginning;
 
     /**
      *  Constructor
@@ -33,6 +34,7 @@ public class Turn implements Serializable {
         this.listAction = new ArrayList<Action>();
         this.timeStampOfTurn = new Timestamp(Calendar.getInstance().getTime().getTime());
         this.currentHand = currentHandToAdd;
+        numberActivePlayersAtTheBeginning = currentHandToAdd.getListActiveUsers().size();
     }
 
     /**
@@ -43,25 +45,31 @@ public class Turn implements Serializable {
 
     public void addAction(Action newAction) throws ActionInvalidException{
 
-        System.out.println("VERIF ACTIONS: "+availableActions(newAction.getUserLightOfPlayer()));
-        System.out.println("acion player: "+newAction.getName());
         if(availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName()))
         {
             if (newAction.getName().equals(EnumerationAction.FOLD)) {
                 getCurrentHand().getPlayer(newAction.getUserLightOfPlayer()).setFold();
             } else if (newAction.getName().equals(EnumerationAction.CHECK)) {
-
+                if(getMaxMoneyBetInTheTurn()!=0 && !getMaxMoneyBetInTheTurn().equals(getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer())))
+                {
+                    throw new ActionInvalidException("Check interdit");
+                }
             } else if (newAction.getName().equals(EnumerationAction.CALL)) {
                 //Mettre l'argent dans l'action
                 newAction.setAmount(getMaxMoneyBetInTheTurn()-getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
-                //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
+
+
             } else if (newAction.getName().equals(EnumerationAction.BET)) {
-                //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
+                if(newAction.getAmount()<getMaxMoneyBetInTheTurn()*2) {
+                    throw new ActionInvalidException("Bet mal fait.");
+                }
+
             } else if (newAction.getName().equals(EnumerationAction.ALLIN)) {
-                //TODO: Ajouter vérifications d'argent pour lutter contre la triche, on ne le fera pas en LO23.
+                newAction.setAmount(getCurrentHand().getCurrentGame().getSeatOfUser(newAction.getUserLightOfPlayer()).getCurrentAccount());
                 getCurrentHand().getPlayer(newAction.getUserLightOfPlayer()).setAllin();
             }
             this.getListAction().add(newAction);
+            newAction.setBetAmountThisTurn(getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
 
             //On met à jour l'argent total du joueur
             if(newAction.getAmount()!=0)
@@ -99,7 +107,7 @@ public class Turn implements Serializable {
             if (money > getMaxMoneyBetInTheTurn() && getMaxMoneyBetInTheTurn() != 0 && getMaxMoneyBetInTheTurn()!=getMoneyBetInTheTurnForAUser(user)) {
                 tempArray.add(EnumerationAction.CALL);
             }
-            if (money > getMaxMoneyBetInTheTurn()) {
+            if (money > getMaxMoneyBetInTheTurn()*2) {
                 tempArray.add(EnumerationAction.BET);
             }
             System.out.println(tempArray);
@@ -188,31 +196,32 @@ public class Turn implements Serializable {
     }
 
     public Boolean isFinished(){
-        //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
+        //S'il n'y a plus qu'une personne en jeu (ie toutes les autres sont couchées), alors cette personne gagne.
+        if(getCurrentHand().getListPerformersUsers().size()==1)
+        {
+            return true;
+        }
 
-        System.out.println(getCurrentHand().getListTurn().size());
+        //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
+        System.out.println("Nombre de tours joués:"+getCurrentHand().getListTurn().size());
         if(getCurrentHand().getListTurn().size()==1)
         {
-            if(getListAction().size()-2<getListActiveUsers().size())
+            if(getListAction().size()-2<numberActivePlayersAtTheBeginning)
                 return false;
         }
         else
         {
-            if(getListAction().size()<getListActiveUsers().size())
+            if(getListAction().size()<numberActivePlayersAtTheBeginning)
                 return false;
         }
 
-        System.out.println("on a pas renvoyé false");
+        System.out.println("Tout le monde a au moins joué une action de tour-ci.");
         //sinon il faut vérifier que tous les joueurs actifs aient le même montant
-        Integer val = -1;
+
         for(UserLight user: getListActiveUsers())
         {
             System.out.println("MONEY BET PAR USER :"+getMoneyBetInTheTurnForAUser(user));
-            if(val==-1)
-            {
-                val = getMoneyBetInTheTurnForAUser(user);
-            }
-            else if(!getMoneyBetInTheTurnForAUser(user).equals(val))
+            if(!getMoneyBetInTheTurnForAUser(user).equals(getMaxMoneyBetInTheTurn()))
                 return false;
         }
         return true;

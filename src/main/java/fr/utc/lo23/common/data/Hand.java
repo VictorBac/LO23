@@ -186,6 +186,20 @@ public class Hand implements Serializable{
     }
 
     /**
+     * Method that search for all UserLight that are still able to win monney
+     * @return ArrayList<UserLight> with the UserLight of all players that can win money
+     */
+    public ArrayList<UserLight> getListPerformersUsers(){
+        ArrayList<UserLight> users = new ArrayList<UserLight>();
+        for(PlayerHand player : getListPlayerHand())
+        {
+            if(!player.isFold())
+                users.add(player.getPlayer());
+        }
+        return users;
+    }
+
+    /**
      * Method that search for all UserLight that are still able to play
      * @return ArrayList<UserLight> with the UserLight of all players that can perform an Action
      */
@@ -205,7 +219,7 @@ public class Hand implements Serializable{
      */
     public Boolean isFinished(){
         //If we have already played the 4 Turn or if everyone have FOLD or ALLIN then true else false
-        if(getListTurn().size()==4 || getListActiveUsers().size()==0)
+        if(getListTurn().size()==4 || getListActiveUsers().size()<=1)
             return true;
         else
             return false;
@@ -240,8 +254,8 @@ public class Hand implements Serializable{
         ArrayList<PlayerHand> calculatedPlayerHandList = new ArrayList<>();
         for(PlayerHand player : getListPlayerHand())
         {
+            playerMoneyBet.put(player.getPlayer(), getTotalAmountForAUser(player.getPlayer()));
             if(!player.isFold()) {
-                playerMoneyBet.put(player.getPlayer(), getTotalAmountForAUser(player.getPlayer()));
                 calculatedPlayerHandList.add(player);
             }
         }

@@ -32,7 +32,7 @@ public class RequestJoinTableMessage extends Message {
         Console.log("Request table connexion");
         if(myServ.getNetworkManager().getDataInstance().canJoinTableUser(user,idTab,mode)){
             myServ.getNetworkManager().getDataInstance().addPlayerToTable(idTab, user, mode);
-            AcceptJoinTableMessage accept = new AcceptJoinTableMessage(idTab,mode);
+            AcceptJoinTableMessage accept = new AcceptJoinTableMessage(myServ.getNetworkManager().getDataInstance().getTableFromId(idTab),mode);
             threadServer.send(accept);
             //TODO : Informer le serveur qu'un client vient de se connecter a la table. Manque une interface?
             NotifyNewPlayerInTableMessage notifNewPlayTable = new NotifyNewPlayerInTableMessage(user,idTab,mode);

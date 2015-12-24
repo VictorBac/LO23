@@ -6,7 +6,7 @@ package fr.utc.lo23.common;
 public class Params {
     public static final String DEFAULT_SERVER_ADDRESS = "127.0.0.1"; //172.25.35.239
 
-    public static final int DEFAULT_SERVER_PORT = 1904;
+    public static final int DEFAULT_SERVER_PORT = 7777;
 
     public static final int NB_MAX_USER = 100;
 

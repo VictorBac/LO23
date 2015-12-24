@@ -56,7 +56,9 @@ public class Turn implements Serializable {
                 }
             } else if (newAction.getName().equals(EnumerationAction.CALL)) {
                 //Mettre l'argent dans l'action
-                newAction.setAmount(getMaxMoneyBetInTheTurn()-getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
+                System.out.println("Max Money Turn: "+getMaxMoneyBetInTheTurn());
+                System.out.println("Money I BEt: "+getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
+                newAction.setAmount(getMaxMoneyBetInTheTurn() - getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
 
 
             } else if (newAction.getName().equals(EnumerationAction.BET)) {
@@ -248,9 +250,9 @@ public class Turn implements Serializable {
 
     public Integer getMaxMoneyBetInTheTurn(){
         Integer money = 0;
-        for (Action a : getListAction()) {
-            if(a.getAmount()>money)
-                money = a.getAmount();
+        for (UserLight user : getCurrentHand().getListPerformersUsers()) {
+            if(getMoneyBetInTheTurnForAUser(user)>money)
+                money = getMoneyBetInTheTurnForAUser(user);
         }
         return money;
     }

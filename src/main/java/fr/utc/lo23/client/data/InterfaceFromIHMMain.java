@@ -83,6 +83,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * @param mode
      */
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException {
+        System.out.println("ID TABLE REF: "+dManagerClient.getListTablesLocal().getTable(tableId));
         dManagerClient.getInterToCom().joinTable(dManagerClient.getUserLocal().getUserLight(), tableId, mode);
     }
 

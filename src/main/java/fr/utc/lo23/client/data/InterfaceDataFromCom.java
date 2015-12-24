@@ -72,10 +72,10 @@ public interface InterfaceDataFromCom {
     /**
      * Method to confirm that the local user has actually correctly join the table
      *
-     * @param TableLocalUserJoined the id of the Table the User joined
+     * @param idTableLocalUserJoined the id of the Table the User joined
      * @param modeUserLocal          an EnumerationTypeOfUser the mode which he has chosen to adopt spectator or player
      */
-    public void tableJoinAccepted(Table TableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
+    public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal);
 
     /**
      * Method to notify that the local user is not able to join the table

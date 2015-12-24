@@ -13,11 +13,10 @@ import java.util.UUID;
 public class AcceptJoinTableMessage extends Message {
 
     private EnumerationTypeOfUser mode;
-    private Table table;
+    private UUID idTable;
 
-    public AcceptJoinTableMessage(Table tableToJoin, EnumerationTypeOfUser mode){
-        System.out.println("Message table players: "+tableToJoin.getListPlayers().getListUserLights());
-        this.table=tableToJoin;
+    public AcceptJoinTableMessage(UUID idTableToJoin, EnumerationTypeOfUser mode){
+        this.idTable=idTableToJoin;
         this.mode=mode;
     }
 
@@ -28,6 +27,6 @@ public class AcceptJoinTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().tableJoinAccepted(table,  mode);
+        threadClient.getNetworkManager().getDataInstance().tableJoinAccepted(idTable,  mode);
     }
 }

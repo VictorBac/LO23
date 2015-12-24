@@ -134,13 +134,16 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMMain().userLeftTableRemote(dManagerClient.getListTablesLocal().getTable(idTable), userLightLeavingGame, typeOfUserWhoLeftTable);
     }
 
-    public void tableJoinAccepted(Table TableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
+    public void tableJoinAccepted(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
         Console.log(TAG +"tableJoinAccepted()");
-        System.out.println("table reçue :"+TableLocalUserJoined.getIdTable());
-        System.out.println("players dedans :"+TableLocalUserJoined.getListPlayers().getListUserLights());
-        dManagerClient.setTableLocal(TableLocalUserJoined);
-        Console.log(TAG+"id Table local"+dManagerClient.getTableLocal().getIdTable());
-        dManagerClient.getInterToIHMMain().tableJoinAccepted(TableLocalUserJoined, modeUserLocal);
+
+        try {
+            dManagerClient.setTableLocal(dManagerClient.getListTablesLocal().addUserToTable(idTableLocalUserJoined, dManagerClient.getUserLocal().getUserLight(), modeUserLocal));
+            dManagerClient.getInterToIHMMain().tableJoinAccepted(dManagerClient.getListTablesLocal().getTable(idTableLocalUserJoined), modeUserLocal);
+            } catch (TableException e) {
+               e.printStackTrace();
+        }
+
     }
 
     public void tableJoinRefused(UUID idTableLocalUserJoined, EnumerationTypeOfUser modeUserLocal){

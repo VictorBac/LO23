@@ -44,7 +44,15 @@ public class NetworkManagerClient implements InterfaceClient  {
     @Override
     public void requestLoginServer(User u, String socketIp, int socketPort) throws Exception {
 
-        serverLink.connect(socketIp, socketPort);
+        try
+        {
+            serverLink.connect(socketIp, socketPort);
+        }
+        catch (Exception e)
+        {
+            serverLink.reset();
+            throw e;
+        }
         //Send the login request to the server
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
         //Console.log("requestelog"+reqLog.getUser().toString());

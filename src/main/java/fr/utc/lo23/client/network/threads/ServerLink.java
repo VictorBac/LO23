@@ -39,7 +39,7 @@ public class ServerLink extends Thread {
      * @param socketPort
      */
     public void connect(String socketIp, int socketPort) throws Exception{
-        if (null != socket) throw new NetworkFailureException("La socket client existe déjà");
+        if (null != socket && !socket.isClosed()) throw new NetworkFailureException("La socket client existe déjà");
 
         socket = new Socket();
         Console.log("Le client tente de se connecter sur: " + socketIp + ":" + socketPort);
@@ -63,6 +63,15 @@ public class ServerLink extends Thread {
     }
 
     /**
+     * Reset the connection from the server (used only for connection purpose)
+     * @throws IOException
+     */
+    public void reset() throws IOException {
+        Console.err("Reset client-side socket");
+        connected = false;
+        socket.close();
+    }
+    /**
      * Run method (thread)
      */
     @Override
@@ -72,7 +81,6 @@ public class ServerLink extends Thread {
                 try {
                     try {
                         this.socket.setSoTimeout(Params.HEARTBEAT_PERIODE);
-                        //Console.log("Waiting for message...");
                         Message msg = (Message) inputStream.readObject();
                         msg.process(this);
                     } catch (SocketTimeoutException e) {

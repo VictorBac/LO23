@@ -136,6 +136,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     public void tableJoinAccepted(Table TableLocalUserJoined, EnumerationTypeOfUser modeUserLocal) {
         Console.log(TAG +"tableJoinAccepted()");
+        System.out.println("table reçue :"+TableLocalUserJoined.getIdTable());
+        System.out.println("players dedans :"+TableLocalUserJoined.getListPlayers().getListUserLights());
         dManagerClient.setTableLocal(TableLocalUserJoined);
         Console.log(TAG+"id Table local"+dManagerClient.getTableLocal().getIdTable());
         dManagerClient.getInterToIHMMain().tableJoinAccepted(TableLocalUserJoined, modeUserLocal);

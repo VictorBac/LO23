@@ -198,6 +198,7 @@ public class MainWindowController extends BaseController {
 
         inGame = true;
     }
+
     public void joinTableAction(EnumerationTypeOfUser mode) {
         if (tableViewCurrentTables.getSelectionModel().getSelectedItem() != null) {
             try {

@@ -16,6 +16,7 @@ public class AcceptJoinTableMessage extends Message {
     private Table table;
 
     public AcceptJoinTableMessage(Table tableToJoin, EnumerationTypeOfUser mode){
+        System.out.println("Message table players: "+tableToJoin.getListPlayers().getListUserLights());
         this.table=tableToJoin;
         this.mode=mode;
     }

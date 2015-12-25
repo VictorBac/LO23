@@ -23,10 +23,10 @@ public class EditOwnProfilController extends BaseController {
     private TextField username;
 
     @FXML
-    private PasswordField oldpassword;
+    private PasswordField oldPassword;
 
     @FXML
-    private PasswordField newpassword;
+    private PasswordField newPassword;
 
     @FXML
     private TextField age;
@@ -36,6 +36,12 @@ public class EditOwnProfilController extends BaseController {
 
     @FXML
     private ImageView imageviewer;
+
+    @FXML
+    private TextField firstname;
+
+    @FXML
+    private TextField lastname;
 
     private FileChooser avatarChooser;
     private String imagePath;
@@ -81,10 +87,12 @@ public class EditOwnProfilController extends BaseController {
         edituser.setAge(Integer.parseInt(age.getText()));
         edituser.setEmail(email.getText());
         edituser.getUserLight().setPseudo(username.getText());
+        edituser.setFirstName(firstname.getText());
+        edituser.setLastName(lastname.getText());
 
-        if (!oldpassword.getText().isEmpty()){
-            if (edituser.getPwd().equals(oldpassword.getText())){
-                edituser.setPwd(newpassword.getText());
+        if (!oldPassword.getText().isEmpty()){
+            if (edituser.getPwd().equals(oldPassword.getText())){
+                edituser.setPwd(newPassword.getText());
             } else {
                 mController.showErrorPopup("Le champ ancien mot de passe ne corespond pas au mot de passe actuel.");
             }
@@ -95,6 +103,8 @@ public class EditOwnProfilController extends BaseController {
             e.printStackTrace();
         }
         mController.getManagerMain().getInterDataToMain().saveNewProfile(edituser);
+        mController.showPopup("Information", "Vous devez redémarrer le client pour prendre en compte " +
+                "certaines modifications");
         mController.showViewOwnWindow();
     }
 
@@ -115,6 +125,8 @@ public class EditOwnProfilController extends BaseController {
                 mController.showErrorPopup("Avatar introuvable !");
             }
         }
+        firstname.setText(userLocal.getFirstName());
+        lastname.setText(userLocal.getLastName());
     }
 
 

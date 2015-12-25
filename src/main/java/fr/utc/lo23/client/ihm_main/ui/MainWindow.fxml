@@ -10,16 +10,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.MainWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.MainWindowController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1220.0" style="-fx-background-color: #D6DBDA;">
          <children>
-            <Button fx:id="buttonQuit" layoutX="40.0" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clickQuit" prefHeight="40.0" prefWidth="120.0" text="Quitter">
+            <Button fx:id="buttonQuit" layoutX="40.0" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clickQuit" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Quitter" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" style="-fx-background-color: rgb(128, 21, 21); -fx-font-size: 16;" text="Utilisateurs en ligne">
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="190.0" style="-fx-background-color: #3B8474; -fx-font-size: 16;" text="Utilisateurs en ligne" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="19.0" />
                     </font>
@@ -30,7 +30,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                                  <ListView id="listViewConnectedUsers" fx:id="listViewConnectedUsers" prefHeight="712.0" prefWidth="200.0" />
+                                  <ListView id="listViewConnectedUsers" fx:id="listViewConnectedUsers" prefHeight="712.0" prefWidth="200.0" style="-fx-background-color: #F2F7F6;" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -44,7 +44,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewPlayersInGame" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="listViewPlayersInGame" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F2F7F6;" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -53,7 +53,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="listViewSpectatorsInGame" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="listViewSpectatorsInGame" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F2F7F6;" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -64,14 +64,14 @@
             <Pane fx:id="profilePane" layoutX="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" />
               <AnchorPane fx:id="listPane" layoutX="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0">
                   <children>
-                      <Button fx:id="connect" layoutX="814.0" layoutY="261.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createTable" prefHeight="40.0" prefWidth="120.0" text="Créer table">
+                      <Button fx:id="connect" layoutX="814.0" layoutY="261.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createTable" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Créer table" textFill="WHITE">
                           <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="12.0" />
                           </font>
                   </Button>
-                      <Button fx:id="viewownprofil" layoutX="814.0" layoutY="343.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openViewOwnProfil" prefHeight="40.0" prefWidth="120.0" text="Mon profil">
+                      <Button fx:id="viewownprofil" layoutX="814.0" layoutY="343.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openViewOwnProfil" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Mon profil" textFill="WHITE">
                           <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="12.0" />
                           </font>
                   </Button>
                       <Label fx:id="labeluser" layoutX="70.0" layoutY="126.0">
@@ -89,44 +89,47 @@
                               <Font size="15.0" />
                           </font>
                       </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="16.0" prefHeight="28.0" prefWidth="760.0" style="-fx-background-color: rgb(128, 21, 21);" text="Liste des tables disponibles">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="16.0" prefHeight="28.0" prefWidth="760.0" style="-fx-background-color: #3B8474;" text="Liste des tables disponibles" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font size="19.0" />
                      </font>
                   </Label>
-                  <ListView fx:id="listViewSavedTables" layoutX="25.0" layoutY="537.0" prefHeight="156.0" prefWidth="760.0" />
-                  <Button fx:id="connect1" layoutX="814.0" layoutY="152.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsPlayer" prefHeight="40.0" prefWidth="120.0" text="Jouer">
+                  <ListView fx:id="listViewSavedTables" layoutX="25.0" layoutY="537.0" prefHeight="156.0" prefWidth="760.0" style="-fx-background-color: #F2F7F6;" />
+                  <Button fx:id="connect1" layoutX="814.0" layoutY="152.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsPlayer" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Jouer" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="509.0" prefHeight="28.0" prefWidth="760.0" style="-fx-background-color: rgb(128, 21, 21);" text="Liste des parties enregistrées">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="509.0" prefHeight="28.0" prefWidth="760.0" style="-fx-background-color: #3B8474;" text="Liste des parties enregistrées" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="connect2" layoutX="814.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Rejouer partie">
+                  <Button fx:id="connect2" layoutX="814.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Rejouer partie" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <TableView fx:id="tableViewCurrentTables" layoutX="24.0" layoutY="44.0" prefHeight="438.0" prefWidth="760.0">
+                  <TableView fx:id="tableViewCurrentTables" layoutX="24.0" layoutY="44.0" prefHeight="438.0" prefWidth="760.0" style="-fx-background-color: #F2F7F6;">
                     <columns>
-                      <TableColumn fx:id="columnTableName" prefWidth="132.0" text="name" />
-                      <TableColumn fx:id="columnTableCreator" prefWidth="157.0" text="creator" />
-                        <TableColumn fx:id="columnTableMise" prefWidth="141.0" text="mise" />
-                        <TableColumn fx:id="columnTablePlayers" prefWidth="208.0" text="players" />
-                        <TableColumn fx:id="columnTableSpectators" prefWidth="121.0" text="spectators" />
+                      <TableColumn fx:id="columnTableName" prefWidth="132.0" text="Nom" />
+                      <TableColumn fx:id="columnTableCreator" prefWidth="157.0" text="Créateur" />
+                        <TableColumn fx:id="columnTableMise" prefWidth="141.0" text="Mise" />
+                        <TableColumn fx:id="columnTablePlayers" prefWidth="208.0" text="Joueurs Min./Act./Max." />
+                        <TableColumn fx:id="columnTableSpectators" prefWidth="121.0" text="Spectateurs ?" />
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="exportProfil" layoutX="814.0" layoutY="399.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exportProfil" prefHeight="40.0" prefWidth="120.0" text="Export profil">
+                  <Button fx:id="exportProfil" layoutX="814.0" layoutY="399.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exportProfil" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Export profil" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="connect11" layoutX="814.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsSpectator" prefHeight="40.0" prefWidth="120.0" text="Observer">
+                  <Button fx:id="connect11" layoutX="814.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsSpectator" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Observer" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
                   </children>

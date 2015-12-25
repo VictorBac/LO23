@@ -44,6 +44,7 @@
             <Label text="Statistiques du joueur:" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label fx:id="labelPlayer" text="Récupération..." textFill="#007057" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <Label fx:id="labelAge" text="Récupération..." textFill="#007057" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Label fx:id="labelStats" text="Récupération..." textFill="#007057" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
 

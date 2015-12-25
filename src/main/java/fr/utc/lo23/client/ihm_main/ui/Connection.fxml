@@ -6,7 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <GridPane alignment="center" hgap="10" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="610.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.ConnectionController">
     <columnConstraints>
         <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="600.0" />
@@ -47,7 +46,7 @@
             </Button>
                 <Label alignment="CENTER" layoutX="311.0" layoutY="29.0" prefHeight="31.0" prefWidth="285.0" style="-fx-background-color: #3B8474;" text="Serveurs" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="21.0" />
+                        <Font size="21.0" />
                     </font>
                 </Label>
                 <Label fx:id="labeluser" layoutX="70.0" layoutY="126.0">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -7,25 +8,63 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.EditOwnProfilController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_main.controllers.EditOwnProfilController">
    <children>
-      <Label layoutX="108.0" layoutY="62.0" text="Username" textAlignment="RIGHT" />
-      <Label layoutX="88.0" layoutY="158.0" text="Old Password" textAlignment="RIGHT" />
-      <Label layoutX="83.0" layoutY="244.0" text="New Password" textAlignment="RIGHT" />
-      <Label layoutX="141.0" layoutY="339.0" text="Age" textAlignment="RIGHT" />
-      <Label layoutX="135.0" layoutY="427.0" text="Email" textAlignment="RIGHT" />
-      <Button fx:id="cancel" layoutX="321.0" layoutY="517.0" mnemonicParsing="false" onAction="#didClickCancelButton" text="Cancel" />
-      <Button fx:id="update" layoutX="511.0" layoutY="517.0" mnemonicParsing="false" onAction="#updateProfil" text="Update" />
-      <TextField fx:id="username" layoutX="321.0" layoutY="49.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
-      <PasswordField fx:id="oldpassword" layoutX="321.0" layoutY="145.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="303.0" />
-      <PasswordField fx:id="newpassword" layoutX="321.0" layoutY="231.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
-      <TextField fx:id="age" layoutX="321.0" layoutY="327.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
-      <TextField fx:id="email" layoutX="321.0" layoutY="415.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" />
-      <ImageView fx:id="imageviewer" fitHeight="304.0" fitWidth="349.0" layoutX="801.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@avatar.jpg" />
-         </image></ImageView>
-      <Button fx:id="avatarButton" layoutX="861.0" layoutY="370.0" mnemonicParsing="false" onAction="#avatarButtonClick" text="Modifier l'avatar" />
+      <GridPane style="-fx-background-color: #D6DBDA;">
+         <children>
+            <Label alignment="CENTER" layoutX="108.0" layoutY="62.0" prefHeight="17.0" prefWidth="102.0" text="Utilisateur:" textAlignment="RIGHT" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" layoutX="110.0" layoutY="157.0" text="Ancien mot de passe:" textAlignment="RIGHT" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" layoutX="70.0" layoutY="249.0" prefHeight="17.0" text="Nouveau mot de passe:" textAlignment="RIGHT" textFill="#007057" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Label alignment="CENTER" layoutX="121.0" layoutY="337.0" prefHeight="17.0" prefWidth="101.0" text="Prénom:" textAlignment="RIGHT" textFill="#007057" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" layoutX="137.0" layoutY="415.0" prefHeight="17.0" prefWidth="103.0" text="Nom:" textAlignment="RIGHT" textFill="#007057" GridPane.rowIndex="5" />
+            <Label alignment="CENTER" layoutX="142.0" layoutY="500.0" prefHeight="17.0" prefWidth="104.0" text="Âge:" textAlignment="RIGHT" textFill="#007057" GridPane.rowIndex="6" />
+            <Label alignment="CENTER" layoutX="134.0" layoutY="587.0" prefHeight="17.0" prefWidth="100.0" text="Adresse email:" textAlignment="RIGHT" textFill="#007057" GridPane.rowIndex="7" />
+            <Button fx:id="cancel" alignment="CENTER" layoutX="321.0" layoutY="675.0" mnemonicParsing="false" onAction="#didClickCancelButton" prefHeight="25.0" prefWidth="94.0" style="-fx-background-color: #3B8474;" text="Annuler" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="updateButton" layoutX="518.0" layoutY="675.0" mnemonicParsing="false" onAction="#updateProfil" prefHeight="25.0" prefWidth="99.0" style="-fx-background-color: #3B8474;" text="Valider" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TextField fx:id="username" layoutX="321.0" layoutY="49.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Pseudo" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="oldPassword" layoutX="321.0" layoutY="145.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Ancien mot de passe" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <PasswordField fx:id="newPassword" layoutX="321.0" layoutY="231.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Nouveau mot de passe" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="firstname" layoutX="321.0" layoutY="319.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Prénom" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="lastname" layoutX="321.0" layoutY="404.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Nom de famille" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="age" layoutX="321.0" layoutY="487.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Âge" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="email" layoutX="321.0" layoutY="575.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Adresse email correct" style="-fx-background-color: #F2F7F6;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ImageView fx:id="imageviewer" fitHeight="267.0" fitWidth="207.0" layoutX="801.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="6">
+               <image>
+                  <Image url="@avatar.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonAvatar" layoutX="861.0" layoutY="373.0" mnemonicParsing="false" onAction="#avatarButtonClick" style="-fx-background-color: #3B8474;" text="Modifier l'avatar" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+            <Label alignment="CENTER" prefHeight="36.0" prefWidth="560.0" text="Modification de profil" textAlignment="CENTER" textFill="#034939" GridPane.columnSpan="3">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints maxWidth="144.0" minWidth="10.0" prefWidth="135.0" />
+            <ColumnConstraints maxWidth="225.0" minWidth="10.0" prefWidth="139.0" />
+            <ColumnConstraints maxWidth="297.0" minWidth="179.0" prefWidth="238.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" />
+            <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="39.0" minHeight="13.0" prefHeight="39.0" />
+            <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="38.0" />
+            <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="52.0" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="57.0" />
+            <RowConstraints maxHeight="177.0" minHeight="10.0" prefHeight="53.0" />
+            <RowConstraints maxHeight="79.0" minHeight="10.0" prefHeight="55.0" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+         </rowConstraints>
+      </GridPane>
 
    </children>
 </AnchorPane>

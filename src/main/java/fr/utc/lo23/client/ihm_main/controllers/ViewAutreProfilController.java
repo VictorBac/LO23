@@ -21,6 +21,9 @@ public class ViewAutreProfilController extends BaseController {
     private Label labelAge;
 
     @FXML
+    private Label labelStats;
+
+    @FXML
     private ImageView imageviewer;
 
     @FXML
@@ -49,6 +52,11 @@ public class ViewAutreProfilController extends BaseController {
     public void setFullData(User profileReturnedByTheServer) {
         if (profileReturnedByTheServer != null) {
             labelAge.setText(Integer.toString(profileReturnedByTheServer.getAge()));
+            if (profileReturnedByTheServer.getStats() != null) {
+                labelStats.setText(profileReturnedByTheServer.getStats().toString());
+            } else {
+                labelStats.setText("Statistiques indisponibles...");
+            }
         }
     }
 }

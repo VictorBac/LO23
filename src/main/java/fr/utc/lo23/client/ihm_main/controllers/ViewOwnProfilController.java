@@ -21,6 +21,18 @@ public class ViewOwnProfilController extends BaseController {
     private Label labelPlayer;
 
     @FXML
+    private Label labelAge;
+
+    @FXML
+    private Label labelFirstName;
+
+    @FXML
+    private Label labelLastName;
+
+    @FXML
+    private Label labelMail;
+
+    @FXML
     private Label labelStats;
 
 
@@ -38,12 +50,23 @@ public class ViewOwnProfilController extends BaseController {
         User currentUser = mController.getManagerMain().getManagerData().getUserLocal();
         UserLight currentLight = currentUser.getUserLight();
         labelPlayer.setText(currentLight.getPseudo());
+        labelAge.setText(Integer.toString(currentUser.getAge()));
+        labelFirstName.setText(currentUser.getFirstName());
+        labelLastName.setText(currentUser.getLastName());
+        labelMail.setText(currentUser.getEmail());
         if (currentLight.getAvatar() != null) {
             try {
                 imageviewer.setImage(currentLight.getAvatar().getImageAvatar());
             } catch (IOException e) {
                 mController.showErrorPopup("Avatar introuvable !");
             }
+        }
+        if (currentUser.getStats() != null)
+        {
+            labelStats.setText(currentUser.getStats().toString());
+        }
+        else {
+            labelStats.setText("Statistiques indisponibles...");
         }
     }
 }

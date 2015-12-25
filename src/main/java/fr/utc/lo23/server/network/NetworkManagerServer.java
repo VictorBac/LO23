@@ -26,11 +26,9 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     /* Attributes */
     private PokerServer server = null;
-    private Integer listeningPort = null;
 
     /* =========================================== METHODES =========================================== */
     public NetworkManagerServer() {
-        listeningPort = Params.DEFAULT_SERVER_PORT;
     }
 
     /* == GETTERS AND SETTERS == */
@@ -56,7 +54,7 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
     public void start(int portToListen) throws NetworkFailureException, IOException {
         if(dataInstance == null)Console.log("Interface data non set dans network");
 
-        server = new PokerServer(this, listeningPort);
+        server = new PokerServer(this, portToListen);
         server.start();
     }
 

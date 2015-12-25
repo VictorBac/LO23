@@ -124,7 +124,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * Ask server for disconnection
      */
     public void exitAsked() throws NetworkFailureException {
-        dManagerClient.getInterToCom().notifyDisconnection(dManagerClient.getUserLocal());
+        // Sometimes, the user has already been deleted
+        if (dManagerClient.getUserLocal() != null) {
+            dManagerClient.getInterToCom().notifyDisconnection(dManagerClient.getUserLocal());
+        }
     }
 
     /**

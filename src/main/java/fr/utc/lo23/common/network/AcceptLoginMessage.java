@@ -46,6 +46,7 @@ public class AcceptLoginMessage extends Message{
         }
         usersArray.remove(luser);
 
+        dataInterface.acceptLogin();
         dataInterface.currentConnectedUser(usersArray);
         dataInterface.currentTables(tablesArray);
         /*Console.log("liste User reçu");

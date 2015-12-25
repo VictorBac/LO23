@@ -31,27 +31,15 @@ private User u;
         Console.log("Notify disconnection message received");
 
         Console.log("Sending to DataServer");
-        try {
-            // Je suppose que c'est la fonction pour enlever l'user. Pas de commentaire de cette fonction sur interface data
-            myServ.getNetworkManager().getDataInstance().deletePlayer(u.getUserLight());
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
         //Appel de la fonction d'interface DATA pour update les tables dans DataServer
 
         Console.log("Refreshing UserLight Table in Server");
+        // On met à jour / notifie les autres que l'utilisateur est parti, on le supprime de la table des users
         try {
             myServ.userDisconnect(u.getUserLight().getIdUser());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Update de la liste de UserLight contenue dans le Thread Server.
-
-
-        // Notification à tous les users de la déconnection
-        NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(u);
-        myServ.sendToAll(NotifyD);
-
         Console.log("Closing the ConnectionThread/Socket");
     }
 

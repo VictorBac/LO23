@@ -5,7 +5,9 @@ package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -22,8 +25,6 @@ import java.io.IOException;
 public class MainControllerClient extends Application {
 
     private static IHMMainClientManager managerMain;
-
-
 
     private Stage pmStage;
 
@@ -54,6 +55,15 @@ public class MainControllerClient extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         pmStage = primaryStage;
+        // Catch the close event (ALT+F4)
+        pmStage.setOnCloseRequest(event -> {
+            try {
+                managerMain.getInterDataToMain().exitAsked();
+            } catch (NetworkFailureException e) {
+                e.printStackTrace();
+            }
+        });
+
         managerMain = new IHMMainClientManager();
         managerMain.setControllerMain(this);
         showConnectionWindow();
@@ -154,9 +164,7 @@ public class MainControllerClient extends Application {
             ViewAutreProfilController controller = loader.getController();
             controller.setMainController(this);
             viewAutreProfilWindowController = controller;
-            if (viewAutreProfilWindowController != null) {
-                viewAutreProfilWindowController.initdata(user);
-            }
+            viewAutreProfilWindowController.initdata(user);
         } catch (IOException e) {
             e.printStackTrace();
         }

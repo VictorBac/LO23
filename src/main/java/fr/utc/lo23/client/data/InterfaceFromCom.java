@@ -296,42 +296,21 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMTable().notifyReadyGameAnswer(player,answer);
     }
 
-
-
     public void deleteTable(UUID idTableDestroyed){
-        //TODO add in integration dManagerClient.getInterToIHMMain().notifyDeletedTable(dManagerClient.getListTablesLocal().getTable(idTableDestroyed));
+        dManagerClient.getInterToIHMMain().notifyDeletedTable(dManagerClient.getListTablesLocal().getTable(idTableDestroyed));
     }
 
+    @Override
+    public void acceptLogin() {
+        dManagerClient.getInterToIHMMain().notifyLoginAccepted();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public void refuseLogin() {
+        dManagerClient.getInterToIHMMain().notifyLoginRefused();
+    }
 
     public UserLightList getPlayerList() {
         return null;
     }
-
-
-
-/*
-    public void userJoinedTableRemote() { //Useless
-        //TODO should just increase able counter --> need id Table
-        //dManagerClient.getInterToIHMMain();
-        //TODO or we take UserLight as a parameter and add it to the Table (maybe type Player/Spectator) waiting harold
-    }
-
-    //TODO add a parameter discuss with Com to add id of the Table or maybe delete this one and see with userJoinedTableRemote()
-    public void addPlayer(UserLight userLightDistant) {//useless
-    }*/
-
-
 }

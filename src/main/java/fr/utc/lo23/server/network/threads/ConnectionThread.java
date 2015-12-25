@@ -15,6 +15,8 @@ import java.util.concurrent.Exchanger;
 
 public class ConnectionThread extends Thread {
     private boolean running;
+    // Indicate if the user is really connected (afaik if he passed the identification)
+    private boolean connected;
     private PokerServer pokerServer;
     private Socket socket;
 
@@ -35,6 +37,7 @@ public class ConnectionThread extends Thread {
         this.pokerServer = pokerServer;
         this.socket = socket;
         last_message_timestamp = System.currentTimeMillis();
+        connected = false;
 
         try {
             inputStream = new ObjectInputStream(this.socket.getInputStream());
@@ -116,6 +119,8 @@ public class ConnectionThread extends Thread {
         this.userId = userId;
     }
 
+    public boolean isConnected() { return connected; }
+    public void setConnected(boolean connected) { this.connected = connected; }
     public PokerServer getMyServer() { return this.pokerServer; }
 
     /**

@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class PokerServer extends Thread {
     private NetworkManagerServer networkManager;
@@ -102,10 +103,12 @@ public class PokerServer extends Thread {
         for (ConnectionThread threadClient : threadsClientList) {
             if(threadClient.getUserId().equals(userId)) {
                 threadsClientList.remove(threadClient);
-                User userToDelete = dataInterface.getUserById(userId);
-                this.networkManager.notifyDisconnection(userToDelete);
-                dataInterface.deletePlayer(userToDelete.getUserLight());
-                //Console.log("broadcast user disconnect");
+                // Only broadcast disconnection message if the user is really connected
+                if (threadClient.isConnected()) {
+                    User userToDelete = dataInterface.getUserById(userId);
+                    this.networkManager.notifyDisconnection(userToDelete);
+                    dataInterface.deletePlayer(userToDelete.getUserLight());
+                }
                 return;
             }
         }
@@ -143,7 +146,11 @@ public class PokerServer extends Thread {
      * @return int
      */
     public int getNbUsers() {
-        return threadsClientList.size();
+        int nbUsers = 0;
+        for (ConnectionThread thread : threadsClientList) {
+            if (thread.isConnected()) nbUsers++;
+        }
+        return nbUsers;
     }
 
     /**

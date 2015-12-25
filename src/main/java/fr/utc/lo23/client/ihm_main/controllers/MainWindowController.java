@@ -152,6 +152,8 @@ public class MainWindowController extends BaseController {
                         super.updateItem(t, bln);
                         if (t != null) {
                             setText(t.getPseudo());
+                        } else {
+                            setText("");
                         }
                     }
                 };
@@ -273,6 +275,7 @@ public class MainWindowController extends BaseController {
     public void setConnectedUsers(List<UserLight> users) {
         connectedUsers = FXCollections.observableArrayList(users);
         listViewConnectedUsers.setItems(connectedUsers);
+        listViewConnectedUsers.refresh();
     }
 
     @FXML

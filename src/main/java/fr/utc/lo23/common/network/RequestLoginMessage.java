@@ -43,16 +43,22 @@ public class RequestLoginMessage extends Message {
         InterfaceServerDataFromCom dataInterface = pokerServer.getNetworkManager().getDataInstance();
 
         Console.log("RequestLoginMessage, reçu du login: "+user.getLogin());
+        threadServer.setUserId(user.getUserLight().getIdUser());
 
         if (pokerServer.getNbUsers() >= Params.NB_MAX_USER) {
             Console.err("There is no room for new user ! " + pokerServer.getNbUsers() + " users are already connected.");
             sendConnectionRejection(threadServer);
+            try {
+                threadServer.shutdown();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return;
         }
         //Give new user to data
         try {
             UserLight ul = dataInterface.userConnection(user);
-            threadServer.setUserId(user.getUserLight().getIdUser());
+            threadServer.setConnected(true);
             ArrayList<UserLight> userList = dataInterface.getConnectedUsers();
             ArrayList<Table> tableList = dataInterface.getTableList();
 

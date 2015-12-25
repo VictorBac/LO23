@@ -24,7 +24,7 @@
                         <Font name="System Bold" size="19.0" />
                     </font>
                 </Label>
-            <Accordion fx:id="accordionList" layoutX="5.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="190.0">
+            <Accordion fx:id="accordionList" layoutX="5.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="190.0">
               <panes>
                 <TitledPane fx:id="tpPlayersConnected" animated="false" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="190.0" text="Joueurs connectés">
                   <content>
@@ -64,12 +64,12 @@
             <Pane fx:id="profilePane" layoutX="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" />
               <AnchorPane fx:id="listPane" layoutX="200.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0">
                   <children>
-                      <Button fx:id="connect" layoutX="814.0" layoutY="261.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createTable" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Créer table" textFill="WHITE">
+                      <Button fx:id="connect" layoutX="814.0" layoutY="261.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createTable" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #3B8474;" text="Créer une table" textFill="WHITE">
                           <font>
                               <Font name="System Bold" size="12.0" />
                           </font>
                   </Button>
-                      <Button fx:id="viewownprofil" layoutX="814.0" layoutY="343.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openViewOwnProfil" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Mon profil" textFill="WHITE">
+                      <Button fx:id="viewownprofil" layoutX="814.0" layoutY="343.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openViewOwnProfil" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #3B8474;" text="Mon profil" textFill="WHITE">
                           <font>
                               <Font name="System Bold" size="12.0" />
                           </font>
@@ -95,7 +95,7 @@
                      </font>
                   </Label>
                   <ListView fx:id="listViewSavedTables" layoutX="25.0" layoutY="537.0" prefHeight="156.0" prefWidth="760.0" style="-fx-background-color: #F2F7F6;" />
-                  <Button fx:id="connect1" layoutX="814.0" layoutY="152.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsPlayer" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Jouer" textFill="WHITE">
+                  <Button fx:id="connect1" layoutX="814.0" layoutY="152.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsPlayer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #3B8474;" text="Rejoindre" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -105,7 +105,7 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="connect2" layoutX="814.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Rejouer partie" textFill="WHITE">
+                  <Button fx:id="connect2" layoutX="814.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #3B8474;" text="Rejouer une partie" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -122,12 +122,12 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="exportProfil" layoutX="814.0" layoutY="399.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exportProfil" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Export profil" textFill="WHITE">
+                  <Button fx:id="exportProfil" layoutX="814.0" layoutY="399.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exportProfil" prefHeight="25.0" style="-fx-background-color: #3B8474;" text="Exporter mon profil" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="connect11" layoutX="814.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsSpectator" prefWidth="120.0" style="-fx-background-color: #3B8474;" text="Observer" textFill="WHITE">
+                  <Button fx:id="connect11" layoutX="814.0" layoutY="205.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#joinTableAsSpectator" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #3B8474;" text="Observer" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

@@ -84,6 +84,12 @@ public class EditOwnProfilController extends BaseController {
     @FXML
     public void updateProfil() {
         User edituser = mController.getManagerMain().getManagerData().getUserLocal();
+        if (age.getText().isEmpty() || email.getText().isEmpty() || username.getText().isEmpty()
+                || firstname.getText().isEmpty() || lastname.getText().isEmpty())
+        {
+            mController.showErrorPopup("Vous devez entrer tout les champs !");
+            return;
+        }
         edituser.setAge(Integer.parseInt(age.getText()));
         edituser.setEmail(email.getText());
         edituser.getUserLight().setPseudo(username.getText());

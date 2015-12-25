@@ -51,6 +51,12 @@ public class CreateController extends BaseController {
      */
     @FXML
     public void createNewUser() {
+        if (username.getText().isEmpty() ||firstname.getText().isEmpty() || lastname.getText().isEmpty() ||
+                email.getText().isEmpty() || age.getText().isEmpty())
+        {
+            mController.showErrorPopup("Vous devez entrer tout les champs !");
+            return;
+        }
         String testpass;
         String verifpass;
 

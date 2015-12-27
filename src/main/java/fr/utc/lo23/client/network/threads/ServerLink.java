@@ -114,6 +114,7 @@ public class ServerLink extends Thread {
     public void send(Message message){
         try {
             outputStream.writeObject(message);
+            outputStream.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }

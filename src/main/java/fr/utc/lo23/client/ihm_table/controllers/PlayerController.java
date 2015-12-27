@@ -170,6 +170,8 @@ public class PlayerController{
     
     public void setYouAreThinkingStatus(){
         playerInfos.setVisible(true);
+        if(!playerInfos.getStyleClass().contains("money"))
+            playerInfos.getStyleClass().add("money");
         playerInfos.setText("Votre tour...");
     }
 

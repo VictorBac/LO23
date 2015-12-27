@@ -171,6 +171,12 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         server.sendToListOfUsers(getDataInstance().getPlayersByTable(idTable), askMoneyMess);
     }
 
+    @Override
+    public void stopTable(UUID table) {
+        StopTableMessage stm = new StopTableMessage(table);
+        server.sendToAll(stm);
+    }
+
 
     @Override
     public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException {

@@ -144,4 +144,6 @@ public interface InterfaceServer {
 
     public void askMoneyAmount(UUID idTable);
 
+    public void stopTable(UUID table);
+
     }

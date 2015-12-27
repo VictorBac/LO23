@@ -70,6 +70,28 @@ public class Card implements Serializable {
         return symbolChar;
     }
 
+    @Override
+    public String toString () {
+        String goodSymbol;
+        switch (this.symbol) {
+            case SPADE: goodSymbol = "♠"; break;
+            case HEART: goodSymbol = "♥"; break;
+            case CLUB: goodSymbol = "♣"; break;
+            case DIAMOND: goodSymbol = "♦"; break;
+            default: goodSymbol = "?";
+        }
+        switch (this.value) {
+            case 14: goodSymbol = goodSymbol + "A"; break;
+            case 13: goodSymbol = goodSymbol + "K"; break;
+            case 12: goodSymbol = goodSymbol + "Q"; break;
+            case 11: goodSymbol = goodSymbol + "J"; break;
+            case 10: goodSymbol = goodSymbol + "T"; break;
+            default: goodSymbol = goodSymbol+ value.toString();
+        }
+        return goodSymbol;
+    }
+
+
     /**
      * Method used to print a Card with the value and the symbol
      */

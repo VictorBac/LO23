@@ -69,7 +69,7 @@ public class Hand implements Serializable{
 
         this.timeStampStartOfTheHand = new Timestamp(Calendar.getInstance().getTime().getTime());
 
-        distributeCard();
+        distributeCardv2();
     }
 
     /**
@@ -151,6 +151,80 @@ public class Hand implements Serializable{
     }
 
     /**
+     * Method used to give to the each player (PlayerHand) of the Hand its card and to put cards on the Fields, upgraded
+     */
+    public void distributeCardv2(){
+        //Mise en place des structures nécessaires
+        int numberCardToDistribute = this.listPlayerHand.size() * NUMBER_OF_CARD_PER_PLAYER_HAND + NUMBER_OF_CARD_ON_FIELD;
+        ArrayList<Card> deck = new ArrayList<>();
+
+        //Création du deck de jeu
+        for(Integer j=0;j<4;j++)
+        {
+            for(Integer i=2;i<=14;i++)
+            {
+                try {
+                    switch(j)
+                    {
+                        case 0:
+                            deck.add(new Card(i,EnumerationCard.CLUB));
+                            break;
+                        case 1:
+                            deck.add(new Card(i,EnumerationCard.DIAMOND));
+                            break;
+                        case 2:
+                            deck.add(new Card(i,EnumerationCard.SPADE));
+                            break;
+                        case 3:
+                            deck.add(new Card(i,EnumerationCard.HEART));
+                            break;
+                    }
+                } catch (CardFormatInvalidException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("Deck au début:");
+        System.out.println(deck);
+
+        //Mise en place de données
+        Integer commonCardDistributed = 0;
+        PlayerHand currentPlayerHand = null;
+        Integer currentIndexPlayerHand = 0;
+        Integer iteration = 1;
+
+        //tant qu'il reste des cartes à distribuer
+        while(numberCardToDistribute!=0)
+        {
+            Integer randInt = randomInt(0,NUMBER_OF_CARD_IN_DECK-iteration);
+            //Soit elles sont pour les cartes communes
+            if(commonCardDistributed<5) {
+                this.listCardField.add(deck.get(randInt));
+                commonCardDistributed++;
+            }
+            //Soit c'est la première carte d'un joueur
+            else if(numberCardToDistribute%2==0)
+            {
+                currentPlayerHand = getListPlayerHand().get(currentIndexPlayerHand);
+                currentIndexPlayerHand++;
+                currentPlayerHand.addNewCard(deck.get(randInt));
+            }
+            //Soit c'est la deuxième
+            else if(numberCardToDistribute%2==1)
+            {
+                currentPlayerHand.addNewCard(deck.get(randInt));
+            }
+            //On retire la carte du paquet
+            System.out.println("Carte choisie:"+deck.get(randInt));
+            deck.remove(deck.get(randInt));
+            System.out.println("Nouveau Deck:");
+            System.out.println(deck);
+            numberCardToDistribute--;
+            iteration++;
+        }
+    }
+
+    /**
      * Method that return a random number between min and max
      * @param min First number that can be return from the interval
      * @param max Last number that can be return from the interval
@@ -191,7 +265,7 @@ public class Hand implements Serializable{
      * @return ArrayList<UserLight> with the UserLight of all players that can win money
      */
     public ArrayList<UserLight> getListPerformersUsers(){
-        ArrayList<UserLight> users = new ArrayList<UserLight>();
+        ArrayList<UserLight> users = new ArrayList<>();
         for(PlayerHand player : getListPlayerHand())
         {
             if(!player.isFold())
@@ -205,24 +279,11 @@ public class Hand implements Serializable{
      * @return ArrayList<UserLight> with the UserLight of all players that can perform an Action
      */
     public ArrayList<UserLight> getListActiveUsers(){
-        ArrayList<UserLight> users = new ArrayList<UserLight>();
+        ArrayList<UserLight> users = new ArrayList<>();
         for(PlayerHand player : getListPlayerHand())
         {
             if(player.isActive())
                 users.add(player.getPlayer());
-        }
-        return users;
-    }
-
-    /**
-     * Method that search for all UserLight that play on the hand
-     * @return ArrayList<UserLight> with the UserLight of all players that can perform an Action
-     */
-    public ArrayList<UserLight> getListUsers(){
-        ArrayList<UserLight> users = new ArrayList<UserLight>();
-        for(PlayerHand player : getListPlayerHand())
-        {
-            users.add(player.getPlayer());
         }
         return users;
     }

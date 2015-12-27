@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ public class FormController {
     // Définition des formes régulières
     final Pattern texte = Pattern.compile("^[A-Za-z][a-z0-9 ]*$");
     final Pattern nombre = Pattern.compile("^[0-9]+$");
-
     @FXML
     TextField formName;
 
@@ -86,12 +86,12 @@ public class FormController {
     Button formSend;
 
     @FXML
+    Button formQuit;
+
+    @FXML
     public void initialize() {
-        formSend.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                formSend(event);
-            }
-        });
+        formSend.setOnAction(this::formSend);
+        formSend.setDefaultButton(true);
     }
     /**
      * Vérifie la validité des données rentrées par l'utilisateur :
@@ -104,7 +104,7 @@ public class FormController {
     @FXML
     private void formSend(ActionEvent event){
         // Checking form values
-        ArrayList<String> errors = new ArrayList<String>(); // Si une erreur est détectée, on l'ajoute dans cette liste
+        ArrayList<String> errors = new ArrayList<>(); // Si une erreur est détectée, on l'ajoute dans cette liste
         errors.clear();
         // Réinitialisation des borders des champs
         clearStyle(formName);
@@ -161,6 +161,11 @@ public class FormController {
             // Envoie de la table à Data
             ihmTable.getDataInterface().tableToCreate(new Table(tableName, ihmTable.getDataInterface().getUser(), spectator, spectatorChat, playerMax, playerMin, abandon, blinde, tempsMax, ante, moneyMax));
         }
+    }
+
+    @FXML
+    private void formQuit() {
+        ihmTable.getMainInterface().quitGame();
     }
 
     /**

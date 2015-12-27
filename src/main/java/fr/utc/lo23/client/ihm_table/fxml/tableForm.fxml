@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" style="-fx-background-color: #D6DBDA;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.FormController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1020.0" style="-fx-background-color: #D6DBDA;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.utc.lo23.client.ihm_table.controllers.FormController">
     <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="400.0" />
@@ -154,11 +154,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text=" secondes" textFill="#3b8474" GridPane.columnIndex="1" />
                 <TextField fx:id="formTempsMax" />
+                <Label text=" secondes" textFill="#3b8474" GridPane.columnIndex="1" />
             </children>
         </GridPane>
-        <Button fx:id="formSend" mnemonicParsing="false" style="-fx-background-color: #3B8474; bor: black;" text="Envoyer" textFill="#f5f2f2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="12" />
       <Label text="Création d'une table de jeu" textFill="#034939" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
          <font>
             <Font name="System Bold" size="29.0" />
@@ -192,5 +191,7 @@
             <Label text=" $" textFill="#007057" GridPane.columnIndex="1" />
          </children>
       </GridPane>
+        <Button fx:id="formSend" mnemonicParsing="false" style="-fx-background-color: #3B8474; bor: black;" text="Envoyer" textFill="#f5f2f2" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="12" />
+      <Button fx:id="formQuit" mnemonicParsing="false" onAction="#formQuit" style="-fx-background-color: #3B8474; bor: black;" text="Annuler" textFill="#f5f2f2" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
     </children>
 </GridPane>

@@ -37,12 +37,21 @@ public class Turn implements Serializable {
         numberActivePlayersAtTheBeginning = currentHandToAdd.getListActiveUsers().size();
     }
 
+    public Integer getMaxMoneyAccountOfAllPerformersUsers(){
+        Integer max=0;
+        for(UserLight user : getCurrentHand().getListPerformersUsers())
+        {
+            if(getCurrentHand().getCurrentGame().getSeatOfUser(user).getCurrentAccount()>max);
+            max = getCurrentHand().getCurrentGame().getSeatOfUser(user).getCurrentAccount();
+        }
+        return max;
+    }
+
     /**
      * Method to add a new action to the turn, update the current amount and the amount in the pot
      * @param newAction
      * @throws ActionInvalidException
      */
-
     public void addAction(Action newAction) throws ActionInvalidException{
 
         if(availableActions(newAction.getUserLightOfPlayer()).contains(newAction.getName()))
@@ -67,7 +76,7 @@ public class Turn implements Serializable {
                 }
 
             } else if (newAction.getName().equals(EnumerationAction.ALLIN)) {
-                newAction.setAmount(getCurrentHand().getCurrentGame().getSeatOfUser(newAction.getUserLightOfPlayer()).getCurrentAccount());
+                newAction.setAmount(getMaxMoneyAccountOfAllPerformersUsers()); // PREVIOUS getCurrentHand().getCurrentGame().getSeatOfUser(newAction.getUserLightOfPlayer()).getCurrentAccount())
                 getCurrentHand().getPlayer(newAction.getUserLightOfPlayer()).setAllin();
             }
             this.getListAction().add(newAction);

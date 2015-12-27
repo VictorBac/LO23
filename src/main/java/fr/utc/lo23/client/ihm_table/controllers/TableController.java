@@ -38,7 +38,6 @@ public class TableController {
     private Image defaultImage;
     private Action actionToFill;
     private Integer potMoneyInt;
-    private ArrayList<Seat> refSeats = new ArrayList<Seat>();
     private Integer lastRaise;
     public Boolean isGameLaunched = false;
     private Integer numberCardsSet = 0;
@@ -644,19 +643,6 @@ public class TableController {
         ihmTable.getDataInterface().setStartAmount(Integer.parseInt(popupAmountInput.getText()));
         hidePopupAmount();
     }
-
-    public ArrayList<Seat> getRefSeats() {
-        return refSeats;
-    }
-
-    public void setRefSeats(ArrayList<Seat> refSeats) {
-        this.refSeats = refSeats;
-    }
-
-    public void addRefSeats(Seat seat) {
-        this.refSeats.add(seat);
-    }
-
     /**
      * Add log in log view
      * @param msg
@@ -866,9 +852,11 @@ public class TableController {
             int waitanimfold = 1;
             for(Map.Entry<UserLight,PlayerController> entry : playerControllerMap.entrySet())
             {
-                setPlayerFoldCardAnimation(entry.getValue().getCard1(),waitanimfold);
-                setPlayerFoldCardAnimation(entry.getValue().getCard2(),waitanimfold+10);
-                waitanimfold+=60;
+                if(entry.getValue().getCard1()!=null && entry.getValue().getCard2()!=null) {
+                    setPlayerFoldCardAnimation(entry.getValue().getCard1(), waitanimfold);
+                    setPlayerFoldCardAnimation(entry.getValue().getCard2(), waitanimfold + 30);
+                    waitanimfold += 80;
+                }
             }
 
             wait = 2000;
@@ -1291,31 +1279,33 @@ public class TableController {
         timeline.play();
     }
 
-    public void endHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla){
-
+    public void endHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla) {
         for(Seat seat : seatPlayers)
         {
             PlayerController playerC = getPlayerControllerOf(seat.getPlayer());
+            System.out.println(seat.getPlayer()+" a actuellement "+seat.getCurrentAccount()+" €.");
+            System.out.println(playerC.getCurrentMoney()+"€ est stocké dans le playerController de cette personne");
             if(playerC.getCurrentMoney()<seat.getCurrentAccount())
             {
                 addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()-playerC.getCurrentMoney())+" € cette manche !");
                 setPotToMoneyPlayerAnimation(playerC);
             }
 
-            if(!apla.equals(null)) {
+            if(apla != null) {
                 for (PlayerHand pl : apla) {
                     if (pl.getPlayer().equals(seat.getPlayer())) {
-                        if (pl.getListCardsHand() != null) { // && pl.getListCardsHand().size()==2
-                            playerC.getCard1().setImage(getImageFromCard(pl.getListCardsHand().get(0)));
-                            playerC.getCard2().setImage(getImageFromCard(pl.getListCardsHand().get(1)));
+                        if (pl.getListCardsHand().size() == 2) {
+                            if(playerC.getCard1()!=null)
+                                playerC.getCard1().setImage(getImageFromCard(pl.getListCardsHand().get(0)));
+                            if(playerC.getCard2()!=null)
+                                playerC.getCard2().setImage(getImageFromCard(pl.getListCardsHand().get(1)));
                         }
                     }
                 }
             }
-            getPlayerControllerOf(seat.getPlayer()).updateMoney(seat.getCurrentAccount());
+            playerC.updateMoney(seat.getCurrentAccount());
             playerC.clearReadyStatus();
         }
-        setRefSeats(seatPlayers);
 
         potMoney.setText("0 €");
     }

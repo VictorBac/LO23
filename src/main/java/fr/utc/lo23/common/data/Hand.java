@@ -334,9 +334,6 @@ public class Hand implements Serializable{
      * Method used to resolve the end of a Hand, distribute money to the winners
      */
     public void resolve(){
-        //A RETIRER, DEBUG ONLY
-        Boolean already = false;
-
         HashMap<UserLight,Integer> playerMoneyBet = new HashMap<>();
         HashMap<UserLight,Integer> effectiveWinningMoney = new HashMap<>();
         ArrayList<PlayerHand> calculatedPlayerHandList = new ArrayList<>();
@@ -455,6 +452,8 @@ public class Hand implements Serializable{
                         maxWin += playerMoneyBet.get(player);
                     }
                 }
+                System.out.println(player.getPseudo()+" gagne "+maxWin+" €");
+
                 //On se donne cet argent
                 effectiveWinningMoney.put(player, maxWin);
 
@@ -467,6 +466,7 @@ public class Hand implements Serializable{
 
                 for (Map.Entry<UserLight, Integer> entry : tempHash.entrySet()) {
                     playerMoneyBet.replace(entry.getKey(), playerMoneyBet.get(entry.getKey()) - maxWin);
+                    System.out.println("Il reste "+playerMoneyBet.get(entry.getKey())+"€ de gagnable à "+entry.getKey().getPseudo());
                     if (playerMoneyBet.get(entry.getKey()) - maxWin <= 0)
                         playerMoneyBet.remove(entry.getKey());
                 }
@@ -482,6 +482,11 @@ public class Hand implements Serializable{
         //On assigne les argents finalement gagnés aux Seat
         for (Map.Entry<UserLight, Integer> entry : effectiveWinningMoney.entrySet()) {
             getCurrentGame().getSeatOfUser(entry.getKey()).addCurrentMoney(entry.getValue());
+        }
+
+        for(Seat seat : getCurrentGame().getListSeatPlayerWithPeculeDepart())
+        {
+            System.out.println(seat.getPlayer().getPseudo()+" a désormais "+seat.getCurrentAccount()+" €");
         }
     }
 

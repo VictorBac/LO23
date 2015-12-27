@@ -288,7 +288,6 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Vous avez suivi.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
-                    // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }

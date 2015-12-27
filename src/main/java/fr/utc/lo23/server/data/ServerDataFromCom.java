@@ -232,59 +232,72 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     System.out.println("La hand est finit");
                     //Si elle est finit résoudre la manche
 
-                    if(hand.getListTurn().size()<4 && hand.getListPerformersUsers().size()>1)
-                    {
-                        PlayerHand playSend = new PlayerHand();
-                        playSend.setPlayer(null);
-                        ArrayList<Card> cards = new ArrayList<>();
-
-                        if(hand.getListTurn().size()==1)
+                    //S'il faut encore afficher des cartes communes, les envoyer pour affichage
+                    if(hand.getListPerformersUsers().size()>1) {
+                        if(hand.getListTurn().size()<4)
                         {
-                            cards.add(hand.getListCardField().get(0));
-                            cards.add(hand.getListCardField().get(1));
-                            cards.add(hand.getListCardField().get(2));
-                        }
-                        if(hand.getListTurn().size()<=2)
-                        {
-                            cards.add(hand.getListCardField().get(3));
-                        }
-                        cards.add(hand.getListCardField().get(4));
+                            PlayerHand playSend = new PlayerHand();
+                            playSend.setPlayer(null);
+                            ArrayList<Card> cards = new ArrayList<>();
 
-                        playSend.setListCardsHand(cards);
-                        ArrayList<PlayerHand> players = new ArrayList<>();
-                        players.add(playSend);
-                        try {
-                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
-                        } catch (NetworkFailureException e) {
-                            e.printStackTrace();
+                            if(hand.getListTurn().size()==1)
+                            {
+                                cards.add(hand.getListCardField().get(0));
+                                cards.add(hand.getListCardField().get(1));
+                                cards.add(hand.getListCardField().get(2));
+                            }
+                            if(hand.getListTurn().size()<=2)
+                            {
+                                cards.add(hand.getListCardField().get(3));
+                            }
+                            cards.add(hand.getListCardField().get(4));
+
+                            playSend.setListCardsHand(cards);
+                            ArrayList<PlayerHand> players = new ArrayList<>();
+                            players.add(playSend);
+
+                            try {
+                                myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                            } catch (NetworkFailureException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
-
-                    if(hand.getListPerformersUsers().size()<=1)
-                    {
-                        /*
-
-                        ?? J'ai du mettre ça mais je vois pas pk, ça cause juste un crash coté client ??
-
-                        try {
-                            myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),null);
-                        } catch (NetworkFailureException e) {
-                            e.printStackTrace();
-                        }*/
-                    }
-
-
 
                     hand.resolve();
 
                     try {
+
                         Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                    //Notifier les clients
-                    myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), game.getListSeatPlayerWithPeculeDepart(),hand.getListPlayerHand());
+                    //TODO: Ce bout de code a l'air de faire buguer le calcul des seat.
+                    /*
+                    Cependant il s'avère nécessaire, en effet l'envoi de plusieurs fois le meme objet cause des problèmes de désérialization.
+
+                     */
+                    ArrayList<Seat> sts = new ArrayList<>();
+                    for(Seat seat : game.getListSeatPlayerWithPeculeDepart()) {
+                        Seat st = new Seat();
+                        st.setPlayer(seat.getPlayer());
+                        st.setCurrentAccount(seat.getCurrentAccount());
+                        sts.add(st);
+                    }
+
+                    if(hand.getListPerformersUsers().size()>1)
+                    {
+                        //Envoyer les résultats du tour et les cartes des joueurs (les couchés enverront des listes vides) , TODO à optimiser en virant les playerhand des joueurs couchés
+
+                        myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, hand.getListPlayerHand());
+                    }
+                    else
+                    {
+                        //Envoyer les résultats du tour mais pas les cartes des joueurs
+                        myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, null);
+                    }
 
                     //puis vérifier si la game est finie
                     if(game.isFinished())
@@ -299,7 +312,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     else
                     {
                         try {
-                            Thread.sleep(10000);
+                            Thread.sleep(8000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

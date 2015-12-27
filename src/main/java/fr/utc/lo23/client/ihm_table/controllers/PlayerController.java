@@ -178,8 +178,9 @@ public class PlayerController{
         betMoney = amount;
         if(!playerInfos.getStyleClass().contains("money"))
             playerInfos.getStyleClass().add("money");
-        if(amount==-1)
+        if(amount==-1) {
             playerInfos.setText("Couché");
+        }
         else
         {
             playerInfos.setText(amount.toString()+" $");
@@ -197,6 +198,13 @@ public class PlayerController{
         {
             playerInfos.setText(amount +" $");
         }
+    }
+
+    public Boolean isReadyStatus(){
+        if(playerInfos.getStyleClass().contains("refuse") || playerInfos.getStyleClass().contains("ready"))
+            return true;
+        else
+            return false;
     }
 
     public void clearReadyStatus(){

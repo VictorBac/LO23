@@ -269,7 +269,15 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         }
                     }
 
+
+
                     hand.resolve();
+
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                     //Notifier les clients
                     myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), game.getListSeatPlayerWithPeculeDepart(),hand.getListPlayerHand());
@@ -316,6 +324,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 }
                 else
                 {
+
                     System.out.println("La manche n'est pas finie");
                     //sinon créer un nouveau tour
                     turn = new Turn(hand);
@@ -342,6 +351,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     }
 
 
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
                     //et relancer l'algorithme
                     playGame(table);
@@ -553,53 +567,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * asks all the users if they are ready to start the game through com server
-     *
-     */
-    public void askReady(Table playingTable) {
-        //TODO:integ5 myManager.getInterfaceToCom().askReady(playingTable.getListPlayers().getListUserLights());
-
-
-    }
-
-    /**
-     * checks if everyone selected their starting money through the attribute nbVotes
-     * @param idTable the id of the table to check
-     * @return
-     */
-    /*
-    INTEG 5: CETTE FONCTION EST INUTILE
-    public boolean isEveryoneAmountMoneySelected(UUID idTable){
-        Table playingTable = getTableFromId(idTable);
-        return (playingTable.getNbPlayerSelectedMoney() == playingTable.getListPlayers().getListUserLights().size());
-    }*/
-
-    /**
-     * receives the answers about readiness of the players
-     * counts the votes to check if everyone is ready
-     * if one is not, restart the process from askMoneyMax
-     * @param player the UserLight of the answering player
-     * @param ready true if ready, else false
-     */
-    public void getAnswerReady(UUID idTable, UserLight player, boolean ready) {
-        //myManager.getInterfaceToCom().notifyVoteReady(ready);
-        Table playingTable = getTableFromId(idTable);
-        playingTable.getVote().add(ready);
-        if (playingTable.getVote().size() == playingTable.getListPlayers().getListUserLights().size()){
-            if (playingTable.getVote().contains(false)){
-                playingTable.getVote().clear();
-                //TODO:integ5 myManager.getInterfaceToCom().notifyVoteFailed(playingTable);
-                //TODO:integ5 playingTable.setNbPlayerelectedMoney(0);
-                askMoneyMax(idTable);
-            }
-            else{
-                playingTable.getCurrentGame().startGame();
-                //TODO:integ5 myManager.getInterfaceToCom().notifyGameStart(playingTable);
-            }
-        }
-    }
-
-    /**
      * asks the player which action he wants to perform
      * @param player the UserLight of the player
      */
@@ -608,15 +575,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         emptyAction.setUserLightOfPlayer(player);
         //TODO: insérer un action time dedans ?
         myManager.getInterfaceToCom().askActionToPLayer(table.getListPlayers().getListUserLights(),emptyAction,availableActions);
-    }
-
-    /**
-     * treats the action wanted by a user
-     * @param player the UserLight of the player
-     * @param attempt the chosen action
-     */
-    public void getAction(UserLight player, Action attempt) {
-
     }
 
     public void updateStats(Game idGame){
@@ -680,7 +638,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 game.setListSeatPlayerWithPeculeDepart(newSeat);
 
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

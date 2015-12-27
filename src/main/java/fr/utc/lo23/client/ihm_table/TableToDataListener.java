@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_table;
 
+import fr.utc.lo23.client.ihm_table.controllers.PlayerController;
 import fr.utc.lo23.client.ihm_table.interfaces.ITableToDataListener;
 import fr.utc.lo23.common.data.*;
 import javafx.application.Platform;
@@ -269,7 +270,7 @@ public class TableToDataListener implements ITableToDataListener {
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a fait tapis !");
                     ihmtable.getTableController().setLastRaise(action.getAmount());
-                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getBetAmountThisTurn());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.BET)) {
@@ -278,7 +279,7 @@ public class TableToDataListener implements ITableToDataListener {
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a relancé de " + action.getAmount() + "$.");
                     ihmtable.getTableController().setLastRaise(action.getAmount());
-                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getBetAmountThisTurn());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                     ihmtable.getTableController().setLastRaise(action.getAmount());
                 }
@@ -288,7 +289,7 @@ public class TableToDataListener implements ITableToDataListener {
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a suivi.");
                     // ATTENTION: vérifier si l'argent que l'on affiche correspond à la totalité de l'argent mis, ou si il correspond seulement à l'argent de ce tour, ou meme de la relance.
-                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getBetAmountThisTurn());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.CHECK)) {
@@ -303,7 +304,6 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry("Vous vous couchez.");
                     else
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " se couche.");
-                    ihmtable.getTableController().getPlayerControllerOf(player).setBetMoneyAmount(0);
                     ihmtable.getTableController().graphicFoldUser(player);
                 }
                 else if(action.getName().equals(EnumerationAction.ANTE)) {
@@ -313,6 +313,7 @@ public class TableToDataListener implements ITableToDataListener {
                         ihmtable.getTableController().addLogEntry(player.getPseudo() + " a mis " + action.getAmount() + " d'Ante" );
                     }
                     ihmtable.getTableController().getPlayerControllerOf(player).updateMoney(action.getAmount());
+                    ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
                 }
                 else if(action.getName().equals(EnumerationAction.BLINDE)) {
                     if(player.equals(ihmtable.getDataInterface().getUser())) {
@@ -323,6 +324,13 @@ public class TableToDataListener implements ITableToDataListener {
                     }
                     ihmtable.getTableController().getPlayerControllerOf(player).decreaseMoney(action.getAmount());
                     ihmtable.getTableController().getPlayerControllerOf(player).addBetMoneyAmount(action.getAmount());
+                    //Supprimer les affichages prets
+                    for(PlayerController playerC : ihmtable.getTableController().getControllersList())
+                    {
+                        if(playerC.isReadyStatus())
+                            playerC.clearReadyStatus();
+                    }
+
                 }
                 else if(action.getName().equals(EnumerationAction.BIGBLINDE)) {
                     if(player.equals(ihmtable.getDataInterface().getUser())) {

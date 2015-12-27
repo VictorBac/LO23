@@ -1,5 +1,6 @@
 package fr.utc.lo23.common.data;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.exceptions.ActionInvalidException;
 import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
@@ -242,13 +243,26 @@ public class Hand implements Serializable{
 
 
 
-
+    public class SeatComparator implements Comparator<Seat> {
+        @Override
+        public int compare(Seat o1, Seat o2) {
+            if(o1.getCurrentAccount()>o2.getCurrentAccount())
+                return 1;
+            else if(o1.getCurrentAccount()<o2.getCurrentAccount())
+                return -1;
+            else
+                return 0;
+        }
+    }
 
 
     /**
      * Method used to resolve the end of a Hand, distribute money to the winners
      */
     public void resolve(){
+        //A RETIRER, DEBUG ONLY
+        Boolean already = false;
+
         HashMap<UserLight,Integer> playerMoneyBet = new HashMap<>();
         HashMap<UserLight,Integer> effectiveWinningMoney = new HashMap<>();
         ArrayList<PlayerHand> calculatedPlayerHandList = new ArrayList<>();
@@ -260,6 +274,9 @@ public class Hand implements Serializable{
             }
         }
 
+        System.out.println("playerMoneybet:");
+        System.out.println(playerMoneyBet);
+
         CombinationCalculator cc = new CombinationCalculator();
 
         //On effectue cet algorithme tant qu'il y a de l'argent à répartir
@@ -267,60 +284,93 @@ public class Hand implements Serializable{
             ArrayList<PlayerHand> winners = cc.getWinner(calculatedPlayerHandList, listCardField);
 
             //S'il y a des ex-aequo, on fait l'algo bien compliqué dessous, sinon on en fait un plus simple
-            //TODO: corriger algo ex-aequo
-            ArrayList<PlayerHand> winners2 = new ArrayList<>();
-            winners2.add(winners.get(0));
-            winners = winners2;
-
             if (winners.size() > 1) {
+                System.out.println(" /////// Ex-aequo ! ///////");
+
                 //on définit quelques stuctures de données nécessaires aux calcules préliminairs et au tri par ordre croissant
-                HashMap<UserLight,Integer> maxWinningMoney = new HashMap<>();
-                HashMap<Integer,UserLight> revertMaxWinningMoney = new HashMap<>();
+                ArrayList<Seat> maxWinningMoney = new ArrayList<>();
+
+                System.out.println("Winners:");
+                System.out.println(winners);
 
                 //Pour tous les ex-aequo, on calcule la somme max que chacun peut gagner
+                //On utilise des Seat car ils possèdent un userlight et de l'argent (#flemme de créer une autre classe spécifique), et ça permet de trier simplement en créant un comparateur custom
                 for (PlayerHand player : winners) {
                     Integer maxWin = 0;
                     for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
-                        if (entry.getValue() <= playerMoneyBet.get(player)) {
+                        if (entry.getValue() <= playerMoneyBet.get(player.getPlayer())) {
                             maxWin += entry.getValue();
                         } else {
-                            maxWin += playerMoneyBet.get(player);
+                            maxWin += playerMoneyBet.get(player.getPlayer());
                         }
                     }
-                    maxWinningMoney.put(player.getPlayer(), maxWin);
-                    revertMaxWinningMoney.put(maxWin, player.getPlayer());
+                    Seat seat = new Seat();
+                    seat.setPlayer(player.getPlayer());
+                    seat.setCurrentAccount(maxWin);
+                    maxWinningMoney.add(seat);
                 }
 
-                //On trie dans l'ordre chaque gagnant
-                List<Integer> sortInteger = new ArrayList<Integer>(maxWinningMoney.values());
-                Collections.sort(sortInteger);
-                HashMap<UserLight, Integer> utilMap = new HashMap<>();
-                for (Integer i : sortInteger) {
-                    utilMap.put(revertMaxWinningMoney.get(i), i);
+
+                //On trie dans l'ordre croissant chaque gagnant
+                Collections.sort(maxWinningMoney, new SeatComparator());
+
+                for(Seat st : maxWinningMoney)
+                {
+                    System.out.println(st.getPlayer().getPseudo()+" va gagner au maximum "+st.getCurrentAccount()+"€");
                 }
+
 
                 //On va donner au plus petit sa valeur de gain, puis aux suivants, ... en retirant cet argent de chaque joueur.
-                for (Map.Entry<UserLight, Integer> entry : utilMap.entrySet()) {
-                    for (Map.Entry<UserLight, Integer> entry2 : utilMap.entrySet()) {
-                        //On assigne ou ajoute la valeur gagnée par le joueur
-                        if (effectiveWinningMoney.containsKey(entry2.getKey()))
-                            effectiveWinningMoney.replace(entry2.getKey(), entry.getValue() / utilMap.size() + effectiveWinningMoney.get(entry2.getKey()));
-                        else
-                            effectiveWinningMoney.put(entry2.getKey(), entry.getValue() / utilMap.size());
+                for (Integer i=0;i<maxWinningMoney.size();i++)
+                {
+                    Seat seat = maxWinningMoney.get(i);
+                    if(seat.getCurrentAccount()>0)
+                    {
+                        for (Integer j=i;j<maxWinningMoney.size();j++) {
+                            //On assigne ou ajoute la valeur gagnée par le joueur
+                            Seat seat2 = maxWinningMoney.get(j);
+                            if (effectiveWinningMoney.containsKey(seat2.getPlayer()))
+                                effectiveWinningMoney.replace(seat2.getPlayer(), seat.getCurrentAccount() / (maxWinningMoney.size()-i) + effectiveWinningMoney.get(seat2.getPlayer()));
+                            else
+                                effectiveWinningMoney.put(seat2.getPlayer(), seat.getCurrentAccount() / (maxWinningMoney.size()-i));
+                            System.out.println(seat2.getPlayer().getPseudo()+" gagne "+(seat.getCurrentAccount() / (maxWinningMoney.size()-i))+" €");
+                        }
+
+                        //On retire de l'argent max possible que va gagner ce vainqueur l'argent qui est partagée
+                        Integer moneyToRemove = seat.getCurrentAccount();
+                        for(Integer j=i;j<maxWinningMoney.size();j++)
+                        {
+                            Seat seat2 = maxWinningMoney.get(j);
+                            seat2.addCurrentMoney(-moneyToRemove);
+                            System.out.println("Il reste " + seat2.getCurrentAccount() + "€ possible à gagner à " + seat2.getPlayer().getPseudo());
+                        }
+
                         //On retire cet argent de tous les parieurs
                         for (Map.Entry<UserLight, Integer> entry3 : playerMoneyBet.entrySet()) {
-                            playerMoneyBet.replace(entry3.getKey(), playerMoneyBet.get(entry3.getKey()) - entry.getValue() / utilMap.size());
+                            System.out.println("joueur: "+entry3.getKey().getPseudo()+" à qui on retire "+moneyToRemove+" €");
+                            playerMoneyBet.replace(entry3.getKey(), playerMoneyBet.get(entry3.getKey()) - moneyToRemove);
+
                         }
+
                     }
-                    utilMap.remove(entry.getKey());
                 }
 
                 //On retire désormais de la liste des joueurs ayant pariés ceux qui n'ont plus d'argent parié
-                for (Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet()) {
-                    if (entry.getValue() <= 0)
-                        playerMoneyBet.remove(entry.getKey());
+                HashMap<UserLight,Integer> tempHash = new HashMap<>();
+                for(Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet())
+                {
+                    tempHash.put(entry.getKey(),entry.getValue());
                 }
+
+                for (Map.Entry<UserLight, Integer> entry : tempHash.entrySet()) {
+                    if (playerMoneyBet.get(entry.getKey())<= 0) {
+                        System.out.println(entry.getKey().getPseudo()+" est retiré de la liste des parieurs");
+                        playerMoneyBet.remove(entry.getKey());
+                    }
+                }
+
             } else {
+                System.out.println(" ////// Un seul vainqueur !! ////// ");
                 //On calcule l'argent max gagnable
                 UserLight player = winners.get(0).getPlayer();
                 Integer maxWin = 0;
@@ -331,18 +381,14 @@ public class Hand implements Serializable{
                         maxWin += playerMoneyBet.get(player);
                     }
                 }
-
                 //On se donne cet argent
                 effectiveWinningMoney.put(player, maxWin);
 
                 //On retire désormais l'argent des joueurs ayant pariés, et on retire de la liste des joueurs ceux qui n'ont plus d'argent parié
-
-                System.out.println(playerMoneyBet);
-
                 HashMap<UserLight,Integer> tempHash = new HashMap<>();
                 for(Map.Entry<UserLight, Integer> entry : playerMoneyBet.entrySet())
                 {
-                    tempHash.put(entry.getKey(),entry.getValue());
+                    tempHash.put(entry.getKey(), entry.getValue());
                 }
 
                 for (Map.Entry<UserLight, Integer> entry : tempHash.entrySet()) {
@@ -350,8 +396,6 @@ public class Hand implements Serializable{
                     if (playerMoneyBet.get(entry.getKey()) - maxWin <= 0)
                         playerMoneyBet.remove(entry.getKey());
                 }
-
-                System.out.println(playerMoneyBet);
             }
 
             //On supprime les vainqueurs de l'ArrayList<PlayerHand>

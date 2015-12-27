@@ -101,13 +101,7 @@ public interface InterfaceServerDataFromCom {
 
     public boolean checkMoneyMax(UserLight player, int money, UUID idTable);
 
-    public void askReady(Table playingTable);
-
-    public void getAnswerReady(UUID idTable, UserLight player, boolean ready);
-
     public void askAction (Table table, UserLight player, EnumerationAction[] availableActions);
-
-    public void getAction(UserLight player, Action attempt);
 
     public void updateStats(Game idGame);
 

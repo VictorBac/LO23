@@ -1233,6 +1233,8 @@ public class TableController {
         {
             if(player.getBetMoney()>0)
                 setMoneyPlayerToPotAnimation(player);
+            player.setBetMoney(0);
+            player.clearReadyStatus();
         }
         setLastRaise(table.getCurrentGame().getBlind()*2);
     }
@@ -1321,5 +1323,9 @@ public class TableController {
     public void notifyEndGame(UserLight winner){
         addLogEntry("Le grand vainqueur de la partie est "+winner.getPseudo()+".");
         //TODO: remettre l'interface graphique en mode attente de joueurs
+    }
+
+    public ArrayList<PlayerController> getControllersList() {
+        return controllersList;
     }
 }

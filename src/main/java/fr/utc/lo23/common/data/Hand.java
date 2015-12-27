@@ -215,6 +215,19 @@ public class Hand implements Serializable{
     }
 
     /**
+     * Method that search for all UserLight that play on the hand
+     * @return ArrayList<UserLight> with the UserLight of all players that can perform an Action
+     */
+    public ArrayList<UserLight> getListUsers(){
+        ArrayList<UserLight> users = new ArrayList<UserLight>();
+        for(PlayerHand player : getListPlayerHand())
+        {
+            users.add(player.getPlayer());
+        }
+        return users;
+    }
+
+    /**
      * Method that checks if the Hand is finished
      * @return true if the Turn id finished (4 Turn were played or no more player is active)
      */

@@ -262,11 +262,15 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
                     if(hand.getListPerformersUsers().size()<=1)
                     {
+                        /*
+
+                        ?? J'ai du mettre ça mais je vois pas pk, ça cause juste un crash coté client ??
+
                         try {
                             myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),null);
                         } catch (NetworkFailureException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
 
 

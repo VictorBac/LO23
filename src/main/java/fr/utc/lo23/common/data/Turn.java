@@ -154,7 +154,7 @@ public class Turn implements Serializable {
             getListAction().add(ac2);
             //TODO: ac2.setTime ??
 
-            ac3.setUserLightOfPlayer(getNextActiveUserAfterUser(getListActiveUsers().get(1)));
+            ac3.setUserLightOfPlayer(getNextActiveUser());
 
             arrayAc.add(ac1);
             arrayAc.add(ac2);
@@ -170,31 +170,23 @@ public class Turn implements Serializable {
     }
 
     public UserLight getNextActiveUser(){
-        UserLight lastActionner = getCurrentAction().getUserLightOfPlayer();
 
-        for(UserLight user : getListActiveUsers())
+        Integer currentIndex = getCurrentHand().getListPlayerHand().indexOf(getCurrentHand().getPlayer(getCurrentAction().getUserLightOfPlayer()));
+        Integer firstIndex = currentIndex;
+        do
         {
-            if(user.equals(lastActionner))
-                lastActionner = user;
+            currentIndex++;
+            if(currentIndex>=getCurrentHand().getListPlayerHand().size())
+            {
+                currentIndex = 0;
+            }
+            if(currentIndex.equals(firstIndex)) {
+                System.out.println("boucle infinie recherche joueur actif");
+                System.exit(1);
+            }
         }
-
-
-        Integer currentIndex = getListActiveUsers().indexOf(lastActionner)+1;
-        if(currentIndex>=getListActiveUsers().size())
-        {
-            currentIndex = 0;
-        }
-        System.out.println("getNextActive: "+getListActiveUsers().get(currentIndex));
-        return getListActiveUsers().get(currentIndex);
-    }
-
-    public UserLight getNextActiveUserAfterUser(UserLight user){
-        Integer currentIndex = getListActiveUsers().indexOf(user)+1;
-        if(currentIndex>=getListActiveUsers().size())
-        {
-            currentIndex = 0;
-        }
-        return getListActiveUsers().get(currentIndex);
+        while(!getCurrentHand().getListPlayerHand().get(currentIndex).isActive());
+        return getCurrentHand().getListPlayerHand().get(currentIndex).getPlayer();
     }
 
     public Boolean isFinished(){

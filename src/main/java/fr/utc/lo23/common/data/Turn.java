@@ -76,7 +76,7 @@ public class Turn implements Serializable {
                 }
 
             } else if (newAction.getName().equals(EnumerationAction.ALLIN)) {
-                newAction.setAmount(getMaxMoneyAccountOfAllPerformersUsers()); // PREVIOUS getCurrentHand().getCurrentGame().getSeatOfUser(newAction.getUserLightOfPlayer()).getCurrentAccount())
+                newAction.setAmount(getCurrentHand().getCurrentGame().getSeatOfUser(newAction.getUserLightOfPlayer()).getCurrentAccount());
                 getCurrentHand().getPlayer(newAction.getUserLightOfPlayer()).setAllin();
             }
             this.getListAction().add(newAction);

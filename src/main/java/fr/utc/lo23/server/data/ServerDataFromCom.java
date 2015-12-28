@@ -274,11 +274,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         e.printStackTrace();
                     }
 
-                    //TODO: Ce bout de code a l'air de faire buguer le calcul des seat.
-                    /*
-                    Cependant il s'avère nécessaire, en effet l'envoi de plusieurs fois le meme objet cause des problèmes de désérialization.
-
-                     */
+                    // Il est nécessaire de recréer des Seat, sinon la déserialization de java va donner les instances des seat déjà créés par le client local et non ceux qu'on lui envoie.
                     ArrayList<Seat> sts = new ArrayList<>();
                     for(Seat seat : game.getListSeatPlayerWithPeculeDepart()) {
                         Seat st = new Seat();
@@ -290,7 +286,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     if(hand.getListPerformersUsers().size()>1)
                     {
                         //Envoyer les résultats du tour et les cartes des joueurs (les couchés enverront des listes vides) , TODO à optimiser en virant les playerhand des joueurs couchés
-
                         myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, hand.getListPlayerHand());
                     }
                     else
@@ -303,7 +298,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     if(game.isFinished())
                     {
                         System.out.println("La partie est finie !");
-
                         //Si la game est finie, résoudre la game
 
                         //Puis clore la game
@@ -387,18 +381,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 askAction(table,turn.getNextActiveUser(),ref);
             }
         }
-    /*   Je démarre une manche.
-    Je demande les ante à tous les joueurs si elles sont definies
-    Je commence par mettre l'icone Dealer au premier joueur, et demander les blindes au joueur 2 puis au joueur 3
-    Je demande aux joueurs dans l'ordre de réaliser des actions, tant que tous n'ont pas joué au moins une fois, et tant qu'il reste un joueur qui ne soit pas couché ou qui n'ait pas la même somme que les autres.
-    La relance a une mise minimum, elle est du minimum de la dernière relance
-    Le tour est finit, je notifie les clients avec les valeurs du pot, j'envoi le flop, puis je lance un nouveau tour
-    nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi le turn, puis je lance un nouveau
-    nouveau tour finit, je notifie les clients avec les valeurs du pot, j'envoi la river, puis je lance un nouveau tour
-    nouveau tour finit, je résoud les cartes, définit les vainqueurs, puis informe tout le monde.
-    J'informe que je finis la manche.
-    S'il ne reste plus qu'un seul joueur avec de l'argent, je termine la game. sinon je décale le premier joueur et je relance une manche.
-    En cas de vote pour demander la fin de la partie, cette fonction n'est pas appelée, sauf s'il y a un vote négatif lorsque tous les votes ont été faits.    */
     }
 
     public void nextStepReplay() {
@@ -427,10 +409,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
-    public void confirmationCardReceived(UserLight player) {
-
-    }
-
     public void replyAction(UUID table, Action playedAction) {
         try {
             myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn().addAction(playedAction);
@@ -450,14 +428,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             ref = turn.availableActions(turn.getNextActiveUser()).toArray(ref);
             askAction(myManager.getTables().getTable(table),turn.getNextActiveUser(), ref);
         }
-    }
-
-    public void confirmationActionReceived(UserLight sender) {
-        // ??? C'est inutile ce truc
-    }
-
-    public void endTurnConfirmation(UserLight player) {
-
     }
 
     /**
@@ -521,66 +491,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
-
-    /**
-     * checks if a game can be launched and notifies the creator
-     * if it can, starts the askMoney method
-     * @param idTable id of the table to check
-     * @param host the creator of the game
-     * @return true if it can be launched, else false
-     */
-    /* *******************************************
-        INTEG 5 : CETTE FONCTION EST DEPRECIEE
-    *********************************************
-    public void canStartGame(UUID idTable, UserLight host) {
-        boolean canLaunch;
-        Table curTable =this.getTableFromId(idTable);
-        if (curTable.getCurrentGame().startGame()) {
-            canLaunch = true;
-            //TODO:integ5 myManager.getInterfaceToCom().tableCreatorRequestToStartGameAccepted(idTable);
-            askMoneyMax(idTable);
-        }
-        else {
-            canLaunch = false;
-            //TODO:integ5 myManager.getInterfaceToCom().tableCreatorRequestToStartGameRejected(idTable);
-        }
-    }*/
-
     /**
      * asks all the players to give their max amount of money through server com
      */
     public void askMoneyMax(UUID idTable) {
         Table toAsk = getTableFromId(idTable);
        //TODO:integ5 myManager.getInterfaceToCom().askPlayersMoney(toAsk.getListPlayers().getListUserLights());
-    }
-
-    /**
-     * checks if the amount of money sent by a user is valid
-     * @param money the amount of money chosen
-     * @param player the userLight who answers
-     * @return
-     * //todo : add ints in Table and remove hashmaps
-     */
-    public boolean checkMoneyMax(UserLight player, int money, UUID idTable) {
-        boolean valid = false;
-
-        Table playingTable = getTableFromId(idTable);
-        if (money > 0 && money < playingTable.getCurrentGame().getMaxStartMoney()) {
-            playingTable.getCurrentGame().setMoneyOfPlayer(player,money);   //sets the money of the player in his seat
-            playingTable.setNbPlayerSelectedMoney(playingTable.getNbPlayerSelectedMoney()+1);
-
-            //TODO:integ5 myManager.getInterfaceToCom().moneyPlayers(player, money);
-            //TODO:integ5 if (moneyPlayers.get(playingTable).equals(playingTable.getListPlayers().getListUserLights().size())){ // if all players confirmed their money
-            //TODO:integ5    this.askReady(playingTable);    //begins the next phase
-            //TODO:integ5 }
-
-            //TODO:integ5 myManager.getInterfaceToCom().notifyNewSeat(playingTable.getListPlayers().getListUserLights(), player, money);  //transmits the new amount to every player
-            valid = true;
-        }
-        else{
-            //TODO:integ5 myManager.getInterfaceToCom().askMoneySinglePlayer(player);
-        }
-        return valid;
     }
 
     /**

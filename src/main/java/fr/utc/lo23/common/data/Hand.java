@@ -155,7 +155,7 @@ public class Hand implements Serializable{
      */
     public void distributeCardv2(){
         //Mise en place des structures nécessaires
-        int numberCardToDistribute = this.listPlayerHand.size() * NUMBER_OF_CARD_PER_PLAYER_HAND + NUMBER_OF_CARD_ON_FIELD;
+        int numberCardToDistribute = listPlayerHand.size() * NUMBER_OF_CARD_PER_PLAYER_HAND + NUMBER_OF_CARD_ON_FIELD;
         ArrayList<Card> deck = new ArrayList<>();
 
         //Création du deck de jeu
@@ -407,7 +407,7 @@ public class Hand implements Serializable{
                             System.out.println(seat2.getPlayer().getPseudo()+" gagne "+(seat.getCurrentAccount() / (maxWinningMoney.size()-i))+" €");
                         }
 
-                        //On retire de l'argent max possible que va gagner ce vainqueur l'argent qui est partagée
+                        //On retire de l'argent max possible que va gagner ce vainqueur l'argent qui est partagée avec les autres vainqueurs
                         Integer moneyToRemove = seat.getCurrentAccount();
                         for(Integer j=i;j<maxWinningMoney.size();j++)
                         {
@@ -464,10 +464,11 @@ public class Hand implements Serializable{
                     tempHash.put(entry.getKey(), entry.getValue());
                 }
 
+                Integer moneyToReduce = playerMoneyBet.get(player);
                 for (Map.Entry<UserLight, Integer> entry : tempHash.entrySet()) {
                     playerMoneyBet.replace(entry.getKey(), playerMoneyBet.get(entry.getKey()) - maxWin);
                     System.out.println("Il reste "+playerMoneyBet.get(entry.getKey())+"€ de gagnable à "+entry.getKey().getPseudo());
-                    if (playerMoneyBet.get(entry.getKey()) - maxWin <= 0)
+                    if (playerMoneyBet.get(entry.getKey()) - moneyToReduce <= 0)
                         playerMoneyBet.remove(entry.getKey());
                 }
             }

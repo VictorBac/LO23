@@ -70,13 +70,7 @@ public interface InterfaceServerDataFromCom {
      */
     void deletePlayer(UserLight deletedUsr) throws fr.utc.lo23.common.data.exceptions.UserNotFoundException;
 
-    void confirmationCardReceived(UserLight player);
-
     void replyAction(UUID table, Action playedAction);
-
-    void confirmationActionReceived(UserLight sender);
-
-    void endTurnConfirmation(UserLight player);
 
     /**
      * returns the user corresponding to a userlight in the Userlist of mymanager
@@ -98,8 +92,6 @@ public interface InterfaceServerDataFromCom {
 //    public boolean canLaunchGame(UUID idGame);
 
     public void askMoneyMax(UUID idTable);
-
-    public boolean checkMoneyMax(UserLight player, int money, UUID idTable);
 
     public void askAction (Table table, UserLight player, EnumerationAction[] availableActions);
 

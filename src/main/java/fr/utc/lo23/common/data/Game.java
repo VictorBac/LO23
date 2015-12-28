@@ -52,6 +52,21 @@ public class Game implements Serializable{
         this.maxStartMoney = maxStartMoney;
     }
 
+    /*
+     * Method to get ArrayList of Seat of all players that still have money in their account and are not disconnected
+     */
+    public ArrayList<Seat> getSeatOfPlayersStillHavingMoney(){
+        ArrayList<Seat> sendSeat = new ArrayList<>();
+        for(Seat seat : getListSeatPlayerWithPeculeDepart())
+        {
+            if(seat.getStatusPlayer().equals(EnumerationStatusPlayer.CONNECTED) && seat.getCurrentAccount()>0)
+            {
+                sendSeat.add(seat);
+            }
+        }
+        return sendSeat;
+    }
+
     /**
      * Method to know the current Hand
      * @return the last Hand of the Array

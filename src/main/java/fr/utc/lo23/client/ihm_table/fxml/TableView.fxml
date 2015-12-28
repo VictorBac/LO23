@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -109,12 +110,18 @@
             </TitledPane>
             <Pane fx:id="commonCardPane" layoutX="377.0" layoutY="177.0" prefHeight="95.0" prefWidth="266.0">
                <children>
-                  <ImageView fx:id="commonCardFlop1" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="commonCardFlop2" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="43.0" />
-                  <ImageView fx:id="commonCardFlop3" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="86.0" />
-                  <ImageView fx:id="commonCardTurn" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="129.0" />
-                  <ImageView fx:id="commonCardRiver" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="172.0" />
-                  <ImageView fx:id="commonCardBack" fitHeight="58.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" x="228.0">
+                  <ImageView fx:id="commonCardFlop1" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@../images/cards/clubs_2.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="commonCardFlop2" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="43.0">
+                     <image>
+                        <Image url="@../images/cards/clubs_3.png" />
+                     </image></ImageView>
+                  <ImageView fx:id="commonCardFlop3" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="86.0" />
+                  <ImageView fx:id="commonCardTurn" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="129.0" />
+                  <ImageView fx:id="commonCardRiver" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" x="172.0" />
+                  <ImageView fx:id="commonCardBack" cacheHint="QUALITY" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="228.0">
                      <image>
                         <Image url="@../images/cards/back.png" />
                      </image>

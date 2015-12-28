@@ -1157,6 +1157,8 @@ public class TableController {
         setPlayerFoldCardAnimation(getPlayerControllerOf(user).getCard2(),100);
         getPlayerControllerOf(user).setCard1(null);
         getPlayerControllerOf(user).setCard2(null);
+        if(getPlayerControllerOf(user).getBetMoney()!=0)
+            setMoneyPlayerToPotAnimation(getPlayerControllerOf(user));
         getPlayerControllerOf(user).setBetMoneyAmount(-1);
     }
 
@@ -1280,15 +1282,21 @@ public class TableController {
     }
 
     public void endHand(ArrayList<Seat> seatPlayers,ArrayList<PlayerHand> apla) {
+        System.out.println(seatPlayers);
         for(Seat seat : seatPlayers)
         {
             PlayerController playerC = getPlayerControllerOf(seat.getPlayer());
-            System.out.println(seat.getPlayer()+" a actuellement "+seat.getCurrentAccount()+" €.");
+            System.out.println(seat.getPlayer().getPseudo()+" a actuellement "+seat.getCurrentAccount()+" €.");
             System.out.println(playerC.getCurrentMoney()+"€ est stocké dans le playerController de cette personne");
             if(playerC.getCurrentMoney()<seat.getCurrentAccount())
             {
                 addLogEntry(seat.getPlayer().getPseudo()+" remporte "+String.valueOf(seat.getCurrentAccount()-playerC.getCurrentMoney())+" € cette manche !");
                 setPotToMoneyPlayerAnimation(playerC);
+                if(apla==null && playerC.getCard1()!=null && playerC.getCard2()!=null)
+                {
+                    setPlayerFoldCardAnimation(playerC.getCard1(),1);
+                    setPlayerFoldCardAnimation(playerC.getCard2(),20);
+                }
             }
 
             if(apla != null) {

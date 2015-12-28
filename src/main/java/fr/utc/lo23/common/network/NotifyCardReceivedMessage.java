@@ -17,7 +17,7 @@ public class NotifyCardReceivedMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        threadServer.getMyServer().getNetworkManager().getDataInstance().confirmationCardReceived(ul);
+        //USELESS CE MESSAGE OU BIEN ??  threadServer.getMyServer().getNetworkManager().getDataInstance().confirmationCardReceived(ul);
     }
 
     @Override

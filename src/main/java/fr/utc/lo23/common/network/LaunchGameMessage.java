@@ -23,7 +23,6 @@ public class LaunchGameMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        //TODO: en fonction du retour de startGame, envoyer une erreur ou une confirmation du lancement de la game
         PokerServer myServ = threadServer.getMyServer();
         Console.log("Launch Game message received");
         if (myServ.getNetworkManager().getDataInstance().startGame(idTable, UserInit)) {
@@ -31,11 +30,13 @@ public class LaunchGameMessage extends Message {
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable), launchGameM);
             AskMoneyMessage askMoneyMess = new AskMoneyMessage();
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable), askMoneyMess);
+            System.out.println("accepte envoyé");
         } else {
             RefuseStartGameMessage refuseStartGameM = new RefuseStartGameMessage();
             ArrayList<UserLight> temp = new ArrayList<>();
             temp.add(UserInit);
             myServ.sendToListOfUsers(temp, refuseStartGameM);
+            System.out.println("refus envoyé");
         }
     }
 

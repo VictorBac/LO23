@@ -7,21 +7,25 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by R�my on 20/10/2015.
+ * Created by Remy on 20/10/2015.
  */
 public class UserLightList implements Serializable{
 
     private ArrayList<UserLight> listUserLights;
     private static final long serialVersionUID = 1L;
 
-
+    /**
+     * Default Constructor
+     */
     public UserLightList(){
         listUserLights = new ArrayList<UserLight>();
     }
+
     /**
-     * recherche un UserLight dans l'arrayList � partir de son UUID
-     * @param userId l'UUUID du joueur � trouver
-     * @return le joueur voulu, nexception si non trouv�
+     * Search a UserLight in the ArrayList with its UUID
+     * @param userId UUID of the UserLight that we are searching for
+     * @return UserLight that was found
+     * @throws UserLightNotFoundException  thrown if no UserLight corresponds to the UUID
      */
     public UserLight getUser(UUID userId) throws UserLightNotFoundException{
         for (UserLight cur : listUserLights)
@@ -33,14 +37,27 @@ public class UserLightList implements Serializable{
         throw new UserLightNotFoundException(userId);
     }
 
+    /**
+     * Method that get the ArrayList of UserLight
+     * @return ArrayList<UserLight>
+     */
     public ArrayList<UserLight> getListUserLights() {
         return listUserLights;
     }
 
+    /**
+     * Setter for the ArrayList of UserLight
+     * @param newList ArrayList<UserLight> to set
+     */
     public void setUserList(ArrayList<UserLight> newList){
         this.listUserLights = newList;
     }
 
+    /**
+     * Method to add a UserLight
+     * @param toAdd  UserLight to add to the UserLight ArrayList
+     * @throws ExistingUserException thrown if the UserLight already exist
+     */
     public void addUser(UserLight toAdd) throws ExistingUserException {
         if (listUserLights.contains(toAdd))
             throw new ExistingUserException(toAdd);
@@ -48,10 +65,12 @@ public class UserLightList implements Serializable{
             listUserLights.add(toAdd);
     }
 
+
     /**
-     * finds a user in listUserLights using his id
-     * @param userId the id of the userlight to find
-     * @return the userlight found, or returns an exception
+     * Search a UserLight in listUserLights using his id (UUID)
+     * @param userId UUID the id of the UserLight to find
+     * @return UserLight found
+     * @throws UserLightNotFoundException thrown if no UserLight was found that corresponds to the userId
      */
     public UserLight findUser(UUID userId) throws UserLightNotFoundException {
 
@@ -64,9 +83,9 @@ public class UserLightList implements Serializable{
     }
 
     /**
-     * removes a userlight from the list
-     * @param toRemove the userlight to remove
-     * @throws UserLightNotFoundException
+     * Removes a UserLight from the list
+     * @param toRemove UserLight to remove
+     * @throws UserLightNotFoundException thrown if no UserLight was found that corresponds to the UserLight
      */
     public void remove(UserLight toRemove) throws UserLightNotFoundException{
         try {
@@ -79,5 +98,14 @@ public class UserLightList implements Serializable{
             throw e;
         }
 
+    }
+
+    /**
+     * Method to update the profile of a UserLight
+     * @param newUserLightProfile UserLight that corresponds to the new Profile
+     */
+    public void changeUserLightProfile(UserLight newUserLightProfile){
+        listUserLights.remove(newUserLightProfile);
+        listUserLights.add(newUserLightProfile);
     }
 }

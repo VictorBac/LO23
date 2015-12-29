@@ -176,7 +176,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         dManagerClient.getInterToCom().sendProfile(dManagerClient.getUserLocal());
     }
 
-    @Override
+
     public void importFiles(String folderPath) {
         try {
             Serialization.moveFiles(folderPath, Serialization.dirLocalSavedFiles);
@@ -185,7 +185,6 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
-    @Override
     public void exportFiles(String folderPath) {
         try {
             Serialization.moveFiles(Serialization.dirLocalSavedFiles, folderPath);
@@ -194,13 +193,13 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
-    @Override
+
     public void importProfileFile(String filePath) {
         User profile = (User) Serialization.deserializationObject(filePath);
         saveNewProfile(profile);
     }
 
-    @Override
+
     public void exportProfileFile(String filePath) {
         Serialization.serializationObject(dManagerClient.getUserLocal(), filePath);
     }

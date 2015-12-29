@@ -72,14 +72,6 @@ public class Action implements Serializable{
 
     }
 
-    /**
-     * Constructor to copy anotherAction
-     * @param originalAction action that we want to make a copy of
-     */
-    public Action(Action originalAction) throws ActionInvalidException {
-        //TODO need a copy constructor for UserLight --> new UserLight(originalAction.userLightOfPlayer)
-        this(originalAction.name, originalAction.amount, new UserLight(),originalAction.timeStampOfAction);
-    }
 
     /**
      * Constructor without argument

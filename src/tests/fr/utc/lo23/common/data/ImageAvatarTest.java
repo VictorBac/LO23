@@ -11,8 +11,7 @@ public class ImageAvatarTest {
 
     @Test
     public void testSetPath() throws Exception {
-        ImageAvatar aGoodImage = new ImageAvatar("C:/Users/Mar/Desktop/LO23/Penguins.jpg");
-        System.out.println("1"+aGoodImage.getPath());
+
 
     }
 

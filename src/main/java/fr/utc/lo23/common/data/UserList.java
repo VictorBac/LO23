@@ -7,21 +7,25 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by R�my on 20/10/2015.
+ * Created by Remy on 20/10/2015.
  */
 public class UserList implements Serializable{
 
     private ArrayList<User> listUser;
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor by default
+     */
     public UserList() {
         listUser = new ArrayList<User>();
     }
 
     /**
-     * recherche un User dans l'arrayList � partir de son UUID
-     * @param userId l'UUUID du joueur � trouver
-     * @return le joueur voulu, null si non trouv�
+     * Search a User in the ArrayList with its UUID
+     * @param userId  UUID of the User that we are searching for
+     * @return User that was found
+     * @throws UserNotFoundException thrown if no User corresponds to the UUID
      */
     public User getUser(UUID userId) throws UserNotFoundException {
         for (User cur : listUser) {
@@ -31,8 +35,11 @@ public class UserList implements Serializable{
         throw new UserNotFoundException(userId);
     }
 
+
     /**
-     * @param connectingUser
+     * Method to add a User to the ArrayList of User
+     * @param connectingUser User of the new User
+     * @throws ExistingUserException thrown if the User already exist in the list
      */
     public void addUser(User connectingUser)  throws ExistingUserException{
         if (this.listUser.contains(connectingUser))
@@ -41,7 +48,24 @@ public class UserList implements Serializable{
             this.listUser.add(connectingUser);
     }
 
+    /**
+     * Method to get the ArrayList of User
+     * @return ArrayList<User>
+     */
     public ArrayList<User> getList(){
         return listUser;
     }
+
+
+    /**
+     * Method to update the profile of a User
+     * @param newUserProfile User that corresponds to the new Profile
+     */
+    public void changeUserProfile(User newUserProfile){
+        listUser.remove(newUserProfile);
+        listUser.add(newUserProfile);
+
+    }
+
+
 }

@@ -62,12 +62,6 @@ public interface InterfaceDataFromCom {
      */
     void transmitLeaveGame(UUID idTable, UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable);
 
-    /**
-     * Method that return  a UserLightList that contain all UserLight that the Local user has locally
-     *
-     * @return a UserLightList that contain an array with the list of UserLight
-     */
-    UserLightList getPlayerList();
 
     /**
      * Method to confirm that the local user has actually correctly join the table
@@ -224,4 +218,10 @@ public interface InterfaceDataFromCom {
     void acceptLogin();
 
     void refuseLogin();
+
+    /**
+     * Method which is called when a remote User has change his profile. User to inform other user of this modification
+     * @param newProfileRemoteUser UserLight with its modification
+     */
+    void profileRemoteUserChange( UserLight newProfileRemoteUser);
 }

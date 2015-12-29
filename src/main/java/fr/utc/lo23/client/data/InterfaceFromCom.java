@@ -12,19 +12,27 @@ import java.util.UUID;
 
 /**
  * Created by Mar on 24/10/2015.
+ * Class that implement of the interfaceDataFromCom
  */
 public class InterfaceFromCom implements InterfaceDataFromCom{
 
-    private final String TAG ="InterfaceFromCom";
+    private final String TAG ="InterfaceFromCom ";
     private DataManagerClient dManagerClient;
 
-
+    /**
+     * Constructor
+     * @param dManagerClient
+     */
     public InterfaceFromCom(DataManagerClient dManagerClient) {
         this.dManagerClient = dManagerClient;
     }
 
 
-
+    /**
+     * Method to update the list of UserLight connected with a new Remote userLight
+     *
+     * @param userLightDistant new UserLight that need to be add
+     */
     public void remoteUserConnected(UserLight userLightDistant) {
         try {//TODO handle exception and test
             Console.log(TAG +"remoteUserConnected");
@@ -300,17 +308,23 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMMain().notifyDeletedTable(dManagerClient.getListTablesLocal().getTable(idTableDestroyed));
     }
 
-    @Override
+
     public void acceptLogin() {
         dManagerClient.getInterToIHMMain().notifyLoginAccepted();
     }
 
-    @Override
     public void refuseLogin() {
         dManagerClient.getInterToIHMMain().notifyLoginRefused();
     }
 
-    public UserLightList getPlayerList() {
-        return null;
+    /**
+     * Method which is called when a remote User has change his profile. User to inform other user of this modification
+     * @param newProfileRemoteUser UserLight with its modification
+     */
+    public void profileRemoteUserChange( UserLight newProfileRemoteUser){
+            Console.log(TAG +"profileRemoteUserChange");
+            dManagerClient.getListUsersLightLocal().changeUserLightProfile(newProfileRemoteUser);
+            //TODO add after integ dManagerClient.getInterToIHMMain().updateUserRemote (newProfileRemoteUser);
+
     }
 }

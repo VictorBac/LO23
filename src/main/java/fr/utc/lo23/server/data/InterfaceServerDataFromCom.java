@@ -17,7 +17,6 @@ public interface InterfaceServerDataFromCom {
      */
     UserLight userConnection(User connectingUser) throws ExistingUserException;
 
-
     /**
      * creates a list of userlights from the list of users
      * @return the list of currently connected users

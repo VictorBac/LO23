@@ -431,16 +431,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * updates a user info with a whole new User
+     * Updates a user info with a whole new User
      * @param newUser the new information
      */
     public void updateProfile(User newUser) {
-        for (User cur : myManager.getUsers().getList()) {
-            if (cur.equals(newUser)) {
-                myManager.getUsers().getList().remove(cur);
-                myManager.getUsers().getList().add(newUser);
-            }
-        }
+        myManager.getUsers().changeUserProfile(newUser);
+        //TODO add after integration myManager.getInterfaceToCom();
     }
 
     /**

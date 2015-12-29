@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
+import fr.utc.lo23.client.data.exceptions.UserAlreadyExistsException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.network.main.Console;
@@ -171,10 +172,8 @@ public class ConnectionController extends BaseController {
         if (file != null) {
             try {
                 mController.getManagerMain().getInterDataToMain().importProfileFile(file.getPath());
-            } catch (NetworkFailureException e) {
-                //TODO add changement here
-
-                e.printStackTrace();
+            } catch (UserAlreadyExistsException e) {
+                mController.showErrorPopup("L'utilisateur existe déjà sur le poste ! Supprimez d'abord celui existant");;
             }
         }
     }

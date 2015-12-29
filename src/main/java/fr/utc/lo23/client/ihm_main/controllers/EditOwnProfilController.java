@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.client.data.exceptions.UserAlreadyExistsException;
 import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
@@ -14,6 +15,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 /**
  * This controller is used to manage the Edit Profil Window
@@ -51,7 +53,11 @@ public class EditOwnProfilController extends BaseController {
      * initialization of the Window with the current Avatar of the User
      */
     public void initialize() {
-        imagePath = "";
+        try {
+            imagePath = getClass().getResource("../ui/avatar.jpg").toURI().getPath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         avatarChooser = new FileChooser();
         avatarChooser.setTitle("Choix de l'avatar");
     }
@@ -84,7 +90,8 @@ public class EditOwnProfilController extends BaseController {
      */
     @FXML
     public void updateProfil() {
-        User edituser = mController.getManagerMain().getManagerData().getUserLocal();
+        User olduser = mController.getManagerMain().getManagerData().getUserLocal();
+        User edituser = new User(olduser);
         if (age.getText().isEmpty() || email.getText().isEmpty() || username.getText().isEmpty()
                 || firstname.getText().isEmpty() || lastname.getText().isEmpty())
         {
@@ -98,7 +105,7 @@ public class EditOwnProfilController extends BaseController {
         edituser.setLastName(lastname.getText());
 
         if (!oldPassword.getText().isEmpty()){
-            if (edituser.getPwd().equals(oldPassword.getText())){
+            if (olduser.getPwd().equals(oldPassword.getText())){
                 edituser.setPwd(newPassword.getText());
             } else {
                 mController.showErrorPopup("Le champ ancien mot de passe ne corespond pas au mot de passe actuel.");
@@ -108,14 +115,19 @@ public class EditOwnProfilController extends BaseController {
             edituser.getUserLight().setAvatar(new ImageAvatar(imagePath));
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
-        try {
-            mController.getManagerMain().getInterDataToMain().saveNewProfile(edituser);
-        } catch (NetworkFailureException e) {
 
-            //TODO add changement here
-            e.printStackTrace();
+        try {
+            mController.getManagerMain().getInterDataToMain().updateProfile(edituser);
+        } catch (NetworkFailureException e) {
+            mController.showErrorPopup("Erreur réseau inattendue... " + e);
+            return;
+        } catch (UserAlreadyExistsException e) {
+            mController.showErrorPopup("Le pseudo est déjà pris ! Choisissez en un autre !");
+            return;
         }
+
         mController.showPopup("Information", "Vous devez redémarrer le client pour prendre en compte " +
                 "certaines modifications");
         mController.showViewOwnWindow();

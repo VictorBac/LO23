@@ -112,11 +112,13 @@ public class ServerLink extends Thread {
      * @param message Message to send
      */
     public void send(Message message){
-        try {
-            outputStream.writeObject(message);
-            //outputStream.reset();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (connected) {
+            try {
+                outputStream.writeObject(message);
+                //outputStream.reset();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

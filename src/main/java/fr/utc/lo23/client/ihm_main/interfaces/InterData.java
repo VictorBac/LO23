@@ -137,4 +137,9 @@ import java.util.List;
     public void notifyLoginRefused() {
         Platform.runLater(() -> managerMain.getControllerMain().getConnectionWindowController().loginRefused());
     }
+
+    @Override
+    public void updateUserRemote(UserLight newProfileRemoteUser) {
+        Platform.runLater(() -> managerMain.updateConnectedUser(newProfileRemoteUser));
+    }
 }

@@ -31,4 +31,6 @@ public interface InterfaceMainToData {
 
     void notifyLoginAccepted();
     void notifyLoginRefused();
+
+    void updateUserRemote(UserLight newProfileRemoteUser);
 }

@@ -322,10 +322,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
      * Method which is called when a remote User has change his profile. User to inform other user of this modification
      * @param newProfileRemoteUser UserLight with its modification
      */
-    public void profileRemoteUserChange( UserLight newProfileRemoteUser){
-            Console.log(TAG +"profileRemoteUserChange");
+    public void profileRemoteUserChange(UserLight newProfileRemoteUser){
+        Console.log(TAG +"profileRemoteUserChange");
+        if (!dManagerClient.getUserLocal().getUserLight().getIdUser().equals(newProfileRemoteUser.getIdUser())) {
             dManagerClient.getListUsersLightLocal().changeUserLightProfile(newProfileRemoteUser);
-            //TODO add after integ dManagerClient.getInterToIHMMain().updateUserRemote (newProfileRemoteUser);
-
+            dManagerClient.getInterToIHMMain().updateUserRemote(newProfileRemoteUser);
+        }
     }
 }

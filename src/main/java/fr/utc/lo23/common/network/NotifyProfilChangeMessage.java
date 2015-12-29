@@ -23,7 +23,6 @@ public class NotifyProfilChangeMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-        //TODO : Faire l'appel en local quand la fonction sera ok -> remoteUserProfilChange(user)
-        // threadClient.getNetworkManager().getDataInstance().
+        threadClient.getNetworkManager().getDataInstance().profileRemoteUserChange(user);
     }
 }

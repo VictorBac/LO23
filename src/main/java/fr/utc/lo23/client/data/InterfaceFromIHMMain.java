@@ -8,8 +8,12 @@ import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -71,13 +75,29 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * Write userLocal into the local data file
      * @param userLocal
      */
-    public void saveNewProfile(User userLocal) throws NetworkFailureException {
+    public void saveNewProfile(User userLocal) throws UserAlreadyExistsException {
         String login = userLocal.getLogin();
         dManagerClient.setUserLocal(userLocal);
+        if (new File(Serialization.dirLocalSavedFiles + login).exists())
+            throw new UserAlreadyExistsException(login);
+
         Serialization.serializationObject(userLocal, Serialization.dirLocalSavedFiles + login);
-        dManagerClient.getInterToCom().updateProfile(userLocal);
     }
 
+    /**
+     * Delete former user local and write the new userLocal into the local data file and notify the server
+     * @param userLocal
+     */
+    public void updateProfile(User userLocal) throws NetworkFailureException, UserAlreadyExistsException {
+        try {
+            Files.deleteIfExists(Paths.get(Serialization.dirLocalSavedFiles + dManagerClient.getUserLocal().getLogin()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        saveNewProfile(userLocal);
+        dManagerClient.getInterToCom().updateProfile(userLocal);
+    }
     /**
      *
      * @param tableId
@@ -195,7 +215,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
 
-    public void importProfileFile(String filePath) throws NetworkFailureException {
+    public void importProfileFile(String filePath) throws UserAlreadyExistsException {
         User profile = (User) Serialization.deserializationObject(filePath);
         saveNewProfile(profile);
     }

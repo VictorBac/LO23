@@ -1,6 +1,7 @@
 package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.LoginNotFoundException;
+import fr.utc.lo23.client.data.exceptions.UserAlreadyExistsException;
 import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
@@ -34,7 +35,14 @@ public interface InterfaceDataFromIHMMain {
      * Method to save new profile
      * @param userLocal
      */
-    void saveNewProfile(User userLocal) throws NetworkFailureException;
+    void saveNewProfile(User userLocal) throws UserAlreadyExistsException;
+
+    /**
+     * Method to update a profile
+     * @param userLocal
+     * @throws NetworkFailureException
+     */
+    void updateProfile(User userLocal) throws NetworkFailureException, UserAlreadyExistsException;
 
     /**
      * Methode to join a table with mode
@@ -103,7 +111,7 @@ public interface InterfaceDataFromIHMMain {
 
     void exportFiles(String folderPath);
 
-    void importProfileFile(String filePath) throws NetworkFailureException;
+    void importProfileFile(String filePath) throws UserAlreadyExistsException;
 
     void exportProfileFile(String filePath);
 

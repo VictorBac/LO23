@@ -1,5 +1,6 @@
 package fr.utc.lo23.client.ihm_main.controllers;
 
+import fr.utc.lo23.client.data.exceptions.UserAlreadyExistsException;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
@@ -13,6 +14,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 /**
  * Created by leclercvictor on 01/12/2015.
@@ -88,8 +90,10 @@ public class CreateController extends BaseController {
         createUser.setAge(createAge);
         try {
             createUserLight.setAvatar(new ImageAvatar(imagePath));
+            Console.err(imagePath);
         } catch (IOException e) {
             mController.showErrorPopup("Avatar introuvable, le chemin est-il correct ?");
+            return;
         }
 
         createUser.setCore(createUserLight);
@@ -100,10 +104,9 @@ public class CreateController extends BaseController {
         //Appel de la fonction de data pour creer un utilisateur.
         try {
             mController.getManagerMain().getInterDataToMain().saveNewProfile(createUser);
-        } catch (NetworkFailureException e) {
-            //TODO add changement here
-
-            e.printStackTrace();
+        } catch (UserAlreadyExistsException e) {
+            mController.showErrorPopup("L'utilisateur existe déjà sur le poste ! Utiliser un autre pseudo");
+            return;
         }
 
         //Retour à la fenetre de connexion
@@ -125,7 +128,12 @@ public class CreateController extends BaseController {
     public void initialize() {
         avatarChooser = new FileChooser();
         avatarChooser.setTitle("Choix de l'avatar");
-        imagePath = "../ui/avatar.jpg";
+        try {
+            imagePath = getClass().getResource("../ui/avatar.jpg").toURI().getPath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML

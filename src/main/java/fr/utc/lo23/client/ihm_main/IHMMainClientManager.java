@@ -217,4 +217,11 @@ public class IHMMainClientManager {
         tables.add(tableTheUserhaveleft);
         updateMainWindowTableList();
     }
+
+    public void updateConnectedUser(UserLight newProfileRemoteUser) {
+        connectedUsers.removeIf(user -> user.getIdUser().equals(newProfileRemoteUser.getIdUser()));
+        updateMainWindowConnectedUsersList();
+        connectedUsers.add(newProfileRemoteUser);
+        updateMainWindowConnectedUsersList();
+    }
 }

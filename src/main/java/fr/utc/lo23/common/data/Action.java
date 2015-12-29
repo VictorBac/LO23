@@ -147,7 +147,7 @@ public class Action implements Serializable{
     /**
      *  method to set the time manually, avoid to use and use instead setActionTime()
      *  @deprecated
-     * @param timeStampOfAction
+     * @param timeStampOfAction : time to set
      */
     public void setTimeStampOfAction(Timestamp timeStampOfAction) {
         this.timeStampOfAction = timeStampOfAction;
@@ -160,10 +160,18 @@ public class Action implements Serializable{
         this.timeStampOfAction = new Timestamp(Calendar.getInstance().getTime().getTime());
     }
 
+    /**
+     * get the amount bet this turn
+     * @return : amount bet
+     */
     public int getBetAmountThisTurn() {
         return betAmountThisTurn;
     }
 
+    /**
+     * Set value of amount bet during the turn
+     * @param betAmountThisTurn : value to set
+     */
     public void setBetAmountThisTurn(int betAmountThisTurn) {
         this.betAmountThisTurn = betAmountThisTurn;
     }

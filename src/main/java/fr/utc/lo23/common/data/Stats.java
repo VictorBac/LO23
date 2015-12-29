@@ -5,16 +5,19 @@ import java.util.ArrayList;
 import fr.utc.lo23.common.data.exceptions.StatsSizeException;
 
 /**
- * Class for statistic. Hope it will be used.
+ * Class for statistic.
  * Created by Jianghan on 20/10/2015.
  */
 public class Stats implements Serializable {
     private static final long serialVersionUID = 1L;
-    //mise de depart du joueur
+    //player's start bet
     private ArrayList<Integer> startPointsList;
-    //points par partie du joueur
+    //player's points per game
     private ArrayList<Integer> endPointsList;
 
+    /**
+     * Default constructor
+     */
     public Stats() {
         this.startPointsList = new ArrayList<>();
         this.endPointsList = new ArrayList<>();
@@ -56,10 +59,18 @@ public class Stats implements Serializable {
         return 1;
     }
 
+    /**
+     * get the game's number
+     * @return : number
+     */
     public int getGameNumber() {
         return this.endPointsList.size();
     }
 
+    /**
+     * get end points
+     * @return : amount of points
+     */
     public Integer getMeanEndPoints() {
         Integer total = 0;
         for (Integer point : endPointsList) {
@@ -72,6 +83,10 @@ public class Stats implements Serializable {
         }
     }
 
+    /**
+     * get start points
+     * @return : amount of points
+     */
     public Integer getMeanStartPoints() {
         Integer total = 0;
         for (Integer point : startPointsList) {
@@ -83,6 +98,10 @@ public class Stats implements Serializable {
         return total;
     }
 
+    /**
+     * get total points
+     * @return : amount of points
+     */
     public Integer getTotalPoints() {
         Integer total = 0;
         for (Integer point : startPointsList) {
@@ -95,11 +114,19 @@ public class Stats implements Serializable {
         }
     }
 
-    /******************* Gettor **********************/
+    /******************* Getters **********************/
+    /**
+     * get start points' list
+     * @return : list of points
+     */
     public ArrayList<Integer> getStartPointsList() {
         return startPointsList;
     }
 
+    /**
+     * get end points' list
+     * @return : list of points
+     */
     public ArrayList<Integer> getEndPointsList() {
         return endPointsList;
     }

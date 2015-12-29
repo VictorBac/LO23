@@ -289,6 +289,7 @@ public class Hand implements Serializable{
     }
 
     /**
+<<<<<<< HEAD
      * Method that checks if the Hand is finished
      * @return true if the Turn id finished (4 Turn were played or no more player is active)
      */
@@ -313,7 +314,6 @@ public class Hand implements Serializable{
         }
         return rs;
     }
-
 
 
 

@@ -23,8 +23,8 @@ public class PlayerHand implements Serializable {
 
     /**
      * Constructor
-     * @param listCardsHand
-     * @param player
+     * @param listCardsHand : list of cards
+     * @param player : player
      */
     public PlayerHand(ArrayList<Card> listCardsHand, UserLight player) {
         this.listCardsHand = listCardsHand;
@@ -33,7 +33,7 @@ public class PlayerHand implements Serializable {
 
     /**
      * Constructor
-     * @param player
+     * @param player : player
      */
     public PlayerHand(UserLight player) {
         this.listCardsHand = new ArrayList<Card>();

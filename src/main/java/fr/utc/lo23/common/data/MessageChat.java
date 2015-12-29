@@ -21,9 +21,9 @@ public class MessageChat implements Serializable {
 
     /**
      * Constructor
-     * @param sender
-     * @param time
-     * @param text
+     * @param sender : user who sends the message
+     * @param time : timestamp when message is sent
+     * @param text : message content
      */
     public MessageChat(UserLight sender, Timestamp time, String text) {
         this.sender = sender;
@@ -35,7 +35,7 @@ public class MessageChat implements Serializable {
 
     /**
      * Getter to return the sender of the message
-     * @return
+     * @return : sender
      */
     public UserLight getSender() {
         return sender;
@@ -43,7 +43,7 @@ public class MessageChat implements Serializable {
 
     /**
      * Getter to return the time of the message
-     * @return
+     * @return : time
      */
     public Timestamp getTime() {
         return time;
@@ -51,7 +51,7 @@ public class MessageChat implements Serializable {
 
     /**
      * Getter to return the content of the message
-     * @return
+     * @return : message's content
      */
     public String getText() {
         return text;
@@ -59,23 +59,16 @@ public class MessageChat implements Serializable {
 
     /**
      * Setter to modify the sender of the message
-     * @param sender
+     * @param sender : user to modify
      */
     public void setSender(UserLight sender) {
         this.sender = sender;
     }
 
-    /**
-     * Setter to modify the time of the message
-     * @param time
-     */
-    public void setTime(Timestamp time) {
-        this.time = time;
-    }
 
     /**
      * Setter to modify the content of the message
-     * @param text
+     * @param text : text to set
      */
     public void setText(String text) {
         this.text = text;

@@ -138,6 +138,12 @@ public interface InterfaceServer {
      */
     public void sendCards(ArrayList<UserLight> aPlayers,ArrayList<PlayerHand> ph) throws NetworkFailureException;
 
+    /**
+     * Inform everybody that a profil has been changed
+     * @param user
+     */
+    public void notifyProfilUpdated(User user);
+
     public void stop();
 
     public void sendLogGame() throws NetworkFailureException;

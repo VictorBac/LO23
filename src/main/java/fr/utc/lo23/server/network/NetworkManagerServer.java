@@ -187,4 +187,10 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
 
     }
+
+    @Override
+    public void notifyProfilUpdated(User user) {
+        NotifyProfilChangeMessage message = new NotifyProfilChangeMessage(user);
+        server.sendToAll(message);
+    }
 }

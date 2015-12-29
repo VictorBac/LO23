@@ -3,6 +3,7 @@ package fr.utc.lo23.client.ihm_main.controllers;
 import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -108,7 +109,13 @@ public class EditOwnProfilController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mController.getManagerMain().getInterDataToMain().saveNewProfile(edituser);
+        try {
+            mController.getManagerMain().getInterDataToMain().saveNewProfile(edituser);
+        } catch (NetworkFailureException e) {
+
+            //TODO add changement here
+            e.printStackTrace();
+        }
         mController.showPopup("Information", "Vous devez redémarrer le client pour prendre en compte " +
                 "certaines modifications");
         mController.showViewOwnWindow();

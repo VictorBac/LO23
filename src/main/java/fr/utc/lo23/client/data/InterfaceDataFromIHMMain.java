@@ -34,7 +34,7 @@ public interface InterfaceDataFromIHMMain {
      * Method to save new profile
      * @param userLocal
      */
-    void saveNewProfile(User userLocal);
+    void saveNewProfile(User userLocal) throws NetworkFailureException;
 
     /**
      * Methode to join a table with mode
@@ -103,7 +103,7 @@ public interface InterfaceDataFromIHMMain {
 
     void exportFiles(String folderPath);
 
-    void importProfileFile(String filePath);
+    void importProfileFile(String filePath) throws NetworkFailureException;
 
     void exportProfileFile(String filePath);
 

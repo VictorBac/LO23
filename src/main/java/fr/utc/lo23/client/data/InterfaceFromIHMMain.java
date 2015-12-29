@@ -71,10 +71,11 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * Write userLocal into the local data file
      * @param userLocal
      */
-    public void saveNewProfile(User userLocal) {
+    public void saveNewProfile(User userLocal) throws NetworkFailureException {
         String login = userLocal.getLogin();
         dManagerClient.setUserLocal(userLocal);
         Serialization.serializationObject(userLocal, Serialization.dirLocalSavedFiles + login);
+        dManagerClient.getInterToCom().updateProfile(userLocal);
     }
 
     /**
@@ -194,7 +195,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
 
-    public void importProfileFile(String filePath) {
+    public void importProfileFile(String filePath) throws NetworkFailureException {
         User profile = (User) Serialization.deserializationObject(filePath);
         saveNewProfile(profile);
     }

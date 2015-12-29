@@ -4,6 +4,7 @@ import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.ImageAvatar;
 import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
@@ -97,7 +98,13 @@ public class CreateController extends BaseController {
         Console.log("user ok");
 
         //Appel de la fonction de data pour creer un utilisateur.
-        mController.getManagerMain().getInterDataToMain().saveNewProfile(createUser);
+        try {
+            mController.getManagerMain().getInterDataToMain().saveNewProfile(createUser);
+        } catch (NetworkFailureException e) {
+            //TODO add changement here
+
+            e.printStackTrace();
+        }
 
         //Retour à la fenetre de connexion
         mController.showConnectionWindow();

@@ -436,7 +436,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public void updateProfile(User newUser) {
         myManager.getUsers().changeUserProfile(newUser);
-        //TODO add after integration myManager.getInterfaceToCom();
+        UserLight newUserLightProfile = null;
+        try {
+            newUserLightProfile = myManager.getUsers().getUser(newUser.getUserLight().getIdUser()).getUserLight();
+        } catch (fr.utc.lo23.common.data.UserNotFoundException e) {
+            e.printStackTrace();
+        }
+        myManager.getInterfaceToCom().notifyProfilUpdated(newUserLightProfile);
     }
 
     /**

@@ -5,6 +5,7 @@ import fr.utc.lo23.client.data.exceptions.WrongPasswordException;
 import fr.utc.lo23.client.ihm_main.IHMMainClientManager;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.Server;
+import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -168,7 +169,13 @@ public class ConnectionController extends BaseController {
     public void importProfilClick() {
         File file = profileChooser.showOpenDialog(buttonConnect.getScene().getWindow());
         if (file != null) {
-            mController.getManagerMain().getInterDataToMain().importProfileFile(file.getPath());
+            try {
+                mController.getManagerMain().getInterDataToMain().importProfileFile(file.getPath());
+            } catch (NetworkFailureException e) {
+                //TODO add changement here
+
+                e.printStackTrace();
+            }
         }
     }
 

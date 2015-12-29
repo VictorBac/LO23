@@ -207,6 +207,11 @@ public interface InterfaceDataFromCom {
      */
     void stopGame(Game gameOfTheUserLocal);
 
+    /**
+     * Method to notify the local User of the answer of remotePlayer concerning the AskReady
+     * @param player UserLight of the remote User who
+     * @param answer
+     */
     void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer);
 
     /**
@@ -215,8 +220,14 @@ public interface InterfaceDataFromCom {
      */
     void deleteTable(UUID idTableDestroyed);
 
+    /**
+     * Method to notify the local User that the connection to the server was accepted
+     */
     void acceptLogin();
 
+    /**
+     * Method to notify the local User that the connection to the server was refused
+     */
     void refuseLogin();
 
     /**

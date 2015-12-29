@@ -15,7 +15,7 @@ import java.util.UUID;
  * Class that implement of the interfaceDataFromCom
  */
 public class InterfaceFromCom implements InterfaceDataFromCom{
-
+//TODO handle when userlocal leave Table update local value Table and listTable
     private final String TAG ="InterfaceFromCom ";
     private DataManagerClient dManagerClient;
 
@@ -305,6 +305,7 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void deleteTable(UUID idTableDestroyed){
+        //TODO change on listTable Local
         dManagerClient.getInterToIHMMain().notifyDeletedTable(dManagerClient.getListTablesLocal().getTable(idTableDestroyed));
     }
 

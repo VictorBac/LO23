@@ -6,42 +6,70 @@ import fr.utc.lo23.common.data.UserList;
 import fr.utc.lo23.server.network.InterfaceServer;
 
 /**
- * Created by R�my on 17/11/2015.
+ * Created by Remy on 17/11/2015.
+ * Class that manage the interface for data module on the server side
  */
 public class DataManagerServer {
 
     private static final String TAG = "DataManagerServer";
+
+    //Interface proposed by com server to data server (data module use the method from this interface to communicate with com server)
     private InterfaceServer interfaceToCom;
+
+    //Interface proposed by data server to Com server
     private InterfaceServerDataFromCom interfaceFromCom;
     private UserList users;
     private TableList tables;
 
+    /**
+     * Default constructor
+     */
     public DataManagerServer(){
-    this.interfaceToCom = null;
+        this.interfaceToCom = null;
         this.interfaceFromCom = new ServerDataFromCom(this);
         users = new UserList();
         tables = new TableList();
         Console.log(TAG + "\tObject created.");
     }
+
+    /**
+     * Get the list of User connected on the server
+     * @return UserList
+     */
     public UserList getUsers(){
         return this.users;
     }
+
+    /**
+     * Get the list of Table on the Server
+     * @return TableList
+     */
     public TableList getTables(){
         return this.tables;
     }
+
+    /**
+     * Get the Interface that is proposed by Com server to Data server
+     * @return InterfaceServer
+     */
     public InterfaceServer getInterfaceToCom(){
         return interfaceToCom;
     }
 
-    public void setInterfaceFromCom(InterfaceServerDataFromCom server){
-        this.interfaceFromCom = server;
+    /**
+     * Set the Interface that is proposed by Com server to Data server
+     * @param interfaceToCom InterfaceServer
+     */
+    public void setInterfaceToCom(InterfaceServer interfaceToCom) {
+        this.interfaceToCom = interfaceToCom;
     }
 
+    /**
+     * Get the Interface that is proposed by Data server to Com server
+     * @return InterfaceServerDataFromCom
+     */
     public InterfaceServerDataFromCom getInterfaceFromCom() {
         return interfaceFromCom;
     }
 
-    public void setInterfaceToCom(InterfaceServer interfaceToCom) {
-        this.interfaceToCom = interfaceToCom;
-    }
 }

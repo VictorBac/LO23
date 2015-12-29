@@ -99,15 +99,6 @@ public class UserLight implements Serializable {
         this.avatar = avatar;
     }
 
-    /**
-     * TODO remove
-     * compares the ID of two UserLights
-     * @param toCompare
-     * @return
-     */
-    /**public boolean equals(UserLight toCompare){
-        return this.idUser.equals(toCompare.getIdUser());
-    }*/
 
     /**
      * Overriding the equal method, only the UUID is used to compare

@@ -36,9 +36,7 @@ public class User implements Serializable{
     /**
      * Default Constructor
      */
-    public User(){
-
-    };
+    public User(){};
 
     /**
      * Constructor to initialize a User with its login and its password
@@ -201,21 +199,6 @@ public class User implements Serializable{
         statsUser.addNewStat(beginMse, points);
     };
 
-
-    /**
-     * TODO remove
-     * hashe le password pwd du joueur en MD5 et le replace dans la string pwd
-     */
-    private void anonymizeUserPassword(){
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            pwd = md.digest(pwd.getBytes()).toString();
-        }
-        catch(NoSuchAlgorithmException e){
-            System.out.println(e.toString());
-        }
-    }
-
     /**
      * Get the login of the userLight contained in the User
      * @return the login as a String, it corresponds to the pseudo of the UserLight core
@@ -240,19 +223,6 @@ public class User implements Serializable{
         this.pwd = "";
     }
 
-
-    /**TODO remove this
-     * checks if another User is equal to this, using their UUIDs
-     * @param other the other User
-     * @return a boolean
-     */
-   /* public boolean equals(User other){
-        boolean match;
-        if (this.core.getIdUser().equals(other.core.getIdUser()))
-            match = true;
-        else match = false;
-        return match;
-    }*/
 
     /**
      * Overriding the equal method, only the core is used to compare

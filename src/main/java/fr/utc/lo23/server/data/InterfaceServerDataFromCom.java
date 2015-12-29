@@ -6,7 +6,6 @@ import fr.utc.lo23.common.data.exceptions.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-//A mettre coté server, les autres classes vont dans common data
 public interface InterfaceServerDataFromCom {
 
     /**

@@ -109,6 +109,8 @@ public interface InterfaceServerDataFromCom {
 
     void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode);
 
+    void removePlayerFromTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode);
+
     void checkIfEverybodyIsReady(UUID idtable);
 
     Table getTableFromId(UUID idTable);

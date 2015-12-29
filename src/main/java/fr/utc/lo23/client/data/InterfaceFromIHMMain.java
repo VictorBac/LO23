@@ -147,6 +147,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     public void exitAsked() throws NetworkFailureException {
         // Sometimes, the user has already been deleted
         if (dManagerClient.getUserLocal() != null) {
+            if (dManagerClient.getTableLocal() != null)
+            {
+                dManagerClient.getInterFromIHMTable().quitGame();
+            }
             dManagerClient.getInterToCom().notifyDisconnection(dManagerClient.getUserLocal());
         }
     }

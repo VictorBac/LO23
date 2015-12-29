@@ -115,6 +115,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
+    @Override
+    public void removePlayerFromTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode) {
+        Table toRemove = getTableFromId(idTable);
+        try {
+            if (mode.equals(EnumerationTypeOfUser.PLAYER)) {
+                toRemove.playerLeaveTable(player);
+            } else {
+                toRemove.spectatorLeaveTable(player);
+            }
+        } catch (TableException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void validateMessage(UserLight sender, MessageChat msgSent) {
 
     }

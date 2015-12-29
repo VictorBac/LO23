@@ -142,7 +142,7 @@ public interface InterfaceServer {
      * Inform everybody that a profil has been changed
      * @param user
      */
-    public void notifyProfilUpdated(User user);
+    public void notifyProfilUpdated(UserLight user);
 
     public void stop();
 

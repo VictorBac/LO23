@@ -10,9 +10,9 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
  */
 public class NotifyProfilChangeMessage extends Message {
 
-    private User user;
+    private UserLight user;
 
-    public NotifyProfilChangeMessage(User user){
+    public NotifyProfilChangeMessage(UserLight user){
         this.user=user;
     }
 

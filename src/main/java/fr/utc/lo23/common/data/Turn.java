@@ -37,6 +37,10 @@ public class Turn implements Serializable {
         numberActivePlayersAtTheBeginning = currentHandToAdd.getListActiveUsers().size();
     }
 
+    /**
+     * make the sum of all players accounts
+     * @return : total sum
+     */
     public Integer getMaxMoneyAccountOfAllPerformersUsers(){
         Integer max=0;
         for(UserLight user : getCurrentHand().getListPerformersUsers())
@@ -130,6 +134,10 @@ public class Turn implements Serializable {
         }
     }
 
+    /**
+     * get the list of active users on turn
+     * @return : list of users
+     */
     public ArrayList<UserLight> getListActiveUsers(){
         ArrayList<UserLight> users = new ArrayList<UserLight>();
         for(PlayerHand player : getCurrentHand().getListPlayerHand())
@@ -199,13 +207,13 @@ public class Turn implements Serializable {
     }
 
     public Boolean isFinished(){
-        //S'il n'y a plus qu'une personne en jeu (ie toutes les autres sont couchées), alors cette personne gagne.
+        //if there is only one player left, then he wins
         if(getCurrentHand().getListPerformersUsers().size()==1)
         {
             return true;
         }
 
-        //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
+        //If everybody didn't play, then turn isn't over
         System.out.println("Nombre de tours joués:"+getCurrentHand().getListTurn().size());
         if(getCurrentHand().getListTurn().size()==1)
         {
@@ -219,7 +227,7 @@ public class Turn implements Serializable {
         }
 
         System.out.println("Tout le monde a au moins joué une action de tour-ci.");
-        //sinon il faut vérifier que tous les joueurs actifs aient le même montant
+        //otherwise need to check that all active players have the same amount
 
         for(UserLight user: getListActiveUsers())
         {
@@ -230,6 +238,11 @@ public class Turn implements Serializable {
         return true;
     }
 
+    /**
+     * Get user's actions
+     * @param user : user to get
+     * @return : list of actions
+     */
     public ArrayList<Action> getActionsOfUser(UserLight user) {
         ArrayList<Action> rs = new ArrayList<Action>();
         for(Action ac : getListAction())
@@ -240,6 +253,9 @@ public class Turn implements Serializable {
         return rs;
     }
 
+    /**
+     * Resolve the distribution of won amounts
+     */
     public void resolve(){
         for(Action action : getListAction())
         {
@@ -249,6 +265,10 @@ public class Turn implements Serializable {
     }
 
 
+    /**
+     * Get the maximum amount bet during the turn
+     * @return : max amount
+     */
     public Integer getMaxMoneyBetInTheTurn(){
         Integer money = 0;
         for (UserLight user : getCurrentHand().getListPerformersUsers()) {
@@ -258,6 +278,11 @@ public class Turn implements Serializable {
         return money;
     }
 
+    /**
+     * return the money bet in the turn by a user
+     * @param user : user to get
+     * @return : total amount
+     */
     public Integer getMoneyBetInTheTurnForAUser(UserLight user){
         Integer money = 0;
         for (Action a : getListAction()) {
@@ -324,18 +349,34 @@ public class Turn implements Serializable {
      */
     public void setTimeStampOfTurn(Timestamp timeStampOfTurn) { this.timeStampOfTurn = timeStampOfTurn; }
 
+    /**
+     * get the current hand
+     * @return : current hand
+     */
     public Hand getCurrentHand() {
         return currentHand;
     }
 
+    /**
+     * Modify current hand value
+     * @param currentHand :value to set
+     */
     public void setCurrentHand(Hand currentHand) {
         this.currentHand = currentHand;
     }
 
+    /**
+     * get pot's value
+     * @return : pot's value
+     */
     public Integer getTurnPot() {
         return turnPot;
     }
 
+    /**
+     * set pot value
+     * @param turnPot : value to set
+     */
     public void setTurnPot(Integer turnPot) {
         this.turnPot = turnPot;
     }

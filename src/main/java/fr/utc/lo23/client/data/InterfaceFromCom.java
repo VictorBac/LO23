@@ -314,8 +314,8 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         dManagerClient.getInterToIHMMain().notifyLoginAccepted();
     }
 
-    public void refuseLogin() {
-        dManagerClient.getInterToIHMMain().notifyLoginRefused();
+    public void refuseLogin(String reason) {
+        dManagerClient.getInterToIHMMain().notifyLoginRefused(reason);
     }
 
     /**

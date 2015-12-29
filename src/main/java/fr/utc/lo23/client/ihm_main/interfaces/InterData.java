@@ -134,8 +134,8 @@ import java.util.List;
     }
 
     @Override
-    public void notifyLoginRefused() {
-        Platform.runLater(() -> managerMain.getControllerMain().getConnectionWindowController().loginRefused());
+    public void notifyLoginRefused(String reason) {
+        Platform.runLater(() -> managerMain.getControllerMain().getConnectionWindowController().loginRefused(reason));
     }
 
     @Override

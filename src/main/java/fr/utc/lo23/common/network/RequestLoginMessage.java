@@ -47,7 +47,7 @@ public class RequestLoginMessage extends Message {
 
         if (pokerServer.getNbUsers() >= Params.NB_MAX_USER) {
             Console.err("There is no room for new user ! " + pokerServer.getNbUsers() + " users are already connected.");
-            sendConnectionRejection(threadServer);
+            sendConnectionRejection("Le serveur est plein !", threadServer);
             try {
                 threadServer.shutdown();
             } catch (Exception e) {
@@ -71,9 +71,14 @@ public class RequestLoginMessage extends Message {
             Console.log("Nouvelle liste des utilisateurs connectés: ");
             for(UserLight oneUser : dataInterface.getConnectedUsers()){
                 Console.log("- " +oneUser.getPseudo());
-        }
+            }
         } catch (ExistingUserException e) {
-            e.printStackTrace();
+            sendConnectionRejection("Un utilisateur avec ce pseudo est déjà connecté!", threadServer);
+            try {
+                threadServer.shutdown();
+            } catch (Exception ef) {
+                ef.printStackTrace();
+            }
         }
     }
 
@@ -107,8 +112,8 @@ public class RequestLoginMessage extends Message {
         threadServer.send(acceptL);
     }
 
-    private void sendConnectionRejection(ConnectionThread threadServer) {
-        RefuseLoginMessage refuseL = new RefuseLoginMessage();
+    private void sendConnectionRejection(String reason, ConnectionThread threadServer) {
+        RefuseLoginMessage refuseL = new RefuseLoginMessage(reason);
         threadServer.send(refuseL);
     }
 

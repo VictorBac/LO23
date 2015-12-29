@@ -30,7 +30,7 @@ public interface InterfaceMainToData {
     void userJoinedTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable);
 
     void notifyLoginAccepted();
-    void notifyLoginRefused();
+    void notifyLoginRefused(String reason);
 
     void updateUserRemote(UserLight newProfileRemoteUser);
 }

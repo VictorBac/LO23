@@ -178,8 +178,8 @@ public class ConnectionController extends BaseController {
         }
     }
 
-    public void loginRefused() {
+    public void loginRefused(String reason) {
         buttonConnect.setDisable(false);
-        mController.showErrorPopup("Vous avez été rejeté par le serveur");
+        mController.showErrorPopup("Vous avez été rejeté par le serveur\n Raison: "+reason);
     }
 }

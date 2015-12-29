@@ -78,7 +78,7 @@ public class ConnectionThread extends Thread {
             e.printStackTrace();
         }
         try {
-            this.pokerServer.userDisconnect(userId);
+            this.pokerServer.userDisconnect(this);
         }
         catch(Exception e){
             Console.err("Impossible d'enlever le thread de la liste des threads\n");

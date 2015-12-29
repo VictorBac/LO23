@@ -11,7 +11,9 @@ import java.io.IOException;
  */
 public class RefuseLoginMessage extends Message {
 
-    public RefuseLoginMessage() {
+    String reason;
+    public RefuseLoginMessage(String reason) {
+        this.reason = reason;
     }
 
     /**
@@ -28,7 +30,7 @@ public class RefuseLoginMessage extends Message {
      */
     @Override
     public void process(ServerLink threadClient) {
-        threadClient.getNetworkManager().getDataInstance().refuseLogin();
+        threadClient.getNetworkManager().getDataInstance().refuseLogin(reason);
         // The Thread is reset to be able to be connected with other servers
         try {
             threadClient.reset();

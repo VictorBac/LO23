@@ -36,7 +36,7 @@ private User u;
         Console.log("Refreshing UserLight Table in Server");
         // On met à jour / notifie les autres que l'utilisateur est parti, on le supprime de la table des users
         try {
-            myServ.userDisconnect(u.getUserLight().getIdUser());
+            myServ.userDisconnect(threadServer);
         } catch (Exception e) {
             e.printStackTrace();
         }

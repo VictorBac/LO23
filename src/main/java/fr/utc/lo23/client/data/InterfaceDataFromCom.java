@@ -228,7 +228,7 @@ public interface InterfaceDataFromCom {
     /**
      * Method to notify the local User that the connection to the server was refused
      */
-    void refuseLogin();
+    void refuseLogin(String reason);
 
     /**
      * Method which is called when a remote User has change his profile. User to inform other user of this modification

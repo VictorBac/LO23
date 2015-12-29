@@ -97,20 +97,15 @@ public class PokerServer extends Thread {
      * @return void
      * @param userId
      */
-    public void userDisconnect(UUID userId) throws Exception{
+    public void userDisconnect(ConnectionThread userThread) throws Exception{
         InterfaceServerDataFromCom dataInterface = this.networkManager.getDataInstance();
-
-        for (ConnectionThread threadClient : threadsClientList) {
-            if(threadClient.getUserId().equals(userId)) {
-                threadsClientList.remove(threadClient);
-                // Only broadcast disconnection message if the user is really connected
-                if (threadClient.isConnected()) {
-                    User userToDelete = dataInterface.getUserById(userId);
-                    this.networkManager.notifyDisconnection(userToDelete);
-                    dataInterface.deletePlayer(userToDelete.getUserLight());
-                }
-                return;
+        if (threadsClientList.removeIf(thread -> thread.getId() == userThread.getId())) {
+            if (userThread.isConnected()) {
+                User userToDelete = dataInterface.getUserById(userThread.getUserId());
+                this.networkManager.notifyDisconnection(userToDelete);
+                dataInterface.deletePlayer(userToDelete.getUserLight());
             }
+            return;
         }
         throw new PlayerNotConnectedException("L'utilisateur n'est pas inscrit sur le serveur");
     }

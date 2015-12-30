@@ -731,15 +731,17 @@ public class TableController {
 
     /**
      * Arrête la partie en cours en réinitialisant les joueurs et en masquant les actions
-     * @param game
      */
-    public void stopGame(Game game) {
+    public void stopGame() {
         for(PlayerController p : controllersList){ // Suppression des joueurs
             removePlayer(p.getUserLight(), false);
+            p.setCard1(null);
+            p.setCard2(null);
         }
         playerInitializer(); // Réinitialisation des joueurs
         hideActionBox();
         disableAllActions();
+        resetCommonCards();
         addLogEntry("Partie terminée.");
     }
 

@@ -129,7 +129,7 @@ public interface ITableToDataListener {
      * Fonction à appeler après la confirmation du serveur que le jeu s'arrête
      * Permet à IHM-Table d'arrêter le jeu.
      */
-	public void stopGame(Game game);
+	public void stopGame();
 
     /*
      * Fonction à appeler après avoir reçu la réponse d'un utilisateur

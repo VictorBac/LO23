@@ -162,6 +162,13 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     @Override
+    public void addNewGameToTable(UUID idTable, UserLight userLight) {
+        Console.log("Add new game\n");
+        AddGameToTableMessage agttMessage = new AddGameToTableMessage(idTable, userLight);
+        serverLink.send(agttMessage);
+    }
+
+    @Override
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
         LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);

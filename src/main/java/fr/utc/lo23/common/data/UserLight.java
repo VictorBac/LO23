@@ -28,7 +28,10 @@ public class UserLight implements Serializable {
     public UserLight(UserLight toCopy)  {
         this.idUser = toCopy.getIdUser();
         this.pseudo = toCopy.getPseudo();
-        this.avatar = new ImageAvatar(toCopy.getAvatar());
+        if(toCopy.getAvatar() != null)
+            this.avatar = new ImageAvatar(toCopy.getAvatar());
+        else
+            this.avatar = null;
     }
 
     /**

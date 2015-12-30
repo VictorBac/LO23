@@ -143,6 +143,22 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
+    public Boolean addGameUsingCurrent(UUID idTable, UserLight player) {
+        Table tableToAddGame = getTableFromId(idTable);
+        if(tableToAddGame.getCurrentGame() != null && player.equals(tableToAddGame.getCreator())) {
+            Game currentGame = tableToAddGame.getCurrentGame();
+            try {
+                tableToAddGame.addNewGameToList(currentGame.getAnte(), currentGame.getBlind(), currentGame.getMaxStartMoney());
+            } catch (TableException e) {
+                Console.err(e.getMessage());
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /*
      * starts a game with a given ID
      *
@@ -319,9 +335,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     {
                         System.out.println("La partie est finie !");
                         //Si la game est finie, résoudre la game
-
+                        //TODO : Résoudre la game ?
                         //Puis clore la game
-
+                        game.stopGame();
+                        myManager.getInterfaceToCom().endGame(table.getListPlayers().getListUserLights());
                     }
                     else
                     {

@@ -11,6 +11,11 @@ import java.util.UUID;
  */
 public interface InterfaceDataFromIHMTable {
     /**
+     * Add new game to current table
+     */
+    public void addNewGameToTable();
+
+    /**
      * method to let the tables's creator ask the end of the game to other players
      */
     public void askStopGame();
@@ -28,7 +33,6 @@ public interface InterfaceDataFromIHMTable {
      * @param table : Table to transmit
      */
     public void tableToCreate(Table table);
-
 
     /**
      * method to save the game

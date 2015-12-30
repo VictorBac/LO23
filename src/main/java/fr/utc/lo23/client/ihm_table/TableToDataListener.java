@@ -406,12 +406,12 @@ public class TableToDataListener implements ITableToDataListener {
      * Fonction à appeler après la confirmation du serveur que le jeu s'arrête
      * Permet à IHM-Table d'arrêter le jeu.
      */
-    public void stopGame(Game game){
+    public void stopGame(){
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                ihmtable.getTableController().stopGame(game);
+                ihmtable.getTableController().stopGame();
             }
         });
     }

@@ -191,4 +191,10 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         NotifyProfilChangeMessage message = new NotifyProfilChangeMessage(user);
         server.sendToAll(message);
     }
+
+    @Override
+    public void endGame(ArrayList<UserLight> aPlayers) {
+        NotifyEndGameMessage message = new NotifyEndGameMessage();
+        server.sendToListOfUsers(aPlayers, message);
+    }
 }

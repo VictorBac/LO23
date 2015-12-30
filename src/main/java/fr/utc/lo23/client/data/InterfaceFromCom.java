@@ -292,12 +292,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
 
     }
 
-
-    public void stopGame(Game gameOfTheUserLocal){
-        dManagerClient.getInterToIHMTable().stopGame(gameOfTheUserLocal);
+    public void stopGame(){
+        dManagerClient.getInterToIHMTable().stopGame();
     }
-
-
 
     public void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer){
         Console.log(TAG +"answerReadyGame()");

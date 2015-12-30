@@ -152,4 +152,8 @@ public interface InterfaceServer {
 
     public void stopTable(UUID table);
 
-    }
+    /**
+     * Notify end game
+     */
+    public void endGame(ArrayList<UserLight> aPlayers);
+}

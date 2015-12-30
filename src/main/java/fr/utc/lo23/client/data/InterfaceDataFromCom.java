@@ -203,9 +203,8 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to call when the Game the user is playing on is stopped
-     * @param gameOfTheUserLocal Game that was stopped
      */
-    void stopGame(Game gameOfTheUserLocal);
+    void stopGame();
 
     /**
      * Method to notify the local User of the answer of remotePlayer concerning the AskReady

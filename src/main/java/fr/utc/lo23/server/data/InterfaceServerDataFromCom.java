@@ -53,6 +53,14 @@ public interface InterfaceServerDataFromCom {
     Game sendLogGame(UserLight player);
 
     /**
+     * Add game to table using current game
+     * @param idTable
+     * @param player
+     * @return
+     */
+    Boolean addGameUsingCurrent(UUID idTable, UserLight player);
+
+    /**
      * starts a game with a given ID
      * @param idTable the id of the table of the game
      * @param player the player launching the game

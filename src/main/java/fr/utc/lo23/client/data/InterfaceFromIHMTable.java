@@ -42,6 +42,13 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
     /**
+     * Add new game to current table
+     */
+    public void addNewGameToTable() {
+        dManagerClient.getInterToCom().addNewGameToTable(dManagerClient.getTableLocal().getIdTable(), dManagerClient.getUserLocal().getUserLight());
+    }
+
+    /**
      * forwards the request to communication module : askStopGame()
      */
     public void askStopGame() {

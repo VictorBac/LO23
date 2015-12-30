@@ -182,6 +182,12 @@ public interface InterfaceClient {
      */
     public void sendMoneyAmount(UUID table, UserLight player, Integer money);
 
+    /**
+     * Add new game to table
+     * @param idTable Id of table
+     * @param userLight User who asked
+     */
+    void addNewGameToTable(UUID idTable, UserLight userLight);
 }
     
 

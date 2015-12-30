@@ -305,8 +305,13 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
     }
 
     public void deleteTable(UUID idTableDestroyed){
-        //TODO change on listTable Local
-        dManagerClient.getInterToIHMMain().notifyDeletedTable(dManagerClient.getListTablesLocal().getTable(idTableDestroyed));
+        Table t = dManagerClient.getListTablesLocal().getTable(idTableDestroyed);
+        try {
+            dManagerClient.getListTablesLocal().deleteTable(t);
+        } catch (TableException e) {
+            e.printStackTrace();
+        }
+        dManagerClient.getInterToIHMMain().notifyDeletedTable(t);
     }
 
 

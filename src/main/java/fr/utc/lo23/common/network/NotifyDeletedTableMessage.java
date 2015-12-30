@@ -8,11 +8,11 @@ import java.util.UUID;
 /**
  * Created by Jean-Côme on 27/12/2015.
  */
-public class StopTableMessage extends Message {
+public class NotifyDeletedTableMessage extends Message {
 
     private final UUID table;
 
-    public StopTableMessage(UUID table) {
+    public NotifyDeletedTableMessage(UUID table) {
         this.table = table;
     }
 

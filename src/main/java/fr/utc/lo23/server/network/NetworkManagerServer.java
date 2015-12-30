@@ -1,8 +1,6 @@
 package fr.utc.lo23.server.network;
 
-import com.sun.corba.se.spi.activation.ActivatorOperations;
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
@@ -173,7 +171,7 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     @Override
     public void stopTable(UUID table) {
-        StopTableMessage stm = new StopTableMessage(table);
+        NotifyDeletedTableMessage stm = new NotifyDeletedTableMessage(table);
         server.sendToAll(stm);
     }
 

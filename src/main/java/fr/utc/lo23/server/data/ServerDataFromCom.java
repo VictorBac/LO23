@@ -121,6 +121,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         try {
             if (mode.equals(EnumerationTypeOfUser.PLAYER)) {
                 toRemove.playerLeaveTable(player);
+                // Il n'y a plus personne sur la table
+                if (toRemove.getListPlayers().getListUserLights().size() == 0)
+                {
+                    myManager.getTables().deleteTable(toRemove);
+                    myManager.getInterfaceToCom().stopTable(idTable);
+                }
             } else {
                 toRemove.spectatorLeaveTable(player);
             }

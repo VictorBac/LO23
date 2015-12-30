@@ -18,8 +18,11 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     private final String TAG ="InterfaceFromIHMTable - ";
     private DataManagerClient dManagerClient;
 
+    /**
+     * Constructor
+     * @param dManagerClient DataManagerClient
+     */
     public InterfaceFromIHMTable(DataManagerClient dManagerClient) {
-
         this.dManagerClient = dManagerClient;
     }
 
@@ -49,6 +52,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     }
 
     /**
+     * Method to let the tables's creator ask the end of the game to other players
      * forwards the request to communication module : askStopGame()
      */
     public void askStopGame() {
@@ -59,20 +63,27 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
         }
     }
 
-    //TODO Com must implement vote()
+    /**
+     * Function to vote if the game can stop
+     * @param answer : true if accept to stop the Game
+     */
     public void vote(boolean answer){
         //dManagerClient.getInterToCom().vote(answer);
+        //TODO Com must implement vote()
     }
 
-    //TODO
-    //params : idGame, idTable?
-    public void saveGame() {
-        //TODO pour com cloner table sans liste games, ins�rer juste le bon game, retourner
+    /**
+     *  Method to save the game
+     * @param idTable UUID of the Table
+     * @param idGameToSave UUID of the Game that the local User wants to save
+     */
+    public void saveGame(UUID idTable, UUID idGameToSave) {
+        //TODO pour com cloner table with only the Game that matters in the list of Game
     }
 
 
     /**
-     * Send message to the server
+     * Send chat message to the server
      * @param message : message to send
      * @param idTableLocale : table's id from which message is sent
      */
@@ -125,7 +136,7 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
 
 
     /**
-     * ask to quit game
+     * Method to ask to quit game
      */
     public void quitGame(){
         try {
@@ -162,17 +173,15 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     private EnumerationTypeOfUser findTypeOfUserIsLocalPlayer(UserLight userToFindType){
         EnumerationTypeOfUser typeOfLocalUser = null;
         try {
-            if(dManagerClient.getTableLocal().getListPlayers().findUser(getUser().getIdUser())!=null)
+            if(dManagerClient.getTableLocal().getListPlayers().findUser(userToFindType.getIdUser())!=null)
                 typeOfLocalUser = EnumerationTypeOfUser.PLAYER;
-            else if(dManagerClient.getTableLocal().getListSpectators().findUser(getUser().getIdUser())!=null)
+            else if(dManagerClient.getTableLocal().getListSpectators().findUser(userToFindType.getIdUser())!=null)
                 typeOfLocalUser = EnumerationTypeOfUser.SPECTATOR;
         } catch (UserLightNotFoundException e) {
             typeOfLocalUser = null;
             e.printStackTrace();
         }
         return typeOfLocalUser;
-
-
     }
 
     /**

@@ -16,13 +16,13 @@ public interface InterfaceDataFromIHMTable {
     public void addNewGameToTable();
 
     /**
-     * method to let the tables's creator ask the end of the game to other players
+     * Method to let the tables's creator ask the end of the game to other players
      */
     public void askStopGame();
 
     /**
      * Function to vote if the game can stop
-     * @param answer : true if accept
+     * @param answer : true if accept to stop the Game
      */
     public void vote(boolean answer);
 
@@ -35,15 +35,17 @@ public interface InterfaceDataFromIHMTable {
     public void tableToCreate(Table table);
 
     /**
-     * method to save the game
+     *  Method to save the game
+     * @param idTable UUID of the Table
+     * @param idGameToSave UUID of the Game that the local User wants to save
      */
-    public void saveGame();
+    public void saveGame(UUID idTable, UUID idGameToSave);
 
 
     /**
-     * method to send a chat message
+     * Send chat message to the server
      * @param message : message to send
-     * @param idTableLocale : table's id
+     * @param idTableLocale : table's id from which message is sent
      */
     public void sendMessage(MessageChat message, UUID idTableLocale);
 
@@ -71,9 +73,20 @@ public interface InterfaceDataFromIHMTable {
      */
     public UserLight getUser();
 
+    /**
+     * Method to ask to quit game
+     */
     public void quitGame();
 
+    /**
+     * set the beginning amount of money
+     * @param amount : amount to set
+     */
     public void setStartAmount(int amount);
 
+    /**
+     * send to server that player is ready
+     * @param status : player's status
+     */
     public void isReady(boolean status);
 }

@@ -134,11 +134,12 @@ public interface InterfaceDataFromCom {
     void askReadyGame();
 
     /**
-     * Method to receive playersHand
-     *
-     * @param playerHandUserLocal PlayerHand of the local User
+     * Method to receive playersHand which contain the cards
+     * If there is only one PlayerHand it corresponds either to the card of the local User or to the card of the field (if the UserLight is null)
+     * If there are more than one PlayerHand then it corresponds to the cards of the other player
+     * @param playerHandsOfTheGame ArrayList<PlayerHand> of the Game
      */
-    void stockCards(ArrayList<PlayerHand> playerHandUserLocal);
+    void stockCards(ArrayList<PlayerHand> playerHandsOfTheGame);
 
 
     /**
@@ -150,7 +151,6 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to notify the local User of the Action of a Player
-     *
      * @param action Action that a user played
      */
     void notifyAction(Action action);
@@ -167,10 +167,10 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to inform the local user that the Hand ended with a list of Seat, their amount of money has changed depending on how won
-     *
      * @param listSeat ArrayList of Seat with their latest amount of money
+     * @param listOfPlayer ArrayList<PlayerHand>
      */
-    void informEndHand(ArrayList<Seat> listSeat, ArrayList<PlayerHand> apla);
+    void informEndHand(ArrayList<Seat> listSeat, ArrayList<PlayerHand> listOfPlayer);
 
     /**
      * Method to inform the local user that the Turn ended with the Pot at the end of Turn
@@ -180,7 +180,6 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to save a game
-     *
      * @param tableThatContainGameToSave : table on which the game was played
      */
     void saveLogGame(Table tableThatContainGameToSave);
@@ -208,8 +207,8 @@ public interface InterfaceDataFromCom {
 
     /**
      * Method to notify the local User of the answer of remotePlayer concerning the AskReady
-     * @param player UserLight of the remote User who
-     * @param answer
+     * @param player UserLight of the remote User who voted
+     * @param answer Boolean true if the player is Ready, false if not
      */
     void infosReadyAnswerFromOtherPlayer(UserLight player, Boolean answer);
 

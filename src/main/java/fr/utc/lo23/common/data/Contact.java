@@ -21,17 +21,17 @@ public class Contact implements Serializable {
     /**
      * Method to add a UserLight to a group
      * @param groupName : the name of group to add the contact
-     * @param newContact : the name of contact to add
+     * @param userToAdd : the name of contact to add
      */
-    public void addToGroup(String groupName, UserLight newContact) throws ContactException, ExistingUserException {
-        Group toAddTo = new Group();
+    public void addToGroup(String groupName, UserLight userToAdd) throws ContactException, ExistingUserException {
+        Group groupToAdd = new Group();
         for (Group cur : groupList)
         {
             if (cur.getGroupName().equals(groupName))
-                toAddTo = cur;
+                groupToAdd = cur;
         }
-        if (toAddTo != null) {
-            toAddTo.addUser(newContact);
+        if (groupToAdd != null) {
+            groupToAdd.addUser(userToAdd);
         } else {
             throw new ContactException("group to add does not exist");
         }

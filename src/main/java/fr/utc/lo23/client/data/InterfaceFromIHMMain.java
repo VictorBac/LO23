@@ -2,26 +2,27 @@ package fr.utc.lo23.client.data;
 
 import fr.utc.lo23.client.data.exceptions.*;
 import fr.utc.lo23.client.network.main.Console;
-import fr.utc.lo23.common.Params;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
-
-import java.net.InetAddress;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 
 /**
+ * Data Interface for IHM Main
  * Created by Jianghan on 01-11-15.
  */
 public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     private DataManagerClient dManagerClient;
 
+    /**
+     * Constructor
+     * @param dManagerClient data manager
+     */
     public InterfaceFromIHMMain(DataManagerClient dManagerClient) {
         this.dManagerClient = dManagerClient;
     }
@@ -29,9 +30,13 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Connexion with login and password, call com interface
-     * @param login
-     * @param password
+     * @param login login of the user
+     * @param password password
+     * @param ip ip address
+     * @param port port number
+     * @throws Exception
      */
+    @Override
     public void logUser(String login, String password, String ip, Integer port) throws Exception {
         User userLocal = (User) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + login);
         if (userLocal == null) {
@@ -51,26 +56,26 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
             dManagerClient.setUserLocal(userLocal);
             User userLogin = new User(userLocal);
             userLogin.setPwd(null);
-
-
             dManagerClient.getInterToCom().requestLoginServer(userLogin, ip, port);
         }
     }
 
     /**
      * Method to get the user's all information
-     * @param userlight
+     * @param userlight get more information of the user
      * @throws ProfileNotFoundOnServerException
      * @throws NetworkFailureException
      */
+    @Override
     public void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException {
         dManagerClient.getInterToCom().consultProfile(userlight);
     }
 
     /**
      * Write userLocal into the local data file
-     * @param userLocal
+     * @param userLocal save profile of the user to local data
      */
+    @Override
     public void saveNewProfile(User userLocal) {
         String login = userLocal.getLogin();
         dManagerClient.setUserLocal(userLocal);
@@ -78,18 +83,20 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
     /**
-     *
-     * @param tableId
-     * @param mode
+     * join table with mode
+     * @param tableId table UUID
+     * @param mode mode number
      */
+    @Override
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException {
         dManagerClient.getInterToCom().joinTable(dManagerClient.getUserLocal().getUserLight(), tableId, mode);
     }
 
     /**
      * Ask server to return UserLightList
-     * @return
+     * @throws NetworkFailureException
      */
+    @Override
     public void getPlayerList() throws NetworkFailureException {
         dManagerClient.getInterToCom().requestUserList();
     }
@@ -98,14 +105,16 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * Ask server to return TableList
      * @throws NetworkFailureException  Network Failure
      */
+    @Override
     public void getTableList() throws NetworkFailureException {
         dManagerClient.getInterToCom().requestTableList();
     }
 
     /**
      * Get local saved game list.
-     * @return
+     * @return table list
      */
+    @Override
     public TableList getSavedGamesList() {
         return (TableList)Serialization.deserializationObject(
                 Serialization.dirLocalSavedFiles + dManagerClient.getUserLocal().getLogin() + Serialization.pathSavedGame);
@@ -113,8 +122,9 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Ask server to play a game.
-     * @param tableId
+     * @param tableId tabe UUID
      */
+    @Override
     public void playGame(UUID tableId) throws NetworkFailureException {
         dManagerClient.getInterToCom().requestPlayGame(dManagerClient.getUserLocal().getUserLight(), tableId);
     }
@@ -122,6 +132,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     /**
      * Ask server for disconnection
      */
+    @Override
     public void exitAsked() throws NetworkFailureException {
         dManagerClient.getInterToCom().notifyDisconnection(dManagerClient.getUserLocal());
     }
@@ -130,15 +141,17 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * get servers list
      * @return server list
      */
+    @Override
     public List<Server> getServersList() {
         return dManagerClient.getListServers();
     }
 
     /**
      * Add server
-     * @param ip
-     * @param port
+     * @param ip ip address
+     * @param port port number
      */
+    @Override
     public void addServer(String ip, Integer port) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
         listServers.add(new Server(ip, port));
@@ -150,6 +163,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * remove server from server list
      * @param server server to remove
      */
+    @Override
     public void removeServer(Server server) {
         ArrayList<Server> listServers = dManagerClient.getListServers();
         listServers.remove(server);
@@ -161,17 +175,24 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
      * get local user profile
      * @return local user
      */
+    @Override
     public User getLocalUserProfile() {
         return dManagerClient.getUserLocal();
     }
 
     /**
      * send local user
+     * @throws NetworkFailureException
      */
+    @Override
     public void sendLocalUser() throws NetworkFailureException {
         dManagerClient.getInterToCom().sendProfile(dManagerClient.getUserLocal());
     }
 
+    /**
+     * import local data
+     * @param folderPath folder path
+     */
     @Override
     public void importFiles(String folderPath) {
         try {
@@ -181,6 +202,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
+    /**
+     * export local data
+     * @param folderPath folder path
+     */
     @Override
     public void exportFiles(String folderPath) {
         try {
@@ -190,12 +215,20 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
+    /**
+     * import the user profile
+     * @param filePath file path
+     */
     @Override
     public void importProfileFile(String filePath) {
         User profile = (User) Serialization.deserializationObject(filePath);
         saveNewProfile(profile);
     }
 
+    /**
+     * export the user profile
+     * @param filePath file path
+     */
     @Override
     public void exportProfileFile(String filePath) {
         Serialization.serializationObject(dManagerClient.getUserLocal(), filePath);

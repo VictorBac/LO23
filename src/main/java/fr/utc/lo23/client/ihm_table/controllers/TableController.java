@@ -4,6 +4,7 @@ import fr.utc.lo23.client.ihm_table.IHMTable;
 import fr.utc.lo23.client.ihm_table.TableUtils;
 import fr.utc.lo23.client.ihm_table.views.BetMoneyView;
 import fr.utc.lo23.client.ihm_table.views.PlayerView;
+import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.data.exceptions.CardFormatInvalidException;
 import javafx.animation.KeyFrame;
@@ -25,6 +26,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -151,7 +153,16 @@ public class TableController {
     public void addPlayer(int id, UserLight user, boolean showLog) {
         Point2D coords = TableUtils.getPlayerPosition(id, table.getNbPlayerMax());
         PlayerView playerView = new PlayerView();
-        PlayerController playerController = playerView.createPlayer(tablePane, user, coords, defaultImage);
+        Image userImage = defaultImage;
+        if(user.getAvatar() != null) {
+            try {
+                userImage = user.getAvatar().getImageAvatar();
+            } catch (IOException e) {
+                Console.log(e.getMessage());
+            }
+
+        }
+        PlayerController playerController = playerView.createPlayer(tablePane, user, coords, userImage);
         playerControllerMap.put(user, playerController);
         controllersList.set(id, playerController);
         if (showLog) addLogEntry(user.getPseudo()+" a rejoint la salle.");

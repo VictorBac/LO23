@@ -734,9 +734,11 @@ public class TableController {
      */
     public void stopGame() {
         for(PlayerController p : controllersList){ // Suppression des joueurs
-            removePlayer(p.getUserLight(), false);
+            p.getCard1().setVisible(false);
+            p.getCard2().setVisible(false);
             p.setCard1(null);
             p.setCard2(null);
+            removePlayer(p.getUserLight(), false);
         }
         playerInitializer(); // Réinitialisation des joueurs
         hideActionBox();

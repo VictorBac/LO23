@@ -93,9 +93,15 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             ok = false;
             Console.log(TAG + "\tPlayer can't join, no spectators allowed");
         }
-        else
+        else if (wantedTable.getCurrentGame() != null
+                && wantedTable.getCurrentGame().getStatusOfTheGame().equals(EnumerationStatusGame.Playing))
+        {
+            ok = false;
+            Console.log(TAG + "\tPlayer can't join, game has started");
+        } else {
             ok = true;
-        Console.log(TAG + "\tPlayer can join : " + Boolean.toString(ok));
+        }
+            Console.log(TAG + "\tPlayer can join : " + Boolean.toString(ok));
         return ok;
     }
 

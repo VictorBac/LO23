@@ -40,9 +40,8 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * creates a list of userlights from the list of users
-     *
-     * @return the list of currently connected users
+     * Get a list of UserLight from the list of users
+     * @return ArrayList<UserLight> the list of currently connected users
      */
     public ArrayList<UserLight> getConnectedUsers() {
         ArrayList<UserLight> created = new ArrayList<UserLight>();
@@ -53,17 +52,19 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return created;
     }
 
+
     /**
-     * @return the list of current tables
+     * Get the list of current tables on the Server
+     * @return ArrayList<Table> the list of current tables
      */
     public ArrayList<Table> getTableList() {
         return myManager.getTables().getListTable();
     }
 
     /**
-     * creates a new table
-     * @param maker
-     * @param newTb TODO : remove the maker attribute ?
+     * Creates a new table on the Server
+     * @param maker UserLight of the Creator of the Table
+     * @param newTb Table that is created
      */
     public void createTable(UserLight maker, Table newTb) {
 
@@ -72,7 +73,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * notifies the tables list has been modified to all observers
+     * Notifies that the tables list has been modified to all observers
      */
     public void updateTableList() {
         myManager.getTables().getListTable().notifyAll();
@@ -173,6 +174,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
+    /**
+     * Add game to table using current game
+     * @param idTable UUID of the Table on which the creator of the Table wants to start a new Game
+     * @param player UserLight of the Creator of the Table
+     * @return True if the creation of the Table was a success, false if not
+     */
     public Boolean addGameUsingCurrent(UUID idTable, UserLight player) {
         Table tableToAddGame = getTableFromId(idTable);
         if(tableToAddGame.getCurrentGame() != null && player.equals(tableToAddGame.getCreator())) {
@@ -189,16 +196,16 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
-    /*
-     * starts a game with a given ID
-     *
+
+    /**
+     * starts a game with a given id of the Table
      * @param idTable the id of the table of the game
-     * @param player the player launching the game
-     * @return the created game
+     * @param creatorTable the User who has launching the game, needs to be the creator of the Table
+     * @return true if the game was created, else false
      */
-    public Boolean startGame(UUID idTable, UserLight player) {
+    public Boolean startGame(UUID idTable, UserLight creatorTable) {
         Table toStart = getTableFromId(idTable);
-        if(toStart.getCurrentGame().startGame() && player.equals(toStart.getCreator()))
+        if(toStart.getCurrentGame().startGame() && creatorTable.equals(toStart.getCreator()))
         {
             return true;
         }
@@ -208,6 +215,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
+    /**
+     * Method that run the whole process (algorithm) of a Game
+     * @param table Table where a the current Game is going to be played
+     */
     public void playGame(Table table){
         Game game = table.getCurrentGame();
         Hand hand;
@@ -458,7 +469,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param master UserLight of the spectator who has decided to replay the Game
      */
     public void nextStepReplay(UUID idTable, UUID idGame, UserLight master) {
-
     }
 
     /**
@@ -578,8 +588,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
 
     /**
-     * asks the player which action he wants to perform
-     * @param player the UserLight of the player
+     * Asks a player which action he wants to perform, with a list of possible Action to perform
+     * @param table Table where is the player
+     * @param player UserLight of the player that needs to perform an action
+     * @param availableActions EnumerationAction[] an array that contain the Action the player can perform
      */
     public void askAction(Table table,UserLight player, EnumerationAction[] availableActions) {
         Action emptyAction = new Action();
@@ -612,7 +624,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
         else {
             myManager.getTables().getTable(idTable).getCurrentGame().createPlayerSeat(user, startAmount);
-            //Si cet utilisateur est le dernier à répondre, lancer les demandes de ready
+            //If this user is the last to answer then send the ready to start request
             if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getListPlayers().getListUserLights().size())
             {
                 myManager.getInterfaceToCom().askIfReady(myManager.getTables().getTable(idTable).getListPlayers().getListUserLights());
@@ -636,7 +648,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      * @param idTable UUID id of a Table
      */
     public void checkIfEverybodyIsReady(UUID idTable){
-        //Si cet utilisateur est le dernier à répondre, lancer la partie
+        //If this user is the last to answer then start the Game
         if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().size())
         {
             Boolean refuse = false;
@@ -649,7 +661,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             }
 
             if(!refuse) {
-                //Réordonnancement des Seat pour correspondre au positionnement des joueurs (et virer les joueurs qui se seraient déconnectés entre temps, est-ce un bien ou un mal ?)
+                //Re-order the Seat to correspond to the position of the players (and remove players that were disconnected during the preparation phase. Correct?)
                 Game game = myManager.getTables().getTable(idTable).getCurrentGame();
                 ArrayList<Seat> newSeat = new ArrayList<>();
                 for (UserLight usr : game.getTableOfTheGame().getListPlayers().getListUserLights()) {

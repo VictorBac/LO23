@@ -73,12 +73,12 @@ public interface InterfaceServerDataFromCom {
     Boolean addGameUsingCurrent(UUID idTable, UserLight player);
 
     /**
-     * starts a game with a given UUID
+     * starts a game with a given UUID of the Table
      * @param idTable the id of the table of the game
-     * @param player the player launching the game
-     * @return the created game
+     * @param creatorTable the User who has launching the game, needs to be the creator of the Table
+     * @return true if the game was created, else false
      */
-    Boolean startGame(UUID idTable, UserLight player);
+    Boolean startGame(UUID idTable, UserLight creatorTable);
 
     /**
      * Method used to ask for the next step of the Game that is replayed

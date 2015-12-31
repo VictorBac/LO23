@@ -144,18 +144,20 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
             if(localUserType!=null) //if error not
             {
                 dManagerClient.getInterToCom().leaveTable(getUser(), dManagerClient.getTableLocal().getIdTable(), localUserType);
-                if (localUserType.equals(EnumerationTypeOfUser.PLAYER))
+                if (localUserType.equals(EnumerationTypeOfUser.PLAYER)) {
                     try {
                         dManagerClient.getTableLocal().playerLeaveTable(getUser());
                     } catch (TableException e) {
                         e.printStackTrace();
                     }
-                else
+                } else {
                     try {
                         dManagerClient.getTableLocal().spectatorLeaveTable(getUser());
                     } catch (TableException e) {
                         e.printStackTrace();
                     }
+                }
+                dManagerClient.setTableLocal(null);
             }
             else
                 Console.log(TAG + "localUser has no type");

@@ -105,14 +105,34 @@ public interface InterfaceDataFromIHMMain {
      */
     User getLocalUserProfile();
 
+    /**
+     * send local user
+     */
     void sendLocalUser() throws NetworkFailureException;
 
+    /**
+     * Import files
+     * @param folderPath path of the folder where are the file
+     */
     void importFiles(String folderPath);
 
+    /**
+     * Export files
+     * @param folderPath path of the folder where have to be copy the files
+     */
     void exportFiles(String folderPath);
 
+    /**
+     * Import a profile
+     * @param filePath path of the profile to import
+     * @throws UserAlreadyExistsException
+     */
     void importProfileFile(String filePath) throws UserAlreadyExistsException;
 
+    /**
+     * Export a profile
+     * @param filePath path to copy the profile in
+     */
     void exportProfileFile(String filePath);
 
 

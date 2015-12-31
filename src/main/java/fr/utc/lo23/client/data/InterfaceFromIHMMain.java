@@ -202,6 +202,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
 
+    /**
+     * Import files
+     * @param folderPath path of the folder where are the file
+     */
     public void importFiles(String folderPath) {
         try {
             Serialization.moveFiles(folderPath, Serialization.dirLocalSavedFiles);
@@ -210,6 +214,10 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
+    /**
+     * Export files
+     * @param folderPath path of the folder where have to be copy the files
+     */
     public void exportFiles(String folderPath) {
         try {
             Serialization.moveFiles(Serialization.dirLocalSavedFiles, folderPath);
@@ -218,13 +226,20 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         }
     }
 
-
+    /**
+     * Import a profile
+     * @param filePath path of the profile to import
+     * @throws UserAlreadyExistsException
+     */
     public void importProfileFile(String filePath) throws UserAlreadyExistsException {
         User profile = (User) Serialization.deserializationObject(filePath);
         saveNewProfile(profile);
     }
 
-
+    /**
+     * Export a profile
+     * @param filePath path to copy the profile in
+     */
     public void exportProfileFile(String filePath) {
         Serialization.serializationObject(dManagerClient.getUserLocal(), filePath);
     }

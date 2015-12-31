@@ -68,7 +68,7 @@ public class Turn implements Serializable {
                     throw new ActionInvalidException("Check interdit");
                 }
             } else if (newAction.getName().equals(EnumerationAction.CALL)) {
-                //Mettre l'argent dans l'action
+                //Put the money in the Action
                 System.out.println("Max Money Turn: "+getMaxMoneyBetInTheTurn());
                 System.out.println("Money I BEt: "+getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
                 newAction.setAmount(getMaxMoneyBetInTheTurn() - getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
@@ -86,7 +86,7 @@ public class Turn implements Serializable {
             this.getListAction().add(newAction);
             newAction.setBetAmountThisTurn(getMoneyBetInTheTurnForAUser(newAction.getUserLightOfPlayer()));
 
-            //On met à jour l'argent total du joueur
+            //The total amount of the player is updated
             if(newAction.getAmount()!=0)
             {
                 getCurrentHand().getCurrentGame().getSeatOfUser(newAction.getUserLightOfPlayer()).addCurrentMoney(-newAction.getAmount());
@@ -148,6 +148,10 @@ public class Turn implements Serializable {
         return users;
     }
 
+    /**
+     * Method to determine the list of action that are possible for the Turn, only for the first Action of the Turn
+     * @return ArrayList<Action> that contain the Actions that the Player can do
+     */
     public ArrayList<Action> askFirstAction(){
         //TODO: Gestion de l'ante (qui va se révéler relou, à bien réfléchir)
         ArrayList<Action> arrayAc = new ArrayList<Action>();
@@ -186,6 +190,10 @@ public class Turn implements Serializable {
         return arrayAc;
     }
 
+    /**
+     * Method to search the next player that can still play
+     * @return  UserLight of the Player that can play
+     */
     public UserLight getNextActiveUser(){
 
         Integer currentIndex = getCurrentHand().getListPlayerHand().indexOf(getCurrentHand().getPlayer(getCurrentAction().getUserLightOfPlayer()));
@@ -206,6 +214,10 @@ public class Turn implements Serializable {
         return getCurrentHand().getListPlayerHand().get(currentIndex).getPlayer();
     }
 
+    /**
+     * Method to check if the Turn is finished
+     * @return true if the Turn is finished, false if not
+     */
     public Boolean isFinished(){
         //if there is only one player left, then he wins
         if(getCurrentHand().getListPerformersUsers().size()==1)

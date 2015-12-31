@@ -31,13 +31,13 @@ import java.util.UUID;
 
             Console.log("SendChatMessage message received");
             try {
-                myServ.getNetworkManager().getDataInstance().validateMessage(sender,messageSend);
+                myServ.getNetworkManager().getDataInstance().saveMessageChat(tableConcerned,messageSend);
                 SendChatMessageMessage chatMessage = new SendChatMessageMessage(sender,messageSend,tableConcerned);
                 myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(tableConcerned),chatMessage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//  Envoie à tout le monde lu message après validation
+//  Send message to all after it has been stored on the Server
 
         }
 

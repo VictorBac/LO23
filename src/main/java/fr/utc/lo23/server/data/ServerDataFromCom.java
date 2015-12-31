@@ -19,15 +19,18 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     private DataManagerServer myManager;
     private final String TAG = "ServerDataFromCom";
 
+    /**
+     * Constructor
+     * @param manager DataManagerServer
+     */
     public ServerDataFromCom(DataManagerServer manager) {
         this.myManager = manager;
     }
 
     /**
-     * Notifies a new user connection and creates a user
-     *
-     * @param connectingUser
-     * @return the new user created
+     * Notifies a new user connection and creates a UserLight
+     * @param connectingUser User profile
+     * @return the new UserLight connected
      * @throws ExistingUserException
      */
     public UserLight userConnection(User connectingUser) throws ExistingUserException {
@@ -105,13 +108,19 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return ok;
     }
 
-    public void addPlayerToTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode) {
+    /**
+     * Method to add a User to the Table. Throw an Exception if the User can't join the Table.
+     * @param idTable UUID id of the Table the User want to join
+     * @param userJoiningTable UserLight of a user that want to join the Table
+     * @param mode EnumerationTypeOfUser the user can be a Spectator or a Player
+     */
+    public void addPlayerToTable(UUID idTable, UserLight userJoiningTable, EnumerationTypeOfUser mode) {
         Table toAdd = getTableFromId(idTable);
         try {
             if(mode.equals(EnumerationTypeOfUser.PLAYER)) {
-                toAdd.playerJoinTable(player);
+                toAdd.playerJoinTable(userJoiningTable);
             } else {
-                toAdd.spectatorJoinTable(player);
+                toAdd.spectatorJoinTable(userJoiningTable);
             }
             Console.log(TAG + "\tPlayer joined table");
         }
@@ -121,31 +130,46 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
-    @Override
-    public void removePlayerFromTable(UUID idTable, UserLight player, EnumerationTypeOfUser mode) {
+    /**
+     * Method to remove a User from a Table.
+     * @param idTable UUID id of the Table the User want to leave
+     * @param userLeavingTable UserLight of a user that want to leave the Table
+     * @param mode EnumerationTypeOfUser the user can be a Spectator or a Player
+     */
+    public void removePlayerFromTable(UUID idTable, UserLight userLeavingTable, EnumerationTypeOfUser mode) {
         Table toRemove = getTableFromId(idTable);
         try {
             if (mode.equals(EnumerationTypeOfUser.PLAYER)) {
-                toRemove.playerLeaveTable(player);
-                // Il n'y a plus personne sur la table
+                toRemove.playerLeaveTable(userLeavingTable);
+                // is someone around the table ?
                 if (toRemove.getListPlayers().getListUserLights().size() == 0)
                 {
                     myManager.getTables().deleteTable(toRemove);
                     myManager.getInterfaceToCom().stopTable(idTable);
                 }
             } else {
-                toRemove.spectatorLeaveTable(player);
+                toRemove.spectatorLeaveTable(userLeavingTable);
             }
         } catch (TableException e) {
             e.printStackTrace();
         }
     }
 
-    public void validateMessage(UserLight sender, MessageChat msgSent) {
-
+    /**
+     * Method to validate chat message
+     * @param idTable UUId id of the Table this message is associated to
+     * @param msgSent Message that is send by player or a spectator
+     */
+    public void saveMessageChat(UUID idTable, MessageChat msgSent){
+        myManager.getTables().getTable(idTable).getCurrentGame().getChatGame().newMessage(msgSent);
     }
 
-    public Game sendLogGame(UserLight player) {
+    /**
+     * Method to send the Table containing only the Game asked to be saved
+     * @param player UserLight of the user who want to save the Game locally
+     * @return Table containing only the Game that matter (the Game where the User is)
+     */
+    public Table sendLogGame(UserLight player) {
         return null;
     }
 
@@ -191,11 +215,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
         if(game.getListHand().size()==0)
         {
-            //On se situe au tout début d'une game
+            //At the beginning of a game
             hand = new Hand(game);
             game.getListHand().add(hand);
 
-            //Envoyer ses cartes à chaque joueur
+            //Send cards to each player
             for(PlayerHand player : hand.getListPlayerHand())
             {
                 ArrayList<UserLight> users = new ArrayList<>();
@@ -211,13 +235,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
         else
         {
-            //La game est déjà commencée
+            //game already started
             hand = game.getCurrentHand();
         }
 
         if(hand.getListTurn().size()==0)
         {
-            //On se situe au début d'un tour
+            //beginning of a turn
             turn = new Turn(hand);
             hand.getListTurn().add(turn);
 
@@ -231,7 +255,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
         if(turn.getListAction().size()==0)
         {
-            //Faire les actions de base
+            //do basics action
             ArrayList<Action> arrayAc = turn.askFirstAction();
             System.out.println("LISTE ACTION ENVOYEE FIRST TURN: "+arrayAc);
             if(arrayAc.size()==1)
@@ -242,7 +266,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             }
             else
             {
-                //Elle doit etre égale à 3 alors, donc les deux blindes plus l'action à demander
+                //must be equal to 3 (2 blinds plus the action to ask)
                 try {
                     myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(0));
                     myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(1));
@@ -258,23 +282,23 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
         else
         {
-            //Vérifier si le tour est finit
+            //check if the turn is over
             if(turn.isFinished())
             {
                 System.out.println("Le tour est finit");
-                //S'il est finit, résoudre ce tour
+                //if yes, resolve turn
                 turn.resolve();
 
-                //Prévenir les utilisateurs
+                //alert players
                 myManager.getInterfaceToCom().endTurn(table.getListPlayers().getListUserLights(),hand.getPot());
 
-                // puis vérifier si la manche est finie
+                // then check again if turn is over
                 if(hand.isFinished())
                 {
                     System.out.println("La hand est finit");
-                    //Si elle est finit résoudre la manche
+                    //if yes, resolve turn
 
-                    //S'il faut encore afficher des cartes communes, les envoyer pour affichage
+                    //if needed, send card to be displayed
                     if(hand.getListPerformersUsers().size()>1) {
                         if(hand.getListTurn().size()<4)
                         {
@@ -316,7 +340,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         e.printStackTrace();
                     }
 
-                    // Il est nécessaire de recréer des Seat, sinon la déserialization de java va donner les instances des seat déjà créés par le client local et non ceux qu'on lui envoie.
+                    //it is necessary to create Seats, otherwise, JAVA deserilization will return already created Seats instances by local client
                     ArrayList<Seat> sts = new ArrayList<>();
                     for(Seat seat : game.getListSeatPlayerWithPeculeDepart()) {
                         Seat st = new Seat();
@@ -327,22 +351,23 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
 
                     if(hand.getListPerformersUsers().size()>1)
                     {
-                        //Envoyer les résultats du tour et les cartes des joueurs (les couchés enverront des listes vides) , TODO à optimiser en virant les playerhand des joueurs couchés
+                        //send results and players cards
+                        //TODO optimize by excluding dropped players
                         myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, hand.getListPlayerHand());
                     }
                     else
                     {
-                        //Envoyer les résultats du tour mais pas les cartes des joueurs
+                        //Send results but not the cards
                         myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, null);
                     }
 
-                    //puis vérifier si la game est finie
+                    //then check again if the turn is over
                     if(game.isFinished())
                     {
                         System.out.println("La partie est finie !");
-                        //Si la game est finie, résoudre la game
+                        //if game is over, resolve game
                         //TODO : Résoudre la game ?
-                        //Puis clore la game
+                        //then close it
                         game.stopGame();
                         myManager.getInterfaceToCom().endGame(table.getListPlayers().getListUserLights());
                     }
@@ -354,11 +379,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                             e.printStackTrace();
                         }
 
-                        //sinon créer une nouvelle manche
+                        //otherwise new turn
                         hand = new Hand(game);
                         game.getListHand().add(hand);
 
-                        //Envoyer ses cartes à chaque joueur
+                        //Send card to each player
                         for(PlayerHand player : hand.getListPlayerHand())
                         {
                             ArrayList<UserLight> users = new ArrayList<>();
@@ -372,7 +397,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                             }
                         }
 
-                        //et relancer l'algorithme
+                        //call the algorithm back
                         playGame(table);
                     }
                 }
@@ -380,7 +405,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 {
 
                     System.out.println("La manche n'est pas finie");
-                    //sinon créer un nouveau tour
+                    //otherwise new turn
                     turn = new Turn(hand);
                     hand.getListTurn().add(turn);
 
@@ -411,14 +436,14 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         e.printStackTrace();
                     }
 
-                    //et relancer l'algorithme
+                    //and relaunch algorithm
                     playGame(table);
                 }
             }
             else
             {
                 System.out.println("Le tour n'est pas finit");
-                //appeler les actions du joueur prochain
+                //call next player actions
                 EnumerationAction[] ref = new EnumerationAction[turn.availableActions(turn.getNextActiveUser()).size()];
                 ref = turn.availableActions(turn.getNextActiveUser()).toArray(ref);
                 askAction(table,turn.getNextActiveUser(),ref);
@@ -426,13 +451,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
-    public void nextStepReplay() {
+    /**
+     * Method used to ask for the next step of the Game that is replayed
+     * @param idTable UUID idTable on which is replayed the Game
+     * @param idGame UUID of the Game which is replayed
+     * @param master UserLight of the spectator who has decided to replay the Game
+     */
+    public void nextStepReplay(UUID idTable, UUID idGame, UserLight master) {
 
     }
 
     /**
-     * deletes a player from the list connectedusers
+     * Deletes a player from the list connected users
      * @param deletedUsr the user to delete
+     * @throws fr.utc.lo23.common.data.exceptions.UserNotFoundException if the UserLight was not found in the list of connected users
      */
     public void deletePlayer(UserLight deletedUsr) throws UserNotFoundException {
         User userToDelete = null;
@@ -452,10 +484,15 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
+    /**
+     * Method that handles an Action that was played by a User
+     * @param table UUID id of the Table on which the player has made his Action
+     * @param playedAction Action that was played
+     */
     public void replyAction(UUID table, Action playedAction) {
         try {
             myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn().addAction(playedAction);
-            //TODO: notifier users
+            //TODO notify users
             try {
                 myManager.getInterfaceToCom().notifyOtherPlayerAction(myManager.getTables().getTable(table).getListPlayers().getListUserLights(),playedAction);
             } catch (NetworkFailureException e) {
@@ -465,7 +502,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             playGame(myManager.getTables().getTable(table));
         }
         catch(ActionInvalidException a) {
-            //TODO erreur dans la reprise
+            //TODO fix error
             Turn turn = myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn();
             EnumerationAction[] ref = new EnumerationAction[turn.availableActions(turn.getNextActiveUser()).size()];
             ref = turn.availableActions(turn.getNextActiveUser()).toArray(ref);
@@ -474,8 +511,8 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * Updates a user info with a whole new User
-     * @param newUser the new information
+     * Method to update a user info with a whole new User
+     * @param newUser the new profile of the user
      */
     public void updateProfile(User newUser) {
         myManager.getUsers().changeUserProfile(newUser);
@@ -489,9 +526,9 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * returns the user corresponding to a userlight in the Userlist of mymanager
-     * @param core the userlight to compare to
-     * @return the corresponding user, null if not found
+     * Get the User corresponding to a UserLight in the Userlist of mymanager
+     * @param core the UserLight corresponding to the Profile that is searched
+     * @return the corresponding User, null if not found
      */
     public User getProfile(UserLight core) {
         for (User cur : myManager.getUsers().getList()) {
@@ -501,6 +538,11 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
+    /**
+     * Get a whole User which is connected on a server that corresponds to a specific UUID
+     * @param userId UUID which is the id of the User
+     * @return User containing the profile of the User, null if no User corresponds to the UUID
+     */
     public User getUserById(UUID userId)
     {
         for (User cur : myManager.getUsers().getList()){
@@ -511,23 +553,21 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     }
 
     /**
-     * returns a list of all the players of the given table
+     * Get the list of all the players of the given table
      * @param tableID the UUID of the table to look for
-     * @return an arrayList of Userlight with all the players
+     * @return an ArrayList of UserLight with all the players
      */
     public ArrayList<UserLight> getPlayersByTable(UUID tableID){
-        // Inutile ?    ArrayList<UserLight> players = new ArrayList<UserLight>();
         Table current = getTableFromId(tableID);
         return current.getListPlayers().getListUserLights();
     }
 
     /**
-     * looks for the table with the corresponding UUID
-     * @param idTable the id to look for
-     * @return the table if found, else null
+     * Get a Table corresponding to a specific UUID
+     * @param idTable UUID id of the Table to look for
+     * @return Table if found, else null
      */
     public Table getTableFromId(UUID idTable){
-        // Inutile ?  Table wantedTable = null;
         ArrayList<Table> tableList = getTableList();
         for (Table cur : tableList){
             if (cur.getIdTable().equals(idTable))
@@ -536,13 +576,6 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         return null;
     }
 
-    /**
-     * asks all the players to give their max amount of money through server com
-     */
-    public void askMoneyMax(UUID idTable) {
-        Table toAsk = getTableFromId(idTable);
-       //TODO:integ5 myManager.getInterfaceToCom().askPlayersMoney(toAsk.getListPlayers().getListUserLights());
-    }
 
     /**
      * asks the player which action he wants to perform
@@ -555,16 +588,23 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         myManager.getInterfaceToCom().askActionToPLayer(table.getListPlayers().getListUserLights(),emptyAction,availableActions);
     }
 
-    public void updateStats(Game idGame){
-
+    /**
+     * Method to update the stats of the players that have played a Game
+     * @param idTable UUID id of the Table
+     * @param idGame UUID id of the Game that will be used to updated the Stats of the Users
+     */
+    public void updateStats(UUID idTable,UUID idGame){
     };
 
-    public ArrayList<Seat> endHand(Table idTable) {
-        return null;
-    }
 
-    /*
-     * Permet à com de transmettre les start money des utilisateurs pour validation ou refus, et sauvegarde coté server si validation
+    /**
+     * Method to notify the players about the money a Player decide to start with.
+     * It checks the amount if it is a valid amount then save it on the server else refuse it
+     * Allow Com module to transmit the startmoney of the users for validation or rejection, and save it on the server side if ok
+     * @param idTable UUID idTable
+     * @param user UserLight of the player who has decided of its amount
+     * @param startAmount Integer amount of money the player is going to start playing with
+     * @return true if the amount is valid, else false
      */
     public boolean setMoneyPlayer(UUID idTable, UserLight user, Integer startAmount){
         if(myManager.getTables().getTable(idTable).getCurrentGame().getMaxStartMoney()<startAmount && startAmount<myManager.getTables().getTable(idTable).getCurrentGame().getBlind()*2) {
@@ -581,13 +621,20 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
         }
     }
 
-    /*
-     * Permet à com de transmettre les ready answer des utilisateurs pour sauvegarde coté server
+    /**
+     * Method to save the ready answer of the players on the server
+     * @param idTable UUID id of the Table
+     * @param user UserLight of a player who send its answer
+     * @param answer Boolean answer of the player, true if he is ready to start the Game, else false
      */
     public void setReadyAnswer(UUID idTable, UserLight user, Boolean answer){
         myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().put(user,answer);
     }
 
+    /**
+     * Method to check if all the player of a Table are ready to start the Game
+     * @param idTable UUID id of a Table
+     */
     public void checkIfEverybodyIsReady(UUID idTable){
         //Si cet utilisateur est le dernier à répondre, lancer la partie
         if(myManager.getTables().getTable(idTable).getCurrentGame().getListSeatPlayerWithPeculeDepart().size()==myManager.getTables().getTable(idTable).getCurrentGame().getReadyUserAnswers().size())

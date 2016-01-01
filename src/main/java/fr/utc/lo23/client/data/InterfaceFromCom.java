@@ -467,4 +467,11 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
             dManagerClient.getInterToIHMMain().updateUserRemote(newProfileRemoteUser);
         }
     }
+
+    @Override
+    public void notifyCardsReceived() {
+        Console.log(TAG +"notifyCardsReceived()");
+        dManagerClient.getInterToIHMTable().notifySpectatorsCards();
+
+    }
 }

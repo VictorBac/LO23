@@ -29,7 +29,7 @@ public class AnswerIfReadyGameMessage extends Message {
         threadServer.getMyServer().getNetworkManager().getDataInstance().setReadyAnswer(tableId, player, answer);
 
         //Informe les autres joueurs de la table de la réponse du joueur
-        ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(tableId);
+        ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getUsersByTable(tableId);
         NotifyAnswerReadyGameMessage notifyAnswerToOthers = new NotifyAnswerReadyGameMessage(player, answer);
         threadServer.getMyServer().sendToListOfUsers(aPlayers,notifyAnswerToOthers);
 

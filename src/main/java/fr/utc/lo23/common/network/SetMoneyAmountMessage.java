@@ -27,7 +27,7 @@ public class SetMoneyAmountMessage extends Message {
         if(threadServer.getMyServer().getNetworkManager().getDataInstance().setMoneyPlayer(table,user,amount))
         {
             //Accepter et envoyer à tout le monde
-            ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(table);
+            ArrayList<UserLight> aPlayers = threadServer.getMyServer().getNetworkManager().getDataInstance().getUsersByTable(table);
             SetMoneyAmountMessage notifyAnswerToOthers = new SetMoneyAmountMessage(table,user,amount);
             threadServer.getMyServer().sendToListOfUsers(aPlayers,notifyAnswerToOthers);
         }

@@ -447,6 +447,15 @@ public class TableToDataListener implements ITableToDataListener {
         });
     }
 
+    @Override
+    public void notifySpectatorsCards() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                ihmtable.getTableController().notifyCardsForSpectator();}
+            });
+    }
+
     /*
      * Fonction à appeler après la fin normale d'un jeu
      * Permet à ihm-table d'afficher le gagnant et de clore la game

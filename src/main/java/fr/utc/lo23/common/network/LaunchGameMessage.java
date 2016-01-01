@@ -27,7 +27,7 @@ public class LaunchGameMessage extends Message {
         Console.log("Launch Game message received");
         if (myServ.getNetworkManager().getDataInstance().startGame(idTable, UserInit)) {
             LaunchGameMessage launchGameM = new LaunchGameMessage(idTable, UserInit);
-            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable), launchGameM);
+            myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getUsersByTable(idTable), launchGameM);
             AskMoneyMessage askMoneyMess = new AskMoneyMessage();
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable), askMoneyMess);
             System.out.println("accepte envoyé");

@@ -1341,4 +1341,55 @@ public class TableController {
     public ArrayList<PlayerController> getControllersList() {
         return controllersList;
     }
+
+    public void notifyCardsForSpectator() {
+        isGameLaunched = true;
+        int wait = 1;
+
+        if (numberCardsSet > 0) {
+            resetCommonCards();
+            potMoney.setText("0 €");
+            int waitanimfold = 1;
+            for (Map.Entry<UserLight, PlayerController> entry : playerControllerMap.entrySet()) {
+                if (entry.getValue().getCard1() != null && entry.getValue().getCard2() != null) {
+                    setPlayerFoldCardAnimation(entry.getValue().getCard1(), waitanimfold);
+                    setPlayerFoldCardAnimation(entry.getValue().getCard2(), waitanimfold + 30);
+                    waitanimfold += 80;
+                }
+            }
+
+            wait = 2000;
+        }
+
+        numberCardsSet = 0;
+
+        for (PlayerController playerController : controllersList) {
+            if (playerController != null) {
+                ImageView img1 = new ImageView();
+                img1.setVisible(false);
+                img1.setFitWidth(40);
+                img1.setFitHeight(60);
+                img1.setX(playerController.getNode().getLayoutX() + 85);
+                img1.setY(playerController.getNode().getLayoutY() + 30);
+                tablePane.getChildren().add(img1);
+                playerController.setCard1(img1);
+                setPlayerCardAnimation(img1, getBackCardImage(), wait);
+                wait += 200;
+            }
+        }
+        for (PlayerController playerController : controllersList) {
+            if (playerController != null) {
+                ImageView img2 = new ImageView();
+                img2.setVisible(false);
+                img2.setFitWidth(40);
+                img2.setFitHeight(60);
+                img2.setX(playerController.getNode().getLayoutX() + 130);
+                img2.setY(playerController.getNode().getLayoutY() + 30);
+                tablePane.getChildren().add(img2);
+                playerController.setCard2(img2);
+                setPlayerCardAnimation(img2, getBackCardImage(), wait);
+                wait += 200;
+            }
+        }
+    }
 }

@@ -233,4 +233,6 @@ public interface InterfaceDataFromCom {
      * @param newProfileRemoteUser UserLight with its modification
      */
     void profileRemoteUserChange( UserLight newProfileRemoteUser);
+
+    void notifyCardsReceived();
 }

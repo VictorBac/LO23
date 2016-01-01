@@ -197,4 +197,10 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
         NotifyEndGameMessage message = new NotifyEndGameMessage();
         server.sendToListOfUsers(aPlayers, message);
     }
+
+    @Override
+    public void notifyCardsSent(ArrayList<UserLight> listUserLights) {
+        NotifyCardsSentMessage message = new NotifyCardsSentMessage();
+        server.sendToListOfUsers(listUserLights, message);
+    }
 }

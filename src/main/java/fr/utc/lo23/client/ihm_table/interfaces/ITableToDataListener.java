@@ -149,4 +149,9 @@ public interface ITableToDataListener {
      */
     public void notifySuccessStartGame();
 
+    /*
+    * Fonction à appeler uniquement pour les spectateurs
+    * Permet à IHM-Table d'afficher le dos des cartes de tous les joueurs
+     */
+    void notifySpectatorsCards();
 }

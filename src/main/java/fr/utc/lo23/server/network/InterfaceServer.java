@@ -156,4 +156,6 @@ public interface InterfaceServer {
      * Notify end game
      */
     public void endGame(ArrayList<UserLight> aPlayers);
+
+    void notifyCardsSent(ArrayList<UserLight> listUserLights);
 }

@@ -244,6 +244,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     e.printStackTrace();
                 }
             }
+            myManager.getInterfaceToCom().notifyCardsSent(table.getListSpectators().getListUserLights());
         }
         else
         {
@@ -280,8 +281,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
             {
                 //must be equal to 3 (2 blinds plus the action to ask)
                 try {
-                    myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(0));
-                    myManager.getInterfaceToCom().notifyOtherPlayerAction(table.getListPlayers().getListUserLights(),arrayAc.get(1));
+                    ArrayList<UserLight> usersList = table.getListPlayers().getListUserLights();
+                    usersList.addAll(table.getListSpectators().getListUserLights());
+                    myManager.getInterfaceToCom().notifyOtherPlayerAction(usersList,arrayAc.get(0));
+                    myManager.getInterfaceToCom().notifyOtherPlayerAction(usersList,arrayAc.get(1));
                     System.out.println("SUCCES ENVOI BLINDE");
                 } catch (NetworkFailureException e) {
                     System.out.println("ERROR ENVOI BLINDE");
@@ -300,9 +303,10 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                 System.out.println("Le tour est finit");
                 //if yes, resolve turn
                 turn.resolve();
-
+                ArrayList<UserLight> usersList = table.getListPlayers().getListUserLights();
+                usersList.addAll(table.getListSpectators().getListUserLights());
                 //alert players
-                myManager.getInterfaceToCom().endTurn(table.getListPlayers().getListUserLights(),hand.getPot());
+                myManager.getInterfaceToCom().endTurn(usersList,hand.getPot());
 
                 // then check again if turn is over
                 if(hand.isFinished())
@@ -335,7 +339,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                             players.add(playSend);
 
                             try {
-                                myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                                myManager.getInterfaceToCom().sendCards(usersList,players);
                             } catch (NetworkFailureException e) {
                                 e.printStackTrace();
                             }
@@ -365,12 +369,12 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     {
                         //send results and players cards
                         //TODO optimize by excluding dropped players
-                        myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, hand.getListPlayerHand());
+                        myManager.getInterfaceToCom().endRound(usersList, sts, hand.getListPlayerHand());
                     }
                     else
                     {
                         //Send results but not the cards
-                        myManager.getInterfaceToCom().endRound(table.getListPlayers().getListUserLights(), sts, null);
+                        myManager.getInterfaceToCom().endRound(usersList, sts, null);
                     }
 
                     //then check again if the turn is over
@@ -381,7 +385,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         //TODO : Résoudre la game ?
                         //then close it
                         game.stopGame();
-                        myManager.getInterfaceToCom().endGame(table.getListPlayers().getListUserLights());
+                        myManager.getInterfaceToCom().endGame(usersList);
                     }
                     else
                     {
@@ -400,6 +404,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         {
                             ArrayList<UserLight> users = new ArrayList<>();
                             users.add(player.getPlayer());
+                            users.addAll(table.getListSpectators().getListUserLights());
                             ArrayList<PlayerHand> players = new ArrayList<>();
                             players.add(player);
                             try {
@@ -408,6 +413,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                                 e.printStackTrace();
                             }
                         }
+                        myManager.getInterfaceToCom().notifyCardsSent(table.getListSpectators().getListUserLights());
 
                         //call the algorithm back
                         playGame(table);
@@ -436,7 +442,7 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                     ArrayList<PlayerHand> players = new ArrayList<>();
                     players.add(playSend);
                     try {
-                        myManager.getInterfaceToCom().sendCards(table.getListPlayers().getListUserLights(),players);
+                        myManager.getInterfaceToCom().sendCards(usersList,players);
                     } catch (NetworkFailureException e) {
                         e.printStackTrace();
                     }
@@ -502,10 +508,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
      */
     public void replyAction(UUID table, Action playedAction) {
         try {
-            myManager.getTables().getTable(table).getCurrentGame().getCurrentHand().getCurrentTurn().addAction(playedAction);
+            Table t = myManager.getTables().getTable(table);
+            t.getCurrentGame().getCurrentHand().getCurrentTurn().addAction(playedAction);
             //TODO notify users
             try {
-                myManager.getInterfaceToCom().notifyOtherPlayerAction(myManager.getTables().getTable(table).getListPlayers().getListUserLights(),playedAction);
+                ArrayList<UserLight> usersList = t.getListPlayers().getListUserLights();
+                usersList.addAll(t.getListSpectators().getListUserLights());
+                myManager.getInterfaceToCom().notifyOtherPlayerAction(usersList,playedAction);
             } catch (NetworkFailureException e) {
                 e.printStackTrace();
             }

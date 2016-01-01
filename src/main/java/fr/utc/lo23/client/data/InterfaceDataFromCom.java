@@ -234,5 +234,8 @@ public interface InterfaceDataFromCom {
      */
     void profileRemoteUserChange( UserLight newProfileRemoteUser);
 
+    /**
+     * Method to notify spectators that cards have been distributed among players
+     */
     void notifyCardsReceived();
 }

@@ -468,7 +468,9 @@ public class InterfaceFromCom implements InterfaceDataFromCom{
         }
     }
 
-    @Override
+    /**
+     * Method to notify spectators that cards have been distributed among players
+     */
     public void notifyCardsReceived() {
         Console.log(TAG +"notifyCardsReceived()");
         dManagerClient.getInterToIHMTable().notifySpectatorsCards();

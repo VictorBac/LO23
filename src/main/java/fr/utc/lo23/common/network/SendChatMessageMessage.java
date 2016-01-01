@@ -2,6 +2,7 @@ package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
+import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.exceptions.network.IncorrectMessageOrRightsException;
@@ -31,9 +32,16 @@ import java.util.UUID;
 
             Console.log("SendChatMessage message received");
             try {
-                myServ.getNetworkManager().getDataInstance().saveMessageChat(tableConcerned,messageSend);
-                SendChatMessageMessage chatMessage = new SendChatMessageMessage(sender,messageSend,tableConcerned);
-                myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(tableConcerned),chatMessage);
+                //the message is not send only if the user is a spectator and the chat for spectator is not accepted on the table
+                if(myServ.getNetworkManager().getDataInstance().getTableFromId(tableConcerned).isAcceptChatSpectator()
+                        ||  !myServ.getNetworkManager().getDataInstance().getTableFromId(tableConcerned).determineTypeUser(sender).equals(EnumerationTypeOfUser.SPECTATOR)) {
+                    //the message can be send to other users and saved on the server
+                    myServ.getNetworkManager().getDataInstance().saveMessageChat(tableConcerned,messageSend);
+                    SendChatMessageMessage chatMessage = new SendChatMessageMessage(sender,messageSend,tableConcerned);
+                    myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getUsersByTable(tableConcerned),chatMessage);
+
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

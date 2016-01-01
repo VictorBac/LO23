@@ -7,6 +7,7 @@ import fr.utc.lo23.common.data.exceptions.UserNotFoundException;
 import fr.utc.lo23.common.network.AskMoneyMessage;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -570,6 +571,19 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
     public ArrayList<UserLight> getPlayersByTable(UUID tableID){
         Table current = getTableFromId(tableID);
         return current.getListPlayers().getListUserLights();
+    }
+
+    /**
+     * Get the list of all the players and spectator of the given table
+     * @param tableID the UUID of the table to look for
+     * @return an ArrayList of UserLight with all the players and Spectators
+     */
+    public ArrayList<UserLight> getUsersByTable(UUID tableID){
+        Table current = getTableFromId(tableID);
+        ArrayList<UserLight> listOfUser = new ArrayList<>();
+        listOfUser.addAll( current.getListPlayers().getListUserLights());
+        listOfUser.addAll( current.getListSpectators().getListUserLights());
+        return listOfUser;
     }
 
     /**

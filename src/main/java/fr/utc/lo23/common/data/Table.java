@@ -170,6 +170,19 @@ public class Table implements Serializable {
         return isAcceptSpectator();
     }
 
+    /**
+     * Method to determine the type of User in a Table
+     * @param userToDetermineType UserLight of the the user to determine his type spectator or player
+     * @return player or spectator or null if not found
+     */
+    public EnumerationTypeOfUser determineTypeUser(UserLight userToDetermineType){
+        EnumerationTypeOfUser userType =  null;
+        if(listPlayers.getListUserLights().contains(userToDetermineType))
+            userType = EnumerationTypeOfUser.PLAYER;
+        else if (listSpectators.getListUserLights().contains(userToDetermineType))
+            userType = EnumerationTypeOfUser.SPECTATOR;
+        return userType;
+    }
 
     /**
      * Add a new game in the table's games list

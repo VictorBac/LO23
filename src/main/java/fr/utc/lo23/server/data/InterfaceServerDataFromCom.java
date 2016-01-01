@@ -131,6 +131,13 @@ public interface InterfaceServerDataFromCom {
     ArrayList<UserLight> getPlayersByTable(UUID tableID);
 
     /**
+     * Get the list of all the players and spectator of the given table
+     * @param tableID the UUID of the table to look for
+     * @return an ArrayList of UserLight with all the players and Spectators
+     */
+    ArrayList<UserLight> getUsersByTable(UUID tableID);
+
+    /**
      * Method to update the stats of the players that have played a Game
      * @param idTable UUID id of the Table
      * @param idGame UUID id of the Game that will be used to updated the Stats of the Users

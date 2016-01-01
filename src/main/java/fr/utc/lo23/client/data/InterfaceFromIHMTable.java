@@ -173,17 +173,11 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
      * @return EnumerationTypeOfUser of the user given in parameter on the local Table, return null if not existing
      */
     private EnumerationTypeOfUser findTypeOfUserIsLocalPlayer(UserLight userToFindType){
-        EnumerationTypeOfUser typeOfLocalUser = null;
-        try {
-            if(dManagerClient.getTableLocal().getListPlayers().findUser(userToFindType.getIdUser())!=null)
-                typeOfLocalUser = EnumerationTypeOfUser.PLAYER;
-            else if(dManagerClient.getTableLocal().getListSpectators().findUser(userToFindType.getIdUser())!=null)
-                typeOfLocalUser = EnumerationTypeOfUser.SPECTATOR;
-        } catch (UserLightNotFoundException e) {
-            typeOfLocalUser = null;
-            e.printStackTrace();
-        }
-        return typeOfLocalUser;
+        if (dManagerClient.getTableLocal().getListPlayers().contains(userToFindType))
+            return EnumerationTypeOfUser.PLAYER;
+        if (dManagerClient.getTableLocal().getListSpectators().contains(userToFindType))
+            return EnumerationTypeOfUser.SPECTATOR;
+        return null;
     }
 
     /**

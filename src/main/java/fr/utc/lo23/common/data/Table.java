@@ -91,7 +91,7 @@ public class Table implements Serializable {
      */
     public void playerJoinTable(UserLight player) throws TableException {
         // number of players on the table < max number of players AND player not already in the table
-        if (checkConditionPlayerJoin() && !this.listPlayers.getListUserLights().contains(player)){
+        if (checkConditionPlayerJoin() && !this.listPlayers.contains(player)){
             this.listPlayers.getListUserLights().add(player);
             //Remove : the player is not added yet to the Game this.getCurrentGame().addPlayer(player);
         }
@@ -107,7 +107,7 @@ public class Table implements Serializable {
      */
     public void playerLeaveTable(UserLight player) throws  TableException{
         //if abandonAmiable = true and player already on the table
-        if(this.listPlayers.getListUserLights().contains(player) && this.abandonAmiable){
+        if(this.listPlayers.contains(player) && this.abandonAmiable){
             this.listPlayers.getListUserLights().remove(player);
             this.getCurrentGame().deletePlayer(player);
         }
@@ -137,7 +137,7 @@ public class Table implements Serializable {
      */
     public void spectatorJoinTable(UserLight spectator) throws TableException {
         //  spectator not on the table yet
-        if (checkConditionSpectatorJoin() && !this.listSpectators.getListUserLights().contains(spectator)){
+        if (checkConditionSpectatorJoin() && !this.listSpectators.contains(spectator)){
             this.listSpectators.getListUserLights().add(spectator);
             this.getCurrentGame().addSpectator(spectator);
         }
@@ -153,7 +153,7 @@ public class Table implements Serializable {
      */
     public void spectatorLeaveTable(UserLight spectator) throws TableException{
         //spectator already on the table
-        if(this.listSpectators.getListUserLights().contains(spectator)){
+        if(this.listSpectators.contains(spectator)){
             this.listSpectators.getListUserLights().remove(spectator);
             this.getCurrentGame().deleteSpectator(spectator);
         }
@@ -177,9 +177,9 @@ public class Table implements Serializable {
      */
     public EnumerationTypeOfUser determineTypeUser(UserLight userToDetermineType){
         EnumerationTypeOfUser userType =  null;
-        if(listPlayers.getListUserLights().contains(userToDetermineType))
+        if(listPlayers.contains(userToDetermineType))
             userType = EnumerationTypeOfUser.PLAYER;
-        else if (listSpectators.getListUserLights().contains(userToDetermineType))
+        else if (listSpectators.contains(userToDetermineType))
             userType = EnumerationTypeOfUser.SPECTATOR;
         return userType;
     }

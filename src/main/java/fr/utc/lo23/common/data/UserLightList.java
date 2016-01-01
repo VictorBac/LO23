@@ -83,6 +83,20 @@ public class UserLightList implements Serializable{
     }
 
     /**
+     * Search for a UserLight in listUserLight
+     * @param toFind UserLight of the user to find
+     * @return true if the user is in the list; else false
+     */
+    public boolean contains(UserLight toFind) {
+        try {
+            findUser(toFind.getIdUser());
+            return true;
+        } catch (UserLightNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
      * Removes a UserLight from the list
      * @param toRemove UserLight to remove
      * @throws UserLightNotFoundException thrown if no UserLight was found that corresponds to the UserLight

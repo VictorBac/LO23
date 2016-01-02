@@ -7,9 +7,6 @@ import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.FullTableException;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
 import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
-
-import java.net.InetAddress;
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,60 +15,67 @@ import java.util.UUID;
  * Created by Jianghan on 20-10-15.
  */
 public interface InterfaceDataFromIHMMain {
+
     /**
-     * Method to log in
-     * @param login
-     * @param password
+     * Connexion with login and password, call com interface
+     * @param login login of the user
+     * @param password password
+     * @param ip ip address
+     * @param port port number
+     * @throws Exception
      */
     void logUser(String login, String password, String ip, Integer port) throws Exception;
 
     /**
      * Method to get the user's all information
-     * @param userlight
+     * @param userlight get more information of the user
+     * @throws ProfileNotFoundOnServerException
+     * @throws NetworkFailureException
      */
     void getUser(UserLight userlight) throws ProfileNotFoundOnServerException, NetworkFailureException;
 
     /**
-     * Method to save new profile
-     * @param userLocal
+     * Write userLocal into the local data file
+     * @param userLocal save profile of the user to local data
      */
     void saveNewProfile(User userLocal) throws UserAlreadyExistsException;
 
     /**
-     * Method to update a profile
-     * @param userLocal
+     * Delete former user local and write the new userLocal into the local data file and notify the server
+     * @param userLocal local user
      * @throws NetworkFailureException
+     * @throws UserAlreadyExistsException
      */
     void updateProfile(User userLocal) throws NetworkFailureException, UserAlreadyExistsException;
 
     /**
-     * Methode to join a table with mode
-     * @param table
-     * @param mode
+     * join table with mode
+     * @param tableId table UUID
+     * @param mode mode number
      */
-    void joinTableWithMode(UUID table, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException;
+    void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException;
 
     /**
-     * Method to get UserList online
-     * @return User Light List
+     * Ask server to return UserLightList
+     * @throws NetworkFailureException
      */
     void getPlayerList() throws NetworkFailureException;
 
     /**
-     * Method to get TableList online
-     * @return Table List
+     * Ask server to return TableList
+     * @throws NetworkFailureException  Network Failure
      */
     void getTableList() throws NetworkFailureException;
 
     /**
      * Method to get saved game list
-     * @return
+     * @return table list
      */
     TableList getSavedGamesList();
 
     /**
-     * Method to play game on the table
-     * @param tableId
+     * Ask server to play a game.
+     * @param tableId tabe UUID
      */
     void playGame(UUID tableId) throws NetworkFailureException;
 
@@ -82,20 +86,20 @@ public interface InterfaceDataFromIHMMain {
 
     /**
      * Methode to get servers list
-     * @return
+     * @return server list
      */
     List<Server> getServersList();
 
     /**
-     * Methode to add server
-     * @param ip
-     * @param port
+     * Add server
+     * @param ip ip address
+     * @param port port number
      */
     void addServer(String ip, Integer port);
 
     /**
      * Method to remove server
-     * @param server
+     * @param server server
      */
     void removeServer(Server server);
 

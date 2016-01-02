@@ -10,17 +10,15 @@ import fr.utc.lo23.exceptions.network.ProfileNotFoundOnServerException;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
 /**
- * Created by Jianghan on 01-11-15.
+ * This is the interface which will be used by the IHM Main module on the client's side
+ * Created by Jianghan on 20-10-15.
  */
 public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
@@ -31,10 +29,14 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
     }
 
 
+
     /**
      * Connexion with login and password, call com interface
-     * @param login
-     * @param password
+     * @param login login of the user
+     * @param password password
+     * @param ip ip address
+     * @param port port number
+     * @throws Exception
      */
     public void logUser(String login, String password, String ip, Integer port) throws Exception {
         User userLocal = (User) Serialization.deserializationObject(Serialization.dirLocalSavedFiles + login);
@@ -63,7 +65,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Method to get the user's all information
-     * @param userlight
+     * @param userlight get more information of the user
      * @throws ProfileNotFoundOnServerException
      * @throws NetworkFailureException
      */
@@ -73,7 +75,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Write userLocal into the local data file
-     * @param userLocal
+     * @param userLocal save profile of the user to local data
      */
     public void saveNewProfile(User userLocal) throws UserAlreadyExistsException {
         String login = userLocal.getLogin();
@@ -86,7 +88,9 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Delete former user local and write the new userLocal into the local data file and notify the server
-     * @param userLocal
+     * @param userLocal local user
+     * @throws NetworkFailureException
+     * @throws UserAlreadyExistsException
      */
     public void updateProfile(User userLocal) throws NetworkFailureException, UserAlreadyExistsException {
         try {
@@ -98,10 +102,11 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
         saveNewProfile(userLocal);
         dManagerClient.getInterToCom().updateProfile(userLocal);
     }
+
     /**
-     *
-     * @param tableId
-     * @param mode
+     * join table with mode
+     * @param tableId table UUID
+     * @param mode mode number
      */
     public void joinTableWithMode(UUID tableId, EnumerationTypeOfUser mode) throws FullTableException, NetworkFailureException {
         System.out.println("ID TABLE REF: "+dManagerClient.getListTablesLocal().getTable(tableId));
@@ -110,7 +115,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Ask server to return UserLightList
-     * @return
+     * @throws NetworkFailureException
      */
     public void getPlayerList() throws NetworkFailureException {
         dManagerClient.getInterToCom().requestUserList();
@@ -126,7 +131,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Get local saved game list.
-     * @return
+     * @return table list
      */
     public TableList getSavedGamesList() {
         return (TableList)Serialization.deserializationObject(
@@ -135,7 +140,7 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Ask server to play a game.
-     * @param tableId
+     * @param tableId tabe UUID
      */
     public void playGame(UUID tableId) throws NetworkFailureException {
         dManagerClient.getInterToCom().requestPlayGame(dManagerClient.getUserLocal().getUserLight(), tableId);
@@ -165,8 +170,8 @@ public class InterfaceFromIHMMain implements InterfaceDataFromIHMMain{
 
     /**
      * Add server
-     * @param ip
-     * @param port
+     * @param ip ip address
+     * @param port port number
      */
     public void addServer(String ip, Integer port) {
         ArrayList<Server> listServers = dManagerClient.getListServers();

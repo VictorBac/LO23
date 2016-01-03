@@ -21,69 +21,138 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * Controller for the Main Window
  * Created by jbmartin on 18/11/15.
  */
 public class MainWindowController extends BaseController {
 
+    /**
+     * ObservableList of UserLight which represents the connected users
+     */
     private ObservableList<UserLight> connectedUsers;
 
+    /**
+     * ObservableList of UserLight which represents the players on a table
+     */
     private ObservableList<UserLight> playersInGame;
 
+    /**
+     * ObservableList of UserLight which represents the spectators on a table
+     */
     private ObservableList<UserLight> spectatorsInGame;
 
+    /**
+     * ListView of UserLight which displays the connected users
+     */
     @FXML
     public ListView<UserLight> listViewConnectedUsers;
 
+    /**
+     * ListView of UserLight which displays the players on a table
+     */
     @FXML
     private ListView<UserLight> listViewPlayersInGame;
 
+    /**
+     * ListView of UserLight which displays the spectators on a table
+     */
     @FXML
     private ListView<UserLight> listViewSpectatorsInGame;
 
+    /**
+     * TableView of Table which displays the current tables on the server
+     */
     @FXML
     private TableView<Table> tableViewCurrentTables;
 
+    /**
+     * TableColumn of Table and String which displays various strings about a table. (Used in the above TableView)
+     */
     @FXML
     private TableColumn<Table, String> columnTableCreator, columnTableName, columnTablePlayers, columnTableSpectators;
 
+    /**
+     * TableColumn of Table and Integer which displays the ante of the table
+     */
     @FXML
     private TableColumn<Table, Integer> columnTableMise;
 
+    /**
+     * ListView of Table which represents the saved tables
+     */
     @FXML
     public ListView<Table> listViewSavedTables;
 
+    /**
+     * Pane which displays a game
+     */
     @FXML
     private Pane gamePane;
 
+    /**
+     * AnchorPane which displays the above ListViews
+     */
     @FXML
     private AnchorPane listPane;
 
+    /**
+     * Pane which displays a profile
+     */
     @FXML
     private Pane profilePane;
 
+    /**
+     * ObservableList of Table which represents current tables
+     */
     private ObservableList<Table> tablesList;
 
+    /**
+     * ObservableList of Table which represents saved tables
+     */
     private ObservableList<Table> tablesSavedList;
 
+    /**
+     * Accordion which manages ListViews of users
+     */
     @FXML
     private Accordion accordionList;
 
+    /**
+     * TitledPane which contains the ListView of connected users
+     */
     @FXML
     private TitledPane tpPlayersConnected;
 
+    /**
+     * TitledPane which contains the ListView of players on a table
+     */
     @FXML
     private TitledPane tpPlayersInGame;
 
+    /**
+     * TitledPane which contains the ListView of spectators on a table
+     */
     @FXML
     private TitledPane tpSpectatorsInGame;
 
+    /**
+     * FileChooser which handles the export action of the current profile
+     */
     private FileChooser profileChooser;
 
+    /**
+     * Constant used to define a double click
+     */
     private static final int DOUBLE_CLICK = 2;
 
-    // Boolean pour savoir si le joueur est en partie ou pas
+    /**
+     * Boolean which represents if the current user is in game (yes=true;no=false)
+     */
     private boolean inGame = false;
 
+    /**
+     * Function used to initialize our JavaFX elements (called automatically)
+     */
     public void initialize() {
 
         columnTableCreator.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getCreator().getPseudo()));
@@ -174,11 +243,18 @@ public class MainWindowController extends BaseController {
         accordionList.setExpandedPane(tpPlayersConnected);
     }
 
+    /**
+     * Function used to display "View Own Profile" window
+     */
     @FXML
     public void openViewOwnProfil() {
         mController.showViewOwnWindow();
     }
 
+    /**
+     * Function used to show "View a distant profile" window
+     * @param list ListView of UserLight we want to attach this function
+     */
     public void showOtherProfile(ListView<UserLight> list) {
         if (list.getSelectionModel().getSelectedItem() != null) {
             profilePane.setVisible(true);
@@ -189,6 +265,9 @@ public class MainWindowController extends BaseController {
         }
     }
 
+    /**
+     * Function used to show the gamePane and hide others.
+     */
     @FXML
     public void createTable() {
         gamePane.setVisible(true);
@@ -201,6 +280,10 @@ public class MainWindowController extends BaseController {
         inGame = true;
     }
 
+    /**
+     * Function used when a user wants to join a table (by double-click or pressed "Rejoindre" button)
+     * @param mode EnumerationTypeOfUser the user wants to enter on the table
+     */
     public void joinTableAction(EnumerationTypeOfUser mode) {
         if (tableViewCurrentTables.getSelectionModel().getSelectedItem() != null) {
             try {
@@ -218,17 +301,27 @@ public class MainWindowController extends BaseController {
         }
     }
 
+    /**
+     * Function used to join a table as a player (see above)
+     */
     @FXML
     public void joinTableAsPlayer() {
         joinTableAction(EnumerationTypeOfUser.PLAYER);
     }
 
+    /**
+     * Function used to join a table as a spectator (see above)
+     */
     @FXML
     public void joinTableAsSpectator() {
         joinTableAction(EnumerationTypeOfUser.SPECTATOR);
     }
 
-
+    /**
+     * Function used after a positive response of the server for a join action
+     * @param t Instance of the table the user wants to join
+     * @param e EnumerationTypeOfUser the user wants to join
+     */
     public void joinAcceptedTable(Table t, EnumerationTypeOfUser e) {
         gamePane.setVisible(true);
         gamePane.setDisable(false);
@@ -254,10 +347,18 @@ public class MainWindowController extends BaseController {
         inGame = true;
     }
 
+    /**
+     * Function used after a negative response of the server after a join action
+     * Show a popup
+     */
     public void joinRefusedTable() {
         mController.showErrorPopup("Impossible de rejoindre la table");
     }
 
+    /**
+     * Function used after a positive response of the server for a table creation
+     * @param t Instance of the table the user created
+     */
     public void joinCreatedTable(Table t) {
         playersInGame = FXCollections.observableArrayList(t.getListPlayers().getListUserLights());
         spectatorsInGame = FXCollections.observableArrayList(t.getListSpectators().getListUserLights());
@@ -272,12 +373,19 @@ public class MainWindowController extends BaseController {
         inGame = true;
     }
 
+    /**
+     * Function used to refresh the ListView of connected users
+     * @param users List of UserLight which contains the connected users
+     */
     public void setConnectedUsers(List<UserLight> users) {
         connectedUsers = FXCollections.observableArrayList(users);
         listViewConnectedUsers.setItems(connectedUsers);
         listViewConnectedUsers.refresh();
     }
 
+    /**
+     * Function used to handle an export profile action
+     */
     @FXML
     public void exportProfil() {
         File file = profileChooser.showSaveDialog(tableViewCurrentTables.getScene().getWindow());
@@ -286,6 +394,10 @@ public class MainWindowController extends BaseController {
         }
     }
 
+    /**
+     * Function used to refresh the TableView of current tables
+     * @param tables List of Table which represents the current tables
+     */
     public void setTables(List<Table> tables) {
         tablesList = FXCollections.observableArrayList(tables);
         tableViewCurrentTables.setItems(tablesList);
@@ -294,6 +406,9 @@ public class MainWindowController extends BaseController {
         tableViewCurrentTables.getColumns().get(0).setVisible(true);
     }
 
+    /**
+     * Function used after an action on the "Quit" button
+     */
     @FXML
     public void clickQuit() {
         try {
@@ -304,6 +419,9 @@ public class MainWindowController extends BaseController {
         Platform.exit();
     }
 
+    /**
+     * Function called after a "View distant profile" window to display the correct pane
+     */
     public void backFromViewProfile() {
         profilePane.setVisible(false);
         if (inGame) {
@@ -316,6 +434,9 @@ public class MainWindowController extends BaseController {
         }
     }
 
+    /**
+     * Function called after the local user quits a table to display the correct pane
+     */
     public void backFromGame() {
         gamePane.setVisible(false);
         gamePane.setDisable(true);
@@ -330,6 +451,11 @@ public class MainWindowController extends BaseController {
         accordionList.setExpandedPane(tpPlayersConnected);
     }
 
+    /**
+     * Function called when a distant user join the local table to add him to the ListViews
+     * @param userWhoJoinTheTable UserLight of the user who joins the table
+     * @param typeOfUserWhoJoinTable EnumerationTypeOfUser of the user who joins the table
+     */
     public void userJoinTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable) {
         if (typeOfUserWhoJoinTable.equals(EnumerationTypeOfUser.PLAYER)) {
             playersInGame.add(userWhoJoinTheTable);
@@ -342,6 +468,11 @@ public class MainWindowController extends BaseController {
         }
     }
 
+    /**
+     * Function called when a distant user left the local table to remove him from the ListViews
+     * @param userLightLeavingGame UserLight of the user who left the table
+     * @param typeOfUserWhoLeftTable EnumerationTypeOfUser of the user who left the table
+     */
     public void userLeftTableLocal(UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable) {
         if (typeOfUserWhoLeftTable.equals(EnumerationTypeOfUser.PLAYER)) {
             playersInGame.remove(userLightLeavingGame);

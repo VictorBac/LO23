@@ -17,36 +17,67 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 /**
+ * Controller used to handle creation of a local profile
  * Created by leclercvictor on 01/12/2015.
  */
 public class CreateController extends BaseController {
 
+    /**
+     * TextField which represents the username
+     */
     @FXML
     private javafx.scene.control.TextField username;
 
+    /**
+     * TextField which represents the first name
+     */
     @FXML
     private javafx.scene.control.TextField firstname;
 
+    /**
+     * TextField which represents the last name
+     */
     @FXML
     private javafx.scene.control.TextField lastname;
 
+    /**
+     * TextField which represents the age of the user
+     */
     @FXML
     private javafx.scene.control.TextField age;
 
+    /**
+     * TextField which represents the email address
+     */
     @FXML
     private javafx.scene.control.TextField email;
 
+    /**
+     * PasswordField which represents the password of the user
+     */
     @FXML
     private PasswordField password;
 
+    /**
+     * PasswordField to confirm the above password
+     */
     @FXML
     private PasswordField repassword;
 
+    /**
+     * ImageView which displays a preview of the avatar
+     */
     @FXML
     private javafx.scene.image.ImageView imageviewer;
 
+    /**
+     * FileChooser which handles selection of the avatar
+     */
     private FileChooser avatarChooser;
 
+    /**
+     * Absolute path to the avatar chosen
+     */
     private String imagePath;
     /**
      * Create a new user, the User need to have filled the nickname, his age, and his password

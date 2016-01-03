@@ -7,8 +7,15 @@ package fr.utc.lo23.client.ihm_main.controllers;
  */
 public abstract class BaseController {
 
+    /**
+     * Instance of the MainControllerClient which manages Controllers and the IHMMainClientManager
+     */
     protected MainControllerClient mController;
 
+    /**
+     * Setter of the instance of the MainControllerClient
+     * @param controllerMain instance of the MainControllerClient
+     */
     public void setMainController(MainControllerClient controllerMain) {
         this.mController = controllerMain;
     }

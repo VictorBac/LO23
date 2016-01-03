@@ -8,9 +8,16 @@ import javafx.scene.control.TextField;
  * Created by jbmartin on 07/12/2015.
  */
 public class AddServerController extends BaseController{
+
+    /**
+     * TextField which represents the IP Address of the server on the GUI
+     */
     @FXML
     private TextField fieldIPAddress;
 
+    /**
+     * TextField which represents the port of the server on the GUI
+     */
     @FXML
     private TextField fieldPort;
 

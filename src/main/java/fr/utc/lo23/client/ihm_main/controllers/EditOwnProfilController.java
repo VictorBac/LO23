@@ -22,31 +22,62 @@ import java.net.URISyntaxException;
  * Created by leclercvictor on 08/12/2015.
  */
 public class EditOwnProfilController extends BaseController {
+
+    /**
+     * TextField which represents the username
+     */
     @FXML
     private TextField username;
 
+    /**
+     * PasswordField which represents the former password
+     */
     @FXML
     private PasswordField oldPassword;
 
+    /**
+     * PasswordField which represents the new password
+     */
     @FXML
     private PasswordField newPassword;
 
+    /**
+     * TextField which represents the age of the user
+     */
     @FXML
     private TextField age;
 
+    /**
+     * TextField which represents the email address
+     */
     @FXML
     private TextField email;
 
+    /**
+     * ImageView which displays a preview of the avatar
+     */
     @FXML
     private ImageView imageviewer;
 
+    /**
+     * TextField which represents the first name of the user
+     */
     @FXML
     private TextField firstname;
 
+    /**
+     * TextField which represents the last name of the user
+     */
     @FXML
     private TextField lastname;
 
+    /**
+     * FileChooser which handles the selection of the avatar
+     */
     private FileChooser avatarChooser;
+    /**
+     * Absolute path to the avatar chosen
+     */
     private String imagePath;
 
     /**
@@ -67,7 +98,7 @@ public class EditOwnProfilController extends BaseController {
      * then we call our function to fill the user's information
      */
     public void initdata(){
-        User edituser = mController.getManagerMain().getManagerData().getUserLocal();
+        User edituser = mController.getManagerMain().getInterDataToMain().getLocalUserProfile();
         fillUserform(edituser);
     }
 

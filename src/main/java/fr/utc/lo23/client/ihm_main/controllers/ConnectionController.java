@@ -25,28 +25,48 @@ import java.util.ArrayList;
  * Created by jbmartin on 04/11/15.
  */
 public class ConnectionController extends BaseController {
+    /**
+     * AnchorPane of the window
+     */
     @FXML
     private AnchorPane bgimage;
 
+    /**
+     * ObservableList which contains servers
+     */
     private ObservableList<Server> serverList;
 
+    /**
+     * Button for the connection action
+     */
     @FXML
     private Button buttonConnect;
 
+    /**
+     * TextField which represents the username
+     */
     @FXML
     public TextField fieldUsername;
 
+    /**
+     * TextField which represents the password of the user
+     */
     @FXML
     public PasswordField fieldPassword;
 
+    /**
+     * ListView which represents informations on servers
+     */
     @FXML
     public ListView<Server> listViewServers;
 
+    /**
+     * FileChooser which handles the import of a local profile
+     */
     private FileChooser profileChooser;
 
     /**
      * Start the connection with the server
-     * @throws IOException
      */
 
 
@@ -54,7 +74,7 @@ public class ConnectionController extends BaseController {
     /** On a click to connect, we start our function that manage it
      *
      */
-    public void didButtonConnectClick() throws IOException {
+    public void didButtonConnectClick() {
         sendAction();
     }
 
@@ -178,6 +198,10 @@ public class ConnectionController extends BaseController {
         }
     }
 
+    /**
+     * The login action has been refused by the server for a reason
+     * @param reason The reason why the login action has been refused
+     */
     public void loginRefused(String reason) {
         buttonConnect.setDisable(false);
         mController.showErrorPopup("Vous avez été rejeté par le serveur\n Raison: "+reason);

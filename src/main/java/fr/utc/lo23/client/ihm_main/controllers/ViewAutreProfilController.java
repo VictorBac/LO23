@@ -11,26 +11,46 @@ import javafx.scene.image.ImageView;
 import java.io.IOException;
 
 /**
+ * Controller of the "View Distant Profile" action
  * Created by leclercvictor on 08/12/2015.
  */
 public class ViewAutreProfilController extends BaseController {
+    /**
+     * Label which represents the username
+     */
     @FXML
     private Label labelPlayer;
 
+    /**
+     * Label which represents the age
+     */
     @FXML
     private Label labelAge;
 
+    /**
+     * Label which represents the stats
+     */
     @FXML
     private Label labelStats;
 
+    /**
+     * ImageView which displays a preview of the avatar
+     */
     @FXML
     private ImageView imageviewer;
 
+    /**
+     * Called after a click on the "Back" button
+     */
     @FXML
     public void didClickBackButton() {
         mController.getMainWindowController().backFromViewProfile();
     }
 
+    /**
+     * Function called after the initialization of the window to fill the window
+     * @param profilautre UserLight of the user we want to display information about
+     */
     public void initdata(UserLight profilautre) {
         labelPlayer.setText(profilautre.getPseudo());
         try {
@@ -49,6 +69,10 @@ public class ViewAutreProfilController extends BaseController {
         }
     }
 
+    /**
+     * Function called after a response of the server about the user we want to display information about
+     * @param profileReturnedByTheServer Full user profile of the user we want to display information about
+     */
     public void setFullData(User profileReturnedByTheServer) {
         if (profileReturnedByTheServer != null) {
             labelAge.setText(Integer.toString(profileReturnedByTheServer.getAge()));

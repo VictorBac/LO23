@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Manager of IHM-Main
  * Created by leclercvictor on 24/11/2015.
  */
 public class IHMMainClientManager {
 
     /**
-     * Nos interfaces
+     * Interfaces
      */
     private InterfaceMainToData interMainToData;
     private InterfaceMainToTable interMainToTable;
@@ -47,12 +48,20 @@ public class IHMMainClientManager {
 
     // Attributs privés
 
-    private ConnectionController controllerConnection;
     private MainControllerClient controllerMain;
 
+    /**
+     * List of UserLight which contains the connected users
+     */
     private List<UserLight> connectedUsers;
+    /**
+     * List of Table which contains the current tables
+     */
     private List<Table> tables;
 
+    /**
+     * Default constructor
+     */
     public IHMMainClientManager() {
 
         //Création des managers
@@ -78,6 +87,10 @@ public class IHMMainClientManager {
 
     }
 
+    /**
+     * Getter for connected users list
+     * @return the list of connected users
+     */
     public List<UserLight> getConnectedUsers() {
         if (connectedUsers == null) {
             connectedUsers = new ArrayList<>();
@@ -85,11 +98,19 @@ public class IHMMainClientManager {
         return connectedUsers;
     }
 
+    /**
+     * Setter for connected users list and refresh ListViews
+     * @param connectedUser the list of connected users
+     */
     public void setConnectedUsers(List<UserLight> connectedUser) {
         this.connectedUsers = connectedUser;
         updateMainWindowConnectedUsersList();
     }
 
+    /**
+     * Add a connected user to the list of connected users and refresh ListViews
+     * @param u UserLight of the user we want to add
+     */
     public void addConnectedUser(UserLight u) {
         if (!this.connectedUsers.contains(u)) {
             this.connectedUsers.add(u);
@@ -97,12 +118,19 @@ public class IHMMainClientManager {
         updateMainWindowConnectedUsersList();
     }
 
-
+    /**
+     * Remove a connected user from the list of connected users and refresh ListViews
+     * @param u UserLight of the user we want to remove
+     */
     public void removeConnectedUser(UserLight u) {
         this.connectedUsers.remove(u);
         updateMainWindowConnectedUsersList();
     }
 
+    /**
+     * Getter for current tables list
+     * @return List of Table of current tables
+     */
     public List<Table> getTables() {
         if (tables == null) {
             tables = new ArrayList<>();
@@ -110,11 +138,19 @@ public class IHMMainClientManager {
         return tables;
     }
 
+    /**
+     * Setter for current tables list and refresh ListViews.
+     * @param listTables List of Table of current tables
+     */
     public void setTables(List<Table> listTables) {
         this.tables = listTables;
         updateMainWindowTableList();
     }
 
+    /**
+     * Add a table to the current tables list and refresh ListViews.
+     * @param table Table we want to add
+     */
     public void addTable(Table table) {
         if (!tables.contains(table)) {
             tables.add(table);
@@ -122,18 +158,21 @@ public class IHMMainClientManager {
         updateMainWindowTableList();
     }
 
+    /**
+     * Remove a table from the current tables list and refresh ListViews.
+     * @param table Table we want to remove
+     */
     public void removeTable(Table table) {
         if (tables.contains(table)) {
             tables.remove(table);
         }
         updateMainWindowTableList();
     }
-    //Getters et setters de nos interfaces
 
-    public InterfaceMainToData getInterMainToData() {
-        return interMainToData;
-    }
-
+    /**
+     * Getter for InterfaceMainToTable
+     * @return interMainToTable
+     */
     public InterfaceMainToTable getInterMainToTable() {
         return interMainToTable;
     }
@@ -141,10 +180,18 @@ public class IHMMainClientManager {
 
     //Getters et setters des interfaces à récupérer
 
+    /**
+     * Getter for InterfaceDataFromIHMMain
+     * @return interDataToMain
+     */
     public InterfaceDataFromIHMMain getInterDataToMain() {
         return interDataToMain;
     }
 
+    /**
+     * Getter for ITableToMainListener
+     * @return interTableToMain
+     */
     public ITableToMainListener getInterTableToMain() {
         return interTableToMain;
     }
@@ -164,20 +211,11 @@ public class IHMMainClientManager {
         return managerData;
     }
 
-
-
-
-
-    //Getters et setters de nos attributs privés
-
-
-    public ConnectionController getControllerConnection() throws NullPointerException {
-        if (controllerConnection == null) {
-            throw  new NullPointerException("controllerConnection is NULL");
-        }
-        return controllerConnection;
-    }
-
+    /**
+     * Getter for the MainControllerClient instance
+     * @return MainControllerClient instance
+     * @throws NullPointerException when the MainControllerClient is null
+     */
     public MainControllerClient getControllerMain() throws NullPointerException {
         if (controllerMain == null) {
             throw new NullPointerException("controllerMain is NULL");
@@ -185,25 +223,28 @@ public class IHMMainClientManager {
         return controllerMain;
     }
 
-    public void setControllerConnection(ConnectionController controllerConnection) {
-        this.controllerConnection = controllerConnection;
-    }
-
+    /**
+     * Setter for the MainControllerClient
+     * @param controllerMain MainControllerClient instance
+     */
     public void setControllerMain(MainControllerClient controllerMain) {
         this.controllerMain = controllerMain;
     }
 
 
-
-
-
-
+    /**
+     * Update ListView of connected users on the main window if needed
+     */
     private void updateMainWindowConnectedUsersList () {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
             Platform.runLater(() -> mainWinController.setConnectedUsers(getConnectedUsers()));
         }
     }
+
+    /**
+     * Update TableView of current tables on the main window if needed
+     */
     private void updateMainWindowTableList() {
         MainWindowController mainWinController = getControllerMain().getMainWindowController();
         if (mainWinController != null) {
@@ -211,6 +252,10 @@ public class IHMMainClientManager {
         }
     }
 
+    /**
+     * Update a specific table in the List of current tables and refresh TableView
+     * @param tableTheUserhaveleft Table we want to update
+     */
     public void updateTable(Table tableTheUserhaveleft) {
         tables.removeIf(table -> table.getIdTable().equals(tableTheUserhaveleft.getIdTable()));
         updateMainWindowTableList();
@@ -218,6 +263,10 @@ public class IHMMainClientManager {
         updateMainWindowTableList();
     }
 
+    /**
+     * Update a specific remote user in the List of connected users and refresh Listview
+     * @param newProfileRemoteUser UserLight of the user we want to update
+     */
     public void updateConnectedUser(UserLight newProfileRemoteUser) {
         connectedUsers.removeIf(user -> user.getIdUser().equals(newProfileRemoteUser.getIdUser()));
         updateMainWindowConnectedUsersList();

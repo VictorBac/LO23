@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
+/**
+ * This is a controller used for tests
+ */
 public class MainController {
 
 	IHMTable ihmTable;

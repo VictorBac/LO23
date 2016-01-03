@@ -170,6 +170,9 @@ public class TableController {
             btnLaunchGame.setVisible(true);
     }
 
+    /**
+     * Initialize chat messages
+     */
     public void chatInitializer(){
         for(MessageChat msg : table.getCurrentGame().getChatGame().getListMessages())
         {
@@ -196,6 +199,10 @@ public class TableController {
 
     }*/
 
+    /**
+     * Returns first available seat for player
+     * @return
+     */
     public int getFirstAvailableSeat() {
         for(int ite = 0; ite < table.getNbPlayerMax(); ++ite) {
             if(controllersList.get(ite) == null) {
@@ -208,10 +215,19 @@ public class TableController {
         return -1;
     }
 
+    /**
+     * Remove player from table
+     * @param user
+     */
     public void removePlayer(UserLight user){
         removePlayer(user, true);
     }
 
+    /**
+     * Remove player from table
+     * @param user
+     * @param showLog
+     */
     public void removePlayer(UserLight user, boolean showLog) {
         PlayerController playerController = getPlayerControllerOf(user);
         if(playerController == null) {
@@ -233,6 +249,9 @@ public class TableController {
         playerController.destroyGraphic();
     }
 
+    /**
+     * Remove empty seats and place players around table
+     */
     public void reorderPlayers(){
         //On vire les sièges vides
         controllersList.removeAll(Collections.singleton(null));

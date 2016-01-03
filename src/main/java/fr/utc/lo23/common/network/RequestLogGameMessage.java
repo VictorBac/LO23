@@ -10,6 +10,7 @@ import fr.utc.lo23.server.network.threads.PokerServer;
 
 /**
  * Created by raphael on 15/12/15.
+ * Ask the server to log the game
  */
 public class RequestLogGameMessage extends Message {
 
@@ -37,6 +38,6 @@ public class RequestLogGameMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 }

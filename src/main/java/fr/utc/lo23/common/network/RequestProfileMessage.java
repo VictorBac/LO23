@@ -7,6 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by rbonneau on 25/11/2015.
+ * Request a chosen profile to the server (we only have the userlight first)
  */
 public class RequestProfileMessage extends Message {
 
@@ -23,6 +24,6 @@ public class RequestProfileMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 }

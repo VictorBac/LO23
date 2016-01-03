@@ -9,7 +9,7 @@ import java.util.UUID;
 
 /**
  * Created by Jean-Côme on 11/12/2015.
- * Notifie aux autres joueurs qu'un joueur a quitté la table
+ * Notifies the other players that a player left the tables
  */
 public class NotifyPlayerLeftTableMessage extends Message {
 

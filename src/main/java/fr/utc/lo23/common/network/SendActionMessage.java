@@ -7,7 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 import java.util.UUID;
 
 /**
- * Message permettant d'envoyer au serveur l'action d'un joueur
+ * Send the action of a player to the server
  * Created by rbonneau on 11/12/2015.
  */
 public class SendActionMessage extends Message {
@@ -29,6 +29,6 @@ public class SendActionMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 }

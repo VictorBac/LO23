@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jean-Côme on 24/11/2015.
+ * Ask the table currently created on the server
  */
 public class RequestListTableMessage extends Message {
 
@@ -18,10 +19,6 @@ public class RequestListTableMessage extends Message {
 
     }
 
-    /**
-     *
-     * @param threadServer
-     */
     @Override
     public void process (ConnectionThread threadServer){
         PokerServer myServ = threadServer.getMyServer();
@@ -31,13 +28,9 @@ public class RequestListTableMessage extends Message {
         threadServer.send(listTableMess);
     }
 
-    /**
-     * Client-side process
-     * @param threadClient
-     */
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 
 }

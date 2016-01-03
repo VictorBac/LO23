@@ -7,7 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by Jean-Côme on 10/12/2015.
- * Notifie les joueurs qu'une table a été créée
+ * Notifies the other players that a new table has been created
  */
 public class NotifyNewTableMessage extends Message {
 

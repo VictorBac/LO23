@@ -12,7 +12,7 @@ import java.util.UUID;
 
 /**
  * Created by Jean-Côme on 01/12/2015.
- * Demande de connection a une table par un user
+ * When a user ask to join a table
  */
 public class RequestJoinTableMessage extends Message {
     private UserLight user;
@@ -54,6 +54,6 @@ public class RequestJoinTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a server-side usage (yet)
     }
 }

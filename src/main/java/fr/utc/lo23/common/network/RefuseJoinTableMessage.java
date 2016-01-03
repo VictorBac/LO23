@@ -9,6 +9,7 @@ import java.util.UUID;
 
 /**
  * Created by Jean-Côme on 01/12/2015.
+ * Unable to join a table
  */
 public class RefuseJoinTableMessage extends Message {
     private EnumerationTypeOfUser mode;
@@ -21,7 +22,7 @@ public class RefuseJoinTableMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

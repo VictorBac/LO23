@@ -4,8 +4,7 @@ import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message permettant de prévenir les joueurs
- * qu'un nouveau tour va commencer
+ * Notifies the other players taht a new turn is beginning
  * Created by rbonneau on 18/12/2015.
  */
 public class NotifyNewTurnMessage extends Message {

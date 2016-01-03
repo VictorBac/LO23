@@ -15,8 +15,7 @@ import fr.utc.lo23.server.network.threads.PokerServer;
 import java.util.ArrayList;
 
 /**
- * Message permettant de demander au serveur si la
- * connection est possible
+ * Ask the server if the user can loggin
  * Created by rbonneau on 14/11/2015.
  */
 public class RequestLoginMessage extends Message {
@@ -82,13 +81,9 @@ public class RequestLoginMessage extends Message {
         }
     }
 
-    /**
-     * Client-side process
-     * @param threadClient
-     */
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 
     /**

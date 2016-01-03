@@ -9,8 +9,7 @@ import fr.utc.lo23.server.network.threads.PokerServer;
 import java.util.ArrayList;
 
 /**
- * Message permettant de demander au serveur si la
- * connection est possible
+ * Ask the players list to the server
  * Created by rbonneau on 14/11/2015.
  */
 public class RequestListUserMessage extends Message {
@@ -33,7 +32,7 @@ public class RequestListUserMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 
 }

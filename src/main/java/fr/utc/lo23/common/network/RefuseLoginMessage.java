@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Created by rbonneau on 15/11/2015.
+ * The player can't loggin to the server
  */
 public class RefuseLoginMessage extends Message {
 
@@ -16,18 +17,11 @@ public class RefuseLoginMessage extends Message {
         this.reason = reason;
     }
 
-    /**
-     * For message processed server-side
-     * @param threadServer
-     */
     @Override
     public void process (ConnectionThread threadServer){
+        //No need for a server-side usage (yet)
     }
 
-    /**
-     * Client-side process
-     * @param threadClient
-     */
     @Override
     public void process(ServerLink threadClient) {
         threadClient.getNetworkManager().getDataInstance().refuseLogin(reason);

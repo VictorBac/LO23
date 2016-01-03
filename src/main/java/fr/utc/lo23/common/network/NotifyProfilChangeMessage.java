@@ -7,6 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by Jean-Côme on 29/12/2015.
+ * Notifies a porofile change
  */
 public class NotifyProfilChangeMessage extends Message {
 
@@ -18,7 +19,7 @@ public class NotifyProfilChangeMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

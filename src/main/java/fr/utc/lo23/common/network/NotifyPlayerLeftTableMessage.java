@@ -9,6 +9,7 @@ import java.util.UUID;
 
 /**
  * Created by Jean-Côme on 11/12/2015.
+ * Notifie aux autres joueurs qu'un joueur a quitté la table
  */
 public class NotifyPlayerLeftTableMessage extends Message {
 
@@ -25,7 +26,7 @@ public class NotifyPlayerLeftTableMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

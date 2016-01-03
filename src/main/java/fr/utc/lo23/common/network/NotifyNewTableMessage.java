@@ -7,6 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by Jean-Côme on 10/12/2015.
+ * Notifie les joueurs qu'une table a été créée
  */
 public class NotifyNewTableMessage extends Message {
 
@@ -17,7 +18,7 @@ public class NotifyNewTableMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

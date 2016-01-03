@@ -10,7 +10,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 public class AskMoneyMessage extends Message {
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

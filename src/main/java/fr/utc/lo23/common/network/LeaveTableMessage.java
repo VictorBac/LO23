@@ -33,6 +33,6 @@ public class LeaveTableMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 }

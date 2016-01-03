@@ -19,7 +19,7 @@ public class NotifyEndTurnMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-        //threadServer.getMyServer().getNetworkManager().getDataInstance().endTurnConfirmation();//TODO éclaircir s'il y a usage côté serveur
+        //No need for a server-side usage (yet)
     }
 
     @Override

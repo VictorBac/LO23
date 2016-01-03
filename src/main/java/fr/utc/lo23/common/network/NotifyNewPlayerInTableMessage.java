@@ -25,7 +25,7 @@ public class NotifyNewPlayerInTableMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

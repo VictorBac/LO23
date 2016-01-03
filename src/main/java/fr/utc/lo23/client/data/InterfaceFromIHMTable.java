@@ -37,8 +37,6 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
             //initialize local table
             dManagerClient.setTableLocal(table);
             dManagerClient.getInterToCom().createTable(getUser(),table);
-        } catch (NetworkFailureException e) {
-            e.printStackTrace();
         } catch (TooManyTablesException e) {
             e.printStackTrace();
         }
@@ -110,8 +108,6 @@ public class InterfaceFromIHMTable implements InterfaceDataFromIHMTable {
     public void replyAction(Action action) {
         try {
             dManagerClient.getInterToCom().sendAction(action,dManagerClient.getTableLocal().getIdTable());
-        } catch (NetworkFailureException e) {
-            e.printStackTrace();
         } catch (IncorrectActionException e) {
             e.printStackTrace();
         }

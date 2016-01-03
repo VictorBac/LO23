@@ -34,7 +34,7 @@ public interface InterfaceClient {
      *  Consult a profile
      * @param  u Profil we want to see
      */
-    public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException;
+    public void consultProfile(UserLight u) throws ProfileNotFoundOnServerException;
 
     /**
      * Table  creation
@@ -43,7 +43,7 @@ public interface InterfaceClient {
      * @throws NetworkFailureException
      * @throws TooManyTablesException
      */
-    public void createTable(UserLight maker, Table t) throws NetworkFailureException, TooManyTablesException;
+    public void createTable(UserLight maker, Table t) throws TooManyTablesException;
     
     /**
      *  Change made on your profile
@@ -64,7 +64,7 @@ public interface InterfaceClient {
      * @param userLocal User to join
      * @param tableToJoin Table to join
      */
-    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException;
+    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws FullTableException;
         
     /**
      * HeartBeat
@@ -79,7 +79,7 @@ public interface InterfaceClient {
      * @throws NetworkFailureException
      * @throws IncorrectActionException
      */
-    public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException;
+    public void sendAction(Action act, UUID IdTable) throws IncorrectActionException;
     
     /**
      * User leaves a table
@@ -99,7 +99,7 @@ public interface InterfaceClient {
      * @throws NetworkFailureException
      * @throws IncorrectFileException
      */
-    public void launchSavedGame() throws NetworkFailureException,IncorrectFileException;
+    public void launchSavedGame() throws IncorrectFileException;
 
     /**
      * Login to the server

@@ -55,7 +55,6 @@ public class NetworkManagerClient implements InterfaceClient  {
         }
         //Send the login request to the server
         RequestLoginMessage reqLog = new RequestLoginMessage(u);
-        //Console.log("requestelog"+reqLog.getUser().toString());
         serverLink.send(reqLog);
         Console.log("RequestLoginMessage envoyé");
     }
@@ -77,14 +76,14 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     @Override
-    public void consultProfile(UserLight u) throws NetworkFailureException, ProfileNotFoundOnServerException {
+    public void consultProfile(UserLight u) throws ProfileNotFoundOnServerException {
         Console.log("Creation d'un Request Profile message\n");
         RequestProfileMessage reqProf = new RequestProfileMessage(u);
         serverLink.send(reqProf);
     }
 
     @Override
-    public void createTable(UserLight maker, Table tabletoCreate) throws NetworkFailureException, TooManyTablesException {
+    public void createTable(UserLight maker, Table tabletoCreate) throws TooManyTablesException {
         Console.log("Creation d'un Send New Table message\n");
         CreateTableMessage createTableMsg = new CreateTableMessage(maker, tabletoCreate);
         serverLink.send(createTableMsg);
@@ -98,7 +97,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     @Override
-    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws NetworkFailureException, FullTableException {
+    public void joinTable(UserLight userLocal, UUID tableToJoin, EnumerationTypeOfUser mode) throws FullTableException {
         Console.log("Tentative de connection à une table");
         RequestJoinTableMessage requestJoinTableMes = new RequestJoinTableMessage(userLocal,tableToJoin,mode);
         serverLink.send(requestJoinTableMes);
@@ -106,13 +105,12 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     @Override
     public void sendHeartbeat() throws NetworkFailureException {
-        //Console.log("Creation d'un Heartbeat message\n");
         HeartbeatMessage message = new HeartbeatMessage();
         serverLink.send(message);
     }
 
     @Override
-    public void sendAction(Action act, UUID IdTable) throws NetworkFailureException, IncorrectActionException {
+    public void sendAction(Action act, UUID IdTable) throws IncorrectActionException {
         SendActionMessage actMsg = new SendActionMessage(act, IdTable);
         serverLink.send(actMsg);
     }
@@ -157,7 +155,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     @Override
     public void notifyAnswerAskReadyGame(UUID table, UserLight player, boolean answer) {
         AnswerIfReadyGameMessage answerM = new AnswerIfReadyGameMessage(table, player, answer);
-        System.out.println("Envoi ready à server");
+        Console.log("Envoi ready à server");
         serverLink.send(answerM);
     }
 
@@ -190,7 +188,7 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     @Override
-    public void launchSavedGame() throws NetworkFailureException, IncorrectFileException {
+    public void launchSavedGame() throws IncorrectFileException {
 
     }
 

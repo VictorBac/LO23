@@ -28,6 +28,7 @@ public class AcceptLoginMessage extends Message{
      */
     @Override
     public void process (ConnectionThread threadServer){
+        //No need for a server-side usage (yet)
     }
 
     /**
@@ -49,10 +50,6 @@ public class AcceptLoginMessage extends Message{
         dataInterface.acceptLogin();
         dataInterface.currentConnectedUser(usersArray);
         dataInterface.currentTables(tablesArray);
-        /*Console.log("liste User reçu");
-        for(UserLight u:usersArray){
-            Console.log(u.toString());
-        }*/
     }
 
 }

@@ -4,7 +4,6 @@ import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.UserLight;
-import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**

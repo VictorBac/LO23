@@ -10,23 +10,24 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
+ * Message to launch the game
  * Created by raphael on 30/11/15.
  */
 public class LaunchGameMessage extends Message {
     private UUID idTable;
-    private UserLight UserInit;
+    private UserLight userInit;
 
     public LaunchGameMessage(UUID idTable,UserLight u) {
         this.idTable = idTable;
-        this.UserInit = u;
+        this.userInit = u;
     }
 
     @Override
     public void process(ConnectionThread threadServer) {
         PokerServer myServ = threadServer.getMyServer();
         Console.log("Launch Game message received");
-        if (myServ.getNetworkManager().getDataInstance().startGame(idTable, UserInit)) {
-            LaunchGameMessage launchGameM = new LaunchGameMessage(idTable, UserInit);
+        if (myServ.getNetworkManager().getDataInstance().startGame(idTable, userInit)) {
+            LaunchGameMessage launchGameM = new LaunchGameMessage(idTable, userInit);
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getUsersByTable(idTable), launchGameM);
             AskMoneyMessage askMoneyMess = new AskMoneyMessage();
             myServ.sendToListOfUsers(threadServer.getMyServer().getNetworkManager().getDataInstance().getPlayersByTable(idTable), askMoneyMess);
@@ -34,7 +35,7 @@ public class LaunchGameMessage extends Message {
         } else {
             RefuseStartGameMessage refuseStartGameM = new RefuseStartGameMessage();
             ArrayList<UserLight> temp = new ArrayList<>();
-            temp.add(UserInit);
+            temp.add(userInit);
             myServ.sendToListOfUsers(temp, refuseStartGameM);
             System.out.println("refus envoyé");
         }

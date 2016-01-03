@@ -6,6 +6,7 @@ import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
+ * Message to create a table server-side
  * Created by rbonneau on 25/11/2015.
  */
 public class CreateTableMessage extends Message {
@@ -13,7 +14,9 @@ public class CreateTableMessage extends Message {
     private UserLight maker;
     private Table newTable;
 
-    public CreateTableMessage(UserLight u, Table t) {maker = u; newTable=t;}
+    public CreateTableMessage(UserLight u, Table t) {
+        maker = u; newTable=t;
+    }
 
     @Override
     public void process(ConnectionThread threadServer) {

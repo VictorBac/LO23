@@ -2,8 +2,6 @@ package fr.utc.lo23.client.network;
 
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.*;
-
-import java.net.InetAddress;
 import java.util.UUID;
 
 /**

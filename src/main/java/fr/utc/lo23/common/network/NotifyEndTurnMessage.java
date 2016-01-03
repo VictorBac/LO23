@@ -1,12 +1,10 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
-import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message pour informer les joueurs
- * de la fin d'un tour
+ * Informs the players the end of the turn
  * Created by rbonneau on 11/12/2015.
  */
 public class NotifyEndTurnMessage extends Message {

@@ -13,7 +13,9 @@ public class RequestProfileMessage extends Message {
 
     private UserLight profile;
 
-    public RequestProfileMessage(UserLight u) {profile=u;}
+    public RequestProfileMessage(UserLight u) {
+        profile=u;
+    }
 
     @Override
     public void process(ConnectionThread threadServer) {

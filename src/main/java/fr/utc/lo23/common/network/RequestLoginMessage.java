@@ -8,7 +8,6 @@ import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.common.data.exceptions.ExistingUserException;
 import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
-import fr.utc.lo23.server.network.NetworkManagerServer;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 

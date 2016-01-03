@@ -5,8 +5,6 @@ import fr.utc.lo23.common.data.Action;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
-import java.util.ArrayList;
-
 /**
  * Created by Jean-Côme on 21/12/2015.
  * Transmits the action of a player

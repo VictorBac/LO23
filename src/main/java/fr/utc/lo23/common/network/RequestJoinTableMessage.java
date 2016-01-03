@@ -6,8 +6,6 @@ import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
-
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**

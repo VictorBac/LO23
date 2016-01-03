@@ -7,8 +7,6 @@ package fr.utc.lo23.server.network;
 
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.exceptions.network.NetworkFailureException;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.UUID;
 

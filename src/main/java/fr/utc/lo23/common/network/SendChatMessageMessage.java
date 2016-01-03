@@ -5,7 +5,6 @@ import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.EnumerationTypeOfUser;
 import fr.utc.lo23.common.data.MessageChat;
 import fr.utc.lo23.common.data.UserLight;
-import fr.utc.lo23.exceptions.network.IncorrectMessageOrRightsException;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 

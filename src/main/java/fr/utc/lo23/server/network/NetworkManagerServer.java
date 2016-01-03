@@ -102,8 +102,8 @@ public class NetworkManagerServer implements InterfaceServer,InterfaceComToMain{
 
     @Override
     public void notifyDisconnection(User distantUser) throws NetworkFailureException {
-        NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(distantUser);
-        server.sendToAll(NotifyD);
+        NotifyDisconnectionMessage notifyD = new NotifyDisconnectionMessage(distantUser);
+        server.sendToAll(notifyD);
     }
 
     @Override

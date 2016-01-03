@@ -1,7 +1,6 @@
 package fr.utc.lo23.common.network;
 
 import fr.utc.lo23.client.network.threads.ServerLink;
-import fr.utc.lo23.common.data.User;
 import fr.utc.lo23.common.data.UserLight;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 

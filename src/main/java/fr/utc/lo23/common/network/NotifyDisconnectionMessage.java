@@ -4,20 +4,19 @@ package fr.utc.lo23.common.network;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.User;
-import fr.utc.lo23.common.data.exceptions.UserNotFoundException;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 import fr.utc.lo23.server.network.threads.PokerServer;
 
 /**
+ * Message to notify the disconnection
  * Created by raphael on 17/11/15.
- * Message unique pour la déconnection. Le traitement sera juste différencié par le serveur et le client.
  */
 public class NotifyDisconnectionMessage extends Message {
 
 private User u;
 
-    public NotifyDisconnectionMessage(User u_init) {
-        u = u_init;
+    public NotifyDisconnectionMessage(User uInit) {
+        u = uInit;
     }
 
     /**

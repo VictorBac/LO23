@@ -13,9 +13,9 @@ import java.util.ArrayList;
  */
 public class SendListTableMessage extends Message {
 
-    private ArrayList<Table> TableList;
+    private ArrayList<Table> tableList;
     public SendListTableMessage(ArrayList<Table> tables) {
-        TableList=tables;
+        tableList=tables;
     }
 
 
@@ -28,7 +28,7 @@ public class SendListTableMessage extends Message {
     @Override
     public void process(ServerLink threadClient) {
         Console.logn("Envoi des tables disponibles");
-        threadClient.getNetworkManager().getDataInstance().currentTables(TableList);
-        Console.logn(TableList+"Envoyée");
+        threadClient.getNetworkManager().getDataInstance().currentTables(tableList);
+        Console.logn(tableList+"Envoyée");
     }
 }

@@ -10,7 +10,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -124,5 +123,6 @@ public class ServerLink extends Thread {
 
 
     /* ============================ GETTERS AND SETTERS ============================ */
-    public NetworkManagerClient getNetworkManager() { return networkManager; }
+    public NetworkManagerClient getNetworkManager() { return networkManager;
+    }
 }

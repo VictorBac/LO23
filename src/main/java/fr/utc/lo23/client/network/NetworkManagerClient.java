@@ -1,15 +1,11 @@
 package fr.utc.lo23.client.network;
 
-import fr.utc.lo23.client.data.DataManagerClient;
 import fr.utc.lo23.client.data.InterfaceDataFromCom;
 import fr.utc.lo23.client.network.main.Console;
 import fr.utc.lo23.client.network.threads.ServerLink;
 import fr.utc.lo23.common.data.*;
 import fr.utc.lo23.common.network.*;
 import fr.utc.lo23.exceptions.network.*;
-import fr.utc.lo23.server.data.InterfaceServerDataFromCom;
-
-import java.net.InetAddress;
 import java.util.UUID;
 
 /**
@@ -110,14 +106,14 @@ public class NetworkManagerClient implements InterfaceClient  {
     }
 
     @Override
-    public void sendAction(Action act, UUID IdTable) throws IncorrectActionException {
-        SendActionMessage actMsg = new SendActionMessage(act, IdTable);
+    public void sendAction(Action act, UUID idTable) throws IncorrectActionException {
+        SendActionMessage actMsg = new SendActionMessage(act, idTable);
         serverLink.send(actMsg);
     }
 
     @Override
-    public void leaveTable(UserLight userLocal, UUID IdTable, EnumerationTypeOfUser type) throws NetworkFailureException {
-        LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,IdTable,type);
+    public void leaveTable(UserLight userLocal, UUID idTable, EnumerationTypeOfUser type) throws NetworkFailureException {
+        LeaveTableMessage leaveT = new LeaveTableMessage(userLocal,idTable,type);
         serverLink.send(leaveT);
     }
 
@@ -169,15 +165,15 @@ public class NetworkManagerClient implements InterfaceClient  {
     @Override
     public void LaunchGame(UUID idTable, UserLight userInit) throws NetworkFailureException {
         Console.log("Creation d'un LaunchGame message\n");
-        LaunchGameMessage LGMess = new LaunchGameMessage(idTable,userInit);
-        serverLink.send(LGMess);
+        LaunchGameMessage lgMess = new LaunchGameMessage(idTable,userInit);
+        serverLink.send(lgMess);
     }
 
     @Override
     public void notifyDisconnection(User maker) throws NetworkFailureException {
         Console.log("Creation d'un notifyDisconnection message\n");
-        NotifyDisconnectionMessage NotifyD = new NotifyDisconnectionMessage(maker);
-        serverLink.send(NotifyD);
+        NotifyDisconnectionMessage notifyD = new NotifyDisconnectionMessage(maker);
+        serverLink.send(notifyD);
     }
 
      /* =========================================== EMPTY METHODS =========================================== */

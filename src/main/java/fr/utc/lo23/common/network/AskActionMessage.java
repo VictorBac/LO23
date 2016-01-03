@@ -6,9 +6,7 @@ import fr.utc.lo23.common.data.EnumerationAction;
 import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
- * Message permettant de demander à un joueur
- * quelle sera son action parmis la liste
- * proposée
+ * Ask a player which action he wants to perform
  * Created by raphael on 15/12/15.
  */
 public class AskActionMessage extends Message{

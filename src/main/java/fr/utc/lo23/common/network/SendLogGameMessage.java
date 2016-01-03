@@ -7,6 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by raphael on 15/12/15.
+ * Sends the log of the game to a players
  */
 public class SendLogGameMessage extends Message {
 
@@ -18,7 +19,7 @@ public class SendLogGameMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

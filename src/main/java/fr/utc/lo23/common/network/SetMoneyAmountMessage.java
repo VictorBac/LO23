@@ -9,6 +9,7 @@ import java.util.UUID;
 
 /**
  * Created by Jean-Côme on 14/12/2015.
+ * Set the money amount for a player
  */
 public class SetMoneyAmountMessage extends Message {
     UUID table;

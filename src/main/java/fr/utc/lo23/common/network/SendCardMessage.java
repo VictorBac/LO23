@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Created by raphael on 22/12/15.
+ * Send the new hand to the player
  */
 public class SendCardMessage extends Message {
 
@@ -19,7 +20,7 @@ public class SendCardMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

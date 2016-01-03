@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jean-Côme on 21/12/2015.
+ * Transmits the action of a player
  */
 public class TransmitActionMessage extends Message {
     private Action act;
@@ -20,7 +21,7 @@ public class TransmitActionMessage extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a client-side usage (yet)
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jean-Côme on 16/11/2015.
+ * Sends the list of users
  */
 public class SendListUserMessage extends Message {
 
@@ -17,19 +18,11 @@ public class SendListUserMessage extends Message {
         userList=users;
     }
 
-    /**
-     * Check if we can login in the server, and send a confirmation (or not ?)
-     * @param threadServer
-     */
     @Override
     public void process (ConnectionThread threadServer){
-
+        //No need for a server-side usage (yet)
     }
 
-    /**
-     * Client-side process
-     * @param threadClient
-     */
     @Override
     public void process(ServerLink threadClient) {
         Console.logn("Envoi de la table");

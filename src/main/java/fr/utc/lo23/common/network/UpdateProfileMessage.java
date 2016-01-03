@@ -6,6 +6,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by rbonneau on 25/11/2015.
+ * Sends the user's updated profile to the server
  */
 public class UpdateProfileMessage extends Message {
 
@@ -20,6 +21,6 @@ public class UpdateProfileMessage extends Message {
 
     @Override
     public void process(ServerLink threadClient) {
-
+        //No need for a client-side usage (yet)
     }
 }

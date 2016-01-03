@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Jean-Côme on 24/11/2015.
+ * Sends the list of table
  */
 public class SendListTableMessage extends Message {
 
@@ -17,19 +18,13 @@ public class SendListTableMessage extends Message {
         TableList=tables;
     }
 
-    /**
-     *
-     * @param threadServer
-     */
+
     @Override
     public void process (ConnectionThread threadServer){
-
+        //No need for a server-side usage (yet)
     }
 
-    /**
-     * Client-side process
-     * @param threadClient
-     */
+
     @Override
     public void process(ServerLink threadClient) {
         Console.logn("Envoi des tables disponibles");

@@ -13,6 +13,7 @@ import java.util.UUID;
 
 /**
  * Created by raphael on 24/11/15.
+ * Sends the new chat message to the other players
  */
 
     public class SendChatMessageMessage extends Message {

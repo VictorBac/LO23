@@ -7,6 +7,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 
 /**
  * Created by rbonneau on 01/12/2015.
+ * Sends the requested profile to the one who asked it
  */
 
 public class SendRequestedProfileMessage  extends Message {
@@ -18,7 +19,7 @@ public class SendRequestedProfileMessage  extends Message {
 
     @Override
     public void process(ConnectionThread threadServer) {
-
+        //No need for a server-side usage (yet)
     }
 
     @Override

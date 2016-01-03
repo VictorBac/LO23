@@ -39,11 +39,8 @@ public class RequestJoinTableMessage extends Message {
             threadServer.send(accept);
             //TODO : Informer le serveur qu'un client vient de se connecter a la table. Manque une interface?
             NotifyNewPlayerInTableMessage notifNewPlayTable = new NotifyNewPlayerInTableMessage(user,idTab,mode);
-            //Test d'envoi seulement à la liste des joueurs concernés.
-            /*for(UserLight user:myServ.getNetworkManager().getDataInstance().getPlayersByTable(idTab))
-            {
-                System.out.println(user);
-            }*/
+
+
             myServ.sendToAll(notifNewPlayTable);
             //myServ.sendToListOfUsers(myServ.getNetworkManager().getDataInstance().getPlayersByTable(idTab),notifNewPlayTable);
          }else {

@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class TransmitActionMessage extends Message {
     private Action act;
     private UserLight user;
-    public TransmitActionMessage(Action a, UserLight user) {
+    public TransmitActionMessage(Action a, UserLight u) {
         this.act=a;
-        this.user = user;
+        this.user = u;
     }
 
     @Override

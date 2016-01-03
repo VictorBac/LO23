@@ -15,12 +15,10 @@ import java.util.ArrayList;
 public class RequestListUserMessage extends Message {
 
     public RequestListUserMessage() {
+        //Empty constructor
     }
 
-    /**
-     * Send the list of connected users to concerned thread.
-     * @param threadServer
-     */
+
     @Override
     public void process (ConnectionThread threadServer){
         PokerServer myServ = threadServer.getMyServer();

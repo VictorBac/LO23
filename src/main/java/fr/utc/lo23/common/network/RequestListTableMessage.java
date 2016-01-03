@@ -16,7 +16,7 @@ public class RequestListTableMessage extends Message {
 
 
     public RequestListTableMessage() {
-
+        //Empty constructor
     }
 
     @Override

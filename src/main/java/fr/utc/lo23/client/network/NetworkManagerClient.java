@@ -184,41 +184,41 @@ public class NetworkManagerClient implements InterfaceClient  {
 
     @Override
     public void sendProfile(User u) throws NetworkFailureException {
-
+        //To be continued
     }
 
     @Override
     public void launchSavedGame() throws IncorrectFileException {
-
+        //To be continued
     }
 
     @Override
     public void sendPacket() throws NetworkFailureException {
-
+        //To be continued
     }
 
     @Override
     public void requestUserStats(UserLight userLocal) throws NetworkFailureException {
-
+        //To be continued
     }
 
     @Override
     public void askStopGame() throws NetworkFailureException {
-
+        //To be continued
     }
 
     @Override
     public void requestPlayGame(UserLight userLocal, UUID tableId) throws NetworkFailureException {
-
+        //To be continued
     }
 
     @Override
     public void transmitRequestServer(UserLight player) {
-
+        //To be continued
     }
 
     @Override
     public void replayAction(Action action, UserLight player) {
-
+        //To be continued
     }
 }

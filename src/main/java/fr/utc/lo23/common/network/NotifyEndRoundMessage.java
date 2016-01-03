@@ -8,8 +8,7 @@ import fr.utc.lo23.server.network.threads.ConnectionThread;
 import java.util.ArrayList;
 
 /**
- * Message pour informer les joueurs
- * de la fin d'une manche
+ * Inform the players that the current round has ended
  * Created by rbonneau on 18/12/2015.
  */
 public class NotifyEndRoundMessage extends Message {

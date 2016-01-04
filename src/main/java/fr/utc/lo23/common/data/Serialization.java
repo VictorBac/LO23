@@ -8,7 +8,7 @@ import java.io.*;
  */
 public class Serialization {
     private final String TAG ="Serialization";
-    public static final String dirLocalSavedFiles ="./tmp/";
+    public static final String dirLocalSavedFiles ="C:/Users/Public/";
     public static final String pathSavedGame ="SavedGame";
     public static final String pathServerList ="ServerList";
 

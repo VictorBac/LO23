@@ -23,7 +23,7 @@ public class PlayerView {
     public PlayerController createPlayer(Pane root,UserLight user,Point2D coords,Image defaultImage) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../fxml/PlayerBox.fxml"));
+            loader.setLocation(getClass().getResource("/fr/utc/lo23/client/ihm_table/fxml/PlayerBox.fxml"));
             node = (Node) loader.load();
             root.getChildren().add(node);
             PlayerController playerController = (PlayerController) loader.getController();

@@ -15,7 +15,7 @@ public class FormView {
     public void createForm(Pane root,IHMTable ihmTable) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../fxml/tableForm.fxml"));
+            loader.setLocation(getClass().getResource("/fr/utc/lo23/client/ihm_table/fxml/tableForm.fxml"));
             root.getChildren().setAll((Node) loader.load());
             FormController formController = (FormController) loader.getController();
             formController.setInterface(ihmTable);

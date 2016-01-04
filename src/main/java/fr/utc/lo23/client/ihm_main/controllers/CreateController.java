@@ -160,7 +160,7 @@ public class CreateController extends BaseController {
         avatarChooser = new FileChooser();
         avatarChooser.setTitle("Choix de l'avatar");
         try {
-            imagePath = getClass().getResource("../ui/avatar.jpg").toURI().getPath();
+            imagePath = getClass().getResource("/fr/utc/lo23/client/ihm_main/ui/avatar.jpg").toURI().getPath();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

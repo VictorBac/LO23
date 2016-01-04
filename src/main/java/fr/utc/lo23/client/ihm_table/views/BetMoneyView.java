@@ -18,7 +18,7 @@ public class BetMoneyView {
     public BetMoneyController createBetMoneyBox(Pane root,Point2D coords) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../fxml/BetMoneyPlayerBox.fxml"));
+            loader.setLocation(getClass().getResource("/fr/utc/lo23/client/ihm_table/fxml/BetMoneyPlayerBox.fxml"));
             node = (Node) loader.load();
             root.getChildren().add(node);
             BetMoneyController betMoneyController = (BetMoneyController) loader.getController();

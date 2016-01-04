@@ -78,24 +78,74 @@ public interface InterfaceMainToData {
     void userJoinedTableRemote(Table t, UserLight user, EnumerationTypeOfUser type);
 
     /**
-     * 
-     * @param tableTheUserhaveleft
-     * @param userLightLeavingGame
-     * @param typeOfUserWhoLeftTable
+     * This method is called when a user joins a remote table
+     * @param tableTheUserhaveleft table the user has just left
+     * @param userLightLeavingGame user that left the game
+     * @param typeOfUserWhoLeftTable type of the user
      */
     void userLeftTableRemote(Table tableTheUserhaveleft,UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable);
+
+    /**
+     * This method is called when a user joins a local table
+     * @param tableTheUserhaveleft table the user has just left
+     * @param userLightLeavingGame user that left the game
+     * @param typeOfUserWhoLeftTable type of the user
+     */
     void userLeftTableLocal(Table tableTheUserhaveleft,UserLight userLightLeavingGame, EnumerationTypeOfUser typeOfUserWhoLeftTable);
+
+    /**
+     * This method is called when a remote user stats have been updated
+     * @param user the user whom stats have been updated
+     * @param st updated stats of the user
+     */
     void userStatsUpdated(UserLight user, Stats st);
+
+    /**
+     * This method is called when a table join request is accepted
+     * @param t table joined
+     * @param type type of user
+     */
     void tableJoinAccepted(Table t, EnumerationTypeOfUser type);
+
+    /**
+     * This method is called when a table join request is refused
+     * @param t table wanted to join
+     */
     void tableJoinRefused(Table t);
+
+    /**
+     * This method is called when a remote user's profile data have been retrieved
+     * @param profileReturnedByTheServer user's profile data
+     */
     void profileRemoteUserFromServer(User profileReturnedByTheServer);
 
+    /**
+     * This method is called when a table is successfully created on the server
+     * @param tableCreatedOnServer table created
+     */
     void tableCreated(Table tableCreatedOnServer);
 
+    /**
+     * This method is called when a user joins a local table
+     * @param userWhoJoinTheTable user who joined the table
+     * @param typeOfUserWhoJoinTable type of the user
+     */
     void userJoinedTableLocal(UserLight userWhoJoinTheTable, EnumerationTypeOfUser typeOfUserWhoJoinTable);
 
+    /**
+     * This method is called when the user is successfully logged in
+     */
     void notifyLoginAccepted();
+
+    /**
+     * This method is called when the user login is refused
+     * @param reason reason of the login failure
+     */
     void notifyLoginRefused(String reason);
 
+    /**
+     * This method is called when the profile of the user has been successfully updated on the server
+     * @param newProfileRemoteUser
+     */
     void updateUserRemote(UserLight newProfileRemoteUser);
 }

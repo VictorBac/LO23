@@ -110,14 +110,8 @@
             </TitledPane>
             <Pane fx:id="commonCardPane" layoutX="377.0" layoutY="177.0" prefHeight="95.0" prefWidth="266.0">
                <children>
-                  <ImageView fx:id="commonCardFlop1" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false">
-                     <image>
-                        <Image url="@../images/cards/clubs_2.png" />
-                     </image></ImageView>
-                  <ImageView fx:id="commonCardFlop2" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="43.0">
-                     <image>
-                        <Image url="@../images/cards/clubs_3.png" />
-                     </image></ImageView>
+                  <ImageView fx:id="commonCardFlop1" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" />
+                  <ImageView fx:id="commonCardFlop2" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="43.0" />
                   <ImageView fx:id="commonCardFlop3" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="86.0" />
                   <ImageView fx:id="commonCardTurn" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" smooth="false" x="129.0" />
                   <ImageView fx:id="commonCardRiver" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" x="172.0" />

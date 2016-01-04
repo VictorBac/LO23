@@ -289,7 +289,6 @@ public class Hand implements Serializable{
     }
 
     /**
-<<<<<<< HEAD
      * Method that checks if the Hand is finished
      * @return true if the Turn id finished (4 Turn were played or no more player is active)
      */
@@ -466,9 +465,9 @@ public class Hand implements Serializable{
 
                 Integer moneyToReduce = playerMoneyBet.get(player);
                 for (Map.Entry<UserLight, Integer> entry : tempHash.entrySet()) {
-                    playerMoneyBet.replace(entry.getKey(), playerMoneyBet.get(entry.getKey()) - maxWin);
+                    playerMoneyBet.replace(entry.getKey(), playerMoneyBet.get(entry.getKey()) - moneyToReduce);
                     System.out.println("Il reste "+playerMoneyBet.get(entry.getKey())+"€ de gagnable à "+entry.getKey().getPseudo());
-                    if (playerMoneyBet.get(entry.getKey()) - moneyToReduce <= 0)
+                    if (playerMoneyBet.get(entry.getKey()) <= 0)
                         playerMoneyBet.remove(entry.getKey());
                 }
             }

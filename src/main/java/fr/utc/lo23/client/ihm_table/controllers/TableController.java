@@ -83,7 +83,7 @@ public class TableController {
     public TableController(){
         playerControllerMap = new HashMap<UserLight,PlayerController>();
         betMoneyControllerMap = new HashMap<UserLight,BetMoneyController>();
-        defaultImage = new Image(getClass().getResource("../images/default.png").toExternalForm());
+        defaultImage = new Image(getClass().getResource("/fr/utc/lo23/client/ihm_table/images/default.png").toExternalForm());
 
         lastRaise = 0;
     }
@@ -1167,7 +1167,7 @@ public class TableController {
      * @return
      */
     public Image getImageFromCard(Card card){
-        return new Image(getClass().getResource("../images/cards/"+card.getSymbol().toString().toLowerCase()+"s_"+card.getValue().toString()+".png").toExternalForm());
+        return new Image(getClass().getResource("/fr/utc/lo23/client/ihm_table/images/cards/"+card.getSymbol().toString().toLowerCase()+"s_"+card.getValue().toString()+".png").toExternalForm());
     }
 
     /**
@@ -1175,11 +1175,11 @@ public class TableController {
      * @return
      */
     public Image getBackCardImage(){
-        return new Image(getClass().getResource("../images/cards/back.png").toExternalForm());
+        return new Image(getClass().getResource("/fr/utc/lo23/client/ihm_table/images/cards/back.png").toExternalForm());
     }
 
     public Image getJetonsImage(){
-        return new Image(getClass().getResource("../images/moneyBetPlayer.png").toExternalForm());
+        return new Image(getClass().getResource("/fr/utc/lo23/client/ihm_table/images/moneyBetPlayer.png").toExternalForm());
     }
 
     /**

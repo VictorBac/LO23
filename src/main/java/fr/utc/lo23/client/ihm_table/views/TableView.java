@@ -16,7 +16,7 @@ public class TableView extends Application{
 	public void createTable(Pane root, Table table, IHMTable ihmTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../fxml/TableView.fxml"));
+            loader.setLocation(getClass().getResource("/fr/utc/lo23/client/ihm_table/fxml/TableView.fxml"));
 			root.getChildren().setAll((Node) loader.load());
 			TableController tableController = (TableController) loader.getController();
 			tableController.setInterface(ihmTable);

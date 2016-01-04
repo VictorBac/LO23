@@ -19,7 +19,7 @@ public class MainView extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("../fxml/MainView.fxml"));
+		loader.setLocation(getClass().getResource("/fr/utc/lo23/client/ihm_table/fxml/MainView.fxml"));
 		Parent root = loader.load();
 		
 		primaryStage.setTitle("Test Main");

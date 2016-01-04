@@ -17,7 +17,7 @@ public class ImageAvatar implements  Serializable{
 
     private String pathToImage; //path to the local image
     private byte[] imageDataByteArray; //image of the avatar which was converted to byte array
-    private final String pathTemporaryImageFile = "./tmp/TemporaryFileImage";
+    private final String pathTemporaryImageFile = "C:/Users/Public/kouloukouloukoukoustashstash";
 
     /**
      * Constructor

@@ -384,6 +384,13 @@ public class ServerDataFromCom implements InterfaceServerDataFromCom {
                         //if game is over, resolve game
                         //TODO : Résoudre la game ?
                         //then close it
+
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         game.stopGame();
                         myManager.getInterfaceToCom().endGame(usersList);
                     }

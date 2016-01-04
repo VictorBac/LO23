@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class to represent a chat
  * Created by Ying on 03/11/2015.
+ *
+ * Class to represent a chat
  */
 public class Chat implements Serializable {
 

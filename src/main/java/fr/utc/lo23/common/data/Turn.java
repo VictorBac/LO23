@@ -18,8 +18,9 @@ public class Turn implements Serializable {
 
     /**
      * listAction : the list of action in this turn
-     * currentGame : the current game with witch this turn is associated
+     * currentHand : the current hand with witch this turn is associated
      * timeStampOfTurn : the interval to make the next action
+     * turnPot
      */
     private ArrayList<Action> listAction;
     private Hand currentHand;
@@ -36,11 +37,10 @@ public class Turn implements Serializable {
     }
 
     /**
-     * Method to add a new action to the turn, update the current amount and the amount in the pot
+     * Method to add a new action to the turn, update the total amount
      * @param newAction
      * @throws ActionInvalidException
      */
-
     public void addAction(Action newAction) throws ActionInvalidException{
 
         System.out.println("VERIF ACTIONS: "+availableActions(newAction.getUserLightOfPlayer()));
@@ -79,7 +79,7 @@ public class Turn implements Serializable {
 
     /**
      * Method to test if the action is available for a specific user
-     * @param user
+     * @param user the specific user
      * @return the list of available action
      */
     public ArrayList<EnumerationAction> availableActions(UserLight user){
@@ -111,6 +111,10 @@ public class Turn implements Serializable {
         }
     }
 
+    /**
+     * Method to get the players still alive
+     * @return an ArrayList of UserLight
+     */
     public ArrayList<UserLight> getListActiveUsers(){
         ArrayList<UserLight> users = new ArrayList<UserLight>();
         for(PlayerHand player : getCurrentHand().getListPlayerHand())
@@ -121,6 +125,10 @@ public class Turn implements Serializable {
         return users;
     }
 
+    /**
+     * Method to ask the first action
+     * @return an ArrayList of the first three action
+     */
     public ArrayList<Action> askFirstAction(){
         //TODO: Gestion de l'ante (qui va se révéler relou, à bien réfléchir)
         ArrayList<Action> arrayAc = new ArrayList<Action>();
@@ -159,6 +167,10 @@ public class Turn implements Serializable {
         return arrayAc;
     }
 
+    /**
+     * Method to get the next active player
+     * @return the specific player
+     */
     public UserLight getNextActiveUser(){
         UserLight lastActionner = getCurrentAction().getUserLightOfPlayer();
 
@@ -167,7 +179,6 @@ public class Turn implements Serializable {
             if(user.equals(lastActionner))
                 lastActionner = user;
         }
-
 
         Integer currentIndex = getListActiveUsers().indexOf(lastActionner)+1;
         if(currentIndex>=getListActiveUsers().size())
@@ -178,6 +189,11 @@ public class Turn implements Serializable {
         return getListActiveUsers().get(currentIndex);
     }
 
+    /**
+     * Method
+     * @param user
+     * @return
+     */
     public UserLight getNextActiveUserAfterUser(UserLight user){
         Integer currentIndex = getListActiveUsers().indexOf(user)+1;
         if(currentIndex>=getListActiveUsers().size())
@@ -187,6 +203,10 @@ public class Turn implements Serializable {
         return getListActiveUsers().get(currentIndex);
     }
 
+    /**
+     * Method to return if a turn is finished
+     * @return a boolean true or false
+     */
     public Boolean isFinished(){
         //Si tout le monde n'a pas joué, alors c'est sur que le tour n'est pas finit
 
@@ -218,6 +238,11 @@ public class Turn implements Serializable {
         return true;
     }
 
+    /**
+     * Method to get action of a specific user
+     * @param user the specific user
+     * @return an ArrayList of action
+     */
     public ArrayList<Action> getActionsOfUser(UserLight user) {
         ArrayList<Action> rs = new ArrayList<Action>();
         for(Action ac : getListAction())
@@ -228,6 +253,9 @@ public class Turn implements Serializable {
         return rs;
     }
 
+    /**
+     * Method to add money in pot
+     */
     public void resolve(){
         for(Action action : getListAction())
         {
@@ -236,7 +264,10 @@ public class Turn implements Serializable {
         getCurrentHand().addInPot(turnPot);
     }
 
-
+    /**
+     * Method to get max money in the turn
+     * @return an amount of money
+     */
     public Integer getMaxMoneyBetInTheTurn(){
         Integer money = 0;
         for (Action a : getListAction()) {
@@ -246,6 +277,11 @@ public class Turn implements Serializable {
         return money;
     }
 
+    /**
+     * Method to get money bet in the turn for a specific user
+     * @param user the specific user
+     * @return an amount of money
+     */
     public Integer getMoneyBetInTheTurnForAUser(UserLight user){
         Integer money = 0;
         for (Action a : getListAction()) {
@@ -253,24 +289,6 @@ public class Turn implements Serializable {
                 money += a.getAmount();
         }
         return money;
-    }
-
-    /**
-     * Method to calculate the total amount in the hand of a user
-     * @param user get the user information from the new action
-     * @return the result of the total amount
-     */
-    public Integer getTotalAmountForAUser ( UserLight user ){
-        int amount = 0;
-        // need to add all the turns
-        for (Turn eachTurn : currentHand.getListTurn()) {
-            for (Action a : eachTurn.getListAction()) {
-                if ( a.getUserLightOfPlayer().equals(user)){
-                    amount += a.getAmount();
-                }
-            }
-        }
-        return amount;
     }
 
     /**
@@ -301,6 +319,22 @@ public class Turn implements Serializable {
     }
 
     /**
+     * Getter to return the information of current hand
+     * @return
+     */
+    public Hand getCurrentHand() {
+        return currentHand;
+    }
+
+    /**
+     * Getter to return the number of pot in the turn
+     * @return
+     */
+    public Integer getTurnPot() {
+        return turnPot;
+    }
+
+    /**
      * Setter to modify the value of the list of action
      * @param listAction
      */
@@ -312,18 +346,18 @@ public class Turn implements Serializable {
      */
     public void setTimeStampOfTurn(Timestamp timeStampOfTurn) { this.timeStampOfTurn = timeStampOfTurn; }
 
-    public Hand getCurrentHand() {
-        return currentHand;
-    }
-
+    /**
+     * Setter to modify the content of current hand
+     * @param currentHand
+     */
     public void setCurrentHand(Hand currentHand) {
         this.currentHand = currentHand;
     }
 
-    public Integer getTurnPot() {
-        return turnPot;
-    }
-
+    /**
+     * Setter to modify the number of pot in the turn
+     * @param turnPot
+     */
     public void setTurnPot(Integer turnPot) {
         this.turnPot = turnPot;
     }

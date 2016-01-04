@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * Class to represent a message of a chat
  * Created by Ying on 21/10/2015.
+ *
+ * Class to represent a message of a chat
  */
 public class MessageChat implements Serializable {
 

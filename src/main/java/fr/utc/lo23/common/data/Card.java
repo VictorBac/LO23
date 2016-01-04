@@ -70,6 +70,9 @@ public class Card implements Serializable {
         return symbolChar;
     }
 
+    /**
+     * Method to print a card
+     */
     public void printCard () {
 //        String ANSI_RESET = (char)27 + "[0m ";
 //        String ANSI_RED = (char)27 + "[31m ";

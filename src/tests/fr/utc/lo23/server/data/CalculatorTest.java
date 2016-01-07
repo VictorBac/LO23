@@ -23,10 +23,11 @@ public class CalculatorTest {
         calculator = new CombinationCalculator();
         Hand oneHand = new Hand(new Timestamp(Calendar.getInstance().getTime().getTime()));
         // Add 4 player in this test.
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player1")));
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player2")));
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player3")));
-        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("player4")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("Thibault")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("Bastien")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("Paul")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("Victor")));
+        oneHand.getListPlayerHand().add(new PlayerHand(new ArrayList<>(), new UserLight("Marouane")));
 
         oneHand.distributeCard();
         listOfPlayer = oneHand.getListPlayerHand();
@@ -40,6 +41,10 @@ public class CalculatorTest {
     @Test
     public void getWinnerTest() {
         listWinner = calculator.getWinner(listOfPlayer, cardsOnField);
+        for (PlayerHand p : listOfPlayer) {
+            System.out.println("Get rank of " + p.getPlayer().getPseudo() + " : " +
+                    calculator.getHandRank(p.getListCardsHand(), cardsOnField));
+        }
     }
 
     /**
@@ -51,7 +56,7 @@ public class CalculatorTest {
         left.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
         ArrayList<Integer> right = new ArrayList<>();
         right.addAll(Arrays.asList(12, 10, 9, 9, 8, 7, 5));
-        System.out.println(calculator.greaterThan(left, right));
+        //System.out.println(calculator.greaterThan(left, right));
     }
 
     /**
